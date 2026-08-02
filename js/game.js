@@ -3,7 +3,11 @@ class Game {
         this.deck = new Deck(); // สร้าง deck ใหม่
         this.deck.shuffle(); // สั่งสับไพ่
         this.discardPile = new DiscardPile(); // สร้างกองทิ้งไพ่ไว้เก็บการ์ดที่ถูกใช้งานแล้ว
-        this.eventManager = new EventManager(this); // สร้าง EventManager เข้าไปเก็บไว้ เพื่อใช้เป็นศูนย์กลางส่ง Event ในเกม
+        this.eventManager = new EventManager(); // สร้าง EventManager เข้าไปเก็บไว้ เพื่อใช้เป็นศูนย์กลางส่ง Event ในเกม
+        // สร้าง Listener สำหรับ Debug ดักจับ Event ความเสียหาย
+        const debugListener = new DebugDamageListener();
+        // ผูก Event "beforeDamage" และ "afterDamage" เข้ากับ EventManager ของเกม
+        debugListener.register(this.eventManager);
         // สร้าง Instance ของ UIManager และส่งออบเจกต์ Game (this) เข้าไป เพื่อใช้เป็นตัวจัดการระบบแสดงผล (UI Engine) หลักของเกม
         this.ui = new UIManager(this); 
         this.players = []; // สร้าง array ไว้เก็บชื่อ ผู้เล่น

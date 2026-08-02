@@ -7,5 +7,11 @@ class Damage{
         this.target = target;
         // จำนวนความเสียหาย (หน่วย HP ที่ต้องลด)
         this.amount = amount;
+        // การ์ดที่เป็นต้นเหตุของความเสียหาย (เช่น SlashCard, FireAttackCard)
+        this.card = null;
+        // ประเภทความเสียหาย (เช่น "normal", "fire", "thunder")
+        this.type = "normal";
+        // สถานะการถูกยกเลิกดาเมจ (ถ้า true จะไม่ลด HP)
+        this.canceled = false;
     }
 }
