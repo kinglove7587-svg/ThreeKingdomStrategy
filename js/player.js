@@ -183,10 +183,18 @@ class Player{
     unequipArmor(){
         // เก็บเกราะเดิมไว้ก่อน
         const armor = this.armor;
+        // หากไม่มีเกราะสวมใส่อยู่ ให้คืนค่า null ออกไปทันที
+        if (!armor){ 
+            return null;
+        }
+        // วนลูปอ่านรายการสกิลของเกราะเพื่อยกเลิกการลงทะเบียน Event (unregister) ทั้งหมด
+        for (const skill of armor.skills){
+            // ถอด Listener ของสกิลเกราะออกจาก EventManager
+            skill.unregister();
+        }
         // ล้างช่องเกราะให้เป็น null
         this.armor = null;
         // คืนค่าเกราะเดิมออกไป เพื่อนำไปจัดการต่อ (เช่น ย้ายลงกองทิ้ง)
         return armor;
     }
-
 }

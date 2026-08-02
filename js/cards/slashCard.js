@@ -28,16 +28,26 @@ class SlashCard extends Card { // SlashCard สืบทอดจาก Card
         }
         // บันทึกสถานะว่าผู้เล่นคนนี้ได้ใช้งานการ์ดฆ่าเรียบร้อยแล้ว (ผ่านเมธอด markSlashUsed)
         player.markSlashUsed();
+        // สร้าง Context สำหรับระบบประมวลผลการหลบ (เก็บผู้โจมตี, เป้าหมาย, และสถานะการหลบ)
+        const dodgeContext = {
+            attacker: player, 
+            target: target, 
+            dodge: false
+        };
         console.log(player.name + " ใช้การ์ดฆ่า " + target.name); // แสดงผู้โจมตี
-
-        if (target.hand.hasCard("หลบ")){ // ถ้ามีการ์ดหลบ
+        // เปิดโอกาสให้สกิลต่างๆ แทรกการทำงานก่อนตรวจสอบการ์ดหลบ
+        game.eventManager.emit("beforeDodge", dodgeContext);
+        // ตรวจสอบเงื่อนไขการหลบจากสกิลก่อนเป็นอันดับแรก
+        if (dodgeContext.dodge){
+            game.log(target.name + " หลบการโจมตี"); 
+        // หากไม่ได้หลบด้วยสกิล ให้ตรวจสอบการ์ดหลบในมือต่อ
+        }else if (target.hand.hasCard("หลบ")){ // ถ้ามีการ์ดหลบ
             const dodgeCard = target.hand.removeCardByName("หลบ"); // เอาการ์ดหลบออกจากมือ
             game.discardPile.addCard(dodgeCard); // ย้ายหลบไปกองทิ้ง
             console.log(target.name + " มีการ์ดหลบ ");  // แจ้งว่าหลบได้
             target.showHand(); // อัปเดตไพ่ในมือ
             game.showDiscardPile(); // อัปเดตกองทิ้ง
-        }
-        else{
+        }else{
             console.log(target.name + " ไม่มีการ์ดหลบ "); // แจ้งว่าหลบไม่ได้
             // สร้างออบเจกต์เก็บข้อมูลความเสียหาย (ระบุผู้ใช้, เป้าหมาย, และจำนวนดาเมจ 1 หน่วย)
             const damage = new Damage(player, target, 1);
