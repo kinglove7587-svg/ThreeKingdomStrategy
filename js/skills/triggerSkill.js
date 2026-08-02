@@ -1,6 +1,26 @@
 class TriggerSkill extends Skill{
-    //
+    // สร้างสกิลที่ถูกเรียกใช้โดยอัตโนมัติเมื่อเหตุการณ์เกิดขึ้น
     constructor(name){
-        super(name);
+        super(name); // เรียกใช้ constructor ของคลาสแม่ (Skill) เพื่อกำหนดชื่อสกิล
+        this.listeners = []; // เก็บข้อมูลการลงทะเบียน Event ของสกิลนี้
+    }
+    // ลงทะเบียน Listener สำหรับ Event ที่สกิลนี้ต้องการฟัง
+    registerListener(eventManager, eventName, callback){
+        // ลงทะเบียน Event กับ EventManager
+        eventManager.on(eventName, callback);
+        // เก็บข้อมูล listener ไว้สำหรับการยกเลิกการลงทะเบียนในอนาคต
+        this.listeners.push({
+            eventManager, eventName, callback
+        });
+    }
+    // ยกเลิกการลงทะเบียน Event ทั้งหมดของสกิลนี้
+    unregister(){
+        // วนลูปผ่าน listener ทั้งหมดและยกเลิกการลงทะเบียนแต่ละตัว
+        for (const listener of this.listeners){
+            // ยกเลิกการลงทะเบียน Event กับ EventManager
+            listener.eventManager.off(listener.eventName, listener.callback);
+        }
+        // ล้างรายการ listener
+        this.listeners = [];
     }
 }

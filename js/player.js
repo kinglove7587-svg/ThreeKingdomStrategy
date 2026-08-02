@@ -173,6 +173,11 @@ class Player{
         }
         // บันทึกเกราะที่สวมใส่ไว้ในช่อง armor ของผู้เล่น
         this.armor = armor;
+        // วนลูปอ่านรายการสกิลทั้งหมดของเกราะใบใหม่
+        for (const skill of armor.skills){
+            // ลงทะเบียน Event ของสกิลเกราะเข้ากับ EventManager ของเกม
+            skill.register(this.game.eventManager, this);
+        }
     }
     // ถอดเกราะของผู้เล่น
     unequipArmor(){

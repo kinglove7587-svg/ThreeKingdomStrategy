@@ -11,6 +11,17 @@ class EventManager{
         // ส่งต่อการลงทะเบียน Event ไปให้ตัวจัดการ EventListener
         this.listener.on(eventName, callback);
     }
+    // ยกเลิกการลงทะเบียน Event โดยส่งชื่อ eventName และฟังก์ชัน callback ที่ต้องการยกเลิก
+    Off(eventName, callback){
+        // หากยังไม่มีการลงทะเบียน Event นี้ไว้ ให้จบการทำงานทันที
+        if (!this.listeners[eventName]){
+            return;
+        }
+        // กรองเอา callback ที่ตรงกับที่ส่งเข้ามาออกจากอาร์เรย์ของ listener สำหรับ eventName นั้น
+        this.listeners[eventName] = this.listeners[eventName].filter(
+            listener => listener !== callback
+        );
+    }
     // กระจาย Event ทั่วไปออกไป พร้อมส่งอาร์กิวเมนต์ต่างๆ ...args ไปให้ฟังก์ชันที่ดักฟังอยู่
     emit(eventName, ...args){
         // สั่งให้ EventListener ยิง Event ตามชื่อที่ระบุพร้อมตัวแปรเสริม
