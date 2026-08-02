@@ -5,15 +5,14 @@ class Paoxiao extends TriggerSkill{
     }
     // ลงทะเบียน Event เข้ากับ EventManager
     register(eventManager, player){
-        // ดักฟัง Event ช่วง Play Phase เมื่อถึงเฟสเล่นการ์ด
-        eventManager.on("onPlayPhase", (target, game)=>{
-            // เช็กว่าผู้เล่นที่เข้าสู่ Play Phase ใช่ตัวเรา เจ้าของสกิล หรือไม่ ถ้าไม่ใช่ให้หยุดการทำงาน
-            if (target !== player){
+        // ลงทะเบียนรับฟัง Event "beforeUseSlash" ก่อนที่ผู้เล่นจะใช้การ์ดฆ่า
+        eventManager.on("beforeUseSlash", (context)=>{
+            // ตรวจสอบว่าผู้เล่นที่กำลังจะใช้การ์ดฆ่า ใช่เจ้าของสกิลนี้หรือไม่
+            if (context.player !== player){
                 return;
             }
-            // รีเซ็ตสถานะการใช้ Slash ให้เป็น false เพื่อให้สั่งใช้ Slash เพิ่มเติมได้ไม่จำกัด
-            player.slashUsed = false;
-            // พิมพ์ Log แสดงการทำงานของสกิล Paoxiao
+            // อนุญาตให้ใช้การ์ดฆ่าได้เสมอ (ยกเลิกข้อจำกัด 1 ครั้งต่อเทิร์น)
+            context.allow = true;
             console.log(player.name + " ใช้สกิล Paoxiao");
         });
     }
