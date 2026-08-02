@@ -1,13 +1,15 @@
-// สร้าง Instance ของเกมใหม่ โดยส่ง Array ของ Object ข้อมูลผู้เล่น (Player Configs) เข้าไป
+// Instance ของเกม โดยกำหนดข้อมูลฮีโร่ ชื่อผู้เล่น และชนิด Controller ของแต่ละคน
 const game = new Game([
-    // กำหนดผู้เล่นคนแรก: ชื่อ "เล่าปี่" ควบคุมโดยมนุษย์ (HumanController)
+    // ผู้เล่นคนที่ 1: ใช้ฮีโร่เล่าปี่ และควบคุมโดยมนุษย์
     {
-        name: "เล่าปี่",
+        hero: LiuBei, 
+        name: "เล่าปี่", 
         controller: HumanController
     },
-    // กำหนดผู้เล่นคนที่สอง: ชื่อ "เตียวหุย" ควบคุมโดยบอท (AIController)
+    // ผู้เล่นคนที่ 2: ใช้ฮีโร่เตียวหุย และควบคุมโดย AI
     {
-        name: "เตียวหุย",
+        hero: ZhangFei, 
+        name: "เตียวหุย", 
         controller: AIController
     }
 ]);

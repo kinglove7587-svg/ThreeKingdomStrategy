@@ -11,6 +11,7 @@ class SlashCard extends Card { // SlashCard สืบทอดจาก Card
         };
         // ส่ง Event ก่อนใช้การ์ดฆ่า เปิดโอกาสให้ Trigger Skill
         game.eventManager.emit("beforeUseSlash", context);
+        console.log("allow =", context.allow);
         // ตรวจสอบสิทธิ์การใช้งานจาก context.allow
         if (!context.allow){
             // หากใช้ไปแล้ว ให้แสดงข้อความแจ้งเตือนใน Console
