@@ -9,7 +9,8 @@ class Player{
         this.skills = []; // เก็บสกิล
         this.controller = new controllerClass(game); // ผูก controllerClass เข้ากับ game
         this.controller.setPlayer(this); // ผูก player (this) เข้ากับ Controller ใบนั้น
-        this.weapon = null;
+        this.weapon = null; // อาวุธ
+        this.armor = null; // เกราะ
         this.infiniteSlash = false;
     }
 
@@ -160,6 +161,27 @@ class Player{
         }
         // ถ้ามีอาวุธ ให้คืนค่าระยะการโจมตีของอาวุธใบนั้น
         return this.weapon.range;
+    }
+    // สวมใส่เกราะให้ผู้เล่น
+    equipArmor(armor){
+        // ตรวจสอบว่าผู้เล่นมีเกราะที่สวมใส่อยู่เดิมแล้วหรือไม่
+        if (this.armor){
+            // ถอดเกราะเดิมออกมาก่อน
+            const oldArmor = this.unequipArmor();
+            // นำเกราะเดิมส่งลงกองทิ้งไพ่ (discardPile) ของเกม
+            this.game.discardPile.addCard(oldArmor);
+        }
+        // บันทึกเกราะที่สวมใส่ไว้ในช่อง armor ของผู้เล่น
+        this.armor = armor;
+    }
+    // ถอดเกราะของผู้เล่น
+    unequipArmor(){
+        // เก็บเกราะเดิมไว้ก่อน
+        const armor = this.armor;
+        // ล้างช่องเกราะให้เป็น null
+        this.armor = null;
+        // คืนค่าเกราะเดิมออกไป เพื่อนำไปจัดการต่อ (เช่น ย้ายลงกองทิ้ง)
+        return armor;
     }
 
 }
