@@ -4,8 +4,15 @@ class SlashCard extends Card { // SlashCard สืบทอดจาก Card
     }
     // Override ความสามารถของการ์ด
     use(player, game){ 
-        // เช็กว่าผู้เล่นคนนี้ใช้การ์ดฆ่าในเทิร์นนี้ไปแล้วหรือยัง (ผ่านเมธอด canUseSlash)
-        if (!player.canUseSlash()){
+        // สร้าง Context สำหรับเช็กเงื่อนไขการใช้การ์ดฆ่า
+        const context = {
+            player : player, 
+            allow : player.canUseSlash()
+        };
+        // ส่ง Event ก่อนใช้การ์ดฆ่า เปิดโอกาสให้ Trigger Skill
+        game.eventManager.emit("beforeUseSlash", context);
+        // ตรวจสอบสิทธิ์การใช้งานจาก context.allow
+        if (!context.allow){
             // หากใช้ไปแล้ว ให้แสดงข้อความแจ้งเตือนใน Console
             console.log(player.name + " ใช้ฆ่าไปแล้ว ");
             // ไม่อนุญาตให้ใช้งานการ์ด ส่งค่า false กลับออกไป
