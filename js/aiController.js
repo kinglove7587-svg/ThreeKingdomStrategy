@@ -1,0 +1,58 @@
+class AIController extends Controller{
+    // กำหนด constructor รับอินสแตนซ์ของผู้เล่น (player) เข้ามาส่งต่อให้คลาสแม่ (Controller)
+    constructor(game){
+        super(game);
+    }
+    // ประกาศเมธอด playTurn() สำหรับจัดการการทำงานในเทิร์นของ AI
+    playTurn(){ 
+        // ให้ AI เลือก index ของการ์ดที่จะเล่น
+        const cardIndex = this.chooseCard();
+        // ถ้าไม่มีการ์ดให้เล่น (ได้ค่า -1) ให้จบเทิร์นทันที
+        if (cardIndex === -1){
+            return false;
+        }
+        // เล่นการ์ดใบที่เลือกผ่านเมธอด playCard และส่งผลลัพธ์การเล่นการ์ดกลับออกไป
+        return this.playCard(cardIndex);
+    }
+    // เมธอดสำหรับให้ AI เลือกตัดสินใจใช้การ์ดบนมือ
+    chooseCard(){
+        // เงื่อนไขที่ 1: ถ้าพลังชีวิต (HP) ไม่เต็ม ให้พยายามหาการ์ด "ยา" เพื่อฟื้นฟูก่อน
+        if (this.player.hp < this.player.maxHp){
+            // วนลูปตรวจดูการ์ดทั้งหมดบนมือของผู้เล่น
+            for (let i = 0; i < this.player.hand.cards.length; i++){
+                const card = this.player.hand.cards[i];
+                // ถ้าเจอการ์ด "ยา" ให้ส่งคืนตำแหน่งดรรชนี (Index) ของการ์ดใบนั้นทันที
+                if (card.name === "ยา"){
+                    return i;
+                }
+            }
+        }
+        // เงื่อนไขที่ 2: พิจารณาเปลี่ยนอาวุธ (สนใจเฉพาะการ์ด WeaponCard ที่ระยะไกลกว่าอาวุธเดิม)
+        for (let i = 0; i < this.player.hand.cards.length; i++){
+            const card = this.player.hand.cards[i];
+            // ข้ามการ์ดที่ไม่ใช่อาวุธ
+            if (!(card instanceof WeaponCard)){
+                continue;
+            }
+            // เลือกใช้อาวุธใหม่เฉพาะเมื่อระยะ (range) ไกลกว่าอาวุธปัจจุบันของผู้เล่น
+            if (card.range > this.player.getWeaponRange()){
+                return i;
+            }
+        }
+        // เงื่อนไขที่ 3: ถ้า HP เต็ม หรือไม่มีการ์ดยา บนมือ ให้ค้นหาการ์ด "ฆ่า" เพื่อโจมตี
+        for (let i = 0; i < this.player.hand.cards.length; i++){
+            const card = this.player.hand.cards[i];
+            // ถ้าเจอการ์ด "ฆ่า" ให้ส่งคืนตำแหน่งดรรชนี (Index) ของการ์ดใบนั้นทันที
+            if (card.name === "ฆ่า"){
+                return i;
+            }
+        }
+        // หากไม่มีการ์ดที่ตรงตามเงื่อนไขใช้งาน ให้คืนค่า -1 (จบการเลือกการ์ด)
+        return -1;
+    }
+    // คืนผู้เล่นเป้าหมายที่ AI เลือก
+    getTarget(card){
+        // ตอนนี้ AI เลือกผู้เล่นคนถัดไปเป็นเป้าหมายเสมอ
+        return this.game.getNextPlayer();
+    }
+}

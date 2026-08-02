@@ -1,0 +1,14 @@
+class ActiveSkill extends Skill{
+    // กำหนด constructor รับชื่อสกิล name เพื่อนำไปสร้าง Active Skill แต่ละตัว
+    constructor(name){
+        super(name);
+    }
+    // เมธอดสำหรับตรวจสอบว่าเงื่อนไขการใช้สกิลผ่านหรือไม่ ให้คลาสลูกนำไป Override คืนค่า true/false เอง
+    canUse(player, game){
+        return false;
+    }
+    // เมธอดสำหรับสั่งงานสกิลเมื่อถูกเรียกใช้ ให้คลาสลูกนำไป Override เพื่อใส่ความสามารถจริงเอง
+    use(player, game){
+        return false;
+    }
+}
