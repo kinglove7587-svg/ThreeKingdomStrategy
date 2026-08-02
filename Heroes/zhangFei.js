@@ -1,13 +1,12 @@
 class ZhangFei extends Player{ // เตียวหุย
-    //
-    constructor(name){
-        super(name);
-        //
+    // ตัวสร้างออบเจกต์เตียวหุย (รับข้อมูลชื่อ, ตัวเกมหลัก, และคลาส Controller)
+    constructor(name, game, controllerClass){
+        // ส่งพารามิเตอร์ทั้งหมดไปยังคลาสแม่ (Player) เพื่อตั้งค่าพื้นฐาน
+        super(name, game, controllerClass);
+        // กำหนดพลังชีวิตสูงสุดและพลังชีวิตปัจจุบันเป็น 4 หน่วย
         this.maxHp = 4;
         this.hp = 4;
-        // 
-        this.skills = [
-            new Paoxiao()
-        ];
+        // เรียกใช้ addSkill() เพื่อเพิ่มและลงทะเบียน Event สกิลพิโรธคำราม (Paoxiao) อัตโนมัติ
+        this.addSkill(new Paoxiao());
     }
 }

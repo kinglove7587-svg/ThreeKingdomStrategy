@@ -13,9 +13,9 @@ class Game {
         this.players = []; // สร้าง array ไว้เก็บชื่อ ผู้เล่น
         // วนลูปอ่านข้อมูลผู้เล่นทีละคนจากอาร์เรย์ playerNames (ซึ่งเก็บเป็น Object { name, controller })
         for (const data of playerNames){
-            // สร้าง Instance ของ Player ใหม่แล้วเพิ่มเข้าไปในอาร์เรย์ this.players ของเกม
+            // สร้าง Instance จากคลาสฮีโร่เฉพาะของแต่ละตัวละคร แล้วเพิ่มลงในอาร์เรย์ผู้เล่น
             this.players.push(
-                new Player(
+                new data.hero(
                     data.name,
                     this,
                     data.controller
