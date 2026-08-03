@@ -13,6 +13,17 @@ class EventListener{
         // นำฟังก์ชัน callback เพิ่มเข้าไปในอาร์เรย์ของ Event นั้น
         this.events[eventName].push(callback);
     }
+    // ยกเลิกการลงทะเบียน Event โดยส่งชื่อ eventName และฟังก์ชัน callback ที่ต้องการยกเลิก
+    off(eventName, callback){
+        // หากไม่มีการลงทะเบียน Event ชื่อนี้ไว้ ให้จบการทำงานทันที
+        if (!this.events[eventName]){
+            return;
+        }
+        // กรองเอา callback ที่ตรงกับที่ส่งเข้ามาออกจากอาร์เรย์
+        this.events[eventName] = this.events[eventName].filter(
+            listener => listener !== callback
+        );
+    }
     // ส่งสัญญาณ Event ออกไปพร้อมส่งข้อมูลตัวแปรเพิ่มเติม ...args ไปให้ callback ทุกตัวรันทำงาน
     emit(eventName, ...args){
         // ถ้าไม่มีใครลงทะเบียนรับฟัง Event ชื่อนี้ไว้ ให้ยกเลิกการทำงานทันที

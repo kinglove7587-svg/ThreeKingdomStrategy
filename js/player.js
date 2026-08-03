@@ -12,6 +12,7 @@ class Player{
         this.weapon = null; // อาวุธ
         this.armor = null; // เกราะ
         this.infiniteSlash = false;
+        this.delayedTricks = [];
     }
 
     drawCard(deck){ // player จั่วกองไพ่
@@ -196,5 +197,24 @@ class Player{
         this.armor = null;
         // คืนค่าเกราะเดิมออกไป เพื่อนำไปจัดการต่อ (เช่น ย้ายลงกองทิ้ง)
         return armor;
+    }
+    // เพิ่มการ์ดคุมเชิง (Delayed Trick) เข้าไปในพื้นที่หน้าตัวละครของผู้เล่น
+    addDelayedTrick(card){
+        // นำการ์ด Delayed Trick เพิ่มเข้าไปในอาร์เรย์ delayedTricks
+        this.delayedTricks.push(card);
+    }
+    // ถอดการ์ดคุมเชิง (Delayed Trick) ออกจากหน้าตัวละครของผู้เล่น
+    removeDelayedTrick(card){
+        // ค้นหาตำแหน่งดรรชนี (index) ของการ์ดที่ต้องการลบในอาร์เรย์ delayedTricks
+        const index = this.delayedTricks.indexOf(card);
+        // ตรวจสอบว่าพบการ์ดใบนี้อยู่ในอาร์เรย์หรือไม่ (-1 แปลว่าไม่พบ)
+        if (index !== -1){
+            // ลบการ์ดออกจากอาร์เรย์ ณ ตำแหน่ง index จำนวน 1 ใบ
+            this.delayedTricks.splice(index, 1);
+        }
+    }
+    // Debug 
+    showDelayedTricks(){
+        console.table(this.delayedTricks);
     }
 }
