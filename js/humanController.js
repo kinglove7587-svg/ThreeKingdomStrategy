@@ -89,6 +89,7 @@ class HumanController extends Controller{
     }
     // รับ Event เลือกเป้าหมาย ตรวจสอบเงื่อนไข รีเซ็ต State กลับเป็น idle และสั่งประมวลผล
     selectTarget(player){
+        console.log("selectTarget ถูกเรียก", player.name); // Debug
         // ดึงการ์ดที่ผู้เล่นเลือกไว้บนมือ
         const card = this.getSelectedCard();
         // หากไม่มีการ์ดที่เลือกอยู่ ให้ยกเลิกการทำงานทันที

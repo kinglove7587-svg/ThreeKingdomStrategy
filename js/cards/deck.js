@@ -12,6 +12,7 @@ class Deck {
             this.cards.push(new TrainingSword("♦️", 5));
             this.cards.push(new CrossbowCard("♠️", 2));
             this.cards.push(new EightTrigramsArmor("♣️", 2));
+            this.cards.push(new LeBuSiShuCard("♠️", 6));
         }
         // เพิ่มการ์ดประเภทอุปกรณ์ / อาวุธ (SwordCard) ท้ายกอง
         this.cards.push(new SwordCard("♠️",5));

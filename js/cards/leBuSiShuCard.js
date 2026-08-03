@@ -15,8 +15,11 @@ class LeBuSiShuCard extends Card{
     }
     // ประมวลผลเมื่อมีการลงการ์ดสุราลืมกลับ
     use(player, game){
+        console.log("เริ่มใช้ สุราลืมกลับ"); // Debug
+        console.log("selectedTarget =", player.controller.getSelectedTarget()); // Debug
         // ให้ controller ของผู้เล่นเลือกเป้าหมายที่จะถูกรบกวนด้วยการ์ดใบนี้
         const target = player.controller.getTarget(this);
+        console.log(target); // Debug
         // หากไม่ได้เลือกเป้าหมาย หรือยกเลิก ให้คืนค่า false เพื่อยกเลิกการใช้การ์ด
         if (target === null){
             return false;
@@ -28,6 +31,10 @@ class LeBuSiShuCard extends Card{
         // แสดงข้อความในระบบ Log ของเกมว่าใครใช้สุราลืมกลับใส่ใคร
         game.log(player.name + " ใช้ สุราลืมกลับ ใส่ " + target.name);
         // คืนค่า true เพื่อยืนยันว่าใช้การ์ดสำเร็จ
+        return true;
+    }
+    // แจ้งระบบ UI/Controller ว่าการ์ดใบนี้จำเป็นต้องคลิกเลือกเป้าหมายก่อนใช้งาน
+    needTarget(){
         return true;
     }
 }
