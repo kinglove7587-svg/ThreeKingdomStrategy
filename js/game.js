@@ -139,6 +139,8 @@ class Game {
         this.ui.addLog("=============");
         this.ui.addLog(player.name + " Turn ");
         this.ui.addLog("=============");
+        // เริ่มช่วงเสี่ยงทาย (Judge Phase) ก่อนเข้าสู่ Phase อื่นๆ
+        player.startJudgePhase();
         this.startPhase(player); // เริ่ม phase ต่างๆ
     }
 
