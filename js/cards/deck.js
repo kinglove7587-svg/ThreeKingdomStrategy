@@ -7,14 +7,14 @@ class Deck {
     initDeck() { // เพิ่มไพ่ลง Deck
         for (let i = 0; i <= 4; i++){ // วนลูป การ์ด 3 ใบ 4 รอบ
             this.cards.push(new SlashCard("♠️", 1)); // เพิ่มการ์ดฆ่า
-            this.cards.push(new Card("Basic", "หลบ", "♥️", 2));
+            //this.cards.push(new Card("Basic", "หลบ", "♥️", 2));
             this.cards.push(new PeachCard("♣️", 3)); // เพิ่มการ์ดยา
             this.cards.push(new TrainingSword("♦️", 5));
             this.cards.push(new CrossbowCard("♠️", 2));
+            this.cards.push(new EightTrigramsArmor("♣️", 2));
         }
         // เพิ่มการ์ดประเภทอุปกรณ์ / อาวุธ (SwordCard) ท้ายกอง
         this.cards.push(new SwordCard("♠️",5));
-        this.cards.push(new SwordCard("♦️",9));
     }
     // สับไพ่
     shuffle() {
