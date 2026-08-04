@@ -12,13 +12,17 @@ class EightTrigramsSkill extends TriggerSkill{
                 return;
             }
             player.game.log(player.name + " ใช้เกราะแปดทิศ");
-            // เรียกใช้ระบบ Judge กลางของเกม เพื่อเช็กว่าไพ่ที่เปิดได้เป็นดอกสีแดง (♥ ♦) หรือไม่
-            const success = player.game.judge(card => {
-                return (card.suit === "♥️" || card.suit === "♦️");
-            });
-            // หากผล Judge เป็นจริง (เปิดได้สีแดง) ให้กำหนดสถานะหลบสำเร็จ
-            if (success){
+            // สั่งเสี่ยงทาย (Judge) และรับค่าผลลัพธ์เป็น JudgeResult
+            const result = player.game.judge(player);
+            // หากเปิดไม่เจอกระดาษไพ่/กองไพ่หมด ให้ยกเลิกการทำงาน
+            if (!result){
+                return;
+            }
+            // ตรวจสอบว่าผลการเสี่ยงทายออกมาเป็นไพ่สีแดง (♥️ หรือ ♦️) หรือไม่
+            if (result.isRed()){
+                // หากเปิดได้สีแดง ให้กำหนดสถานะหลบสำเร็จ และลง Log แจ้งเตือน
                 context.dodge = true;
+                player.game.log(player.name + " หลบการโจมตี");
             }
         };
         // ใช้ registerListener ของ TriggerSkill เพื่อลงทะเบียน Event "beforeDodge"

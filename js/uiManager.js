@@ -66,7 +66,6 @@ class UIManager{
             }
             // กำหนด Event เมื่อผู้เล่นคลิกที่กรอบของตัวละคร เพื่อส่งข้อมูลผู้เล่นใบนั้นไปประมวลผล
             div.onclick = () => {
-                console.log("คลิก", player.name); // Debug
                 this.onPlayerClick(player);
             };
             // กำหนดข้อความ HTML ภายใน div ให้แสดงชื่อ (ตัวหนา) และ พลังชีวิต HP
@@ -158,15 +157,16 @@ class UIManager{
     }
     // เมธอดจัดการ Event เมื่อผู้เล่นคลิกที่ตัวละคร
     onPlayerClick(player){
+        console.log("คลิก", player.name); // Debug
         // ดึงข้อมูลผู้เล่นปัจจุบันที่กำลังถึงตาเล่น
         const currentPlayer = this.game.getCurrentPlayer();
         // ดึง Controller ของผู้เล่นปัจจุบัน
         const controller = currentPlayer.controller;
+        console.log("inputState =", controller.inputState); // Debug
         // ถ้าไม่ใช่ผู้เล่นมนุษย์ ไม่ต้องรับการคลิก
         if (!(controller instanceof HumanController)){
             return;
         }
-        console.log("inputState =", controller.inputState); // Debug
         // ถ้า Controller ไม่ได้อยู่ในสถานะรอเลือกเป้าหมาย ให้ยกเลิกการคลิก
         if (controller.inputState !== "waitingTarget"){
             return;

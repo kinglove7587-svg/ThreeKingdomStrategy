@@ -4,6 +4,10 @@ class DelayedTrickCard extends Card{
         // สั่งเรียก constructor ของ Card โดยระบุประเภทเป็น "DelayedTrick"
         super("DelayedTrick", name, suit, number);
     }
+    // ต้องเลือกเป้าหมาย
+    needTarget(){
+        return true;
+    }
     // การ์ดประเภทนี้เมื่อเล่นแล้วจะไม่ลงกองทิ้งทันที (จะถูกไปแปะไว้หน้าตัวละครเป้าหมายก่อน)
     shouldDiscard(){
         return false;

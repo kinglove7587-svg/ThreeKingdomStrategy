@@ -268,6 +268,7 @@ class Game {
     }
     // ประกาศเมธอด log() เพื่อให้ส่วนอื่นส่งข้อความมาเพิ่มลงใน Log บน UI ได้ง่ายขึ้น
     log(message){
+        console.log(message);
         this.ui.addLog(message);
     }
     checkGameOver(){ // เช็กเกม over
