@@ -27,4 +27,12 @@ class JudgeResult{
     isDiamond(){
         return this.card.suit === "♦️";
     }
+    // ตรวจสอบว่าเป็นไพ่สีแดง (หัวใจ หรือ ข้าวหลามตัด) หรือไม่
+    isRed(){
+        return this.isHeart() || this.isDiamond();
+    }
+    // ตรวจสอบว่าเป็นไพ่สีดำ (โพดำ หรือ ดอกจิก) หรือไม่
+    isBlack(){
+        return this.isSpade() || this.isClub();
+    }
 }

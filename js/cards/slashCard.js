@@ -51,6 +51,8 @@ class SlashCard extends Card { // SlashCard สืบทอดจาก Card
             console.log(target.name + " ไม่มีการ์ดหลบ "); // แจ้งว่าหลบไม่ได้
             // สร้างออบเจกต์เก็บข้อมูลความเสียหาย (ระบุผู้ใช้, เป้าหมาย, และจำนวนดาเมจ 1 หน่วย)
             const damage = new Damage(player, target, 1);
+            // บันทึกว่าดาเมจนี้เกิดจากการ์ดใบไหน
+            damage.card = this;
             // ส่งออบเจกต์ความเสียหายให้ Game เป็นศูนย์กลางประมวลผล
             game.damage(damage);
         }

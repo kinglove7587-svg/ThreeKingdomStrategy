@@ -289,6 +289,10 @@ class Game {
         // แสดง Log การทำความเสียหายออกทาง Console เพื่อตรวจสอบ
         console.log(damage.source.name + " ทำความเสียหาย " + 
             damage.amount + " ให้ " + damage.target.name);
+        // เช็กว่ามีความเสียหายที่เกิดจากการ์ดหรือไม่ ถ้ามีให้แสดงชื่อการ์ดที่เป็นต้นเหตุ
+        if (damage.card){
+            console.log("Damage Card :", damage.card.name);
+        }
         // ลด HP ของเป้าหมายตามจำนวนความเสียหายที่กำหนดในออบเจกต์ Damage
         damage.target.loseHp(damage.amount);
         // ส่ง Event แจ้งเตือนหลังเกิดความเสียหาย เพื่อเปิดโอกาสให้สกิลที่ทำงานหลังโดนดาเมจ (เช่น สกิลดูดเลือด/โต้กลับ) ทำงาน
