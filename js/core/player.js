@@ -226,12 +226,16 @@ class Player{
     resetPhaseFlag(){
         this.skipPlayPhase = false;
     }
-    // เปิดเผยการ์ดในมือ 1 ใบตามตำแหน่ง Index (เริ่มต้นที่ตำแหน่งแรก index 0)
-    revealHandCard(index = 0){
+    // เปิดเผยการ์ดในมือ 1 ใบแบบสุ่ม
+    revealHandCard(){
         // หากไม่มีการ์ดในมือ ให้คืนค่า null
         if (this.hand.cards.length === 0){
             return null;
         }
+        // สุ่มตำแหน่ง Index ของการ์ดตามจำนวนการ์ดที่มีในมือ
+        const index = Math.floor(Math.random() * this.hand.cards.length);
+        // Debug
+        console.log(this.name + " เปิดไพ่ลำดับ " + index);
         // คืนค่าออบเจกต์การ์ดในมือตามตำแหน่งที่ระบุ
         return this.hand.cards[index];
     }

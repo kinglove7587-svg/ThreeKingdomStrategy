@@ -51,6 +51,20 @@ class SlashCard extends Card { // SlashCard สืบทอดจาก Card
             console.log(target.name + " ไม่มีการ์ดหลบ "); // แจ้งว่าหลบไม่ได้
             // สร้างออบเจกต์เก็บข้อมูลความเสียหาย (ระบุผู้ใช้, เป้าหมาย, และจำนวนดาเมจ 1 หน่วย)
             const damage = new Damage(player, target, 1);
+            // สร้าง Context ตรวจสอบการถูกโจมตีด้วย Slash
+            const context = {
+                source: player, 
+                target: target, 
+                card: this, 
+                canceled: false
+            };
+            // ส่ง Event ก่อนการโจมตีโดนเป้าหมาย
+            game.eventManager.emit("beforeSlashHit", context);
+            // หากมีการยกเลิกการโจมตี
+            if (context.canceled){
+                game.log(target.name + " ป้องกันการโจมตี");
+                return true;
+            }
             // บันทึกว่าดาเมจนี้เกิดจากการ์ดใบไหน
             damage.card = this;
             // ส่งออบเจกต์ความเสียหายให้ Game เป็นศูนย์กลางประมวลผล
