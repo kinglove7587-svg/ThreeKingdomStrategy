@@ -1,8 +1,8 @@
-class LeBuSiShuCard extends Card{
+class LeBuSiShuCard extends DelayedTrickCard{
     // กำหนด constructor รับค่าดอก (suit) และตัวเลข (number) ของไพ่
     constructor(suit, number){
         // เรียก constructor ของคลาสแม่ (Card) โดยระบุประเภทเป็น "DelayedTrick" และชื่อการ์ดเป็น "สุราลืมกลับ"
-        super("DelayedTrick", "สุราลืมกลับ", suit, number);
+        super("สุราลืมกลับ", suit, number);
     }
     // ตรวจสอบว่าสามารถเลือกผู้เล่นเป้าหมายได้หรือไม่ (ใช้ใส่ตัวเองไม่ได้)
     canTarget(player, target){
@@ -27,7 +27,7 @@ class LeBuSiShuCard extends Card{
         // นำการ์ดสุราลืมกลับไปแปะไว้ในโซน delayedTricks หน้าตัวละครของเป้าหมาย
         target.addDelayedTrick(this);
         //
-        target.showDelayedTricks();
+        target.showDelayedTrick();
         // แสดงข้อความในระบบ Log ของเกมว่าใครใช้สุราลืมกลับใส่ใคร
         game.log(player.name + " ใช้ สุราลืมกลับ ใส่ " + target.name);
         // คืนค่า true เพื่อยืนยันว่าใช้การ์ดสำเร็จ
@@ -36,5 +36,32 @@ class LeBuSiShuCard extends Card{
     // แจ้งระบบ UI/Controller ว่าการ์ดใบนี้จำเป็นต้องคลิกเลือกเป้าหมายก่อนใช้งาน
     needTarget(){
         return true;
+    }
+    // ประมวลผลการเสี่ยงทาย (Judge) ของการ์ดสุราลืมกลับ
+    onJudge(player){
+        console.log(player.name + " เริ่ม Judge สุราลืมกลับ");
+        // จั่วการ์ดใบใบบนสุดจากกองเพื่อใช้พิพากษา
+        const judgeCard = player.game.deck.drawTopCard();
+        // ถ้ากองไพ่หมด ให้ยกเลิกการทำงาน
+        if (!judgeCard){
+            return;
+        }
+        // แสดงผลดอกไพ่และตัวเลขของการ์ดที่ใช้เสี่ยงทาย
+        console.log("Judge :", judgeCard.suit, judgeCard.number);
+        // ถ้าผลเสี่ยงทายไม่ใช่ดอกหัวใจ (♥) ให้ติดสถานะข้าม Play Phase
+        if (judgeCard.suit !== "♥️"){
+            console.log(player.name + " ถูกสุราลืมกลับ");
+            player.skipPlay();
+        }
+        // ทิ้งไพ่ที่ใช้ Judge ลงกองทิ้ง
+        player.game.discardPile.addCard(judgeCard);
+        // ถอดการ์ดสุราลืมกลับออกจากตัวละคร
+        player.removeDelayedTrick(this);
+        // ส่งการ์ดสุราลืมกลับลงกองทิ้ง
+        player.game.discardPile.addCard(this);
+        // แสดงรายการ Delayed Trick ที่เหลืออยู่
+        player.showDelayedTrick();
+        // แสดงรายการไพ่ในกองทิ้ง
+        player.game.showDiscardPile();
     }
 }

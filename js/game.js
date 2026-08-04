@@ -139,8 +139,6 @@ class Game {
         this.ui.addLog("=============");
         this.ui.addLog(player.name + " Turn ");
         this.ui.addLog("=============");
-        // เริ่มช่วงเสี่ยงทาย (Judge Phase) ก่อนเข้าสู่ Phase อื่นๆ
-        player.startJudgePhase();
         this.startPhase(player); // เริ่ม phase ต่างๆ
     }
 
@@ -154,9 +152,11 @@ class Game {
         // ส่งต่อการทำงานไปยังช่วงเช็กดวง/คำนวณผล (Judge Phase) เป็นลำดับถัดไป
         this.judgePhase(player); // ส่งต่อเฟส
     }
-
-    judgePhase(player){ // เฟสดักจับ กับดัก
+    // ช่วงเสี่ยงทาย (Judge Phase) ของผู้เล่น
+    judgePhase(player){ 
         this.ui.addLog("Judge Phase");
+        // ประมวลผลการ์ดหน่วงเวลา (Delayed Trick) ทั้งหมดของผู้เล่น
+        player.startJudgePhase();
         // ส่ง Event "onJudgePhase" ผ่าน eventManager ไปยังผู้เล่นเป้าหมาย player เพื่อเรียกใช้สกิลช่วง Judge Phase
         this.eventManager.emitToPlayer("onJudgePhase", player);
         // 
@@ -171,8 +171,17 @@ class Game {
         this.ui.render();
         this.playPhase(player); // ส่งต่เฟส
     }
-
-    playPhase(player){ // เฟส Action
+    // เฟส Action ( Play Phase )
+    playPhase(player){ 
+        // เช็กสถานะข้าม Play Phase (เช่น ผลจากการ์ดสุราลืมกลับ)
+        if (player.skipPlayPhase){
+            this.ui.addLog(player.name + " ถูกสุราลืมกลับ ข้าม Play Phase");
+            // รีเซ็ต Flag ให้มีผลแค่เทิร์นนี้
+            player.resetPhaseFlag();
+            // ข้ามไป Discard Phase ทันที
+            this.discardPhase(player);
+            return;
+        }
         this.ui.addLog("Play Phase");
         // ส่ง Event "onPlayPhase" ผ่าน eventManager ไปยังผู้เล่นเป้าหมาย เพื่อเปิดใช้งานสกิลช่วง Play Phase
         this.eventManager.emitToPlayer("onPlayPhase", player);

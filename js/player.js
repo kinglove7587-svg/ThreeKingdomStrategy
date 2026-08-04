@@ -12,7 +12,8 @@ class Player{
         this.weapon = null; // อาวุธ
         this.armor = null; // เกราะ
         this.infiniteSlash = false;
-        this.delayedTricks = [];
+        this.delayedTricks = []; // เก็บการ์ดหน่วงเวลาที่ติดอยู่
+        this.skipPlayPhase = false; // Flag สำหรับข้าม Play Phase เมื่อติดผลสุราลืมกลับ
     }
 
     drawCard(deck){ // player จั่วกองไพ่
@@ -214,7 +215,7 @@ class Player{
         }
     }
     // Debug 
-    showDelayedTricks(){
+    showDelayedTrick(){
         console.table(this.delayedTricks);
     }
     // เริ่มช่วงเสี่ยงทาย (Judge Phase) ประมวลผลการ์ดหน่วงเวลา
@@ -222,6 +223,23 @@ class Player{
         // วนลูปสั่งรันการ์ด Delayed Trick ทุกใบที่ติดอยู่หน้าตัวละคร
         for (const card of this.delayedTricks){
             card.onJudge(this);
+        }
+    }
+    // สั่งให้ผู้เล่นข้าม Play Phase ในเทิร์นนี้
+    skipPlay(){
+        this.skipPlayPhase = true;
+    }
+    // รีเซ็ต Flag การข้าม Phase ให้กลับเป็น false
+    resetPhaseFlag(){
+        this.skipPlayPhase = false;
+    }
+    // ลบการ์ด Delayed Trick ออกจากโซนตัวละคร
+    removeDelayedTrick(card){
+        // ค้นหาตำแหน่ง Index ของการ์ดที่ต้องการลบ
+        const index = this.delayedTricks.indexOf(card);
+        // ถ้าพบการ์ดในอาร์เรย์ ให้ลบการ์ดใบนั้นออก
+        if (index !== -1){
+            this.delayedTricks.splice(index, 1);
         }
     }
 }
