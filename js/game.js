@@ -300,6 +300,11 @@ class Game {
     damage(damage){
         // ส่ง Event แจ้งเตือนก่อนเกิดความเสียหาย เพื่อเปิดโอกาสให้เกราะหรือสกิลเข้ามาแก้ไขค่า Damage หรือยกเลิกได้
         this.eventManager.emit("beforeDamage", damage);
+        // หากความเสียหายถูกยกเลิก ให้ลง Log และจบการทำงานทันที
+        if (damage.canceled){
+            this.log("ความเสียหายถูกยกเลิก");
+            return;
+        }
         // ตรวจสอบ source หากไม่มีผู้สร้างความเสียหาย (เช่น สายฟ้า) ให้ใช้ชื่อ "สายฟ้า" แทน เพื่อป้องกัน Error
         const sourceName = damage.source ? damage.source.name : "สายฟ้า";
         // กำหนดชื่อประเภทความเสียหายภาษาไทย
