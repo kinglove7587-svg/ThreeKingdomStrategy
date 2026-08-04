@@ -7,6 +7,6 @@ class LiuBei extends Player{ // เล่าปี่
         this.maxHp = 4;
         this.hp = 4;
         // เรียกใช้ addSkill() เพื่อเพิ่มสกิลและลงทะเบียน Event สกิลจิตเมตตา (Rende) อัตโนมัติ
-        this.addSkill(new Rende());
+        //this.addSkill(new Rende());
     }
 }

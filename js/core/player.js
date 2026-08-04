@@ -49,7 +49,7 @@ class Player{
             this.hp = 0;
         }
 
-        console.log(this.name + "  เสีย HP " + amount); // แสดง ข้อความ HP ที่เสียไป
+        game.log(this.name + "  เสีย HP " + amount);
         this.showStatus(); // แสดง HP ล่าสุด
         // ถ้าผู้เล่น hp เหลือ 0 แสดง ชื่อ ผู้เล่น ว่า ตาย
         if (this.hp === 0){
@@ -225,5 +225,14 @@ class Player{
     // รีเซ็ต Flag การข้าม Phase ให้กลับเป็น false
     resetPhaseFlag(){
         this.skipPlayPhase = false;
+    }
+    // เปิดเผยการ์ดในมือ 1 ใบตามตำแหน่ง Index (เริ่มต้นที่ตำแหน่งแรก index 0)
+    revealHandCard(index = 0){
+        // หากไม่มีการ์ดในมือ ให้คืนค่า null
+        if (this.hand.cards.length === 0){
+            return null;
+        }
+        // คืนค่าออบเจกต์การ์ดในมือตามตำแหน่งที่ระบุ
+        return this.hand.cards[index];
     }
 }

@@ -14,6 +14,7 @@ class Deck {
             this.cards.push(new EightTrigramsArmor("♣️", 2)); // เพิ่มเกราะแปดทิศ
             this.cards.push(new LeBuSiShuCard("♠️", 6)); // เพิ่มการ์ดหน่วงเวลา สุราลืมกลับ
             this.cards.push(new LightningCard("♠️", 2)); // เพิ่มการ์ดหน่วงเวลา สายฟ้า
+            this.cards.push(new FireAttackCard("♥️", 8)); // เพิ่มการ์ดกลอุบาย เพลิงผลาญ
         }
     }
     // สับไพ่

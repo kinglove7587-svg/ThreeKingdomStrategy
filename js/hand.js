@@ -30,4 +30,28 @@ class Hand{
         }
         return this.cards.splice(index, 1)[0]; // ลบแล้วคืนการ์ด
     }
+    // คืนค่าออบเจกต์การ์ดใบแรกที่มีดอก (Suit) ตรงกับที่ระบุ
+    findCardBySuit(suit){
+        // วนลูปตรวจการ์ดทุกใบในมือ
+        for (const card of this.cards){
+            // ถ้าพบการ์ดที่มีดอกตรงกัน ให้ส่งคืนการ์ดนั้นทันที
+            if (card.suit === suit){
+                return card;
+            }
+        }
+        // หากไม่พบการ์ดดอกที่ต้องการ ให้คืนค่า null
+        return null;
+    }
+    // คืนค่า Index (ตำแหน่ง) ของการ์ดใบแรกที่มีดอก (Suit) ตรงกับที่ระบุ
+    findCardIndexBySuit(suit){
+        // วนลูปตามจำนวนการ์ดในมือ
+        for (let i = 0; i < this.cards.length; i++){
+            // ถ้าพบการ์ดที่มีดอกตรงกัน ให้ส่งคืนตำแหน่ง Index นั้น
+            if (this.cards[i].suit === suit){
+                return i;
+            }
+        }
+        // หากไม่พบการ์ดดอกที่ต้องการ ให้คืนค่า -1
+        return -1;
+    }
 }
