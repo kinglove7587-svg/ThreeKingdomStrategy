@@ -1,8 +1,5 @@
-class DamageType{
-    // ความเสียหายประเภทปกติ (เช่น การฟัน Slash ทั่วไป)
-    static NORMAL = "normal";
-    // ความเสียหายประเภทไฟ (เช่น เพลิงเผา, การ์ด Slash ธาตุไฟ)
-    static FIRE = "fire";
-    // ความเสียหายประเภทสายฟ้า (เช่น การ์ดสายฟ้า Lightning)
-    static THUNDER = "thunder";
-}
+class DamageType{}
+// กำหนดประเภทความเสียหายแบบคงที่ (Static Constants)
+DamageType.NORMAL = "normal"; // ความเสียหายปกติ
+DamageType.FIRE = "fire"; // ความเสียหายธาตุไฟ
+DamageType.THUNDER = "thunder"; // ความเสียหายธาตุสายฟ้า

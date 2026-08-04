@@ -112,6 +112,19 @@ class Game {
 
         return this.players[index]; // ส่งผู้เล่นในลำดับกลับ
     }
+    // คืนผู้เล่นคนถัดไปโดยอ้างอิงจากผู้เล่นที่ส่งเข้ามา (player)
+    getNextPlayerOf(player){
+        // หาตำแหน่ง Index ของผู้เล่นในอาร์เรย์ this.players
+        const index = this.players.indexOf(player);
+        // ถ้าหาไม่เจอ ให้ส่งค่า null
+        if (index === -1){
+            return null;
+        }
+        // คำนวณ Index คนถัดไป (ใช้วนรอบกลับไป 0 เมื่อถึงคนสุดท้าย)
+        const nextIndex = (index + 1) % this.players.length;
+        // ส่งผู้เล่นคนถัดไปกลับออกไป
+        return this.players[nextIndex];
+    }
     // คืนค่าระยะห่างระหว่างผู้เล่น 2 คน บนโต๊ะแบบวงกลม
     getDistance(fromPlayer, toPlayer){
         // หาตำแหน่งของผู้เล่นต้นทางในอาร์เรย์ผู้เล่น
@@ -287,9 +300,22 @@ class Game {
     damage(damage){
         // ส่ง Event แจ้งเตือนก่อนเกิดความเสียหาย เพื่อเปิดโอกาสให้เกราะหรือสกิลเข้ามาแก้ไขค่า Damage หรือยกเลิกได้
         this.eventManager.emit("beforeDamage", damage);
-        // แสดง Log การทำความเสียหายออกทาง Console เพื่อตรวจสอบ
-        console.log(damage.source.name + " ทำความเสียหาย " + 
-            damage.amount + " ให้ " + damage.target.name);
+        // ตรวจสอบ source หากไม่มีผู้สร้างความเสียหาย (เช่น สายฟ้า) ให้ใช้ชื่อ "สายฟ้า" แทน เพื่อป้องกัน Error
+        const sourceName = damage.source ? damage.source.name : "สายฟ้า";
+        // กำหนดชื่อประเภทความเสียหายภาษาไทย
+        let damageName = "";
+        // แปลงประเภท Damage เป็นข้อความ
+        switch(damage.type){
+            case DamageType.FIRE: damageName = "ไฟ";
+            break;
+            case DamageType.THUNDER: damageName = "สายฟ้า";
+            break;
+            default: damageName = "ปกติ";
+        }
+        // แสดง Log ผลความเสียหาย
+        this.log(sourceName + " ทำความเสียหาย " + damageName + " " +
+            damage.amount +  " ให้ " + damage.target.name
+        );
         // เช็กว่ามีความเสียหายที่เกิดจากการ์ดหรือไม่ ถ้ามีให้แสดงชื่อการ์ดที่เป็นต้นเหตุ
         if (damage.card){
             console.log("Damage Card :", damage.card.name);
@@ -356,4 +382,5 @@ class Game {
     getSelectedTarget(){
         return this.selectedTarget;
     }
+    //
 }

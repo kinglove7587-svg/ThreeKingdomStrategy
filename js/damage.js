@@ -1,17 +1,14 @@
 class Damage{
     // ตัวสร้างออบเจกต์เก็บข้อมูลความเสียหาย (Data Object)
     constructor(source, target, amount, type = DamageType.NORMAL){
-        // ผู้สร้างความเสียหาย (Player ฝั่งโจมตี)
-        this.source = source;
-        // ผู้ได้รับความเสียหาย (Player ฝั่งรับ)
-        this.target = target;
-        // จำนวนความเสียหาย (หน่วย HP ที่ต้องลด)
-        this.amount = amount;
-        // ประเภทความเสียหาย (เช่น DamageType.NORMAL, DamageType.FIRE, DamageType.THUNDER)
-        this.type = type;
-        // การ์ดที่เป็นต้นเหตุของความเสียหาย (เช่น SlashCard, FireAttackCard)
-        this.card = null;
-        // สถานะการถูกยกเลิกดาเมจ (ถ้า true จะไม่ลด HP)
-        this.canceled = false;
+        this.source = source; // ผู้สร้างความเสียหาย (Player หรือ null)
+        this.target = target; // เป้าหมายที่รับความเสียหาย
+        this.amount = amount; // จำนวนความเสียหาย
+        this.type = type; // ประเภทความเสียหาย (NORMAL, THUNDER, FIRE)
+        this.card = null; // การ์ดที่เป็นต้นเหตุความเสียหาย
+        this.canceled = false; // สถานะการถูกยกเลิกความเสียหาย
+        this.ignoreArmor = false; // ข้ามการคำนวณเกราะป้องกัน
+        this.chain = false; // สามารถส่งต่อความเสียหายผ่านโซ่เหล็ก
+        this.isEffectDamage = false; // เกิดจากเอฟเฟกต์/เสี่ยงทาย ไม่ใช่การโจมตีปกติ
     }
 }
