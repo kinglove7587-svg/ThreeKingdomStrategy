@@ -354,4 +354,20 @@ class Game {
     getSelectedTarget(){
         return this.selectedTarget;
     }
+    // ระบบกลางสำหรับการเสี่ยงทาย (Judge Phase)
+    judge(player){
+        // จั่วการ์ดใบบนสุดจากกองเพื่อใช้เสี่ยงทาย
+        const judgeCard = this.deck.drawTopCard();
+        // ถ้ากองไพ่หมด ให้คืนค่า false
+        if (!judgeCard){
+            return false;
+        }
+        this.log("Judge : " + judgeCard.suit + " " + judgeCard.number);
+        // ส่งการ์ดเสี่ยงทายลงกองทิ้ง
+        this.discardPile.addCard(judgeCard);
+        // แสดงรายการไพ่ในกองทิ้ง
+        this.showDiscardPile();
+        // คืนค่าออบเจกต์ JudgeResult เพื่อนำไปเช็กผลลัพธ์ต่อ
+        return new JudgeResult(judgeCard);
+    }
 }
