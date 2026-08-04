@@ -1,6 +1,8 @@
 class SlashCard extends Card { // SlashCard สืบทอดจาก Card
-    constructor(suit, number){
-        super("Basic", "ฆ่า", suit, number); // เรียก constructor ของ Card
+    //
+    constructor(suit, number, damageType = DamageType.NORMAL){
+        super("Basic", "ฆ่า", suit, number); 
+        this.damageType = damageType; // กำหนดประเภทความเสียหายของการ์ดฆ่า
     }
     // Override ความสามารถของการ์ด
     use(player, game){ 
@@ -34,7 +36,8 @@ class SlashCard extends Card { // SlashCard สืบทอดจาก Card
             target: target, 
             dodge: false
         };
-        console.log(player.name + " ใช้การ์ดฆ่า " + target.name); // แสดงผู้โจมตี
+        // แสดงชื่อตามประเภทการ์ด เช่น ฆ่า / ฆ่าไฟ / ฆ่าสายฟ้า
+        game.log(player.name + " ใช้การ์ด " + this.getDisplayName() + " ใส่ " + target.name); 
         // เปิดโอกาสให้สกิลต่างๆ แทรกการทำงานก่อนตรวจสอบการ์ดหลบ
         game.eventManager.emit("beforeDodge", dodgeContext);
         // ตรวจสอบเงื่อนไขการหลบจากสกิลก่อนเป็นอันดับแรก
@@ -49,8 +52,6 @@ class SlashCard extends Card { // SlashCard สืบทอดจาก Card
             game.showDiscardPile(); // อัปเดตกองทิ้ง
         }else{
             console.log(target.name + " ไม่มีการ์ดหลบ "); // แจ้งว่าหลบไม่ได้
-            // สร้างออบเจกต์เก็บข้อมูลความเสียหาย (ระบุผู้ใช้, เป้าหมาย, และจำนวนดาเมจ 1 หน่วย)
-            const damage = new Damage(player, target, 1);
             // สร้าง Context ตรวจสอบการถูกโจมตีด้วย Slash
             const context = {
                 source: player, 
@@ -65,6 +66,8 @@ class SlashCard extends Card { // SlashCard สืบทอดจาก Card
                 game.log(target.name + " ป้องกันการโจมตี");
                 return true;
             }
+            // สร้างออบเจกต์เก็บข้อมูลความเสียหาย
+            const damage = new Damage(player, target, 1, this.damageType);
             // บันทึกว่าดาเมจนี้เกิดจากการ์ดใบไหน
             damage.card = this;
             // ส่งออบเจกต์ความเสียหายให้ Game เป็นศูนย์กลางประมวลผล
@@ -89,5 +92,20 @@ class SlashCard extends Card { // SlashCard สืบทอดจาก Card
             return false;
         }
         return true;
+    }
+    // คืนค่าชื่อการ์ดสำหรับแสดงผล ตามประเภทความเสียหาย
+    getDisplayName(){
+        // ตรวจสอบประเภทความเสียหายของการ์ด
+        switch(this.damageType){
+            // กรณีเป็นความเสียหายธาตุไฟ
+            case DamageType.FIRE:
+                return "ฆ่าไฟ";
+            // กรณีเป็นความเสียหายธาตุสายฟ้า
+            case DamageType.THUNDER:
+                return "ฆ่าสายฟ้า";
+            // กรณีความเสียหายปกติ (Default)
+            default:
+                return "ฆ่า";
+        }
     }
 }

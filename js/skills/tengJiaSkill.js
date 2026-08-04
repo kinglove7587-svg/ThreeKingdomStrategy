@@ -31,6 +31,10 @@ class TengJiaSkill extends TriggerSkill{
             if (!(context.card instanceof SlashCard)){
                 return;
             }
+            // ตรวจสอบว่าเป็นความเสียหายปกติหรือไม่ (ถ้าเป็น Fire Slash / Thunder Slash ให้ข้ามไป)
+            if (context.card.damageType !== DamageType.NORMAL){
+                return;
+            }
             // ยกเลิกการถูกโจมตีด้วยการ์ดฆ่าธรรมดา
             context.canceled = true;
             player.game.log(player.name + " เกราะหวายป้องกันการ์ดฆ่า");
