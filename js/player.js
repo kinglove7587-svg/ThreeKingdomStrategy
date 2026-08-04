@@ -30,19 +30,12 @@ class Player{
     }
 
     takeDamage(amount){
-        this.hp -= amount;
-
-        if (this.hp < 0){
-            this.hp = 0;
-        }
+        //
+        this.loseHp(amount);
     }
 
     heal(amount){ // ฟื้นฟู HP
-        this.hp += amount;
-
-        if (this.hp > this.maxHp){
-            this.hp = this.maxHp;
-        }
+        this.recoverHp(amount);
     }
 
     showStatus(){ // แสดงสถานะผู้เล่น
@@ -232,14 +225,5 @@ class Player{
     // รีเซ็ต Flag การข้าม Phase ให้กลับเป็น false
     resetPhaseFlag(){
         this.skipPlayPhase = false;
-    }
-    // ลบการ์ด Delayed Trick ออกจากโซนตัวละคร
-    removeDelayedTrick(card){
-        // ค้นหาตำแหน่ง Index ของการ์ดที่ต้องการลบ
-        const index = this.delayedTricks.indexOf(card);
-        // ถ้าพบการ์ดในอาร์เรย์ ให้ลบการ์ดใบนั้นออก
-        if (index !== -1){
-            this.delayedTricks.splice(index, 1);
-        }
     }
 }

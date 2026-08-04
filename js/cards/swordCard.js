@@ -3,11 +3,4 @@ class SwordCard extends WeaponCard{
     constructor(suit, number){
         super("ดาบ", suit, number, 2);
     }
-    // ใช้งานการ์ดดาบ
-    use(player, game){
-        // สวมใส่อาวุธดาบใบนี้ให้กับผู้เล่น
-        player.equipWeapon(this);
-        console.log(player.name + " สวม " + this.name);
-        return true;
-    }
 }

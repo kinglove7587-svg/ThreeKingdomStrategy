@@ -298,24 +298,21 @@ class Game {
         // ส่ง Event แจ้งเตือนหลังเกิดความเสียหาย เพื่อเปิดโอกาสให้สกิลที่ทำงานหลังโดนดาเมจ (เช่น สกิลดูดเลือด/โต้กลับ) ทำงาน
         this.eventManager.emit("afterDamage", damage);
     }
-    // ประมวลผลระบบ Judge (เปิดไพ่ตัดสิน) โดยรับฟังก์ชันเช็กเงื่อนไขผ่าน checkFunction
-    judge(checkFunction){
-        // จั่วไพ่ใบบนสุดออกจากกอง deck
-        const card = this.deck.drawTopCard();
-        // ป้องกันกรณีกองไพ่หมด
-        if (!card){
+    // ระบบกลางสำหรับการเสี่ยงทาย (Judge Phase)
+    judge(player){
+        // จั่วการ์ดใบบนสุดจากกองเพื่อใช้เสี่ยงทาย
+        const judgeCard = this.deck.draw();
+        // ถ้ากองไพ่หมด ให้คืนค่า false
+        if (!judgeCard){
             return false;
         }
-        // แสดงผลการเปิดไพ่ Judge ลงใน Log ของเกม
-        this.log("Judge : " + card.suit + " " + card.number);
-        // ส่งไพ่ใบนี้ไปให้ checkFunction ตรวจสอบเงื่อนไข แล้วรับผลลัพธ์ (true/false)
-        const result = checkFunction(card);
-        // นำไพ่ที่ Judge เสร็จแล้วย้ายลงกองทิ้ง
-        this.discardPile.addCard(card);
-        // อัปเดตแสดงผลกองทิ้งบน UI
+        this.log("Judge : " + judgeCard.suit + " " + judgeCard.number);
+        // ส่งการ์ดเสี่ยงทายลงกองทิ้ง
+        this.discardPile.addCard(judgeCard);
+        // แสดงรายการไพ่ในกองทิ้ง
         this.showDiscardPile();
-        // คืนผลลัพธ์ว่าผ่านเงื่อนไขหรือไม่
-        return result;
+        // คืนค่าออบเจกต์ JudgeResult เพื่อนำไปเช็กผลลัพธ์ต่อ
+        return new JudgeResult(judgeCard);
     }
     // เมธอดสำหรับจบเทิร์น และส่งต่อผู้เล่นปัจจุบันเข้าสู่เฟสทิ้งการ์ด
     finishTurn(){
@@ -357,21 +354,5 @@ class Game {
     // ดึงข้อมูลผู้เล่นเป้าหมายที่ถูกเลือกอยู่ในปัจจุบัน
     getSelectedTarget(){
         return this.selectedTarget;
-    }
-    // ระบบกลางสำหรับการเสี่ยงทาย (Judge Phase)
-    judge(player){
-        // จั่วการ์ดใบบนสุดจากกองเพื่อใช้เสี่ยงทาย
-        const judgeCard = this.deck.drawTopCard();
-        // ถ้ากองไพ่หมด ให้คืนค่า false
-        if (!judgeCard){
-            return false;
-        }
-        this.log("Judge : " + judgeCard.suit + " " + judgeCard.number);
-        // ส่งการ์ดเสี่ยงทายลงกองทิ้ง
-        this.discardPile.addCard(judgeCard);
-        // แสดงรายการไพ่ในกองทิ้ง
-        this.showDiscardPile();
-        // คืนค่าออบเจกต์ JudgeResult เพื่อนำไปเช็กผลลัพธ์ต่อ
-        return new JudgeResult(judgeCard);
     }
 }

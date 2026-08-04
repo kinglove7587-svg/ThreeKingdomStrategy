@@ -7,7 +7,7 @@ class Deck {
     initDeck() { // เพิ่มไพ่ลง Deck
         for (let i = 0; i <= 4; i++){ // วนลูป การ์ด 3 ใบ 4 รอบ
             this.cards.push(new SlashCard("♠️", 1)); // เพิ่มการ์ดฆ่า
-            //this.cards.push(new Card("Basic", "หลบ", "♥️", 2));
+            this.cards.push(new Card("Basic", "หลบ", "♥️", 2));
             this.cards.push(new PeachCard("♣️", 3)); // เพิ่มการ์ดยา
             this.cards.push(new TrainingSword("♦️", 5));
             this.cards.push(new CrossbowCard("♠️", 2));
@@ -32,14 +32,5 @@ class Deck {
             return null;
         }
         return this.cards.pop(); // ถ้ามี นำใบบนสุด ให้ผู้เล่น
-    }
-    // จั่วการ์ดใบบนสุดออกจากกองไพ่
-    drawTopCard(){
-        // หากไม่มีการ์ดเหลือในกอง ให้คืนค่า null
-        if (this.cards.length === 0){
-            return null;
-        }
-        // ดึงและคืนค่าการ์ดใบบนสุด (ท้ายอาร์เรย์) ออกจากกอง
-        return this.cards.pop();
     }
 }
