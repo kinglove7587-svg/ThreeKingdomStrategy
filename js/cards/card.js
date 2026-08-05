@@ -22,4 +22,8 @@ class Card {
     shouldDiscard(){
         return true;
     }
+    //
+    canRecast(){
+        return false;
+    }
 }

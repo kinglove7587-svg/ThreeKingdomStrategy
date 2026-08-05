@@ -387,5 +387,12 @@ class Game {
     getSelectedTarget(){
         return this.selectedTarget;
     }
-    //
+    // ประมวลผลการ Recast (หลอมไพ่ใหม่): ทิ้งการ์ดลงกองทิ้ง แล้วให้ผู้เล่นจั่วไพ่ใหม่ 1 ใบ
+    recast(player, card){
+        this.log(player.name + " Recast " + card.name + "  แล้วจั่ว 1 ใบ");
+        // นำการ์ดส่งลงกองทิ้ง (discardPile)
+        this.discardPile.addCard(card);
+        // ให้ผู้เล่นจั่วการ์ดใหม่ขึ้นมือ 1 ใบ
+        player.drawCard(this.deck);
+    }
 }

@@ -27,4 +27,8 @@ class IronChainCard extends TrickCard{
         // ทำงานสำเร็จ คืนค่า true
         return true;
     }
+    //
+    canRecast(){
+        return true;
+    }
 }
