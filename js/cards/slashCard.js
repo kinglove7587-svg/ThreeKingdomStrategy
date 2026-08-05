@@ -17,7 +17,7 @@ class SlashCard extends Card { // SlashCard สืบทอดจาก Card
         // ตรวจสอบสิทธิ์การใช้งานจาก context.allow
         if (!context.allow){
             // หากใช้ไปแล้ว ให้แสดงข้อความแจ้งเตือนใน Console
-            console.log(player.name + " ใช้ฆ่าไปแล้ว ");
+            game.log(player.name + " ใช้ฆ่าไปแล้ว ");
             // ไม่อนุญาตให้ใช้งานการ์ด ส่งค่า false กลับออกไป
             return false;
         }

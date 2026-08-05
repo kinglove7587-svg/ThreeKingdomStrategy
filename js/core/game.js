@@ -28,6 +28,8 @@ class Game {
         this.selectedCardIndex = -1;
         // กำหนดค่าเริ่มต้นของผู้เล่นเป้าหมาย ให้เป็น null (ยังไม่ได้เลือกเป้าหมาย)
         this.selectedTarget = null;
+        this.chainDamageListener = new ChainDamageListener(); // สร้าง Listener สำหรับความเสียหายโซ่ตรวน
+        this.chainDamageListener.register(this.eventManager); // ผูก chainDamageListener เข้ากับ EventManager
     }
 
     dealInitialCards(cardCount = 2){ // แจกไพ่ให้ผู้เล่น
