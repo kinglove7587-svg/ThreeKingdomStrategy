@@ -66,17 +66,11 @@ class Game {
             );
             return false;
         }
+        //
+        this.log(player.name + " ใช้ " + card.name);
 
         const success = card.use(player, this); // ใช้การ์ดว่าสำเร็จหรือไม่
-        // ตรวจสอบว่าผู้เล่นใช้งานการ์ดใบนั้นสำเร็จหรือไม่
-        if (success){
-            this.ui.addLog(
-                player.name + 
-                " ใช้ " + 
-                card.name
-            );
-        }
-        
+        //
         if (!success){
             player.hand.addCard(card); // คืนการ์ดกลับเข้ามือ
             return false;

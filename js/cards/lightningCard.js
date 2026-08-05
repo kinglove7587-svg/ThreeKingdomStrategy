@@ -21,7 +21,7 @@ class LightningCard extends DelayedTrickCard{
         target.addDelayedTrick(this);
         // แสดงรายการการ์ดหน่วงเวลาทั้งหมดที่ติดอยู่หน้าตัวละคร
         target.showDelayedTrick();
-        game.log(player.name + " วางสายฟ้า");
+        game.log("→ เป้าหมาย : " + target.name);
         // คืนค่า true แสดงว่าใช้งานการ์ดสำเร็จ
         return true;
     }

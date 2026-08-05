@@ -29,7 +29,7 @@ class LeBuSiShuCard extends DelayedTrickCard{
         //
         target.showDelayedTrick();
         // แสดงข้อความในระบบ Log ของเกมว่าใครใช้สุราลืมกลับใส่ใคร
-        game.log(player.name + " ใช้ สุราลืมกลับ ใส่ " + target.name);
+        game.log("→ เป้าหมาย : " + target.name);
         // คืนค่า true เพื่อยืนยันว่าใช้การ์ดสำเร็จ
         return true;
     }

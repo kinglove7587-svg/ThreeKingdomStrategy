@@ -21,7 +21,7 @@ class IronChainCard extends TrickCard{
         if(!target){
             return false;
         }
-        game.log(player.name + " ใช้ โซ่ตรวน ใส่ " + target.name);
+        game.log("→ เป้าหมาย : " + target.name);
         // สลับสถานะติดโซ่ตรวนของผู้เล่นเป้าหมาย
         target.toggleChain();
         // ทำงานสำเร็จ คืนค่า true

@@ -30,7 +30,7 @@ class FireAttackCard extends TrickCard{
         if (!target){
             return false;
         }
-        game.log(player.name + " ใช้ เพลิงผลาญ ใส่ " + target.name);
+        game.log("→ เป้าหมาย : " + target.name);
         // ให้เป้าหมายเปิดเผยการ์ดบนมือ 1 ใบ
         const revealCard = target.revealHandCard();
         // หากไม่มีการ์ดเปิดเผย (เช่น ไพ่ในมือเป้าหมายหมด) ให้ยกเลิกการทำงาน

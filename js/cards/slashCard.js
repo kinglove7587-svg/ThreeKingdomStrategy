@@ -37,7 +37,7 @@ class SlashCard extends Card { // SlashCard สืบทอดจาก Card
             dodge: false
         };
         // แสดงชื่อตามประเภทการ์ด เช่น ฆ่า / ฆ่าไฟ / ฆ่าสายฟ้า
-        game.log(player.name + " ใช้ " + this.getName() + " ใส่ " + target.name); 
+        game.log("→ เป้าหมาย : " + target.name); 
         // เปิดโอกาสให้สกิลต่างๆ แทรกการทำงานก่อนตรวจสอบการ์ดหลบ
         game.eventManager.emit("beforeDodge", dodgeContext);
         // ตรวจสอบเงื่อนไขการหลบจากสกิลก่อนเป็นอันดับแรก
