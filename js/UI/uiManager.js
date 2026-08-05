@@ -68,6 +68,11 @@ class UIManager{
             div.onclick = () => {
                 this.onPlayerClick(player);
             };
+            // กำหนดสถานะโซ่ตรวน
+            let status = "";
+            if(player.isChained()){
+                status += "<br>⛓";
+            }
             // กำหนดข้อความ HTML ภายใน div ให้แสดงชื่อ (ตัวหนา) และ พลังชีวิต HP
             div.innerHTML = 
                 "<b>" + 
@@ -76,7 +81,7 @@ class UIManager{
                 "HP : " +
                 player.hp + 
                 "/" + 
-                player.maxHp;
+                player.maxHp + status;
             // เช็กว่าถ้าเป็นผู้เล่นคนแรก (index 0) ให้ถือว่าเป็นฝั่งเรา
             if (i === 0){
                 // นำ element ไปแสดงในโซน playerArea

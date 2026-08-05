@@ -7,6 +7,8 @@ class Deck {
     initDeck() { // เพิ่มไพ่ลง Deck
         for (let i = 0; i <= 4; i++){ // วนลูป การ์ด 3 ใบ 4 รอบ
             this.cards.push(new SlashCard("♠️", 1)); // เพิ่มการ์ดฆ่า
+            this.cards.push(new SlashCard("♥️", 7, DamageType.FIRE)); // การ์ดฆ่าไฟ
+            this.cards.push(new SlashCard("♠️", 12, DamageType.THUNDER)); // การ์ดฆ่าสายไฟ
             this.cards.push(new Card("Basic", "หลบ", "♥️", 2)); // เพิ่มการ์ดหลบ
             this.cards.push(new PeachCard("♣️", 3)); // เพิ่มการ์ดยา
             this.cards.push(new TrainingSword("♦️", 5)); // เพิ่มอาวุธ กระบี่ฝึกหัด
@@ -16,6 +18,7 @@ class Deck {
             this.cards.push(new LightningCard("♠️", 2)); // เพิ่มการ์ดหน่วงเวลา สายฟ้า
             this.cards.push(new FireAttackCard("♥️", 8)); // เพิ่มการ์ดกลอุบาย เพลิงผลาญ
             this.cards.push(new TengJiaArmor("♣️", 7)); // เพิ่มอุปกรณ์เกราะ เกราะหวาย
+            this.cards.push(new IronChainCard("♣️"), 12); // การ์ดโซ่ตรวน
         }
     }
     // สับไพ่

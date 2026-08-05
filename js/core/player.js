@@ -14,6 +14,7 @@ class Player{
         this.infiniteSlash = false;
         this.delayedTricks = []; // เก็บการ์ดหน่วงเวลาที่ติดอยู่
         this.skipPlayPhase = false; // Flag สำหรับข้าม Play Phase เมื่อติดผลสุราลืมกลับ
+        this.chained = false; // สถานะติดโซ่ตรวน (Iron Chain)
     }
 
     drawCard(deck){ // player จั่วกองไพ่
@@ -238,5 +239,24 @@ class Player{
         console.log(this.name + " เปิดไพ่ลำดับ " + index);
         // คืนค่าออบเจกต์การ์ดในมือตามตำแหน่งที่ระบุ
         return this.hand.cards[index];
+    }
+    // ตรวจสอบว่าผู้เล่นกำลังติดสถานะโซ่ตรวน (Iron Chain) อยู่หรือไม่
+    isChained(){
+        return this.chained;
+    }
+    // กำหนดสถานะติดโซ่ตรวนของผู้เล่นโดยตรง (true = ติดโซ่, false = หลุดจากโซ่)
+    setChained(value){
+        this.chained = value;
+    }
+    // สลับสถานะติดโซ่ตรวนของผู้เล่น (ถ้าติดอยู่จะหลุด / ถ้ายังไม่ติดจะถูกล่ามโซ่)
+    toggleChain(){
+        // สลับค่าสถานะ boolean (true <-> false)
+        this.chained = !this.chained;
+        // บันทึก Log แจ้งเตือนสถานะตามค่าปัจจุบัน
+        if(this.chained){
+            this.game.log(this.name + " ถูกล่ามโซ่");
+        }else{
+            this.game.log(this.name + " หลุดจากโซ่");
+        }
     }
 }

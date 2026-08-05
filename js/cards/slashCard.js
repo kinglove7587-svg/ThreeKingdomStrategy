@@ -37,7 +37,7 @@ class SlashCard extends Card { // SlashCard สืบทอดจาก Card
             dodge: false
         };
         // แสดงชื่อตามประเภทการ์ด เช่น ฆ่า / ฆ่าไฟ / ฆ่าสายฟ้า
-        game.log(player.name + " ใช้การ์ด " + this.getDisplayName() + " ใส่ " + target.name); 
+        game.log(player.name + " ใช้ " + this.getName() + " ใส่ " + target.name); 
         // เปิดโอกาสให้สกิลต่างๆ แทรกการทำงานก่อนตรวจสอบการ์ดหลบ
         game.eventManager.emit("beforeDodge", dodgeContext);
         // ตรวจสอบเงื่อนไขการหลบจากสกิลก่อนเป็นอันดับแรก
@@ -66,6 +66,7 @@ class SlashCard extends Card { // SlashCard สืบทอดจาก Card
                 game.log(target.name + " ป้องกันการโจมตี");
                 return true;
             }
+            console.log("Slash DamageType =", this.damageType);// Debug
             // สร้างออบเจกต์เก็บข้อมูลความเสียหาย
             const damage = new Damage(player, target, 1, this.damageType);
             // บันทึกว่าดาเมจนี้เกิดจากการ์ดใบไหน
@@ -94,18 +95,18 @@ class SlashCard extends Card { // SlashCard สืบทอดจาก Card
         return true;
     }
     // คืนค่าชื่อการ์ดสำหรับแสดงผล ตามประเภทความเสียหาย
-    getDisplayName(){
+    getName(){
         // ตรวจสอบประเภทความเสียหายของการ์ด
         switch(this.damageType){
-            // กรณีเป็นความเสียหายธาตุไฟ
+            // กรณีความเสียหายธาตุไฟ
             case DamageType.FIRE:
                 return "ฆ่าไฟ";
-            // กรณีเป็นความเสียหายธาตุสายฟ้า
+            // กรณีความเสียหายธาตุสายฟ้า
             case DamageType.THUNDER:
                 return "ฆ่าสายฟ้า";
-            // กรณีความเสียหายปกติ (Default)
+            // กรณีความเสียหายปกติ คืนค่าชื่อการ์ดตั้งต้น (ฆ่า)
             default:
-                return "ฆ่า";
+                return this.name;
         }
     }
 }
