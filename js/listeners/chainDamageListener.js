@@ -14,19 +14,23 @@ class ChainDamageListener{
         ){
             return;
         }
+        // ถ้าความเสียหายนี้เกิดจากการส่งต่อโซ่ตรวนมาแล้ว ให้ข้ามไปทันที
+        if(damage.chain){
+            return;
+        }
         // ถ้าเป้าหมายไม่ได้ติดโซ่ตรวน ให้ข้ามไปทันที
         if(!damage.target.isChained()){
             return;
         }
-        //
-        const target = this.getChainedPlayers(damage.target);
-        console.log("ผู้เล่นติดโซ่", target.map(p => p.name));
+        // ค้นหาผู้เล่นคนอื่นที่ติดโซ่ตรวน
+        const targets = this.getChainedPlayers(damage.target);
+        console.log(targets);
     }
-    //
+    // เมธอดสำหรับค้นหาผู้เล่นคนอื่นๆ ที่ติดโซ่ตรวน
     getChainedPlayers(source){
-        //
+        // อ้างอิงตัวจัดการเกมกลาง
         const game = source.game;
-        //
+        // คัดกรองเฉพาะผู้เล่นที่ไม่ใช่เป้าหมายเดิม
         return game.players.filter(player => 
             player !== source && 
             player.isAlive() && 

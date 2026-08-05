@@ -244,6 +244,10 @@ class Player{
     isChained(){
         return this.chained;
     }
+    // เช็กว่าผู้เล่นยังมีชีวิตอยู่หรือไม่ (HP มากกว่า 0)
+    isAlive(){
+        return this.hp > 0;
+    }
     // กำหนดสถานะติดโซ่ตรวนของผู้เล่นโดยตรง (true = ติดโซ่, false = หลุดจากโซ่)
     setChained(value){
         this.chained = value;
