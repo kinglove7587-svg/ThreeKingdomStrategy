@@ -1,7 +1,7 @@
-class FireAttackCard extends Card{
+class FireAttackCard extends TrickCard{
     // ตัวสร้างออบเจกต์การ์ดกลอุบาย "เพลิงผลาญ" (Fire Attack)
     constructor(suit, number){
-        super("Trick", "เพลิงผลาญ", suit, number);
+        super("เพลิงผลาญ", suit, number);
     }
     // ระบุว่าการ์ดใบนี้จำเป็นต้องเลือกเป้าหมายในการใช้งาน
     needTarget(){
@@ -21,11 +21,13 @@ class FireAttackCard extends Card{
         return true;
     }
     // ประมวลผลการใช้งานการ์ดเพลิงผลาญ
-    use(player, game){
+    use(player){
+        // ดึงออบเจกต์เกมจากตัวละครผู้ใช้
+        const game = player.game;
         // ดึงเป้าหมายที่เลือกผ่าน Controller
         const target = player.controller.getTarget(this);
-        // ถ้าไม่ได้เลือกเป้าหมาย หรือยกเลิก ให้ยกเลิกการใช้งานการ์ด
-        if (target === null){
+        // หากไม่ได้เลือกเป้าหมาย หรือยกเลิก ให้ยกเลิกการทำงานของการ์ด
+        if (!target){
             return false;
         }
         game.log(player.name + " ใช้ เพลิงผลาญ ใส่ " + target.name);

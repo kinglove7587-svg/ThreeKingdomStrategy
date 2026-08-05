@@ -1,4 +1,4 @@
-class IronChainCard extends Card{
+class IronChainCard extends TrickCard{
     // กำหนดชื่อการ์ด "โซ่ตรวน" พร้อมส่ง ดอก (suit) และ ตัวเลข (number) ให้กับ TrickCard
     constructor(suit, number){
         super("โซ่ตรวน", suit, number);
@@ -12,11 +12,19 @@ class IronChainCard extends Card{
         return true;
     }
     // ประมวลผลเมื่อผู้เล่นใช้งานการ์ดโซ่ตรวน
-    use(player, target){
-        player.game.log(player.name + " ใช้โซ่ตรวน ใส่ " + target.name);
+    use(player){
+        // ดึงออบเจกต์เกมจากตัวละครผู้เล่น
+        const game = player.game;
+        // ดึงเป้าหมายที่เลือกผ่าน Controller
+        const target = player.controller.getTarget(this);
+        // หากไม่ได้เลือกเป้าหมาย หรือยกเลิก ให้ยกเลิกการทำงานของการ์ด
+        if(!target){
+            return false;
+        }
+        game.log(player.name + " ใช้ โซ่ตรวน ใส่ " + target.name);
         // สลับสถานะติดโซ่ตรวนของผู้เล่นเป้าหมาย
         target.toggleChain();
-        //
+        // ทำงานสำเร็จ คืนค่า true
         return true;
     }
 }
