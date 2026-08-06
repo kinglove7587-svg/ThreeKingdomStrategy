@@ -19,6 +19,7 @@ class Deck {
             this.cards.push(new FireAttackCard("♥️", 8)); // เพิ่มการ์ดกลอุบาย เพลิงผลาญ
             this.cards.push(new TengJiaArmor("♣️", 7)); // เพิ่มอุปกรณ์เกราะ เกราะหวาย
             this.cards.push(new IronChainCard("♣️", 12)); // การ์ดโซ่ตรวน
+            this.cards.push(new DuelCard("♠️", 1)); // การ์ดดวลเดียว
         }
     }
     // สับไพ่

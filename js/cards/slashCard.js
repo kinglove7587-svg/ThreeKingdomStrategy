@@ -47,7 +47,7 @@ class SlashCard extends Card { // SlashCard สืบทอดจาก Card
         }else if (target.hand.hasCard("หลบ")){ // ถ้ามีการ์ดหลบ
             const dodgeCard = target.hand.removeCardByName("หลบ"); // เอาการ์ดหลบออกจากมือ
             game.discardPile.addCard(dodgeCard); // ย้ายหลบไปกองทิ้ง
-            console.log(target.name + " มีการ์ดหลบ ");  // แจ้งว่าหลบได้
+            game.log(target.name + " มีการ์ดหลบ ");  // แจ้งว่าหลบได้
             target.showHand(); // อัปเดตไพ่ในมือ
             game.showDiscardPile(); // อัปเดตกองทิ้ง
         }else{
