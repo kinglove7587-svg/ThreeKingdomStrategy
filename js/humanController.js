@@ -2,9 +2,14 @@ class HumanController extends Controller{
     // ตัวสร้างวัตถุ กำหนดสถานะ Input เริ่มต้นเป็น idle, ล้างค่า index การ์ด (-1) และเป้าหมายที่เลือก (null)
     constructor(game){
         super(game);
-        this.inputState = "idle";
-        this.selectedCardIndex = -1;
-        this.selectedTarget = null;
+        this.inputState = "idle"; // สถานะการรับ Input ปัจจุบัน
+        this.selectedCardIndex = -1; // ดรรชนี (Index) ของการ์ดที่เลือกอยู่บนมือ
+        this.selectedTarget = null; // ผู้เล่นเป้าหมายที่เลือก
+        // ---------- Response State ----------
+        this.responseTitle = ""; // ข้อความหัวเรื่องที่จะแสดงผลในโหมด Response
+        this.responseCards = []; // รายการการ์ดที่สามารถเลือกใช้ตอบโต้ได้
+        this.responseCancleable = true; // สถานะอนุญาตให้ยกเลิก/กด "ไม่ใช้" การ์ดได้หรือไม่
+        this.inResponse = false; // สถานะเปิด/ปิด โหมดตอบโต้ (Response Mode)
     }
     // จัดการเทิร์นของผู้เล่นมนุษย์
     playTurn(){ 
@@ -154,5 +159,31 @@ class HumanController extends Controller{
             console.log(items.length + " : ไม่ใช้");
         }
         return 0;
+    }
+    // เริ่มเปิดใช้งานโหมดตอบโต้ (Response Mode)
+    startResponse(title, cards, cancelable = true){
+        // กำหนดข้อความหัวเรื่องของโหมดตอบโต้
+        this.responseTitle = title;
+        // บันทึกรายการการ์ดที่สามารถเลือกใช้ตอบโต้ได้
+        this.responseCards =cards;
+        // กำหนดสิทธิ์การอนุญาตให้ยกเลิกการใช้การ์ด
+        this.responseCancleable = cancelable;
+        // เปลี่ยนสถานะเป็นกำลังอยู่ในโหมดตอบโต้
+        this.inResponse = true;
+    }
+    // สิ้นสุดและรีเซ็ตค่าโหมดตอบโต้กลับเป็นค่าเริ่มต้น
+    endResponse(){
+        // ล้างข้อความหัวเรื่อง
+        this.responseTitle = "";
+        // ล้างรายการการ์ดตอบโต้
+        this.responseCards = [];
+        // คืนค่าสิทธิ์การยกเลิกเป็น true
+        this.responseCancleable = true;
+        // ปิดสถานะโหมดตอบโต้
+        this.inResponse = false;
+    }
+    // ตรวจสอบว่ากำลังอยู่ในโหมดตอบโต้หรือไม่
+    isInResponse(){
+        return this.inResponse;
     }
 }
