@@ -55,9 +55,15 @@ class AIController extends Controller{
         // ตอนนี้ AI เลือกผู้เล่นคนถัดไปเป็นเป้าหมายเสมอ
         return this.game.getNextPlayer();
     }
-    // สอบถามตำแหน่งการ์ด "ฆ่า" จาก Controller ของผู้เล่น
-    askSlash(player){
-        // ค้นหาและคืนค่าตำแหน่ง Index ของการ์ด "ฆ่า" ในมือผู้เล่น
-        return player.hand.cards.findIndex(card => card instanceof SlashCard);
+    // สอบถามเลือกการ์ด "ฆ่า" สำหรับการดวล (สำหรับ AIController/Controller)
+    askSlash(player, game){
+        // ค้นหารายการการ์ด "ฆ่า" ทั้งหมดที่มีอยู่บนมือของผู้เล่น
+        const slashCard = player.hand.findSlashCards();
+        // หากไม่มีการ์ด "ฆ่า" ในมือเลย ให้คืนค่า -1 (ไม่ใช้/ไม่มีการ์ด)
+        if(slashCard.length === 0){
+            return -1;
+        }
+        // คืนค่า index ของการ์ด "ฆ่า" ใบแรกที่พบในมือ
+        return slashCard[0].index;
     }
 }

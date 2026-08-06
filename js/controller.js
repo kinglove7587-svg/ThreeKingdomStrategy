@@ -34,7 +34,7 @@ class Controller{
         return false;
     }
     //
-    askSlash(player){
+    askSlash(player, game){
         return -1;
     }
 }

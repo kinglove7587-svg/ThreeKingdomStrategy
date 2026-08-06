@@ -54,4 +54,23 @@ class Hand{
         // หากไม่พบการ์ดดอกที่ต้องการ ให้คืนค่า -1
         return -1;
     }
+    // ค้นหาการ์ดประเภท "ฆ่า" (SlashCard) ทั้งหมดที่มีในมือ
+    findSlashCards(){
+        // สร้างอาร์เรย์สำหรับเก็บผลลัพธ์การ์ดที่ค้นพบ
+        const result = [];
+        // วนลูปตรวจการ์ดทีละใบในมือ
+        for(let i = 0; i < this.cards.length; i++){
+            // ดึงข้อมูลการ์ดในตำแหน่งปัจจุบัน
+            const card = this.cards[i];
+            // ตรวจสอบว่าเป็นการ์ดประเภท "ฆ่า" หรือไม่
+            if(card instanceof SlashCard){
+                // บันทึกตำแหน่ง (index) และออบเจกต์การ์ดเข้าอาร์เรย์ผลลัพธ์
+                result.push({
+                    index: i, 
+                    card: card
+                });
+            }
+        }
+        return result;
+    }
 }
