@@ -14,17 +14,30 @@ class ChainDamageListener{
         ){
             return;
         }
+        // บันทึกสถานะเดิมว่าเป้าหมายเคยติดโซ่ตรวนอยู่หรือไม่
+        const wasChained = damage.target.isChained();
+        // หากติดโซ่ตรวน ให้ปลดสถานะออกทันที พร้อมบันทึก Log
+        if(wasChained){
+            // ปลดโซ่ตรวน
+            damage.target.setChained(false);
+            damage.target.game.log(damage.target.name + " หลุดจากสถานะโซ่ตรวน");
+        }
         // ถ้าความเสียหายนี้เกิดจากการส่งต่อโซ่ตรวนมาแล้ว ให้ข้ามไปทันที
         if(damage.chain){
             return;
         }
-        // ถ้าเป้าหมายไม่ได้ติดโซ่ตรวน ให้ข้ามไปทันที
-        if(!damage.target.isChained()){
+        // ถ้าเป้าหมายแรกไม่ได้ติดโซ่ตรวนมาตั้งแต่ต้น ไม่ต้องส่งต่อความเสียหาย
+        if(!wasChained){
             return;
         }
         // ค้นหาผู้เล่นคนอื่นที่ติดโซ่ตรวน
         const targets = this.getChainedPlayers(damage.target);
         console.log("targets =", targets.map(p => p.name));
+        // แสดง Log การส่งต่อความเสียหาย เฉพาะเมื่อมีเป้าหมายอื่นติดโซ่รองรับ
+        if(targets.length > 0){
+            damage.target.game.log(damage.target.name + " ส่งต่อความเสียหาย" + 
+                (damage.type === DamageType.FIRE ? "ไฟ" : "สายฟ้า"));
+        }
         // วนลูปสร้างความเสียหายส่งต่อให้ผู้เล่นที่ติดโซ่ตรวนทีละคน
         for(const target of targets){
             console.log("loop target =", target.name);
@@ -39,10 +52,6 @@ class ChainDamageListener{
             chainDamage.card = damage.card;
             // ทำเครื่องหมายว่าเป็นความเสียหายจากการส่งต่อโซ่ตรวน
             chainDamage.chain = true;
-            // บันทึก Log การส่งต่อความเสียหายลงระบบของเกม
-            damage.target.game.log(damage.target.name + " ส่งต่อความเสียหาย" + 
-                (damage.type === DamageType.FIRE ? "ไฟ" : "สายฟ้า")
-            );
             // ส่งความเสียหายลูกใหม่เข้าระบบประมวลผลเกมจริง!
             damage.target.game.damage(chainDamage);
         }
