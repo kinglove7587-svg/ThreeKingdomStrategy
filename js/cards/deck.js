@@ -9,7 +9,7 @@ class Deck {
             this.cards.push(new SlashCard("♠️", 1)); // เพิ่มการ์ดฆ่า
             this.cards.push(new SlashCard("♥️", 7, DamageType.FIRE)); // การ์ดฆ่าไฟ
             this.cards.push(new SlashCard("♠️", 12, DamageType.THUNDER)); // การ์ดฆ่าสายไฟ
-            this.cards.push(new Card("Basic", "หลบ", "♥️", 2)); // เพิ่มการ์ดหลบ
+            this.cards.push(new DodgeCard("♥️", 2)); // เพิ่มการ์ดหลบ
             this.cards.push(new PeachCard("♣️", 3)); // เพิ่มการ์ดยา
             this.cards.push(new TrainingSword("♦️", 5)); // เพิ่มอาวุธ กระบี่ฝึกหัด
             this.cards.push(new CrossbowCard("♠️", 2)); // เพิ่มอาวุธ หน้าไม้จูเก่อ
