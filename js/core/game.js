@@ -283,8 +283,7 @@ class Game {
     checkGameOver(){ // เช็กเกม over
         for (const player of this.players){ // วนดูผู้เล่นทุกคน
             // ถ้าใคร hp เหลือ 0 แสดง Game Over
-            if (player.hp <= 0){ 
-                this.ui.addLog(player.name + " แพ้แล้ว");
+            if (!player.isAlive()){ 
                 this.ui.addLog("Game Over");
                 return true;
             }
@@ -473,5 +472,10 @@ class Game {
             return;
         }
         this.log(player.name + " เข้าสู่สถานะใกล้ตาย");
+        // เปลี่ยนสถานะผู้เล่นเป็นเสียชีวิต
+        player.dead();
+        this.log(player.name + " แพ้แล้ว");
+        // ตรวจสอบเงื่อนไขการจบเกม
+        this.checkGameOver();
     }
 }

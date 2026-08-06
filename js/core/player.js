@@ -15,6 +15,7 @@ class Player{
         this.delayedTricks = []; // เก็บการ์ดหน่วงเวลาที่ติดอยู่
         this.skipPlayPhase = false; // Flag สำหรับข้าม Play Phase เมื่อติดผลสุราลืมกลับ
         this.chained = false; // สถานะติดโซ่ตรวน (Iron Chain)
+        this.alive = true; // สถานะชีวิตของผู้เล่น (true = ยังมีชีวิตอยู่)
     }
 
     drawCard(deck){ // player จั่วกองไพ่
@@ -244,13 +245,22 @@ class Player{
     isChained(){
         return this.chained;
     }
-    // เช็กว่าผู้เล่นยังมีชีวิตอยู่หรือไม่ (HP มากกว่า 0)
+    // ตรวจสอบว่าผู้เล่นยังมีชีวิตอยู่หรือไม่
     isAlive(){
-        return this.hp > 0;
+        return this.alive;
     }
     // ตรวจสอบว่าผู้เล่นอยู่ในสถานะใกล้ตายหรือไม่ (HP <= 0)
     isDying(){
         return this.hp <= 0;
+    }
+    // กำหนดสถานะให้ผู้เล่นเสียชีวิต (ป้องกันการเรียกซ้ำหากตายแล้ว)
+    dead(){
+        // ถ้าผู้เล่นตายแล้ว ให้ยกเลิกการทำงาน
+        if(!this.alive){
+            return;
+        }
+        // เปลี่ยนสถานะชีวิตเป็น false
+        this.alive = false;
     }
     // กำหนดสถานะติดโซ่ตรวนของผู้เล่นโดยตรง (true = ติดโซ่, false = หลุดจากโซ่)
     setChained(value){
@@ -267,4 +277,5 @@ class Player{
             this.game.log(this.name + " หลุดจากโซ่");
         }
     }
+    //
 }
