@@ -5,11 +5,6 @@ class HumanController extends Controller{
         this.inputState = "idle"; // สถานะการรับ Input ปัจจุบัน
         this.selectedCardIndex = -1; // ดรรชนี (Index) ของการ์ดที่เลือกอยู่บนมือ
         this.selectedTarget = null; // ผู้เล่นเป้าหมายที่เลือก
-        // ---------- Response State ----------
-        this.responseTitle = ""; // ข้อความหัวเรื่องที่จะแสดงผลในโหมด Response
-        this.responseCards = []; // รายการการ์ดที่สามารถเลือกใช้ตอบโต้ได้
-        this.responseCancleable = true; // สถานะอนุญาตให้ยกเลิก/กด "ไม่ใช้" การ์ดได้หรือไม่
-        this.inResponse = false; // สถานะเปิด/ปิด โหมดตอบโต้ (Response Mode)
     }
     // จัดการเทิร์นของผู้เล่นมนุษย์
     playTurn(){ 
@@ -113,7 +108,7 @@ class HumanController extends Controller{
         // เรียกใช้เมธอด finishTurn() เพื่อเริ่มประมวลผลการใช้การ์ดกับเป้าหมาย
         this.finishTurn();
     }
-    // สอบถามและแสดงรายการการ์ด "ฆ่า" สำหรับ HumanController
+    // สอบถามการ์ด "ฆ่า" สำหรับ HumanController
     askSlash(player, game){
         // ค้นหารายการการ์ด "ฆ่า" ทั้งหมดในมือของผู้เล่น
         const slashCards = player.hand.findSlashCards();
@@ -121,73 +116,11 @@ class HumanController extends Controller{
         if(slashCards.length === 0){
             return -1;
         }
-        game.log("เลือกการ์ดฆ่า");
-        // วนลูปบันทึก Log แสดงตัวเลือกการ์ด "ฆ่า" แต่ละใบที่มีในมือ
-        for(let i = 0; i < slashCards.length; i++){
-            // ดึงข้อมูลออบเจกต์การ์ดมาเตรียมแสดงผล
-            const card = slashCards[i].card;
-            game.log(i + " : " + card.name + " " + card.suit + " " + card.number);
-        }
-        game.log(slashCards.length + " : ไม่ใช้");
-        // ส่งรายการการ์ด "ฆ่า" ไปให้ระบบเลือกรายการ (รายการการ์ด/ยกเลิก)
-        const select = this.chooseCardFromList("เลือกการ์ดฆ่า", slashCards);
-        // หากผู้เล่นเลือกตัวเลือกสุดท้าย (กด "ไม่ใช้") ให้คืนค่า -1
-        if(select === slashCards.length){
-            return -1;
-        }
-        // คืนค่า index จริงของการ์ดในมือตามตำแหน่งที่เลือก
-        return slashCards[select].index;
-    }
-    //
-    askCard(player, game, filter){
-        // ค้นหาและคืนค่า index ของการ์ดใบแรกที่ตรงตามเงื่อนไข filter
-        return player.hand.cards.findIndex(filter);
-    }
-    // เมธอดกลางสำหรับแสดงตัวเลือกรายการการ์ดลง Console
-    chooseCardFromList(title, items, canCancel = true){
-        console.log(title);
-        // วนลูปแสดงข้อมูลการ์ดแต่ละใบในรายการ
-        for(let i = 0; i < items.length; i++){
-            console.log(i + " : " + 
-                items[i].card.name + " " + 
-                items[i].card.suit + " " +
-                items[i].card.number
-            );
-        }
-        // แสดงตัวเลือกยกเลิกการใช้การ์ด (หากตั้งค่า canCancel เป็น true)
-        if(canCancel){
-            console.log(items.length + " : ไม่ใช้");
-        }
-        return 0;
-    }
-    // เริ่มเปิดใช้งานโหมดตอบโต้ (Response Mode)
-    startResponse(title, cards, cancelable = true){
-        // กำหนดข้อความหัวเรื่องของโหมดตอบโต้
-        this.responseTitle = title;
-        // บันทึกรายการการ์ดที่สามารถเลือกใช้ตอบโต้ได้
-        this.responseCards =cards;
-        // กำหนดสิทธิ์การอนุญาตให้ยกเลิกการใช้การ์ด
-        this.responseCancleable = cancelable;
-        // เปลี่ยนสถานะเป็นกำลังอยู่ในโหมดตอบโต้
-        this.inResponse = true;
-    }
-    // สิ้นสุดและรีเซ็ตค่าโหมดตอบโต้กลับเป็นค่าเริ่มต้น
-    endResponse(){
-        // ล้างข้อความหัวเรื่อง
-        this.responseTitle = "";
-        // ล้างรายการการ์ดตอบโต้
-        this.responseCards = [];
-        // คืนค่าสิทธิ์การยกเลิกเป็น true
-        this.responseCancleable = true;
-        // ปิดสถานะโหมดตอบโต้
-        this.inResponse = false;
-    }
-    // ตรวจสอบว่ากำลังอยู่ในโหมดตอบโต้หรือไม่
-    isInResponse(){
-        return this.inResponse;
+        // คืนค่า index ของการ์ดใบแรก
+        return slashCards[0].index;
     }
     //
     isHuman(){
-        return false;
+        return true;
     }
 }

@@ -427,16 +427,7 @@ class Game {
     }
     // ตรวจสอบและบังคับใช้การ์ด "ฆ่า" ในมือของผู้เล่น
     askSlash(player){
-        // ตรวจสอบว่าผู้เล่นเป็นมนุษย์ (HumanController) หรือไม่
-        if(player.controller.isHuman()){
-            // ค้นหารายการการ์ด "ฆ่า" ทั้งหมดที่มีในมือของผู้เล่น
-            const slashCards = player.hand.findSlashCards();
-            // เริ่มต้นเปิดโหมดตอบโต้ (Response Mode) บน Controller ของมนุษย์
-            player.controller.startResponse("เลือกการ์ดฆ่า", slashCards, true);
-            // คืนค่า false ชั่วคราวเนื่องจากต้องรอการกดรับ Input จากผู้เล่นก่อน
-            return false;
-        }
-        // กรณีเป็น AI ให้สอบถามหาตำแหน่งการ์ด "ฆ่า" โดยตรงทันที
+        // ส่งคำร้องขอเลือกการ์ด "ฆ่า" ไปยัง Controller ของผู้เล่น
         const index = player.controller.askSlash(player, this);
         // หากผู้เล่นไม่มีการ์ด "ฆ่า" บนมือ
         if(index === -1){
@@ -451,10 +442,5 @@ class Game {
         // อัปเดตหน้าจอ UI ใหม่ทันทีหลังการ์ดถูกทิ้ง
         this.ui.render();
         return true;
-    }
-    // สอบถามและส่งคำร้องขอเลือกใช้การ์ดตามเงื่อนไข (Response Engine)
-    askCard(player, filter){
-        // ส่งต่อไปยัง Controller ของผู้เล่นเพื่อเลือกการ์ดตาม Filter ที่กำหนด
-        return player.controller.askCard(player, this, filter);
     }
 }

@@ -37,10 +37,6 @@ class Controller{
     askSlash(player, game){
         return -1;
     }
-    // ตอบกลับการเลือกใช้การ์ดตามเงื่อนไข (คืนค่า -1 เป็นค่าเริ่มต้น/ไม่มีการ์ด)
-    askCard(player, game, filter){
-        return -1;
-    }
     //
     isHuman(){
         return false;
