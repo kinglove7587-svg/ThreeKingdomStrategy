@@ -41,4 +41,8 @@ class Controller{
     askCard(player, game, filter){
         return -1;
     }
+    //
+    isHuman(){
+        return false;
+    }
 }

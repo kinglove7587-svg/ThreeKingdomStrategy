@@ -186,4 +186,8 @@ class HumanController extends Controller{
     isInResponse(){
         return this.inResponse;
     }
+    //
+    isHuman(){
+        return false;
+    }
 }
