@@ -50,7 +50,7 @@ class Player{
             this.hp = 0;
         }
 
-        game.log(this.name + "  เสีย HP " + amount);
+        this.game.log(this.name + "  เสีย HP " + amount);
         this.showStatus(); // แสดง HP ล่าสุด
         // ถ้าผู้เล่น hp เหลือ 0 แสดง ชื่อ ผู้เล่น ว่า ตาย
         if (this.hp === 0){
