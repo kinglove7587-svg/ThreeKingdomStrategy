@@ -30,6 +30,7 @@ class Game {
         this.selectedTarget = null;
         this.chainDamageListener = new ChainDamageListener(); // สร้าง Listener สำหรับความเสียหายโซ่ตรวน
         this.chainDamageListener.register(this.eventManager); // ผูก chainDamageListener เข้ากับ EventManager
+        this.isGameOver = false;
     }
 
     dealInitialCards(cardCount = 2){ // แจกไพ่ให้ผู้เล่น
@@ -294,6 +295,12 @@ class Game {
     }
     // แสดงข้อความประกาศจบเกม
     gameOver(){
+        //
+        if(this.isGameOver){
+            return;
+        }
+        //
+        this.isGameOver = true;
         this.ui.addLog("Game Over");
     }
     // ประมวลผลความเสียหายพร้อมส่งแจ้งเตือน Event ก่อนและหลังเกิดความเสียหาย

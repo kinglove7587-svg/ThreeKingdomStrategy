@@ -216,7 +216,7 @@ class Player{
     // เริ่มช่วงเสี่ยงทาย (Judge Phase) ประมวลผลการ์ดหน่วงเวลา
     startJudgePhase(){
         // วนลูปสั่งรันการ์ด Delayed Trick ทุกใบที่ติดอยู่หน้าตัวละคร
-        for (const card of this.delayedTricks){
+        for (const card of [...this.delayedTricks]){
             card.onJudge(this);
         }
     }
