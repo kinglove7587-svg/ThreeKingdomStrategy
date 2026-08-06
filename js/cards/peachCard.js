@@ -1,4 +1,4 @@
-class PeachCard extends Card{
+class PeachCard extends BasicCard{
     constructor(suit, number){
         super("Basic", "ยา", suit, number); // เรียก constructor ของ Card
     }
