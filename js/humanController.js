@@ -132,4 +132,9 @@ class HumanController extends Controller{
         // คืนค่า index ของการ์ด "ฆ่า" ใบแรกที่พบ (ชั่วคราวก่อนต่อระบบ UI/Input)
         return slashCards[0].index;
     }
+    //
+    askCard(player, game, filter){
+        // ค้นหาและคืนค่า index ของการ์ดใบแรกที่ตรงตามเงื่อนไข filter
+        return player.hand.cards.findIndex(filter);
+    }
 }

@@ -433,4 +433,9 @@ class Game {
         this.ui.render();
         return true;
     }
+    // สอบถามและส่งคำร้องขอเลือกใช้การ์ดตามเงื่อนไข (Response Engine)
+    askCard(player, filter){
+        // ส่งต่อไปยัง Controller ของผู้เล่นเพื่อเลือกการ์ดตาม Filter ที่กำหนด
+        return player.controller.askCard(player, this, filter);
+    }
 }

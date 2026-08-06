@@ -71,4 +71,9 @@ class AIController extends Controller{
         // คืนค่า index ของการ์ด "ฆ่า" ใบแรกที่พบ
         return slashCards[0].index;
     }
+    // เลือกการ์ดในมือของ AI ตามเงื่อนไข filter ที่ระบุ
+    askCard(player, game, filter){
+        // ค้นหาและคืนค่า index ของการ์ดใบแรกที่ตรงตามเงื่อนไข filter
+        return player.hand.cards.findIndex(filter);
+    }
 }
