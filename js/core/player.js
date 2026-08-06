@@ -248,6 +248,10 @@ class Player{
     isAlive(){
         return this.hp > 0;
     }
+    // ตรวจสอบว่าผู้เล่นอยู่ในสถานะใกล้ตายหรือไม่ (HP <= 0)
+    isDying(){
+        return this.hp <= 0;
+    }
     // กำหนดสถานะติดโซ่ตรวนของผู้เล่นโดยตรง (true = ติดโซ่, false = หลุดจากโซ่)
     setChained(value){
         this.chained = value;

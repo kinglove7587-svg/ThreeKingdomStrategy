@@ -323,6 +323,11 @@ class Game {
         }
         // ลด HP ของเป้าหมายตามจำนวนความเสียหายที่กำหนดในออบเจกต์ Damage
         damage.target.loseHp(damage.amount);
+        // ตรวจสอบสถานะใกล้ตายของผู้เล่นเป้าหมาย
+        if(damage.target.isDying()){
+            // เข้าสู่กระบวนการสถานะใกล้ตาย
+            this.enterDying(damage.target);
+        }
         // ส่ง Event แจ้งเตือนหลังเกิดความเสียหาย เพื่อเปิดโอกาสให้สกิลที่ทำงานหลังโดนดาเมจ (เช่น สกิลดูดเลือด/โต้กลับ) ทำงาน
         this.eventManager.emit("afterDamage", damage);
     }
@@ -460,5 +465,13 @@ class Game {
         this.ui.render();
         // คืนค่า true แสดงว่าตอบโต้ด้วยการ์ดหลบสำเร็จ
         return true;
+    }
+    // จัดการเข้าสู่สถานะใกล้ตายของผู้เล่น
+    enterDying(player){
+        // ถ้าผู้เล่นไม่ได้อยู่ในสถานะใกล้ตาย ให้ยกเลิก
+        if(!player.isDying()){
+            return;
+        }
+        this.log(player.name + " เข้าสู่สถานะใกล้ตาย");
     }
 }
