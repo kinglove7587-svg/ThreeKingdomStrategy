@@ -1,4 +1,4 @@
-class SlashCard extends BasicCard{ // SlashCard สืบทอดจาก Card
+class SlashCard extends BasicCard{ 
     //
     constructor(suit, number, damageType = DamageType.NORMAL){
         super("Basic", "ฆ่า", suit, number); 
