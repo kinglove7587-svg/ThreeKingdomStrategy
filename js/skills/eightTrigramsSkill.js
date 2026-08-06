@@ -22,7 +22,6 @@ class EightTrigramsSkill extends TriggerSkill{
             if (result.isRed()){
                 // หากเปิดได้สีแดง ให้กำหนดสถานะหลบสำเร็จ และลง Log แจ้งเตือน
                 context.dodge = true;
-                player.game.log(player.name + " หลบการโจมตี");
             }
         };
         // ใช้ registerListener ของ TriggerSkill เพื่อลงทะเบียน Event "beforeDodge"
