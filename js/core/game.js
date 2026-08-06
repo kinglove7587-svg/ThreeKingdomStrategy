@@ -280,16 +280,21 @@ class Game {
         console.log(message);
         this.ui.addLog(message);
     }
-    checkGameOver(){ // เช็กเกม over
+    // ตรวจสอบว่ามีผู้เล่นเสียชีวิตเพื่อจบเกมหรือไม่
+    checkGameOver(){ 
         for (const player of this.players){ // วนดูผู้เล่นทุกคน
-            // ถ้าใคร hp เหลือ 0 แสดง Game Over
+            // ถ้ามีผู้เล่นที่ไม่อยู่ในสถานะมีชีวิต ให้สั่งจบเกม
             if (!player.isAlive()){ 
-                this.ui.addLog("Game Over");
+                this.gameOver();
                 return true;
             }
         }
         // ถ้ายังไม่มีใครตาย เกมดำเนินต่อ
         return false;
+    }
+    // แสดงข้อความประกาศจบเกม
+    gameOver(){
+        this.ui.addLog("Game Over");
     }
     // ประมวลผลความเสียหายพร้อมส่งแจ้งเตือน Event ก่อนและหลังเกิดความเสียหาย
     damage(damage){
