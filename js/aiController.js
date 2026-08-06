@@ -55,15 +55,20 @@ class AIController extends Controller{
         // ตอนนี้ AI เลือกผู้เล่นคนถัดไปเป็นเป้าหมายเสมอ
         return this.game.getNextPlayer();
     }
-    // สอบถามเลือกการ์ด "ฆ่า" สำหรับการดวล (สำหรับ AIController/Controller)
+    // สอบถามเลือกการ์ด "ฆ่า"
     askSlash(player, game){
-        // ค้นหารายการการ์ด "ฆ่า" ทั้งหมดที่มีอยู่บนมือของผู้เล่น
-        const slashCard = player.hand.findSlashCards();
-        // หากไม่มีการ์ด "ฆ่า" ในมือเลย ให้คืนค่า -1 (ไม่ใช้/ไม่มีการ์ด)
-        if(slashCard.length === 0){
+        // เรียกใช้ฟังก์ชันตัดสินใจเลือกการ์ด "ฆ่า"
+        return this.chooseSlash(player);
+    }
+    // เลือกการ์ด "ฆ่า" ใบแรกที่มีในมือ
+    chooseSlash(player){
+        // ค้นหารายการการ์ด "ฆ่า" ทั้งหมดในมือ
+        const slashCards = player.hand.findSlashCards();
+        // หากไม่มีการ์ด "ฆ่า" ในมือเลย ให้คืนค่า -1
+        if(slashCards.length === 0){
             return -1;
         }
-        // คืนค่า index ของการ์ด "ฆ่า" ใบแรกที่พบในมือ
-        return slashCard[0].index;
+        // คืนค่า index ของการ์ด "ฆ่า" ใบแรกที่พบ
+        return slashCards[0].index;
     }
 }
