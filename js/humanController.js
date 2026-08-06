@@ -124,12 +124,35 @@ class HumanController extends Controller{
             game.log(i + " : " + card.name + " " + card.suit + " " + card.number);
         }
         game.log(slashCards.length + " : ไม่ใช้");
-        // คืนค่า index ของการ์ด "ฆ่า" ใบแรก
-        return slashCards[0].index;
+        // ส่งรายการการ์ด "ฆ่า" ไปให้ระบบเลือกรายการ (รายการการ์ด/ยกเลิก)
+        const select = this.chooseCardFromList("เลือกการ์ดฆ่า", slashCards);
+        // หากผู้เล่นเลือกตัวเลือกสุดท้าย (กด "ไม่ใช้") ให้คืนค่า -1
+        if(select === slashCards.length){
+            return -1;
+        }
+        // คืนค่า index จริงของการ์ดในมือตามตำแหน่งที่เลือก
+        return slashCards[select].index;
     }
     //
     askCard(player, game, filter){
         // ค้นหาและคืนค่า index ของการ์ดใบแรกที่ตรงตามเงื่อนไข filter
         return player.hand.cards.findIndex(filter);
+    }
+    // เมธอดกลางสำหรับแสดงตัวเลือกรายการการ์ดลง Console
+    chooseCardFromList(title, items, canCancel = true){
+        console.log(title);
+        // วนลูปแสดงข้อมูลการ์ดแต่ละใบในรายการ
+        for(let i = 0; i < items.length; i++){
+            console.log(i + " : " + 
+                items[i].card.name + " " + 
+                items[i].card.suit + " " +
+                items[i].card.number
+            );
+        }
+        // แสดงตัวเลือกยกเลิกการใช้การ์ด (หากตั้งค่า canCancel เป็น true)
+        if(canCancel){
+            console.log(items.length + " : ไม่ใช้");
+        }
+        return 0;
     }
 }
