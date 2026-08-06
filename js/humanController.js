@@ -108,28 +108,23 @@ class HumanController extends Controller{
         // เรียกใช้เมธอด finishTurn() เพื่อเริ่มประมวลผลการใช้การ์ดกับเป้าหมาย
         this.finishTurn();
     }
-    // สอบถามและส่งคำร้องขอเลือกการ์ด "ฆ่า"
+    // สอบถามและแสดงรายการการ์ด "ฆ่า" สำหรับ HumanController
     askSlash(player, game){
-        // เรียกใช้เมธอดเลือกการ์ด "ฆ่า" ของ Controller
-        return this.chooseSlash(player, game);
-    }
-    //
-    chooseSlash(player, game){
-        // ค้นหารายการการ์ด "ฆ่า" ทั้งหมดที่มีในมือของผู้เล่น
+        // ค้นหารายการการ์ด "ฆ่า" ทั้งหมดในมือของผู้เล่น
         const slashCards = player.hand.findSlashCards();
-        // หากไม่มีการ์ด "ฆ่า" ให้คืนค่า -1 (ไม่มี/ไม่ใช้)
+        // หากไม่มีการ์ด "ฆ่า" ในมือเลย ให้คืนค่า -1 (ไม่มีการ์ดให้เลือก)
         if(slashCards.length === 0){
             return -1;
         }
-        console.log("เลือกการ์ดฆ่า");
-        // วนลูปแสดงตัวเลือกการ์ด "ฆ่า" ที่เลือกได้ลง Console
+        game.log("เลือกการ์ดฆ่า");
+        // วนลูปบันทึก Log แสดงตัวเลือกการ์ด "ฆ่า" แต่ละใบที่มีในมือ
         for(let i = 0; i < slashCards.length; i++){
-            console.log(i + " : " + slashCards[i].card.name + " " +
-                slashCards[i].card.suit
-            );
+            // ดึงข้อมูลออบเจกต์การ์ดมาเตรียมแสดงผล
+            const card = slashCards[i].card;
+            game.log(i + " : " + card.name + " " + card.suit + " " + card.number);
         }
-        console.log(slashCards.length + " : ไม่ใช้");
-        // คืนค่า index ของการ์ด "ฆ่า" ใบแรกที่พบ (ชั่วคราวก่อนต่อระบบ UI/Input)
+        game.log(slashCards.length + " : ไม่ใช้");
+        // คืนค่า index ของการ์ด "ฆ่า" ใบแรก
         return slashCards[0].index;
     }
     //
