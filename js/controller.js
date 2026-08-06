@@ -33,4 +33,8 @@ class Controller{
     isWaitingInput(){
         return false;
     }
+    //
+    askSlash(player){
+        return -1;
+    }
 }

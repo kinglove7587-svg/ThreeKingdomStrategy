@@ -108,4 +108,9 @@ class HumanController extends Controller{
         // เรียกใช้เมธอด finishTurn() เพื่อเริ่มประมวลผลการใช้การ์ดกับเป้าหมาย
         this.finishTurn();
     }
+    // สอบถามตำแหน่งการ์ด "ฆ่า" จาก Controller ของผู้เล่น
+    askSlash(player){
+        // ค้นหาและคืนค่าตำแหน่ง Index ของการ์ด "ฆ่า" ในมือผู้เล่น
+        return player.hand.cards.findIndex(card => card instanceof SlashCard);
+    }
 }

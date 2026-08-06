@@ -417,8 +417,8 @@ class Game {
     }
     // ตรวจสอบและบังคับใช้การ์ด "ฆ่า" ในมือของผู้เล่น
     askSlash(player){
-        // ค้นหาตำแหน่งของการ์ด "ฆ่า" (SlashCard) ใบแรกในมือผู้เล่น
-        const index = player.hand.cards.findIndex(card => card instanceof SlashCard);
+        // ส่งคำร้องขอเลือกการ์ด "ฆ่า" ไปยัง Controller ของผู้เล่น
+        const index = player.controller.askSlash(player);
         // หากผู้เล่นไม่มีการ์ด "ฆ่า" บนมือ
         if(index === -1){
             this.log(player.name + " ไม่มี ฆ่า");
