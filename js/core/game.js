@@ -443,4 +443,22 @@ class Game {
         this.ui.render();
         return true;
     }
+    // ตรวจสอบและบังคับใช้การ์ด "หลบ" ในมือของผู้เล่น
+    askDodge(player){
+        // ส่งคำร้องขอเลือกการ์ด "หลบ" ไปยัง Controller ของผู้เล่น
+        const index = player.controller.askDodge(player, this);
+        // หากผู้เล่นไม่มีการ์ด "หลบ" บนมือ (หรือเลือกไม่ใช้)
+        if(index === -1){
+            this.log(player.name + " ไม่มี หลบ");
+            return false;
+        }
+        // ดึงการ์ด "หลบ" ออกจากมือตามตำแหน่งที่พบ
+        const dodge = player.hand.removeCard(index);
+        //
+        this.discardPile.addCard(dodge);
+        this.log(player.name + " ใช้ หลบ");
+        this.ui.render();
+        // คืนค่า true แสดงว่าตอบโต้ด้วยการ์ดหลบสำเร็จ
+        return true;
+    }
 }

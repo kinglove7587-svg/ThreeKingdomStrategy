@@ -73,4 +73,8 @@ class Hand{
         }
         return result;
     }
+    //
+    findCardIndexByName(cardName){
+        return this.cards.findIndex(card => card.name === cardName);
+    }
 }

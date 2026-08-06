@@ -44,10 +44,7 @@ class SlashCard extends BasicCard{
         if (dodgeContext.dodge){
             game.log(target.name + " หลบการโจมตี"); 
         // หากไม่ได้หลบด้วยสกิล ให้ตรวจสอบการ์ดหลบในมือต่อ
-        }else if (target.hand.hasCard("หลบ")){ // ถ้ามีการ์ดหลบ
-            const dodgeCard = target.hand.removeCardByName("หลบ"); // เอาการ์ดหลบออกจากมือ
-            game.discardPile.addCard(dodgeCard); // ย้ายหลบไปกองทิ้ง
-            game.log(target.name + " มีการ์ดหลบ ");  // แจ้งว่าหลบได้
+        }else if(game.askDodge(target)){ // ถ้ามีการ์ดหลบ
             target.showHand(); // อัปเดตไพ่ในมือ
             game.showDiscardPile(); // อัปเดตกองทิ้ง
         }else{

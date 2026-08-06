@@ -123,4 +123,9 @@ class HumanController extends Controller{
     isHuman(){
         return true;
     }
+    // สอบถามและค้นหาตำแหน่งการ์ด "หลบ" ในมือของผู้เล่น
+    askDodge(player){
+        // คืนค่าตำแหน่งดรรชนี (Index) ของการ์ด "หลบ" ที่พบในมือ (หากไม่พบจะคืนค่า -1)
+        return player.hand.findCardIndexByName("หลบ");
+    }
 }
