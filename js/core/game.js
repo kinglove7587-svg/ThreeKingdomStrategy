@@ -399,6 +399,7 @@ class Game {
         let opponent = attacker;
         // วนลูปสลับกันทิ้งการ์ด "ฆ่า" ไปเรื่อยๆ จนกว่าจะมีฝ่ายใดฝ่ายหนึ่งไม่มีการ์ด
         while(true){
+            this.log(current.name + " ต้องใช้ ฆ่า");
             // ถามหาและบังคับใช้การ์ด "ฆ่า" จากฝ่าย current
             const success = this.askSlash(current);
             // หากฝ่าย current ไม่มีการ์ด "ฆ่า" ให้รับความเสียหายและจบการดวลทันที
@@ -409,11 +410,20 @@ class Game {
                 this.damage(damage);
                 break;
             }
-            // สลับบทบาทผู้เล่นสำหรับรอบถัดไป
-            const temp = current;
-            current = opponent;
-            opponent= temp;
+            // สลับบทบาทผู้เล่นสำหรับรอบถัดไปผ่าน Helper Function
+            const players = this.swapPlayers(current, opponent);
+            // อัปเดตผู้เล่นปัจจุบันและฝ่ายตรงข้ามใหม่หลังสลับสิทธิ์
+            current = players.current;
+            opponent = players.opponent;
         }
+    }
+    // สลับบทบาทผู้เล่นระหว่างฝ่ายรุกและฝ่ายรับ
+    swapPlayers(current, opponent){
+        // คืนค่าออบเจกต์ที่สลับตำแหน่ง current และ opponent เรียบร้อยแล้ว
+        return {
+            current: opponent, 
+            opponent: current
+        };
     }
     // ตรวจสอบและบังคับใช้การ์ด "ฆ่า" ในมือของผู้เล่น
     askSlash(player){
