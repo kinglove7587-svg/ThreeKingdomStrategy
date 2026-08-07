@@ -141,4 +141,16 @@ class HumanController extends Controller{
         // คืนค่าตำแหน่ง index ของการ์ดยาที่พบ
         return index;
     }
+    // ผู้เล่นกดปุ่ม "ใช้ยา" ช่วยชีวิต
+    confirmPeach(){
+        // รีเซ็ตสถานะ Input กลับเป็น idle
+        this.inputState = "idle";
+        return true;
+    }
+    // ผู้เล่นกดปุ่ม "ไม่ใช้ยา" (ข้าม)
+    declinePeach(){
+        // รีเซ็ตสถานะ Input กลับเป็น idle
+        this.inputState = "idle";
+        return false;
+    }
 }
