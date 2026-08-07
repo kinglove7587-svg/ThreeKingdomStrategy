@@ -128,4 +128,8 @@ class HumanController extends Controller{
         // คืนค่าตำแหน่งดรรชนี (Index) ของการ์ด "หลบ" ที่พบในมือ (หากไม่พบจะคืนค่า -1)
         return player.hand.findCardIndexByName("หลบ");
     }
+    // ค้นหาดัชนีของการ์ด "ยา" ในมือของผู้เล่น
+    askPeach(player){
+        return player.hand.findCardIndexByName("ยา");
+    }
 }
