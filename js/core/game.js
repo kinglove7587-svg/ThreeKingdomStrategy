@@ -493,6 +493,11 @@ class Game {
             }
             // เรียกผ่าน Controller ของผู้เล่นแต่ละคนเพื่อหาดัชนีการ์ดยา
             const index = helper.controller.askPeach(helper);
+            // ตรวจสอบว่าผู้เล่นมนุษย์กำลังอยู่ในสถานะรอตัดสินใจกดใช้ยาหรือไม่
+            if(helper.controller.isWaitingPeach()){
+                // คืนค่า "waiting" เพื่อหยุด Game Flow ชั่วคราว รอ Input จาก UI
+                return "waiting";
+            }
             // ถ้าไม่มีการ์ดยาในมือ ให้ข้ามไปถามคนถัดไป
             if(index === -1){
                 continue;

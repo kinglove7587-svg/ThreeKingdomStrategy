@@ -45,4 +45,8 @@ class Controller{
     askPeach(player, game){
         return -1;
     }
+    //
+    isWaitingPeach(){
+        return false;
+    }
 }

@@ -153,4 +153,8 @@ class HumanController extends Controller{
         this.inputState = "idle";
         return false;
     }
+    // เช็กว่าผู้เล่น Human กำลังอยู่ในสถานะรอตัดสินใจกดใช้ยาหรือไม่
+    isWaitingPeach(){
+        return this.inputState === "waitingPeach";
+    }
 }
