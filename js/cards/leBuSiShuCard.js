@@ -33,10 +33,6 @@ class LeBuSiShuCard extends DelayedTrickCard{
         // คืนค่า true เพื่อยืนยันว่าใช้การ์ดสำเร็จ
         return true;
     }
-    // แจ้งระบบ UI/Controller ว่าการ์ดใบนี้จำเป็นต้องคลิกเลือกเป้าหมายก่อนใช้งาน
-    needTarget(){
-        return true;
-    }
     // ประมวลผลการเสี่ยงทาย (Judge) ของการ์ดสุราลืมกลับ
     onJudge(player){
         console.log(player.name + " เริ่ม Judge สุราลืมกลับ");
