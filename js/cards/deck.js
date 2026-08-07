@@ -20,6 +20,7 @@ class Deck {
             this.cards.push(new TengJiaArmor("♣️", 7)); // เพิ่มอุปกรณ์เกราะ เกราะหวาย
             this.cards.push(new IronChainCard("♣️", 12)); // การ์ดโซ่ตรวน
             this.cards.push(new DuelCard("♠️", 1)); // การ์ดดวลเดียว
+            this.cards.push(new WineCard("♦️", 9)); // การ์ด สุรา
         }
     }
     // สับไพ่
