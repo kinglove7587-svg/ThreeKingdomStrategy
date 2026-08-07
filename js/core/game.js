@@ -477,24 +477,33 @@ class Game {
         // คืนค่า true แสดงว่าตอบโต้ด้วยการ์ดหลบสำเร็จ
         return true;
     }
-    // สอบถามการใช้การ์ดยาเพื่อช่วยชีวิตตนเอง
+    // สอบถามการใช้การ์ดยาเพื่อช่วยชีวิตผู้เล่นใกล้ตาย (ถามทุกคนบนโต๊ะ)
     askPeach(player){
         this.log(player.name + " ต้องการ ยา");
-        // ค้นหาการ์ด "ยา" ในมือของผู้เล่น
-        const index = player.hand.findCardIndexByName("ยา");
-        // ถ้าไม่มีการ์ดยาในมือ ให้ส่งกลับ false
-        if(index === -1){
-            return false;
+        // วนลูปถามผู้เล่นทุกคนในเกม
+        for(const helper of this.players){
+            // ข้ามผู้เล่นที่เสียชีวิตไปแล้ว
+            if(!helper.isAlive()){
+                continue;
+            }
+            // ค้นหาตำแหน่งการ์ด "ยา" ในมือของผู้เล่นคนนั้น
+            const index = helper.hand.findCardIndexByName("ยา");
+            // ถ้าไม่มีการ์ดยาในมือ ให้ข้ามไปถามคนถัดไป
+            if(index === -1){
+                continue;
+            }
+            // ถ้ารบกวนพบการ์ดยา ให้ดึงออกจากมือ แล้วนำลงกองทิ้ง
+            const peach = helper.hand.removeCard(index);
+            this.discardPile.addCard(peach);
+            this.log(helper.name + " ใช้ ยา ช่วย " + player.name);
+            // ฟื้นฟู HP ให้คนที่ใกล้ตาย 1 หน่วย
+            player.recoverHp(1);
+            this.ui.render();
+            // ส่งกลับ true เพื่อระบุว่ารอดชีวิต
+            return true;
         }
-        // ดึงการ์ดยาออกจากมือ แล้วนำลงกองทิ้ง
-        const peach = player.hand.removeCard(index);
-        this.discardPile.addCard(peach);
-        this.log(player.name + " ใช้ ยา");
-        // ฟื้นฟู HP ให้ผู้เล่น 1 หน่วย (แก้ไขจาก recoverHP เป็น recoverHp)
-        player.recoverHp(1);
-        this.ui.render();
-        // ส่งกลับ true เพื่อระบุว่ารอดชีวิต
-        return true;
+        // ถ้าวนถามจนครบทุกคนแล้วไม่มีใครมี/ใช้การ์ดยา
+        return false;
     }
     // จัดการเข้าสู่สถานะใกล้ตายของผู้เล่น
     enterDying(player){
