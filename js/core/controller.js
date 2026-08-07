@@ -41,4 +41,8 @@ class Controller{
     isHuman(){
         return false;
     }
+    //
+    askPeach(player, game){
+        return -1;
+    }
 }
