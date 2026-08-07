@@ -491,8 +491,8 @@ class Game {
             if(!helper.isAlive()){
                 continue;
             }
-            // ค้นหาตำแหน่งการ์ด "ยา" ในมือของผู้เล่นคนนั้น
-            const index = helper.hand.findCardIndexByName("ยา");
+            // เรียกผ่าน Controller ของผู้เล่นแต่ละคนเพื่อหาดัชนีการ์ดยา
+            const index = helper.controller.askPeach(helper);
             // ถ้าไม่มีการ์ดยาในมือ ให้ข้ามไปถามคนถัดไป
             if(index === -1){
                 continue;
