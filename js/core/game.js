@@ -348,9 +348,14 @@ class Game {
         const judgeCard = this.deck.draw();
         // ถ้ากองไพ่หมด ให้คืนค่า false
         if (!judgeCard){
-            return false;
+            return null;
         }
-        this.log("Judge : " + judgeCard.suit + " " + judgeCard.number);
+        this.log(
+            player.name + " Judge : " +
+            judgeCard.name + " " +
+            judgeCard.suit + " " +
+            judgeCard.number
+        );
         // ส่งการ์ดเสี่ยงทายลงกองทิ้ง
         this.discardPile.addCard(judgeCard);
         // แสดงรายการไพ่ในกองทิ้ง
