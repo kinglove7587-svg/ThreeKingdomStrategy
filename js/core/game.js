@@ -477,6 +477,11 @@ class Game {
         // คืนค่า true แสดงว่าตอบโต้ด้วยการ์ดหลบสำเร็จ
         return true;
     }
+    // สอบถามการใช้การ์ดยาเพื่อช่วยชีวิตผู้เล่นใกล้ตาย (คืนค่า true ถ้ารอด)
+    askPeach(player){
+        this.log(player.name + " ต้องการ ยา");
+        return false;
+    }
     // จัดการเข้าสู่สถานะใกล้ตายของผู้เล่น
     enterDying(player){
         // ถ้าผู้เล่นไม่ได้อยู่ในสถานะใกล้ตาย ให้ยกเลิก
@@ -484,6 +489,12 @@ class Game {
             return;
         }
         this.log(player.name + " เข้าสู่สถานะใกล้ตาย");
+        // ถามหาการ์ดยาเพื่อช่วยชีวิต
+        const saved = this.askPeach(player);
+        // ถ้ารอดชีวิต ให้จบกระบวนการทันที
+        if(saved){
+            return;
+        }
         // เปลี่ยนสถานะผู้เล่นเป็นเสียชีวิต
         player.dead();
         this.log(player.name + " แพ้แล้ว");
