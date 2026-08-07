@@ -64,12 +64,23 @@ class SlashCard extends BasicCard{
                 return true;
             }
             console.log("Slash DamageType =", this.damageType);// Debug
-            // สร้างออบเจกต์เก็บข้อมูลความเสียหาย
-            const damage = new Damage(player, target, 1, this.damageType);
+            // กำหนดค่าความเสียหายพื้นฐานของการ์ดฆ่าเริ่มต้นที่ 1
+            let damageAmount = 1;
+            // ตรวจสอบว่าผู้เล่นกำลังอยู่ในสถานะเมาสุราหรือไม่
+            if(player.isDrunk()){
+                // หากเมาสุรา ให้เพิ่มค่าความเสียหายขึ้นอีก 1 (รวมเป็น 2)
+                damageAmount++;
+                // รีเซ็ตสถานะเมาสุราของผู้เล่นกลับเป็น false ทันที เพื่อไม่ให้ผลติดไปในการโจมตีครั้งถัดไป
+                player.setDrunk(false);
+                game.log(player.name + " ได้รับผลของสุรา ความเสียหาย +1");
+            }
+            // สร้าง Object ความเสียหาย (Damage) โดยส่งตัวละครผู้โจมตี, เป้าหมาย, จำนวนความเสียหายที่คำนวณได้ และประเภทความเสียหาย
+            const damage = new Damage(player, target, damageAmount, this.damageType);
             // บันทึกว่าดาเมจนี้เกิดจากการ์ดใบไหน
             damage.card = this;
             // ส่งออบเจกต์ความเสียหายให้ Game เป็นศูนย์กลางประมวลผล
             game.damage(damage);
+            console.log(player.isDrunk());
         }
         return true;
     }
