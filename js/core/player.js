@@ -12,6 +12,7 @@ class Player{
         this.weapon = null; // อาวุธ
         this.armor = null; // เกราะ
         this.infiniteSlash = false;
+        this.drunk = false; // สถานะมึนสุรา (ใช้เพิ่ม Damage ให้การ์ดฆ่า)
         this.delayedTricks = []; // เก็บการ์ดหน่วงเวลาที่ติดอยู่
         this.skipPlayPhase = false; // Flag สำหรับข้าม Play Phase เมื่อติดผลสุราลืมกลับ
         this.chained = false; // สถานะติดโซ่ตรวน (Iron Chain)
@@ -277,5 +278,12 @@ class Player{
             this.game.log(this.name + " หลุดจากโซ่");
         }
     }
-    //
+    // ตรวจสอบสถานะมึนสุราของผู้เล่น
+    isDrunk(){
+        return this.drunk;
+    }
+    // กำหนดสถานะมึนสุราของผู้เล่น
+    setDrunk(drunk){
+        this.drunk = drunk;
+    }
 }
