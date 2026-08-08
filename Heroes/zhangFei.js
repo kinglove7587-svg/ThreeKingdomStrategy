@@ -5,7 +5,7 @@ class ZhangFei extends Player{ // เตียวหุย
         super(name, game, controllerClass);
         // กำหนดพลังชีวิตสูงสุดและพลังชีวิตปัจจุบันเป็น 4 หน่วย
         this.maxHp = 4;
-        this.hp = 1;
+        this.hp = 4;
         // เรียกใช้ addSkill() เพื่อเพิ่มและลงทะเบียน Event สกิลพิโรธคำราม (Paoxiao) อัตโนมัติ
         //this.addSkill(new Paoxiao());
         //this.equipArmor(new TengJiaArmor("♣️", 7));

@@ -83,13 +83,14 @@ class UIManager{
                 "/" + 
                 player.maxHp + status;
             // เช็กว่าถ้าเป็นผู้เล่นคนแรก (index 0) ให้ถือว่าเป็นฝั่งเรา
-            if (i === 0){
+            /*if (i === 0){
                 // นำ element ไปแสดงในโซน playerArea
                 this.playerArea.appendChild(div);
             }else{
                 // หากเป็นผู้เล่นคนอื่นๆ (index > 0) ให้ถือว่าเป็นฝั่งศัตรู นำไปแสดงในโซน enemyArea
                 this.enemyArea.appendChild(div);
-            }
+            }*/
+            this.playerArea.appendChild(div);
         }
     }
     // วาดปุ่มการ์ดบนมือของผู้เล่นที่ถึงตาเล่นในปัจจุบัน

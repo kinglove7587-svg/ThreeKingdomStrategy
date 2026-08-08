@@ -146,6 +146,10 @@ class Game {
 
     startTurn(){ // เริ่ม ตา
         const player = this.getCurrentPlayer();
+        const zhangFei = this.players.find(p => p.name === "เตียวหุย");
+        if (zhangFei) {
+            zhangFei.showHand();
+        }
         this.ui.addLog("=============");
         this.ui.addLog(player.name + " Turn ");
         this.ui.addLog("=============");
@@ -171,6 +175,7 @@ class Game {
         this.eventManager.emitToPlayer("onJudgePhase", player);
         // 
         this.drawPhase(player); // ส่งต่อเฟส
+        player.showHand();
     }
 
     drawPhase(player){ // เฟสจั่วไพ่
@@ -257,7 +262,6 @@ class Game {
             this.ui.addLog("ไพ่หมด");
             return;
         }
-
         this.currentPlayerIndex++; // ถ้าถึงคนสุดท้ายแล้ว ให้เวียนกลับไปหาผู้เล่นคนแรก
 
         if (this.currentPlayerIndex >= this.players.length){
