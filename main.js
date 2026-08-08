@@ -11,11 +11,6 @@ const game = new Game([
         hero: ZhangFei, 
         name: "เตียวหุย", 
         controller: AIController//HumanController//AIController
-    },
-    {
-        hero: LiuBei, 
-        name: "เล่าปี่2", 
-        controller: AIController
     }
 ]);
 // เรียกใช้เมธอด start() เพื่อเริ่มรัน Game Loop / ระบบการเล่นของเกม
