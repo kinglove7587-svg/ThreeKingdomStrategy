@@ -35,7 +35,7 @@ class Rende extends ActiveSkill{
         // เพิ่มจำนวนครั้งที่ใช้งานสกิลสะสมขึ้นไปอีก 1 ครั้ง
         this.usedCount++;
         // แสดง Log การใช้สกิล รายชื่อการ์ดที่มอบ และผู้รับ
-        console.log(
+        game.log(
             player.name + 
             " ใช้สกิล Rende (จิตเมตตา) มอบ " + 
             card.name + 
