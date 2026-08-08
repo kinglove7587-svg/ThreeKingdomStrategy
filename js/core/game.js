@@ -561,8 +561,33 @@ class Game {
         if(!player){
             return;
         }
-        // กรณีผู้เล่นตัดสินใจใช้การ์ดยา (จะประมวลผลการดึงการ์ดในขั้นตอนถัดไป)
+        // กรณีผู้เล่นตกลงใช้การ์ดยาช่วยชีวิต
         if(usePeach){
+            // ดึงออบเจกต์ผู้เล่นที่กำลังตัดสินใจใช้ยา (ที่บันทึกไว้ใน peachHelper)
+            const helper = this.peachHelper;
+            // ถ้าไม่มีข้อมูลผู้เล่นที่ช่วย ให้ยกเลิกการทำงาน
+            if(!helper){
+                return;
+            }
+            // ค้นหาตำแหน่งดัชนี (index) ของการ์ด "ยา" ในมือของผู้เล่น
+            const index = helper.hand.findCardIndexByName("ยา");
+            // ถ้าไม่พบการ์ดยาในมือ ให้ยกเลิกการทำงาน
+            if(index === -1){
+                return;
+            }
+            // ดึงการ์ดยาออกจากมือของผู้เล่นตามตำแหน่งดัชนีที่หาได้
+            const peach = helper.hand.removeCard(index);
+            // นำการ์ดยาที่ถูกใช้ลงกองทิ้งการ์ด
+            this.discardPile.addCard(peach);
+            this.log(helper.name + " ใช้ ยา ช่วย " + player.name);
+            // ฟื้นฟู HP ให้กับผู้เล่นที่กำลังใกล้ตายเพิ่มขึ้น 1 หน่วย
+            player.recoverHp(1);
+            this.ui.render();
+            // ล้างค่า State ต่างๆ เกี่ยวกับการใกล้ตายกลับเป็นค่าเริ่มต้น
+            this.dyingPlayer = null;
+            this.peachHelper = null;
+            this.peachHelperIndex = 0;
+            // จบกระบวนการช่วยเหลือ
             return;
         }
         // กรณีผู้เล่นกดไม่ใช้ยา ให้เรียก askPeach เพื่อวนถามผู้เล่นคนถัดไปตามลำดับ
