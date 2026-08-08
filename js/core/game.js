@@ -538,4 +538,13 @@ class Game {
         // ตรวจสอบเงื่อนไขการจบเกม
         this.checkGameOver();
     }
+    //
+    resumeDying(player, usePeach){
+        //
+        if(usePeach){
+            //
+        }else{
+            //
+        }
+    }
 }
