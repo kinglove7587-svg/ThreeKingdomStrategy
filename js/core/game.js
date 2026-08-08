@@ -27,7 +27,9 @@ class Game {
         // กำหนดค่าเริ่มต้นของตำแหน่งการ์ดที่ถูกเลือก ให้เป็น -1 (ยังไม่ได้เลือกการ์ดใดๆ)
         this.selectedCardIndex = -1;
         // กำหนดค่าเริ่มต้นของผู้เล่นเป้าหมาย ให้เป็น null (ยังไม่ได้เลือกเป้าหมาย)
-        this.selectedTarget = null;
+        this.selectedTarget = null; // กำหนดค่าเริ่มต้นของผู้เล่นเป้าหมาย ให้เป็น null
+        this.dyingPlayer = null; // เก็บผู้เล่นที่กำลังอยู่ในสถานะใกล้ตาย
+        this.peachHelperIndex = 0; // ก็บตำแหน่งผู้เล่นที่กำลังถูกถามว่าจะใช้ยาช่วยไหม
         this.chainDamageListener = new ChainDamageListener(); // สร้าง Listener สำหรับความเสียหายโซ่ตรวน
         this.chainDamageListener.register(this.eventManager); // ผูก chainDamageListener เข้ากับ EventManager
         this.isGameOver = false;
