@@ -6,6 +6,7 @@ class HumanController extends Controller{
         this.selectedCardIndex = -1; // ดรรชนี (Index) ของการ์ดที่เลือกอยู่บนมือ
         this.selectedTarget = null; // ผู้เล่นเป้าหมายที่เลือก
         this.selectedSkill = null; // บันทึกออบเจกต์ Skill ที่ผู้เล่นเลือกใช้งาน
+        this.selectedSkillCardIndex = -1; // บันทึกตำแหน่ง Index ของการ์ดที่ผู้เล่นเลือกเพื่อมอบผ่านสกิล
     }
     // จัดการเทิร์นของผู้เล่นมนุษย์
     playTurn(){ 
@@ -177,14 +178,37 @@ class HumanController extends Controller{
         }
         // บันทึกตัวละครเป้าหมายที่เลือกไว้ใน selectedTarget
         this.setSelectedTarget(player);
-        // ดึงออบเจกต์ Skill ที่เก็บไว้ใน selectedSkill ออกมา
+        // เปลี่ยนสถานะเป็นรอเลือกการ์ดที่จะมอบด้วยสกิล (waitingSkillCard)
+        this.inputState = "waitingSkillCard";
+        this.game.ui.render();
+    }
+    // รับตำแหน่ง Index ของการ์ดที่ผู้เล่นเลือก แล้วส่งให้สกิลประมวลผลการส่งมอบ
+    selectSkillCard(index){
+        console.log("selectSkillCard ถูกเรียก", index);
+        // ตรวจสอบสถานะว่าต้องอยู่ในช่วงรอเลือกการ์ดให้สกิลเท่านั้น
+        if(this.inputState !== "waitingSkillCard"){
+            return;
+        }
+        // ดึงออบเจกต์ สกิล ที่เก็บบันทึกไว้ใน selectedSkill
         const skill = this.selectedSkill;
-        // รีเซ็ตค่า State การเลือก Skill และ Input กลับเป็นค่าเริ่มต้น (idle)
+        if(!skill){
+            return;
+        }
+        // ตรวจสอบว่ามี การ์ด อยู่ในตำแหน่ง Index ดังกล่าวจริงหรือไม่
+        const card = this.player.hand.cards[index];
+        if(!card){
+            return;
+        }
+        // บันทึกตำแหน่งการ์ดที่เลือกไว้ใน selectedSkillCardIndex
+        this.selectedSkillCardIndex = index;
+        // ล้างค่าสกิลและรีเซ็ตสถานะ Input กลับเป็น idle
         this.selectedSkill = null;
         this.inputState = "idle";
-        // เรียกใช้งาน Skill โดยส่งผู้เล่นปัจจุบันและออบเจกต์เกมเข้าไป
+        // เรียกใช้งานสกิลประมวลผล
         const success = skill.use(this.player, this.game);
-        // แจ้งตัวเกมหลักประมวลผลต่อหลังจาก Human แอคชันเสร็จสิ้น
+        // รีเซ็ตค่าตำแหน่งการ์ดสกิลกลับเป็น -1
+        this.selectedSkillCardIndex = -1;
+        // แจ้งเกมหลักประมวลผลต่อหลังจาก Human ทำแอคชันเสร็จสิ้น
         this.game.afterHumanAction(success);
     }
 }
