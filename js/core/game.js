@@ -491,8 +491,15 @@ class Game {
     // สอบถามการใช้การ์ดยาเพื่อช่วยชีวิตผู้เล่นใกล้ตาย (ถามทุกคนบนโต๊ะ)
     askPeach(player){
         this.log(player.name + " ต้องการ ยา");
-        // วนลูปถามผู้เล่นทุกคนในเกม
-        for(const helper of this.players){
+        // วนลูปถามทีละคนโดยใช้ peachHelperIndex
+        while(this.peachHelperIndex < this.players.length){
+            const helper = this.players[this.peachHelperIndex];
+            // เพิ่ม index ทันที เพื่อให้การ Resume ครั้งถัดไปชี้ไปที่ผู้เล่นคนถัดไป
+            this.peachHelperIndex++;
+            // ป้องกันไม่ให้ส่งคำถามหาคนใกล้ตายซ้ำโดยไม่จำเป็น
+            if(helper === player){
+                continue;
+            }
             // ข้ามผู้เล่นที่เสียชีวิตไปแล้ว
             if(!helper.isAlive()){
                 continue;
