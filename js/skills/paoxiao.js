@@ -13,7 +13,7 @@ class Paoxiao extends TriggerSkill{
             }
             // อนุญาตให้ใช้การ์ดฆ่าได้เสมอ (ยกเลิกข้อจำกัด 1 ครั้งต่อเทิร์น)
             context.allow = true;
-            console.log(player.name + " ใช้สกิล Paoxiao");
+            player.game.log(player.name + " ใช้สกิล พิโรธคำราม");
         };
         // ใช้ registerListener ของ TriggerSkill เพื่อลงทะเบียน Event และบันทึก Callback ไว้สำหรับการ unregister ในอนาคต
         this.registerListener(eventManager, "beforeUseSlash", callback);
