@@ -30,6 +30,7 @@ class Game {
         this.selectedTarget = null; // กำหนดค่าเริ่มต้นของผู้เล่นเป้าหมาย ให้เป็น null
         this.dyingPlayer = null; // เก็บผู้เล่นที่กำลังอยู่ในสถานะใกล้ตาย
         this.peachHelperIndex = 0; // ก็บตำแหน่งผู้เล่นที่กำลังถูกถามว่าจะใช้ยาช่วยไหม
+        this.peachHelper = null; // เก็บผู้เล่นที่กำลังถูกถามว่าจะใช้ยาช่วยหรือไม่
         this.chainDamageListener = new ChainDamageListener(); // สร้าง Listener สำหรับความเสียหายโซ่ตรวน
         this.chainDamageListener.register(this.eventManager); // ผูก chainDamageListener เข้ากับ EventManager
         this.isGameOver = false;
@@ -508,6 +509,8 @@ class Game {
             const index = helper.controller.askPeach(helper);
             // ตรวจสอบว่าผู้เล่นมนุษย์กำลังอยู่ในสถานะรอตัดสินใจกดใช้ยาหรือไม่
             if(helper.controller.isWaitingPeach()){
+                // บันทึกผู้เล่น Human ที่กำลังถูกถาม
+                this.peachHelper = helper;
                 // คืนค่า "waiting" เพื่อหยุด Game Flow ชั่วคราว รอ Input จาก UI
                 return "waiting";
             }
