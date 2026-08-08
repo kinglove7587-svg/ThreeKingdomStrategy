@@ -191,12 +191,18 @@ class UIManager{
         this.controlArea.appendChild(yesButton);
         this.controlArea.appendChild(noButton);
     }
-    // เมธอดสำหรับจัดการ Event เมื่อมีการคลิกการ์ด (หรือกดปุ่ม End Turn ซึ่งส่ง index เป็น -1)
+    // เมธอดสำหรับจัดการ Event เมื่อมีการคลิกการ์ด
     onCardClick(index){
-        // ดึงข้อมูลผู้เล่นปัจจุบันที่กำลังเล่นอยู่ในเทิร์นนี้
+        // ดึงข้อมูลผู้เล่นปัจจุบันที่กำลังถึงตาเล่น
         const player = this.game.getCurrentPlayer();
-        // ส่งตำแหน่ง index ของการ์ดที่ถูกคลิก ไปให้ Controller ของผู้เล่นประมวลผลต่อ
-        player.controller.selectCard(index);
+        const controller = player.controller;
+        // ตรวจสอบว่าถ้าอยู่ในสถานะรอเลือกการ์ดสำหรับสกิล
+        if(controller.inputState === "waitingSkillCard"){
+            controller.selectSkillCard(index);
+            return;
+        }
+        // กรณีปกติ ให้เลือกการ์ดตาม Logic เดิม
+        controller.selectCard(index);
     }
      // จัดการคำสั่งการตัดสินใจใช้/ไม่ใช้การ์ดยา จากปุ่มกดบนหน้าจอ UI
     onPeachDecision(usePeach){
