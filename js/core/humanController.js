@@ -5,6 +5,7 @@ class HumanController extends Controller{
         this.inputState = "idle"; // สถานะการรับ Input ปัจจุบัน
         this.selectedCardIndex = -1; // ดรรชนี (Index) ของการ์ดที่เลือกอยู่บนมือ
         this.selectedTarget = null; // ผู้เล่นเป้าหมายที่เลือก
+        this.selectedSkill = null; // บันทึกออบเจกต์ Skill ที่ผู้เล่นเลือกใช้งาน
     }
     // จัดการเทิร์นของผู้เล่นมนุษย์
     playTurn(){ 
@@ -156,5 +157,15 @@ class HumanController extends Controller{
     // เช็กว่าผู้เล่น Human กำลังอยู่ในสถานะรอตัดสินใจกดใช้ยาหรือไม่
     isWaitingPeach(){
         return this.inputState === "waitingPeach";
+    }
+    // เริ่มต้นสถานะการเลือกเป้าหมาย (Target) ให้กับ สกิล (Skill) สำหรับ Human
+    startSkillTargetSelection(skill){
+        // บันทึกสกิลที่กำลังจะใช้งานลงในตัวแปร selectedSkill
+        this.selectedSkill = skill;
+        // ล้างค่าเป้าหมายเดิมออกก่อน
+        this.selectedTarget = null;
+        // ปลี่ยนสถานะ Input ให้เป็น "waitingSkillTarget" เพื่อรอผู้เล่นคลิกเลือกตัวละครเป้าหมาย
+        this.inputState = "waitingSkillTarget";
+        this.game.ui.render();
     }
 }
