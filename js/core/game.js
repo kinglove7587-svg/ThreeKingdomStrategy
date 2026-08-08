@@ -491,7 +491,6 @@ class Game {
     }
     // สอบถามการใช้การ์ดยาเพื่อช่วยชีวิตผู้เล่นใกล้ตาย (ถามทุกคนบนโต๊ะ)
     askPeach(player){
-        this.log(player.name + " ต้องการ ยา");
         // วนลูปถามทีละคนโดยใช้ peachHelperIndex
         while(this.peachHelperIndex < this.players.length){
             const helper = this.players[this.peachHelperIndex];
@@ -541,6 +540,7 @@ class Game {
         this.dyingPlayer = player;
         this.peachHelperIndex = 0;
         this.log(player.name + " เข้าสู่สถานะใกล้ตาย");
+        this.log(player.name + " ต้องการ ยา");
         // ถามหาการ์ดยาเพื่อช่วยชีวิต
         const saved = this.askPeach(player);
         // ถ้ารอดชีวิต ให้จบกระบวนการทันที
@@ -603,6 +603,11 @@ class Game {
         // ถ้าวนถามผู้เล่นทุกคนแล้วไม่มีใครใช้ยาช่วย ให้เปลี่ยนสถานะเป็นเสียชีวิต
         player.dead();
         this.log(player.name + " แพ้แล้ว");
+        // ล้าง State Dying
+        this.dyingPlayer = null;
+        this.peachHelper = null;
+        this.peachHelperIndex = 0;
+
         this.checkGameOver();
     }
 }
