@@ -180,4 +180,30 @@ class UIManager{
         // ส่งเป้าหมายให้ Controller จัดการ
         controller.selectTarget(player);
     }
+    //
+    onPeachDecision(usePeach){
+        //
+        const player = this.game.peachHelper;
+        //
+        if(!player){
+            return;
+        }
+        //
+        const controller = player.controller;
+        //
+        if(!(controller instanceof HumanController)){
+            return;
+        }
+        //
+        if(controller.inputState !== "waitingPeach"){
+            return;
+        }
+        //
+        if(usePeach){
+            controller.confirmPeach();
+        }else{
+            //
+            controller.declinePeach();
+        }
+    }
 }
