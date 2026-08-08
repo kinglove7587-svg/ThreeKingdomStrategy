@@ -9,6 +9,7 @@ class UIManager{
         this.handArea = document.getElementById("hand-area");
         this.logArea = document.getElementById("log-area");
         this.endTurnButton = document.getElementById("end-turn");
+        this.controlArea = document.getElementById("control-area");
         this.bindEvents();
     }
     // แสดงผลสถานะล่าสุดของเกมออกทาง Console
@@ -19,6 +20,8 @@ class UIManager{
         this.renderHands();
         // อัปเดตการแสดงผลปุ่ม End Turn ตามประเภทของ Controller
         this.renderEndTurnButton();
+        //
+        this.renderPeachButtons();
     }
     // วาดการ์ดแสดงตัวละครฝั่งเราและฝั่งศัตรู
     renderPlayers(){
@@ -154,6 +157,40 @@ class UIManager{
             this.endTurnButton.style.display = "none";
         }
     }
+    // สร้างและแสดงปุ่ม "ใช้ยา"
+    renderPeachButtons(){
+        // ล้างปุ่มเดิมใน controlArea ออกก่อน
+        this.controlArea.innerHTML = "";
+        // ดึงผู้เล่นมนุษย์ที่กำลังถูกถามเรื่องยา
+        const player = this.game.peachHelper;
+        if(!player){
+            return;
+        }
+        // ดึง Controller และตรวจสอบว่าเป็น HumanController หรือไม่
+        const controller = player.controller;
+        if(!(controller instanceof HumanController)){
+            return;
+        }
+        // แสดงปุ่มเฉพาะตอนที่สถานะกำลังรอการตัดสินใจใช้ยา (waitingPeach) เท่านั้น
+        if(controller.inputState !== "waitingPeach"){
+            return;
+        }
+        // สร้างปุ่ม "ใช้ยา"
+        const yesButton = document.createElement("button");
+        yesButton.textContent = "ใช้ยา";
+        yesButton.onclick = () => {
+            this.onPeachDecision(true);
+        };
+        // สร้างปุ่ม "ไม่ใช้ยา"
+        const noButton = document.createElement("button");
+        noButton.textContent = "ไม่ใช้ยา";
+        noButton.onclick = () => {
+            this.onPeachDecision(false);
+        };
+        // นำปุ่มทั้งสองไปใส่ในพื้นที่ controlArea
+        this.controlArea.appendChild(yesButton);
+        this.controlArea.appendChild(noButton);
+    }
     // เมธอดสำหรับจัดการ Event เมื่อมีการคลิกการ์ด (หรือกดปุ่ม End Turn ซึ่งส่ง index เป็น -1)
     onCardClick(index){
         // ดึงข้อมูลผู้เล่นปัจจุบันที่กำลังเล่นอยู่ในเทิร์นนี้
@@ -186,6 +223,7 @@ class UIManager{
             // กรณีผู้เล่นกดปุ่มไม่ใช้ยา / ข้าม
             controller.declinePeach();
         }
+        this.game.ui.render();
     }
     // เมธอดจัดการ Event เมื่อผู้เล่นคลิกที่ตัวละคร
     onPlayerClick(player){
