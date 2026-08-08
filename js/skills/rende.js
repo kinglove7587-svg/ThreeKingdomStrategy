@@ -28,7 +28,6 @@ class Rende extends ActiveSkill{
             target = player.controller.getSelectedTarget();
             // ถ้ายังไม่ได้เลือกเป้าหมาย ให้เปลี่ยนสถานะ HumanController เข้าสู่การรอเลือก Target
             if(!target){
-                game.log(player.name + " ใช้สกิล Rende (จิตเมตตา)");
                 player.controller.startSkillTargetSelection(this);
                 return false;
             }

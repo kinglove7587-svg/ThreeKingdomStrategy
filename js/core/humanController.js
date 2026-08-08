@@ -178,6 +178,7 @@ class HumanController extends Controller{
         }
         // บันทึกตัวละครเป้าหมายที่เลือกไว้ใน selectedTarget
         this.setSelectedTarget(player);
+        this.game.log(player.name + " ใช้สกิล Rende (จิตเมตตา)");
         // เปลี่ยนสถานะเป็นรอเลือกการ์ดที่จะมอบด้วยสกิล (waitingSkillCard)
         this.inputState = "waitingSkillCard";
         this.game.ui.render();
