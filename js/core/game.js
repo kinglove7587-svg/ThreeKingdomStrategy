@@ -527,6 +527,9 @@ class Game {
         if(!player.isDying()){
             return;
         }
+        // บันทึกผู้เล่นที่กำลังจะตาย และรีเซ็ตดัชนีผู้ช่วยเป็น 0
+        this.dyingPlayer = player;
+        this.peachHelperIndex = 0;
         this.log(player.name + " เข้าสู่สถานะใกล้ตาย");
         // ถามหาการ์ดยาเพื่อช่วยชีวิต
         const saved = this.askPeach(player);
