@@ -237,11 +237,15 @@ class UIManager{
         if (!(controller instanceof HumanController)){
             return;
         }
-        // ถ้า Controller ไม่ได้อยู่ในสถานะรอเลือกเป้าหมาย ให้ยกเลิกการคลิก
-        if (controller.inputState !== "waitingTarget"){
+        // กรณี Controller กำลังรอเลือกเป้าหมายให้กับ สกิล (Skill)
+        if(controller.inputState === "waitingSkillTarget"){
+            controller.selectSkillTarget(player);
             return;
         }
-        // ส่งเป้าหมายให้ Controller จัดการ
-        controller.selectTarget(player);
+        // กรณี Controller กำลังรอเลือกเป้าหมายให้กับ การ์ดปกติ (Card)
+        if(controller.inputState === "waitingTarget"){
+            controller.selectTarget(player);
+            return;
+        }
     }
 }

@@ -168,4 +168,23 @@ class HumanController extends Controller{
         this.inputState = "waitingSkillTarget";
         this.game.ui.render();
     }
+    // รับตัวละครเป้าหมาย (player) จากการคลิกเลือกของ Human แล้วส่งให้ Skill ประมวลผล
+    selectSkillTarget(player){
+        console.log("selectSkillTarget ถูกเรียก", player.name);
+        // ตรวจสอบสถานะว่าต้องอยู่ในช่วงรอเลือกเป้าหมายให้สกิลเท่านั้น
+        if(this.inputState !== "waitingSkillTarget"){
+            return;
+        }
+        // บันทึกตัวละครเป้าหมายที่เลือกไว้ใน selectedTarget
+        this.setSelectedTarget(player);
+        // ดึงออบเจกต์ Skill ที่เก็บไว้ใน selectedSkill ออกมา
+        const skill = this.selectedSkill;
+        // รีเซ็ตค่า State การเลือก Skill และ Input กลับเป็นค่าเริ่มต้น (idle)
+        this.selectedSkill = null;
+        this.inputState = "idle";
+        // เรียกใช้งาน Skill โดยส่งผู้เล่นปัจจุบันและออบเจกต์เกมเข้าไป
+        const success = skill.use(this.player, this.game);
+        // แจ้งตัวเกมหลักประมวลผลต่อหลังจาก Human แอคชันเสร็จสิ้น
+        this.game.afterHumanAction(success);
+    }
 }
