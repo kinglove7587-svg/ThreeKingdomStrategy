@@ -551,12 +551,19 @@ class Game {
         this.checkGameOver();
     }
     //
-    resumeDying(player, usePeach){
+    resumeDying(usePeach){
+        //
+        const player = this.dyingPlayer;
+        //
+        if(!player){
+            return;
+        }
         //
         if(usePeach){
-            //
-        }else{
-            //
+            // TODO ประมวลผลยาในขั้นถัดไป
+            return;
         }
+        // Human ไม่ใช้ยา
+        // TODO: ไปถามผู้เล่นคนถัดไปในขั้นถัดไป
     }
 }
