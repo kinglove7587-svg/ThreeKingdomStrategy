@@ -161,6 +161,32 @@ class UIManager{
         // ส่งตำแหน่ง index ของการ์ดที่ถูกคลิก ไปให้ Controller ของผู้เล่นประมวลผลต่อ
         player.controller.selectCard(index);
     }
+     // จัดการคำสั่งการตัดสินใจใช้/ไม่ใช้การ์ดยา จากปุ่มกดบนหน้าจอ UI
+    onPeachDecision(usePeach){
+        // ดึงออบเจกต์ผู้เล่นมนุษย์ (Human) ที่กำลังถูกถามว่าจะใช้ยาหรือไม่
+        const player = this.game.peachHelper;
+        // ถ้าไม่มีผู้เล่นที่กำลังถูกถาม ให้ยกเลิกการทำงาน
+        if(!player){
+            return;
+        }
+        // ดึง Controller ของผู้เล่นคนนั้น
+        const controller = player.controller;
+        // ตรวจสอบว่า Controller เป็นของ HumanController หรือไม่
+        if(!(controller instanceof HumanController)){
+            return;
+        }
+        // ตรวจสอบสถานะต้องเป็น waitingPeach เท่านั้น ถึงจะรับคำสั่งนี้ได้
+        if(controller.inputState !== "waitingPeach"){
+            return;
+        }
+        // กรณีผู้เล่นกดปุ่มใช้ยา
+        if(usePeach){
+            controller.confirmPeach();
+        }else{
+            // กรณีผู้เล่นกดปุ่มไม่ใช้ยา / ข้าม
+            controller.declinePeach();
+        }
+    }
     // เมธอดจัดการ Event เมื่อผู้เล่นคลิกที่ตัวละคร
     onPlayerClick(player){
         console.log("คลิก", player.name); // Debug
@@ -179,31 +205,5 @@ class UIManager{
         }
         // ส่งเป้าหมายให้ Controller จัดการ
         controller.selectTarget(player);
-    }
-    //
-    onPeachDecision(usePeach){
-        //
-        const player = this.game.peachHelper;
-        //
-        if(!player){
-            return;
-        }
-        //
-        const controller = player.controller;
-        //
-        if(!(controller instanceof HumanController)){
-            return;
-        }
-        //
-        if(controller.inputState !== "waitingPeach"){
-            return;
-        }
-        //
-        if(usePeach){
-            controller.confirmPeach();
-        }else{
-            //
-            controller.declinePeach();
-        }
     }
 }
