@@ -145,13 +145,13 @@ class HumanController extends Controller{
     confirmPeach(){
         // รีเซ็ตสถานะ Input กลับเป็น idle
         this.inputState = "idle";
-        return true;
+        this.game.resumeDying(true);
     }
     // ผู้เล่นกดปุ่ม "ไม่ใช้ยา" (ข้าม)
     declinePeach(){
         // รีเซ็ตสถานะ Input กลับเป็น idle
         this.inputState = "idle";
-        return false;
+        this.game.resumeDying(false);
     }
     // เช็กว่าผู้เล่น Human กำลังอยู่ในสถานะรอตัดสินใจกดใช้ยาหรือไม่
     isWaitingPeach(){
