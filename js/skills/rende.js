@@ -16,6 +16,11 @@ class Rende extends ActiveSkill{
             player.hand.cards.length > 0
         );
     }
+    // ตรวจสอบว่าสามารถเลือกผู้เล่นคนนี้เป็นเป้าหมายของ Rende ได้หรือไม่
+    canTarget(player, target){
+        // Rende ต้องมอบการ์ดให้ตัวละครอื่น ห้ามเลือกตัวเอง
+        return player !== target;
+    }
     // ประมวลผลการใช้สกิล Rende 
     use(player, game){
         // เช็กก่อนว่าผ่านเงื่อนไขการใช้งานหรือไม่ หากไม่มีไพ่ในมือให้ยกเลิกการทำงาน

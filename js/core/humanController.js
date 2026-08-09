@@ -176,6 +176,16 @@ class HumanController extends Controller{
         if(this.inputState !== "waitingSkillTarget"){
             return;
         }
+        // ดึงออบเจกต์ สกิล ที่เก็บบันทึกไว้
+        const skill = this.selectedSkill;
+        if(!skill){
+            return;
+        }
+        // ตรวจสอบว่าเป้าหมายถูกต้องตามกฎของ สกิล หรือไม่
+        if(!skill.canTarget(this.player, player)){
+            this.game.log("ไม่สามารถเลือกเป้าหมายนี้ได้");
+            return;
+        }
         // บันทึกตัวละครเป้าหมายที่เลือกไว้ใน selectedTarget
         this.setSelectedTarget(player);
         this.game.log(this.player.name + " ใช้สกิล Rende (จิตเมตตา)");

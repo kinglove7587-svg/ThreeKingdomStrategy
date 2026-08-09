@@ -56,6 +56,15 @@ class UIManager{
                     div.classList.add("disabled-target");
                 }
             }
+            // ตรวจสอบเงื่อนไข Disabled Target สำหรับ สกิล
+            if(
+                controller.inputState === "waitingSkillTarget" && 
+                controller.selectedSkill
+            ){
+                if(!controller.selectedSkill.canTarget(currentPlayer, player)){
+                    div.classList.add("disabled-target");
+                }
+            }
             // ประกาศตัวแปรรองรับวัตถุเป้าหมายเริ่มต้นเป็น null
             let target = null;
             // ตรวจสอบว่า Controller มีเมธอด getSelectedTarget หรือไม่
