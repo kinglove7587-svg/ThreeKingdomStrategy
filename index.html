@@ -6,7 +6,9 @@
 
         <link rel="stylesheet" href="style.css">
     </head>
+
     <body>
+
         <div id="game">
             <div id="enemy-area"></div>
             <div id="log-area"></div>
@@ -19,65 +21,134 @@
             </button>
         </div>
 
-        <script src="js/cards/card.js"></script>
 
-        <script src="js/cards/basic/basicCard.js"></script>
+        <!-- =========================
+             Cards : Base
+        ========================== -->
+
+        <script src="js/cards/base/card.js"></script>
+        <script src="js/cards/base/basicCard.js"></script>
+        <script src="js/cards/base/equipmentCard.js"></script>
+        <script src="js/cards/base/trickCard.js"></script>
+        <script src="js/cards/base/delayedTrickCard.js"></script>
+        <script src="js/cards/base/judgeResult.js"></script>
+
+
+        <!-- =========================
+             Cards : Basic
+        ========================== -->
+
         <script src="js/cards/basic/wineCard.js"></script>
         <script src="js/cards/basic/dodgeCard.js"></script>
         <script src="js/cards/basic/slashCard.js"></script>
         <script src="js/cards/basic/peachCard.js"></script>
-        
-        <script src="js/cards/equipmentCard.js"></script>
-        <script src="js/cards/weaponCard.js"></script>
-        <script src="js/cards/trainingSword.js"></script>
-        <script src="js/cards/crossbowCard.js"></script>
-        <script src="js/cards/swordCard.js"></script>
-        <script src="js/cards/armorCard.js"></script>
-        <script src="js/cards/tengJiaArmor.js"></script>
-        <script src="js/cards/eightTrigramsArmor.js"></script>
-        <script src="js/cards/delayedTrickCard.js"></script>
 
-        <script src="js/cards/trick/trickCard.js"></script>
+
+        <!-- =========================
+             Cards : Equipment
+        ========================== -->
+
+        <script src="js/cards/equipment/weaponCard.js"></script>
+        <script src="js/cards/equipment/trainingSword.js"></script>
+        <script src="js/cards/equipment/crossbowCard.js"></script>
+        <script src="js/cards/equipment/swordCard.js"></script>
+        <script src="js/cards/equipment/armorCard.js"></script>
+        <script src="js/cards/equipment/tengJiaArmor.js"></script>
+        <script src="js/cards/equipment/eightTrigramsArmor.js"></script>
+
+
+        <!-- =========================
+             Cards : Trick
+        ========================== -->
+
         <script src="js/cards/trick/duelCard.js"></script>
         <script src="js/cards/trick/ironChainCard.js"></script>
         <script src="js/cards/trick/fireAttackCard.js"></script>
+        <script src="js/cards/trick/leBuSiShuCard.js"></script>
+        <script src="js/cards/trick/lightningCard.js"></script>
 
-        <script src="js/cards/judgeResult.js"></script>
-        <script src="js/cards/leBuSiShuCard.js"></script>
-        <script src="js/cards/lightningCard.js"></script>
+
+        <!-- =========================
+             Deck / Discard
+        ========================== -->
+
         <script src="js/cards/deck.js"></script>
         <script src="js/cards/discardPile.js"></script>
 
+
+        <!-- =========================
+             Core
+        ========================== -->
+
         <script src="js/core/hand.js"></script>
         <script src="js/core/player.js"></script>
-        <script src="js/eventManager.js"></script>
-        <script src="js/eventListener.js"></script>
+
+        <script src="js/core/eventManager.js"></script>
+        <script src="js/core/eventListener.js"></script>
 
         <script src="js/core/controller.js"></script>
         <script src="js/core/aiController.js"></script>
         <script src="js/core/humanController.js"></script>
-        <script src="js/UI/uiManager.js"></script>
-        <script src="js/damageType.js"></script>
+
+        <script src="js/core/damageType.js"></script>
         <script src="js/core/damage.js"></script>
 
         <script src="js/core/game.js"></script>
 
-        <script src="js/skills/skill.js"></script>
-        <script src="js/skills/activeSkill.js"></script>
-        <script src="js/skills/passiveSkill.js"></script>
-        <script src="js/skills/triggerSkill.js"></script>
-        <script src="js/skills/tengJiaSkill.js"></script>
-        <script src="js/skills/eightTrigramsSkill.js"></script>
-        <script src="js/listeners/debugDamageListener.js"></script>
-        <script src="js/listeners/chainDamageListener.js"></script>
-        <script src="js/skills/jijiang.js"></script>
-        <script src="js/skills/paoxiao.js"></script>
-        <script src="js/skills/rende.js"></script>
+
+        <!-- =========================
+             Skills : Base
+        ========================== -->
+
+        <script src="js/skills/base/skill.js"></script>
+        <script src="js/skills/base/activeSkill.js"></script>
+        <script src="js/skills/base/passiveSkill.js"></script>
+        <script src="js/skills/base/triggerSkill.js"></script>
 
 
+        <!-- =========================
+             Skills : Equipment
+        ========================== -->
 
-        <script src="js/Heroes/liuBei.js"></script>
-        <script src="js/Heroes/zhangFei.js"></script>
+        <script src="js/skills/equipment/tengJiaSkill.js"></script>
+        <script src="js/skills/equipment/eightTrigramsSkill.js"></script>
+
+
+        <!-- =========================
+             Skills : Heroes
+        ========================== -->
+
+        <script src="js/skills/heroes/jijiang.js"></script>
+        <script src="js/skills/heroes/paoxiao.js"></script>
+        <script src="js/skills/heroes/rende.js"></script>
+
+
+        <!-- =========================
+             Skill Listeners
+        ========================== -->
+
+        <script src="js/skills/listeners/debugDamageListener.js"></script>
+        <script src="js/skills/listeners/chainDamageListener.js"></script>
+
+
+        <!-- =========================
+             UI
+        ========================== -->
+
+        <script src="js/ui/uiManager.js"></script>
+
+
+        <!-- =========================
+             Heroes
+        ========================== -->
+
+        <script src="js/heroes/liuBei.js"></script>
+        <script src="js/heroes/zhangFei.js"></script>
+
+
+        <!-- =========================
+             Main
+        ========================== -->
 
         <script src="main.js"></script>
 
