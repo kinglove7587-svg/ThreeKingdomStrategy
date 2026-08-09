@@ -59,8 +59,8 @@ class Rende extends ActiveSkill{
         }
         // นำการ์ดใบนั้นย้ายเข้าไปใส่ไว้ในมือของผู้เล่นเป้าหมาย
         target.hand.addCard(card);
-        // เพิ่มจำนวนครั้งที่ใช้งานสกิลสะสมขึ้นไปอีก 1 ครั้ง
-        this.usedCount++;
+        // เพิ่มจำนวนการ์ด Rende ที่มอบไปแล้วในเทิร์นนี้
+        this.rendeCardCount++;
         // แสดง Log การใช้สกิล รายชื่อการ์ดที่มอบ และผู้รับ
         game.log(
             player.name + 
@@ -69,6 +69,10 @@ class Rende extends ActiveSkill{
             " ให้ " +
             target.name
         );
+        // มอบการ์ดใบที่ 2 ในเทิร์นนี้ จะฟื้น HP 1
+        if(this.rendeCardCount === 2 && player.hp < player.maxHp){
+            player.heal(1);
+        }
         // แสดงรายการไพ่ในมือล่าสุดของผู้ใช้สกิลและผู้รับ
         player.showHand();
         target.showHand();

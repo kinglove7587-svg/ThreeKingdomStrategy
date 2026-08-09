@@ -67,7 +67,7 @@ class Player{
             this.hp = this.maxHp; // ถ้าเกิน ให้ดึงกลับมาเท่ากับค่า maxHp
         }
 
-        console.log(this.name + " ฟื้น HP " + amount); // แสดง ว่าผู้เล่นคนนี้ฟื้น HP เท่าไหร่
+        this.game.log(this.name + " ฟื้น HP " + amount); // แสดง ว่าผู้เล่นคนนี้ฟื้น HP เท่าไหร่
         this.showStatus(); // แสดง HP ล่าสุด
     }
     // เช็กว่าผู้เล่นคนนี้สามารถใช้การ์ด "ฆ่า" ในเทิร์นนี้ได้หรือไม่ (ถ้ายังไม่เคยใช้จะคืนค่า true)
