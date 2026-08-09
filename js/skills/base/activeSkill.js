@@ -7,6 +7,10 @@ class ActiveSkill extends Skill{
     canUse(player, game){
         return false;
     }
+    // ตรวจสอบว่าสามารถเลือก target คนนี้ได้หรือไม่
+    canTarget(player, target){
+        return true;
+    }
     // เมธอดสำหรับสั่งงานสกิลเมื่อถูกเรียกใช้ ให้คลาสลูกนำไป Override เพื่อใส่ความสามารถจริงเอง
     use(player, game){
         return false;
