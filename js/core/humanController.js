@@ -169,6 +169,30 @@ class HumanController extends Controller{
         this.inputState = "waitingSkillTarget";
         this.game.ui.render();
     }
+    // เริ่มต้นกระบวนการใช้ Active Skill โดยถามเงื่อนไขจาก Skill ก่อนว่าต้องการเลือก Target หรือเลือก การ์ด ในมือหรือไม่
+    startSkillUse(skill){
+        // บันทึก สกิล ที่กำลังเลือกไว้
+        this.selectedSkill = skill;
+        // รีเซ็ตค่าเป้าหมายและการ์ดที่เคยเลือกไว้เดิม
+        this.selectedTarget = null;
+        this.selectedSkillCardIndex = -1;
+        // ตรวจสอบว่า สกิล ต้องการให้เลือกเป้าหมายก่อนหรือไม่
+        if(skill.needsTarget(this.player, this.game)){
+            this.inputState = "waitingSkillTarget";
+            this.game.ui.render();
+            return;
+        }
+        // ตรวจสอบว่า สกิล ต้องการให้เลือกการ์ดจากมือก่อนหรือไม่
+        if(skill.needsCardSelection(this.player, this.game)){
+            this.inputState = "waitingSkillCard";
+            this.game.ui.render();
+            return;
+        }
+        // หากไม่ต้องเลือกอะไรเพิ่ม ให้รันเมธอด use() ของ สกิล ทันที
+        const success = skill.use(this.player, this.game);
+        // ส่งผลลัพธ์การทำงานหลังผู้เล่นทำ Action
+        this.game.afterHumanAction(success);
+    }
     // รับตัวละครเป้าหมาย (player) จากการคลิกเลือกของ Human แล้วส่งให้ Skill ประมวลผล
     selectSkillTarget(player){
         console.log("selectSkillTarget ถูกเรียก", player.name);
