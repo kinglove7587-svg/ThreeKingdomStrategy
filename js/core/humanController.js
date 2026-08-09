@@ -213,9 +213,10 @@ class HumanController extends Controller{
         // บันทึกตัวละครเป้าหมายที่เลือกไว้ใน selectedTarget
         this.setSelectedTarget(player);
         // เช็กด้วย Framework ใหม่: ถ้าสกิลต้องการให้เลือกการ์ดต่อ ให้เปลี่ยนสถานะรอเลือกการ์ด
-        if(skill,needsCardSelection(this.player, this.game)){
+        if(skill.needsCardSelection(this.player, this.game)){
             this.inputState = "waitingSkillCard";
             this.game.ui.render();
+            return;
         }
         // ถ้าสกิลไม่ต้องการเลือกการ์ดต่อ ให้รันสกิลทันที
         this.inputState = "idle";
