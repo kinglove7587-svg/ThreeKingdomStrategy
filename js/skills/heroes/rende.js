@@ -35,11 +35,6 @@ class Rende extends ActiveSkill{
         // ถ้าผู้ใช้เป็น Human ให้ดึงเป้าหมายจากการเลือก
         if(player.controller.isHuman()){
             target = player.controller.getSelectedTarget();
-            // ถ้ายังไม่ได้เลือกเป้าหมาย ให้เปลี่ยนสถานะ HumanController เข้าสู่การรอเลือก Target
-            if(!target){
-                player.controller.startSkillTargetSelection(this);
-                return false;
-            }
         }else{
             // ถ้าเป็น AI ให้เลือกเป้าหมายเป็นผู้เล่นถัดไป
             target = game.getNextPlayer();
