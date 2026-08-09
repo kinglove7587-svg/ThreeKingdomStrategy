@@ -20,7 +20,8 @@ class UIManager{
         this.renderHands();
         // อัปเดตการแสดงผลปุ่ม End Turn ตามประเภทของ Controller
         this.renderEndTurnButton();
-        //
+        this.controlArea.innerHTML = ""; // ล้างพื้นที่ปุ่มเดิมก่อน
+        this.renderSkillButtons();
         this.renderPeachButtons();
     }
     // วาดการ์ดแสดงตัวละครฝั่งเราและฝั่งศัตรู
@@ -157,10 +158,35 @@ class UIManager{
             this.endTurnButton.style.display = "none";
         }
     }
+    // เมธอดสำหรับสร้างปุ่มกดใช้งาน Active Skill บน UI
+    renderSkillButtons(){
+        // ดึงข้อมูลผู้เล่นปัจจุบันที่กำลังถึงตาเล่น
+        const player = this.game.getCurrentPlayer();
+        // ถ้าผู้เล่นปัจจุบันไม่ใช่ Human ไม่ต้องสร้างปุ่ม สกิล
+        if(!(player.controller instanceof HumanController)){
+            return;
+        }
+        // ดึงรายการ Active Skill ทั้งหมดของผู้เล่น
+        const skills = player.getActiveSkills();
+        // วนลูปเช็กสกิลแต่ละใบ
+        for(const skill of skills){
+            // ถ้าสกิลไม่ผ่านเงื่อนไขการใช้งาน ให้ข้ามไป
+            if(!skill.canUse(player, this.game)){
+                continue;
+            }
+            // สร้างปุ่มกดสำหรับสกิล
+            const button = document.createElement("button");
+            button.textContent = "ใช้สกิล " + skill.name;
+            // เมื่อคลิกปุ่ม ให้สั่ง HumanController เริ่มกระบวนการเลือกเป้าหมายสกิล
+            button.onclick = () => {
+                player.controller.startSkillTargetSelection(skill);
+            };
+            // นำปุ่มไปใส่ไว้ในพื้นที่ควบคุม (controlArea) บน UI
+            this.controlArea.appendChild(button);
+        }
+    }
     // สร้างและแสดงปุ่ม "ใช้ยา"
     renderPeachButtons(){
-        // ล้างปุ่มเดิมใน controlArea ออกก่อน
-        this.controlArea.innerHTML = "";
         // ดึงผู้เล่นมนุษย์ที่กำลังถูกถามเรื่องยา
         const player = this.game.peachHelper;
         if(!player){
