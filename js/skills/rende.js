@@ -16,7 +16,7 @@ class Rende extends ActiveSkill{
             player.hand.cards.length > 0
         );
     }
-    // ประมวลผลการใช้สกิล Rende (เมตตาธรรม)
+    // ประมวลผลการใช้สกิล Rende 
     use(player, game){
         // เช็กก่อนว่าผ่านเงื่อนไขการใช้งานหรือไม่ หากไม่มีไพ่ในมือให้ยกเลิกการทำงาน
         if (!this.canUse(player, game)){
@@ -35,8 +35,23 @@ class Rende extends ActiveSkill{
             // ถ้าเป็น AI ให้เลือกเป้าหมายเป็นผู้เล่นถัดไป
             target = game.getNextPlayer();
         }
-        // ดึงการ์ดใบแรก (index ที่ 0) ออกมาจากมือของผู้เล่น
-        const card = player.hand.removeCard(0);
+        let cardIndex;
+        // ตรวจสอบและเลือกเป้าหมาย (Target)
+        if(player.controller.isHuman()){
+            cardIndex = player.controller.selectedSkillCardIndex;
+            // ถ้ายังไม่ได้เลือกเป้าหมาย ให้สั่งเข้าสู่สถานะรอเลือกเป้าหมายก่อน
+            if(cardIndex === -1){
+                player.controller.selectedSkill = this;
+                player.controller.inputState = "waitingSkillCard";
+                player.controller.game.ui.render();
+                return false;
+            }
+        }else{
+            // AI ยังเลือกใบแรก
+            cardIndex = 0;
+        }
+        //
+        const card = player.hand.removeCard(cardIndex);
         // เช็กความปลอดภัย หากดึงไพ่ไม่ได้ (ได้ค่า null) ให้ยกเลิกการทำงาน
         if (card === null){
             return false;
