@@ -204,22 +204,25 @@ class Game {
         // ส่ง Event "onPlayPhase" ผ่าน eventManager ไปยังผู้เล่นเป้าหมาย เพื่อเปิดใช้งานสกิลช่วง Play Phase
         this.eventManager.emitToPlayer("onPlayPhase", player);
         // ใช้ Active Skill
-        // กำหนดตัวแปร flag ไว้เช็กว่าในรอบลูปนั้นๆ มีการใช้สกิลเกิดขึ้นหรือไม่ (เริ่มต้นให้เป็น true เพื่อเข้าลูป)
-        let usedSkill = true;
-        // วนลูปทำงานตราบใดที่ยังมีการใช้สกิลสำเร็จอยู่ในรอบก่อนหน้า
-        while (usedSkill) {
-            // รีเซ็ตค่าเป็น false ในทุกๆ รอบลูปเริ่มต้น หากไม่มีสกิลไหนถูกใช้ในรอบนี้ ลูปจะจบลงทันที
-            usedSkill = false;
-            // วนลูปตรวจสอบเฉพาะ Active Skill ของผู้เล่น เช่น สกิล Rende ของเล่าปี่
-            for (const skill of player.getActiveSkills()){
-                // ถ้าสกิลนี้ไม่ผ่านเงื่อนไขการใช้งาน canUse เป็น false ให้ข้ามไปเช็กสกิลถัดไป
-                if (!skill.canUse(player, this)){
-                    continue;
-                }
-                // สั่งใช้งานสกิล และหากใช้งานสำเร็จ use คืนค่า true
-                if (skill.use(player, this)){
-                    usedSkill = true;
-                    break;
+        //
+        if(!player.controller.isHuman()){
+            // กำหนดตัวแปร flag ไว้เช็กว่าในรอบลูปนั้นๆ มีการใช้สกิลเกิดขึ้นหรือไม่ (เริ่มต้นให้เป็น true เพื่อเข้าลูป)
+            let usedSkill = true;
+            // วนลูปทำงานตราบใดที่ยังมีการใช้สกิลสำเร็จอยู่ในรอบก่อนหน้า
+            while (usedSkill) {
+                // รีเซ็ตค่าเป็น false ในทุกๆ รอบลูปเริ่มต้น หากไม่มีสกิลไหนถูกใช้ในรอบนี้ ลูปจะจบลงทันที
+                usedSkill = false;
+                // วนลูปตรวจสอบเฉพาะ Active Skill ของผู้เล่น เช่น สกิล Rende ของเล่าปี่
+                for (const skill of player.getActiveSkills()){
+                    // ถ้าสกิลนี้ไม่ผ่านเงื่อนไขการใช้งาน canUse เป็น false ให้ข้ามไปเช็กสกิลถัดไป
+                    if (!skill.canUse(player, this)){
+                        continue;
+                    }
+                    // สั่งใช้งานสกิล และหากใช้งานสำเร็จ use คืนค่า true
+                    if (skill.use(player, this)){
+                        usedSkill = true;
+                        break;
+                    }
                 }
             }
         }
