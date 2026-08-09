@@ -11,9 +11,12 @@ class Paoxiao extends TriggerSkill{
             if (context.player !== player){
                 return;
             }
-            // อนุญาตให้ใช้การ์ดฆ่าได้เสมอ (ยกเลิกข้อจำกัด 1 ครั้งต่อเทิร์น)
-            context.allow = true;
-            player.game.log(player.name + " ใช้สกิล พิโรธคำราม");
+            // หากระบบไม่อนุญาตให้ใช้ Slash (เนื่องจากใช้ไปแล้ว 1 ครั้ง)
+            // ให้ Paoxiao เข้ามาปลดล็อก (context.allow = true) และแสดง Log สกิลทันที
+            if(!context.allow){
+                context.allow = true;
+                player.game.log(player.name + " ใช้สกิล พิโรธคำราม");
+            }
         };
         // ใช้ registerListener ของ TriggerSkill เพื่อลงทะเบียน Event และบันทึก Callback ไว้สำหรับการ unregister ในอนาคต
         this.registerListener(eventManager, "beforeUseSlash", callback);
