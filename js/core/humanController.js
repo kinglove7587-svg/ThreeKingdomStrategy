@@ -209,6 +209,10 @@ class HumanController extends Controller{
         const success = skill.use(this.player, this.game);
         // รีเซ็ตค่าตำแหน่งการ์ดสกิลกลับเป็น -1
         this.selectedSkillCardIndex = -1;
+        // ใช้สกิลสำเร็จแล้ว ล้างเป้าหมายของสกิล
+        if(success){
+            this.selectedTarget = null;
+        }
         // แจ้งเกมหลักประมวลผลต่อหลังจาก Human ทำแอคชันเสร็จสิ้น
         this.game.afterHumanAction(success);
     }
