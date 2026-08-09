@@ -2,19 +2,15 @@ class Rende extends ActiveSkill{
     // กำหนด constructor สืบทอดจาก ActiveSkill และระบุชื่อสกิล "Rende" (จิตเมตตา)
     constructor(){
         super("Rende"); // จิตเมตตา
-        // จำนวนครั้งที่ใช้ในเทิร์นนี้
-        this.usedCount = 0;
+        this.rendeCardCount = 0; // เปลี่ยนมาใช้นับจำนวนการ์ดที่มอบในเทิร์นนี้แทน
     }
-    // เริ่มเทิร์นใหม่ รีเซ็ตจำนวนครั้งที่ใช้
+    // เริ่มเทิร์นใหม่ รีเซ็ตจำนวนการ์ดที่มอบให้กลับเป็น 0
     onTurnStart(player, game){
-        this.usedCount = 0;
+        this.rendeCardCount = 0;
     }
-    // ใช้ได้เมื่อยังไม่ครบ 2 ครั้ง และมีไพ่ในมือ
+    // เช็กเงื่อนไขการใช้งาน: ใช้งานได้เรื่อยๆ ตราบใดที่ยังมีการ์ดในมือ
     canUse(player, game){
-        return(
-            this.usedCount < 2 &&
-            player.hand.cards.length > 0
-        );
+        return player.hand.cards.length > 0;
     }
     // ตรวจสอบว่าสามารถเลือกผู้เล่นคนนี้เป็นเป้าหมายของ Rende ได้หรือไม่
     canTarget(player, target){
