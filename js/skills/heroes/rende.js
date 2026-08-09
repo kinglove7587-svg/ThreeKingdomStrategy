@@ -12,6 +12,14 @@ class Rende extends ActiveSkill{
     canUse(player, game){
         return player.hand.cards.length > 0;
     }
+    // ระบุว่าสกิลนี้ต้องเลือกเป้าหมาย
+    needsTarget(player, game){
+        return true;
+    }
+    // ระบุว่าสกิลนี้ต้องเลือกการ์ดในมือ
+    needsCardSelection(player, game){
+        return true;
+    }
     // ตรวจสอบว่าสามารถเลือกผู้เล่นคนนี้เป็นเป้าหมายของ Rende ได้หรือไม่
     canTarget(player, target){
         // Rende ต้องมอบการ์ดให้ตัวละครอื่น ห้ามเลือกตัวเอง
@@ -71,7 +79,7 @@ class Rende extends ActiveSkill{
         );
         // มอบการ์ดใบที่ 2 ในเทิร์นนี้ จะฟื้น HP 1
         if(this.rendeCardCount === 2 && player.hp < player.maxHp){
-            player.heal(1);
+            player.recoverHp(1);
         }
         // แสดงรายการไพ่ในมือล่าสุดของผู้ใช้สกิลและผู้รับ
         player.showHand();
