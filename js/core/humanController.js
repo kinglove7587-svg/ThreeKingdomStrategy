@@ -242,13 +242,12 @@ class HumanController extends Controller{
         }
         // บันทึกตำแหน่งการ์ดที่เลือกไว้ใน selectedSkillCardIndex
         this.selectedSkillCardIndex = index;
-        // ล้างค่าสกิลและรีเซ็ตสถานะ Input กลับเป็น idle
-        this.selectedSkill = null;
-        this.inputState = "idle";
-        // เรียกใช้งานสกิลประมวลผล
+        // เเรียกใช้ Skill ก่อน
         const success = skill.use(this.player, this.game);
-        // รีเซ็ตค่าตำแหน่งการ์ดสกิลกลับเป็น -1
+        // หลัง Skill ทำงานเสร็จแล้วค่อยล้าง State
+        this.selectedSkill = null;
         this.selectedSkillCardIndex = -1;
+        this.inputState = "idle";
         // ใช้สกิลสำเร็จแล้ว ล้างเป้าหมายของสกิล
         if(success){
             this.selectedTarget = null;
