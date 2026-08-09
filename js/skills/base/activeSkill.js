@@ -11,6 +11,10 @@ class ActiveSkill extends Skill{
     needsTarget(player, game){
         return true;
     }
+    // ตรวจสอบว่าสกิลต้องให้ผู้เล่นเลือกการ์ดจากมือหรือไม่
+    needsCardSelection(player, game){
+        return false;
+    }
     // ตรวจสอบว่าสามารถเลือก target คนนี้ได้หรือไม่
     canTarget(player, target){
         return true;
