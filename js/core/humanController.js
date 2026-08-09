@@ -212,10 +212,15 @@ class HumanController extends Controller{
         }
         // บันทึกตัวละครเป้าหมายที่เลือกไว้ใน selectedTarget
         this.setSelectedTarget(player);
-        //this.game.log(this.player.name + " ใช้สกิล Rende (จิตเมตตา)");
-        // เปลี่ยนสถานะเป็นรอเลือกการ์ดที่จะมอบด้วยสกิล (waitingSkillCard)
-        this.inputState = "waitingSkillCard";
-        this.game.ui.render();
+        // เช็กด้วย Framework ใหม่: ถ้าสกิลต้องการให้เลือกการ์ดต่อ ให้เปลี่ยนสถานะรอเลือกการ์ด
+        if(skill,needsCardSelection(this.player, this.game)){
+            this.inputState = "waitingSkillCard";
+            this.game.ui.render();
+        }
+        // ถ้าสกิลไม่ต้องการเลือกการ์ดต่อ ให้รันสกิลทันที
+        this.inputState = "idle";
+        const success = skill.use(this.player, this.game);
+        this.game.afterHumanAction(success);
     }
     // รับตำแหน่ง Index ของการ์ดที่ผู้เล่นเลือก แล้วส่งให้สกิลประมวลผลการส่งมอบ
     selectSkillCard(index){
