@@ -43,13 +43,6 @@ class Rende extends ActiveSkill{
         // ตรวจสอบและเลือกเป้าหมาย (Target)
         if(player.controller.isHuman()){
             cardIndex = player.controller.selectedSkillCardIndex;
-            // ถ้ายังไม่ได้เลือกเป้าหมาย ให้สั่งเข้าสู่สถานะรอเลือกเป้าหมายก่อน
-            if(cardIndex === -1){
-                player.controller.selectedSkill = this;
-                player.controller.inputState = "waitingSkillCard";
-                player.controller.game.ui.render();
-                return false;
-            }
         }else{
             // AI ยังเลือกใบแรก
             cardIndex = 0;
