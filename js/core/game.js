@@ -158,14 +158,18 @@ class Game {
         this.ui.addLog("=============");
         this.startPhase(player); // เริ่ม phase ต่างๆ
     }
-
-    startPhase(player){ // เริ่มต้นเฟส
+    // ประมวลผลช่วงเริ่มเทิร์น (Start Phase)
+    startPhase(player){ 
         // รีเซ็ตสถานะการใช้การ์ด "ฆ่า/ฟัน" (Slash) ให้ผู้เล่นกลับมาใช้ได้ใหม่ในเทิร์นนี้
         player.slashUsed = false;  
         // ส่งข้อความ "Start Phase" ไปบันทึกและแสดงในกล่อง Log บนหน้าเว็บ
         this.ui.addLog("Start Phase");
         // ส่ง Event "onTurnStart" เจาะจงไปยังผู้เล่นเป้าหมาย เพื่อกระตุ้นสกิลที่ทำงานช่วงเริ่มเทิร์น
         this.eventManager.emitToPlayer("onTurnStart", player);
+        // เรียก lifecycle onTurnStart ของทุกสกิลที่ผู้เล่นมี
+        for(const skill of player.skills){
+            skill.onTurnStart(player, this);
+        }
         // ส่งต่อการทำงานไปยังช่วงเช็กดวง/คำนวณผล (Judge Phase) เป็นลำดับถัดไป
         this.judgePhase(player); // ส่งต่อเฟส
     }
