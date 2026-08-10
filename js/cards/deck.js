@@ -18,8 +18,8 @@ class Deck {
             this.cards.push(new LightningCard("♠️", 2)); // เพิ่มการ์ดหน่วงเวลา สายฟ้า
             this.cards.push(new FireAttackCard("♥️", 8)); // เพิ่มการ์ดกลอุบาย เพลิงผลาญ
             this.cards.push(new TengJiaArmor("♣️", 7)); // เพิ่มอุปกรณ์เกราะ เกราะหวาย
-            this.cards.push(new IronChainCard("♣️", 12)); // การ์ดโซ่ตรวน
-            this.cards.push(new DuelCard("♠️", 1)); // การ์ดดวลเดียว
+            this.cards.push(new IronChainCard("♣️", 12)); // การ์ด โซ่ตรวน
+            this.cards.push(new DuelCard("♠️", 1)); // การ์ด ดวลเดียว
             this.cards.push(new WineCard("♦️", 9)); // การ์ด สุรา
         }
     }
