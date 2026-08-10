@@ -5,13 +5,15 @@ class LiuBei extends Player{ // เล่าปี่
         super(name, game, controllerClass);
         // กำหนดพลังชีวิตสูงสุดและพลังชีวิตปัจจุบันเป็น 4 หน่วย
         this.maxHp = 4;
-        this.hp = 1;
+        this.hp = 4;
         // เรียกใช้ addSkill() เพื่อเพิ่มสกิลและลงทะเบียน Event สกิลจิตเมตตา (Rende) อัตโนมัติ
         this.addSkill(new Rende());
         //this.setChained(true);
         //this.equipArmor(new EightTrigramsArmor("♣️", 7));
         //this.hand.addCard(new IronChainCard("♠️", 1));
-        //this.hand.addCard(new PeachCard("♠️", 1));
+        this.hand.addCard(new StealCard("♠️", 1));
+        this.hand.addCard(new StealCard("♠️", 1));
+        this.hand.addCard(new StealCard("♠️", 1));
         //this.hand.addCard(new EightTrigramsArmor("♠️", 1));
     }
 }

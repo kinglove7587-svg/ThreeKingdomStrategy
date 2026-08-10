@@ -12,6 +12,10 @@ class StealCard extends TrickCard{
         if(player === target){
             return false;
         }
+        // เป้าหมายต้องมีไพ่ในมืออย่างน้อย 1 ใบ
+        if(target.hand.cards.length === 0){
+            return false;
+        }
         // ระยะห่าง (Distance) ต้องไม่เกิน 1
         return player.game.getDistance(player, target) <= 1;
     }
