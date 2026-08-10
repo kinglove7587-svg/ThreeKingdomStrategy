@@ -112,6 +112,11 @@ class UIManager{
         this.handArea.innerHTML = "";
         // ดึงตัวละครผู้เล่นที่กำลังถึงตาเล่นในปัจจุบันจาก Game Engine
         const player = this.game.getCurrentPlayer();
+        // หากอยู่ในสถานะรอเลือกการ์ดเพื่อขโมย (Steal) ให้เปลี่ยนไปวาดการ์ดแบบคว่ำแทนแล้วจบฟังก์ชัน
+        if(player.controller.inputState === "waitingStealCard"){
+            this.renderStealHand();
+            return;
+        }
         // ถ้าไม่ใช่ผู้เล่นมนุษย์ ไม่ต้องแสดงการ์ดในมือ
         if (!(player.controller instanceof HumanController)){
             return;
@@ -130,6 +135,32 @@ class UIManager{
                 this.onCardClick(i);
             };
             // นำปุ่มการ์ดที่สร้างเสร็จแล้วไปแสดงในโซน handArea บนหน้าเว็บ
+            this.handArea.appendChild(button);
+        }
+    }
+    // วาดการ์ดคว่ำของเป้าหมายในโหมดขโมยการ์ด (Steal)
+    renderStealHand(){
+        // ดึงผู้เล่นปัจจุบันที่กำลังเล่นอยู่ในขณะนี้
+        const player = this.game.getCurrentPlayer();
+        // ดึง Controller ของผู้เล่น
+        const controller = player.controller;
+        // ดึงเป้าหมายที่จะขโมยการ์ดที่ถูกเลือกไว้
+        const target = controller.selectedStealTarget;
+        // ถ้าไม่มีเป้าหมาย ให้ยกเลิกการทำงาน
+        if(!target){
+            return;
+        }
+        // วนลูปสร้างปุ่มไพ่คว่ำตามจำนวนการ์ดบนมือของเป้าหมาย
+        for(let i = 0; i < target.hand.cards.length; i++){
+            // สร้าง Element ปุ่ม <button> ขึ้นมาใหม่
+            const button = document.createElement("button");
+            // กำหนดข้อความบนปุ่มเป็นไอคอนไพ่คว่ำ พร้อมหมายเลข
+            button.textContent = "🂠 " + (i + 1);
+            // กำหนด Event เมื่อกดคลิก ให้เรียกใช้เมธอด selectStealCard
+            button.onclick = () => {
+                controller.selectStealCard(i);
+            };
+            // นำปุ่มที่สร้างไปแสดงผลในโซน handArea บนหน้าเว็บ
             this.handArea.appendChild(button);
         }
     }
@@ -234,6 +265,11 @@ class UIManager{
         // ตรวจสอบว่าถ้าอยู่ในสถานะรอเลือกการ์ดสำหรับสกิล
         if(controller.inputState === "waitingSkillCard"){
             controller.selectSkillCard(index);
+            return;
+        }
+        // ตรวจสอบว่าถ้าอยู่ในสถานะรอเลือกการ์ดที่จะขโมย (Steal)
+        if(controller.inputState === "waitingStealCard"){
+            controller.selectStealCard(index);
             return;
         }
         // กรณีปกติ ให้เลือกการ์ดตาม Logic เดิม
