@@ -116,6 +116,31 @@ class HumanController extends Controller{
         this.selectedStealCard = target.hand.cards[index];
         this.selectedStealCardIndex = index;
     }
+    // ทำการย้ายการ์ดที่เลือกไว้จากมือของเป้าหมาย เข้าสู่มือของผู้เล่น
+    stealSelectedCard(){
+        const target = this.getSelectedTarget();
+        // ตรวจสอบว่ามีเป้าหมายหรือไม่
+        if(!target){
+            return false;
+        }
+        // ตรวจสอบว่าเป็นแหล่งข้อมูลจากมือ ("hand") หรือไม่
+        if(this.selectedStealSource !== "hand"){
+            return false;
+        }
+        const index = this.selectedStealCardIndex;
+        // ตรวจสอบว่า Index อยู่ในขอบเขตการ์ดมือเป้าหมายหรือไม่
+        if(index < 0 || index >= target.hand.cards.length){
+            return false;
+        }
+        // ดึงการ์ดออกจากมือเป้าหมาย
+        const card = target.hand.removeCard(index);
+        if(!card){
+            return false;
+        }
+        // เพิ่มการ์ดเข้ามือผู้ใช้
+        this.player.hand.addCard(card);
+        return true;
+    }
     // คืนค่า true แสดงว่ากำลังรอ Input จากผู้เล่นมนุษย์
     isWaitingInput(){
         return true;
