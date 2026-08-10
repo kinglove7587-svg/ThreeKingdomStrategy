@@ -97,6 +97,23 @@ class HumanController extends Controller{
         this.inputState = "waitingStealCard";
         this.game.ui.render();
     }
+    // รับตำแหน่ง Index ของการ์ดเป้าหมายที่ต้องการขโมย
+    selectStealCard(index){
+        // ดึงเป้าหมายที่เลือกไว้
+        const target = this.getSelectedTarget();
+        // ถ้ายังไม่มีเป้าหมาย ให้ยกเลิกการทำงาน
+        if(!target){
+            return;
+        }
+        // ตรวจสอบว่า Index อยู่ในขอบเขตการ์ดบนมือของเป้าหมายหรือไม่
+        if(index < 0 || index >= target.hand.cards.length){
+            return;
+        }
+        // บันทึกแหล่งที่มาของการ์ด
+        this.selectedStealSource = "hand";
+        // บันทึกการ์ดที่เลือก
+        this.selectedStealCard = target.hand.cards[index];
+    }
     // คืนค่า true แสดงว่ากำลังรอ Input จากผู้เล่นมนุษย์
     isWaitingInput(){
         return true;
