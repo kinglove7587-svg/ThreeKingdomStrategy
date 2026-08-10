@@ -238,6 +238,10 @@ class UIManager{
         if(!(controller instanceof HumanController)){
             return;
         }
+        // ไม่ต้องแสดงปุ่ม "ใช้ยา / ไม่ใช้ยา"
+        if(player === this.game.dyingPlayer){
+            return;
+        }
         // แสดงปุ่มเฉพาะตอนที่สถานะกำลังรอการตัดสินใจใช้ยา (waitingPeach) เท่านั้น
         if(controller.inputState !== "waitingPeach"){
             return;

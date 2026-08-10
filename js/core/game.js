@@ -549,14 +549,22 @@ class Game {
         this.log(player.name + " เข้าสู่สถานะใกล้ตาย");
         this.log(player.name + " ต้องการ ยา");
         // ถ้าตัวละครที่กำลังใกล้ตายเป็น Human ให้ตรวจสอบว่ามียาในมือหรือไม่
-        if(player.controller.isHuman()){
-            const index = player.hand.findCardIndexByName("ยา");
+        const index = player.hand.findCardIndexByName("ยา");
             // ถ้ามียา ให้ตั้งตัวเองเป็น peachHelper แล้วหยุดรอการตัดสินใจกดปุ่มจาก Human ก่อน
-            if(index !== -1){
+        if(index !== -1){
+            // ถ้าเป็น Human → รอผู้เล่นกดใช้ยา
+            if(player.controller.isHuman()){
                 this.peachHelper = player;
                 player.controller.askPeach(player);
                 return;
             }
+            // ถ้าเป็น AI → ใช้ยาทันที
+            const peach = player.hand.removeCard(index);
+            this.discardPile.addCard(peach);
+            this.log(player.name + " ใช้ ยา ช่วยตัวเอง");
+            player.recoverHp(1);
+            this.ui.render();
+            return;
         }
         // ถ้าไม่ใช่ Human หรือ Human ตัวเองไม่มีการ์ดยา ให้เข้าสููลูปถามผู้เล่นคนอื่นตามลำดับ
         const saved = this.askPeach(player);
