@@ -4,7 +4,7 @@ class Deck {
         this.initDeck(); // เพิ่มการ์ด ลง กอง
     }
 
-    initDeck() { // เพิ่มไพ่ลง Deck
+    initDeck() { // เพิ่มการ์ดลง Deck
         for (let i = 0; i <= 4; i++){ // วนลูป การ์ด 3 ใบ 4 รอบ
             this.cards.push(new SlashCard("♠️", 1)); // เพิ่มการ์ดฆ่า
             this.cards.push(new SlashCard("♥️", 7, DamageType.FIRE)); // การ์ดฆ่าไฟ
@@ -21,6 +21,7 @@ class Deck {
             this.cards.push(new IronChainCard("♣️", 12)); // การ์ด โซ่ตรวน
             this.cards.push(new DuelCard("♠️", 1)); // การ์ด ดวลเดียว
             this.cards.push(new WineCard("♦️", 9)); // การ์ด สุรา
+            this.cards.push(new SomethingOutOfNothingCard("♥️", 7)); // การ์ดกลอุบาย บังเกิดมีสิ่ง
         }
     }
     // สับไพ่
