@@ -550,7 +550,7 @@ class Game {
         this.log(player.name + " ต้องการ ยา");
         // ถ้าตัวละครที่กำลังใกล้ตายเป็น Human ให้ตรวจสอบว่ามียาในมือหรือไม่
         const index = player.hand.findCardIndexByName("ยา");
-            // ถ้ามียา ให้ตั้งตัวเองเป็น peachHelper แล้วหยุดรอการตัดสินใจกดปุ่มจาก Human ก่อน
+        // ถ้ามียา ให้ตั้งตัวเองเป็น peachHelper แล้วหยุดรอการตัดสินใจกดปุ่มจาก Human ก่อน
         if(index !== -1){
             // ถ้าเป็น Human → รอผู้เล่นกดใช้ยา
             if(player.controller.isHuman()){
