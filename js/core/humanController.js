@@ -142,6 +142,25 @@ class HumanController extends Controller{
         this.player.hand.addCard(card);
         return true;
     }
+    // ยืนยันการขโมยการ์ดที่เลือก ล้าง State และกลับสู่สถานะปกติ (idle)
+    confirmStealSelection(){
+        // ดำเนินการย้ายการ์ด
+        const success = this.stealSelectedCard();
+        // ถ้าย้ายการ์ดไม่สำเร็จ ให้ยกเลิก
+        if(!success){
+            return false;
+        }
+        // คืนค่าสถานะหลักเป็นปกติ
+        this.inputState = "idle";
+        // ล้างค่า State ของการขโมยทั้งหมด
+        this.selectedStealTarget = null;
+        this.selectedStealCard = null;
+        this.selectedStealSource = null;
+        this.selectedStealCardIndex = -1;
+        // สั่ง UI ให้แสดงผลใหม่ (กลับมาแสดงมือผู้เล่น)
+        this.game.ui.render();
+        return true;
+    }
     // คืนค่า true แสดงว่ากำลังรอ Input จากผู้เล่นมนุษย์
     isWaitingInput(){
         return true;

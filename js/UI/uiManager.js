@@ -159,6 +159,7 @@ class UIManager{
             // กำหนด Event เมื่อกดคลิก ให้เรียกใช้เมธอด selectStealCard
             button.onclick = () => {
                 controller.selectStealCard(i);
+                controller.confirmStealSelection();
             };
             // นำปุ่มที่สร้างไปแสดงผลในโซน handArea บนหน้าเว็บ
             this.handArea.appendChild(button);
