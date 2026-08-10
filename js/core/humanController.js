@@ -103,7 +103,7 @@ class HumanController extends Controller{
     // รับตำแหน่ง Index ของการ์ดเป้าหมายที่ต้องการขโมย
     selectStealCard(index){
         // ดึงเป้าหมายที่เลือกไว้
-        const target = this.getSelectedTarget();
+        const target = this.selectedStealTarget;
         // ถ้ายังไม่มีเป้าหมาย ให้ยกเลิกการทำงาน
         if(!target){
             return;
@@ -119,7 +119,7 @@ class HumanController extends Controller{
     }
     // ทำการย้ายการ์ดที่เลือกไว้จากมือของเป้าหมาย เข้าสู่มือของผู้เล่น
     stealSelectedCard(){
-        const target = this.getSelectedTarget();
+        const target = this.selectedStealTarget;
         // ตรวจสอบว่ามีเป้าหมายหรือไม่
         if(!target){
             return false;
