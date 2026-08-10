@@ -22,6 +22,7 @@ class Deck {
             this.cards.push(new DuelCard("♠️", 1)); // การ์ด ดวลเดียว
             this.cards.push(new WineCard("♦️", 9)); // การ์ด สุรา
             this.cards.push(new SomethingOutOfNothingCard("♥️", 7)); // การ์ดกลอุบาย บังเกิดมีสิ่ง
+            this.cards.push(new StealCard("♠️", 3)); // การ์ดกลอุบาย ฉกฉวย 
         }
     }
     // สับไพ่
