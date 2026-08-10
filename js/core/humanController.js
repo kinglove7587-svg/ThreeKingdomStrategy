@@ -10,6 +10,7 @@ class HumanController extends Controller{
         //Steal (ฉกฉวย) State
         this.selectedStealCard = null; 
         this.selectedStealSource = null; 
+        this.selectedStealCardIndex = -1;
     }
     // จัดการเทิร์นของผู้เล่นมนุษย์
     playTurn(){ 
@@ -93,6 +94,7 @@ class HumanController extends Controller{
         // ล้างค่าการ์ดและแหล่งที่มาจากการ Steal ครั้งก่อน
         this.selectedStealCard = null;
         this.selectedStealSource = null;
+        this.selectedStealCardIndex = -1;
         // เปลี่ยนสถานะเป็นรอเลือกการ์ดที่จะขโมย
         this.inputState = "waitingStealCard";
         this.game.ui.render();
@@ -109,10 +111,10 @@ class HumanController extends Controller{
         if(index < 0 || index >= target.hand.cards.length){
             return;
         }
-        // บันทึกแหล่งที่มาของการ์ด
+        // บันทึกข้อมูลการเลือก
         this.selectedStealSource = "hand";
-        // บันทึกการ์ดที่เลือก
         this.selectedStealCard = target.hand.cards[index];
+        this.selectedStealCardIndex = index;
     }
     // คืนค่า true แสดงว่ากำลังรอ Input จากผู้เล่นมนุษย์
     isWaitingInput(){
