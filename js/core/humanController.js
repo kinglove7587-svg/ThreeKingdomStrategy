@@ -88,6 +88,15 @@ class HumanController extends Controller{
         // เรียกใช้ getSelectedTarget() เพื่อดึงเป้าหมายปัจจุบันที่ผู้เล่นเลือกไว้
         return this.getSelectedTarget();
     }
+    // รีเซ็ตค่าการขโมยเดิม และเปลี่ยนสถานะเป็น "waitingStealCard"
+    startStealSelection(){
+        // ล้างค่าการ์ดและแหล่งที่มาจากการ Steal ครั้งก่อน
+        this.selectedStealCard = null;
+        this.selectedStealSource = null;
+        // เปลี่ยนสถานะเป็นรอเลือกการ์ดที่จะขโมย
+        this.inputState = "waitingStealCard";
+        this.game.ui.render();
+    }
     // คืนค่า true แสดงว่ากำลังรอ Input จากผู้เล่นมนุษย์
     isWaitingInput(){
         return true;
