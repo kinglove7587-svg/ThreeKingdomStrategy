@@ -11,4 +11,16 @@ class RationsDepletedCard extends DelayedTrickCard{
         // เป้าหมายต้องอยู่ในระยะทางกายภาพ
         return player.game.getDistance(player, target) <= 1;
     }
+    //
+    use(player, game){
+        //
+        const target = player.controller.getSelectedTarget();
+        //
+        if(!target){
+            return false;
+        }
+        //
+        target.addDelayedTrick(this);
+        return true;
+    }
 }
