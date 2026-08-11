@@ -91,9 +91,22 @@ class Game {
 
         return true;
     }
+    // ตรวจสอบความถูกต้องของการ์ดที่เลือกก่อนเข้าสู่กระบวนการ Recast
     recastCard(cardIndex = 0){
-        //
+        // ดึงออบเจกต์ผู้เล่นที่กำลังถึงตาเล่นในปัจจุบัน
         const player = this.getCurrentPlayer();
+        // ดึงข้อมูลการ์ดจากมือผู้เล่นตามตำแหน่ง cardIndex
+        const card = player.hand.cards[cardIndex];
+        // ตรวจสอบว่ามี Card ในตำแหน่งที่เลือกหรือไม่
+        if(!card){
+            this.ui.addLog(player.name + " ไม่มีการ์ดใบนี้");
+            return false;
+        }
+        // ตรวจสอบว่า Card ใบนี้สามารถ Recast ได้หรือไม่
+        if(!card.canRecast()){
+            this.ui.addLog(card.name + " ไม่สามารถ Recast ได้");
+            return false;
+        }
     }
     
     playCurrentPlayerTurn(cardIndex = 0){ // เล่น 1 เทิร์นแบบย่อ
