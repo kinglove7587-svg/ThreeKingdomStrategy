@@ -11,7 +11,7 @@ class ZhangFei extends Player{ // เตียวหุย
         //this.equipArmor(new TengJiaArmor("♣️", 7));
         //this.setChained(true);
         //this.hand.addCard(new IronChainCard("♥️", 1));
-        //this.hand.addCard(new SlashCard("♠️", 1, DamageType.FIRE));
         //this.hand.addCard(new PeachCard("♠️", 1));
+        //this.hand.addCard(new TrainingSword("♠️", 1));
     }
 }
