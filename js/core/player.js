@@ -15,6 +15,7 @@ class Player{
         this.drunk = false; // สถานะมึนสุรา (ใช้เพิ่ม Damage ให้การ์ดฆ่า)
         this.delayedTricks = []; // เก็บการ์ดหน่วงเวลาที่ติดอยู่
         this.skipPlayPhase = false; // Flag สำหรับข้าม Play Phase เมื่อติดผลสุราลืมกลับ
+        this.skipDrawPhase = false; // Flag สำหรับระบุสถานะข้าม Draw Phase (เฟสจั่วการ์ด)
         this.chained = false; // สถานะติดโซ่ตรวน (Iron Chain)
         this.alive = true; // สถานะชีวิตของผู้เล่น (true = ยังมีชีวิตอยู่)
     }
