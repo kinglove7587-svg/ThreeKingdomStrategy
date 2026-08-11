@@ -10,4 +10,8 @@ class KnowEnemyCard extends TrickCard{
         }
         return true;
     }
+    // ระบุว่าการ์ดรู้เขารู้เรา สามารถนำไป Recast (เปลี่ยนการ์ด) ได้หรือไม่
+    canRecast(){
+        return true;
+    }
 }
