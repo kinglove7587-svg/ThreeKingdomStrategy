@@ -7,7 +7,7 @@ class UIManager{
         this.enemyArea = document.getElementById("enemy-area");
         this.playerArea = document.getElementById("player-area");
         this.handArea = document.getElementById("hand-area");
-        this.log(Area = document.getElementById("log-area");
+        this.logArea = document.getElementById("log-area");
         this.endTurnButton = document.getElementById("end-turn");
         this.controlArea = document.getElementById("control-area");
         this.bindEvents();
@@ -182,9 +182,9 @@ class UIManager{
         // กำหนดเนื้อหาข้อความภายใน div ให้เท่ากับข้อความที่ส่งเข้ามา
         line.textContent = text;
         // นำบรรทัดข้อความใหม่ที่สร้างเสร็จแล้ว ไปต่อเพิ่มในโซน logArea บนหน้าเว็บ
-        this.log(Area.appendChild(line);
+        this.logArea.appendChild(line);
         // ปรับตำแหน่ง Scroll ของกล่อง Log ให้เลื่อนลงไปล่างสุดเสมอ เพื่อให้เห็นข้อความล่าสุดทันที
-        this.log(Area.scrollTop = this.log(Area.scrollHeight;
+        this.logArea.scrollTop = this.logArea.scrollHeight;
     }
     // ควบคุมการแสดงผลปุ่ม End Turn บนหน้าเว็บ
     renderEndTurnButton(){
@@ -198,6 +198,39 @@ class UIManager{
             // ซ่อนปุ่ม End Turn ไม่ให้กดได้ระหว่างที่ AI เล่น
             this.endTurnButton.style.display = "none";
         }
+    }
+    // เมธอดสำหรับวาดปุ่มทางเลือกระหว่าง "เล่น" หรือ "Recast" สำหรับการ์ดที่รองรับ
+    renderCardActionButtons(index){
+        // ดึงออบเจกต์ผู้เล่นปัจจุบัน
+        const player = this.game.getCurrentPlayer();
+        // ดึง Controller ของผู้เล่น
+        const controller = player.controller;
+        // ดึงการ์ดในมือจากตำแหน่ง index ที่เลือก
+        const card = player.hand.cards[index];
+        // ตรวจสอบว่ามีการ์ดในตำแหน่งนี้หรือไม่
+        if(!card){
+            return;
+        }
+        // ถ้าการ์ดใบนี้ Recast ไม่ได้ ให้สั่งเลือกการ์ดเล่นแบบเดิมทันที
+        if(!card.canRecast()){
+            controller.selectCard(index);
+            return;
+        }
+        // --- กรณีการ์ด canRecast() === true ---
+        // สร้างปุ่ม "เล่น" สำหรับการสั่งใช้การ์ดปกติ
+        const playButton = document.createElement("button");
+        playButton.textContent = "เล่น";
+        playButton.onclick = () => {
+            controller.selectCard(index);
+        };
+        this.controlArea.appendChild(playButton);
+        // สร้างปุ่ม "Recast" สำหรับการทิ้งไพ่เพื่อจั่วใบใหม่
+        const recastButton = document.createElement("button");
+        recastButton.textContent = "Recast";
+        recastButton.onclick = () => {
+            this.game.recastCard(index);
+        };
+        this.controlArea.appendChild(recastButton);
     }
     // เมธอดสำหรับสร้างปุ่มกดใช้งาน Active Skill บน UI
     renderSkillButtons(){
@@ -277,8 +310,8 @@ class UIManager{
             controller.selectStealCard(index);
             return;
         }
-        // กรณีปกติ ให้เลือกการ์ดตาม Logic เดิม
-        controller.selectCard(index);
+        // 
+        this.renderCardActionButtons(index);
     }
      // จัดการคำสั่งการตัดสินใจใช้/ไม่ใช้การ์ดยา จากปุ่มกดบนหน้าจอ UI
     onPeachDecision(usePeach){
