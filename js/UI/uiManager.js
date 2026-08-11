@@ -230,7 +230,7 @@ class UIManager{
         const recastButton = document.createElement("button");
         recastButton.textContent = "Recast";
         recastButton.onclick = () => {
-            this.game.recastCard(index);
+            controller.recastCard(index);
         };
         this.controlArea.appendChild(recastButton);
     }
