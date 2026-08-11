@@ -226,6 +226,10 @@ class Player{
     skipPlay(){
         this.skipPlayPhase = true;
     }
+    //
+    skipDraw(){
+        this.skipDrawPhase = true;
+    }
     // รีเซ็ต Flag การข้าม Phase ให้กลับเป็น false
     resetPhaseFlag(){
         this.skipPlayPhase = false;

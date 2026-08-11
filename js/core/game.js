@@ -219,6 +219,16 @@ class Game {
 
     drawPhase(player){ // เฟสจั่วไพ่
         this.ui.addLog("Draw Phase");
+        //
+        if(player.skipDrawPhase){
+            this.log(player.name + " ข้าม Draw Phase");
+            //
+            player.skipDrawPhase = false;
+            this.ui.render();
+            //
+            this.playPhase(player);
+            return;
+        }
         this.eventManager.emitToPlayer("onDrawPhase", player);
         player.drawCard(this.deck); // แสดงสถานะ
         this.ui.addLog(player.name + " จั่วการ์ด 1 ใบ");
