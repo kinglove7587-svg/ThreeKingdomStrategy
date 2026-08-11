@@ -211,6 +211,8 @@ class UIManager{
         if(!card){
             return;
         }
+        //
+        this.controlArea.innerHTML = "";
         // ถ้าการ์ดใบนี้ Recast ไม่ได้ ให้สั่งเลือกการ์ดเล่นแบบเดิมทันที
         if(!card.canRecast()){
             controller.selectCard(index);

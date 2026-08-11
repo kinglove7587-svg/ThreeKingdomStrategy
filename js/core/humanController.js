@@ -21,6 +21,23 @@ class HumanController extends Controller{
         // ยังไม่รู้ผล เพราะกำลังรอผู้เล่นกด
         return null;
     }
+    // เรียกใช้การ Recast จาก Game Engine พร้อมล้างค่า State
+    recastCard(index){
+        // สั่งให้ Game ดำเนินการ Recast การ์ดตาม index ที่เลือก
+        const success = this.game.recastCard(index);
+        // หาก Recast ไม่สำเร็จ ให้ยกเลิกกระบวนการ
+        if(!success){
+            return false;
+        }
+        // ล้างค่าตัวแประบุการ์ดและเป้าหมายที่เคยเลือกไว้
+        this.selectedCardIndex = -1;
+        this.selectedTarget = null;
+        // คืนค่าสถานะการรับ Input กลับเป็นปกติ (idle)
+        this.inputState = "idle";
+        // แจ้ง Game Engine ว่าผู้เล่นมนุษย์ทำ Action สำเร็จแล้ว
+        this.game.afterHumanAction(true);
+        return true;
+    }
     // เมธอดประมวลผลจบเทิร์นของผู้เล่นมนุษย์
     finishTurn(){
         // ดึง index ของการ์ดที่เลือกไว้
