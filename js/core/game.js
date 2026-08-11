@@ -93,6 +93,7 @@ class Game {
     }
     recastCard(cardIndex = 0){
         //
+        const player = this.getCurrentPlayer();
     }
     
     playCurrentPlayerTurn(cardIndex = 0){ // เล่น 1 เทิร์นแบบย่อ
