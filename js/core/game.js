@@ -107,6 +107,21 @@ class Game {
             this.ui.addLog(card.name + " ไม่สามารถ Recast ได้");
             return false;
         }
+        // ตรวจสอบว่า Deck ยังมี Card ให้จั่วหรือไม่
+        if(this.deck.cards.length === 0){
+            this.log("ไพ่ในกองหมด ไม่สามารถ Recast ได้");
+            return false;
+        }
+        // นำ Card ที่ต้องการ Recast ออกจากมือผู้เล่น
+        const cardToRecast = player.hand.removeCard(cardIndex);
+        this.discardPile.addCard(cardToRecast);
+        // จั่ว Card ใบใหม่จากกองจั่ว (Deck)
+        const newCard = this.deck.draw();
+        // นำ Card ใบใหม่ใส่เพิ่มเข้ามือผู้เล่น
+        player.hand.addCard(newCard);
+        this.ui.render();
+        this.log(player.name + " Recast " + cardToRecast.name + " ได้ " + newCard.name);
+        return true;
     }
     
     playCurrentPlayerTurn(cardIndex = 0){ // เล่น 1 เทิร์นแบบย่อ
