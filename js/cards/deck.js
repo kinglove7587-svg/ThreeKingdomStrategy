@@ -23,6 +23,7 @@ class Deck {
             this.cards.push(new WineCard("♦️", 9)); // การ์ด สุรา
             this.cards.push(new SomethingOutOfNothingCard("♥️", 7)); // การ์ดกลอุบาย บังเกิดมีสิ่ง
             this.cards.push(new StealCard("♠️", 3)); // การ์ดกลอุบาย ฉกฉวย 
+            this.cards.push(new RationsDepletedCard("♣️", 4)); // การ์ดหน่วงเวลา เสบียงหมด!
         }
     }
     // สับไพ่
