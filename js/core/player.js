@@ -226,7 +226,7 @@ class Player{
     skipPlay(){
         this.skipPlayPhase = true;
     }
-    //
+    // กำหนด Flag เพื่อสั่งให้ผู้เล่นข้ามขั้นตอนการจั่วการ์ด
     skipDraw(){
         this.skipDrawPhase = true;
     }

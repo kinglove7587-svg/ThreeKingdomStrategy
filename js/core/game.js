@@ -216,16 +216,16 @@ class Game {
         this.drawPhase(player); // ส่งต่อเฟส
         player.showHand();
     }
-
-    drawPhase(player){ // เฟสจั่วไพ่
+    // เฟสจั่วไพ่ (Draw Phase)
+    drawPhase(player){ 
         this.ui.addLog("Draw Phase");
-        //
+        // ตรวจสอบ Flag ว่าผู้เล่นต้องข้ามเฟสจั่วการ์ดหรือไม่
         if(player.skipDrawPhase){
             this.log(player.name + " ข้าม Draw Phase");
-            //
+            // รีเซ็ต Flag กลับเป็น false เพื่อให้เทิร์นถัดไปจั่วได้ตามปกติ
             player.skipDrawPhase = false;
             this.ui.render();
-            //
+            // ส่งต่อไปยังเฟสเล่นการ์ด (Play Phase) ทันที
             this.playPhase(player);
             return;
         }
