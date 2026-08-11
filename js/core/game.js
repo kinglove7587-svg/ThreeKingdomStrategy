@@ -67,7 +67,7 @@ class Game {
         // ตรวจสอบว่าผู้เล่นไม่มีการ์ดใบที่เลือก (หาการ์ดไม่พบ)
         if (card === null){
             // ส่งข้อความแจ้งเตือนไป แสดงบน UI ของเกม
-            this.ui.addLog(
+            this.log(
                 player.name + " ไม่มีการ์ดใบนี้"
             );
             return false;
@@ -99,7 +99,7 @@ class Game {
         const card = player.hand.cards[cardIndex];
         // ตรวจสอบว่ามี Card ในตำแหน่งที่เลือกหรือไม่
         if(!card){
-            this.ui.addLog(player.name + " ไม่มีการ์ดใบนี้");
+            this.log(player.name + " ไม่มีการ์ดใบนี้");
             return false;
         }
         // ตรวจสอบว่า Card ใบนี้สามารถ Recast ได้หรือไม่
@@ -185,9 +185,9 @@ class Game {
         if (zhangFei) {
             zhangFei.showHand();
         }
-        this.ui.addLog("=============");
-        this.ui.addLog(player.name + " Turn ");
-        this.ui.addLog("=============");
+        this.log("=============");
+        this.log(player.name + " Turn ");
+        this.log("=============");
         this.startPhase(player); // เริ่ม phase ต่างๆ
     }
     // ประมวลผลช่วงเริ่มเทิร์น (Start Phase)
@@ -195,7 +195,7 @@ class Game {
         // รีเซ็ตสถานะการใช้การ์ด "ฆ่า/ฟัน" (Slash) ให้ผู้เล่นกลับมาใช้ได้ใหม่ในเทิร์นนี้
         player.slashUsed = false;  
         // ส่งข้อความ "Start Phase" ไปบันทึกและแสดงในกล่อง Log บนหน้าเว็บ
-        this.ui.addLog("Start Phase");
+        this.log("Start Phase");
         // ส่ง Event "onTurnStart" เจาะจงไปยังผู้เล่นเป้าหมาย เพื่อกระตุ้นสกิลที่ทำงานช่วงเริ่มเทิร์น
         this.eventManager.emitToPlayer("onTurnStart", player);
         // เรียก lifecycle onTurnStart ของทุกสกิลที่ผู้เล่นมี
@@ -207,7 +207,7 @@ class Game {
     }
     // ช่วงเสี่ยงทาย (Judge Phase) ของผู้เล่น
     judgePhase(player){ 
-        this.ui.addLog("Judge Phase");
+        this.log("Judge Phase");
         // ประมวลผลการ์ดหน่วงเวลา (Delayed Trick) ทั้งหมดของผู้เล่น
         player.startJudgePhase();
         // ส่ง Event "onJudgePhase" ผ่าน eventManager ไปยังผู้เล่นเป้าหมาย player เพื่อเรียกใช้สกิลช่วง Judge Phase
@@ -218,10 +218,10 @@ class Game {
     }
 
     drawPhase(player){ // เฟสจั่วไพ่
-        this.ui.addLog("Draw Phase");
+        this.log("Draw Phase");
         this.eventManager.emitToPlayer("onDrawPhase", player);
         player.drawCard(this.deck); // แสดงสถานะ
-        this.ui.addLog(player.name + " จั่วการ์ด 1 ใบ");
+        this.log(player.name + " จั่วการ์ด 1 ใบ");
         this.ui.render();
         this.playPhase(player); // ส่งต่เฟส
     }
@@ -229,14 +229,14 @@ class Game {
     playPhase(player){ 
         // เช็กสถานะข้าม Play Phase (เช่น ผลจากการ์ดสุราลืมกลับ)
         if (player.skipPlayPhase){
-            this.ui.addLog(player.name + " ถูกสุราลืมกลับ ข้าม Play Phase");
+            this.log(player.name + " ถูกสุราลืมกลับ ข้าม Play Phase");
             // รีเซ็ต Flag ให้มีผลแค่เทิร์นนี้
             player.resetPhaseFlag();
             // ข้ามไป Discard Phase ทันที
             this.discardPhase(player);
             return;
         }
-        this.ui.addLog("Play Phase");
+        this.log("Play Phase");
         // ส่ง Event "onPlayPhase" ผ่าน eventManager ไปยังผู้เล่นเป้าหมาย เพื่อเปิดใช้งานสกิลช่วง Play Phase
         this.eventManager.emitToPlayer("onPlayPhase", player);
         // ใช้ Active Skill
@@ -279,21 +279,21 @@ class Game {
         }
         // ถ้าเกมยังไม่จบ แต่ลงการ์ดไม่สำเร็จ
         if (!success){
-            this.ui.addLog("ลงการ์ดไม่สำเร็จ");
+            this.log("ลงการ์ดไม่สำเร็จ");
         }
         // เมื่อใช้การ์ดเสร็จแล้ว (1 ใบ) ส่งต่อผู้เล่นไปยัง Discard Phase
         this.discardPhase(player);
     }
 
     discardPhase(player){ // เฟส ทิ้งไพ่
-        this.ui.addLog("Discard Phase");
+        this.log("Discard Phase");
         // ส่ง Event "onDiscardPhase" ผ่าน eventManager ไปยังผู้เล่นเป้าหมาย เพื่อเปิดใช้งานสกิลช่วงทิ้งไพ่
         this.eventManager.emitToPlayer("onDiscardPhase", player);
         this.endPhase(player);
     }
 
     endPhase(player){ // เฟส จบ เทิร์น
-        this.ui.addLog("End Phase");
+        this.log("End Phase");
         // ส่ง Event "onTurnEnd" ผ่าน eventManager ไปยังผู้เล่นเป้าหมาย เพื่อเปิดใช้งานสกิลช่วงสิ้นสุดเทิร์น
         this.eventManager.emitToPlayer("onTurnEnd", player);
         this.nextTurn(); 
@@ -301,7 +301,7 @@ class Game {
 
     nextTurn(){ // เปลี่ยน ตา
         if(this.deck.cards.length === 0){
-            this.ui.addLog("ไพ่หมด");
+            this.log("ไพ่หมด");
             return;
         }
         this.currentPlayerIndex++; // ถ้าถึงคนสุดท้ายแล้ว ให้เวียนกลับไปหาผู้เล่นคนแรก
@@ -325,7 +325,7 @@ class Game {
     // ประกาศเมธอด log() เพื่อให้ส่วนอื่นส่งข้อความมาเพิ่มลงใน Log บน UI ได้ง่ายขึ้น
     log(message){
         console.log(message);
-        this.ui.addLog(message);
+        this.log(message);
     }
     // ตรวจสอบว่ามีผู้เล่นเสียชีวิตเพื่อจบเกมหรือไม่
     checkGameOver(){ 
@@ -347,7 +347,7 @@ class Game {
         }
         //
         this.isGameOver = true;
-        this.ui.addLog("Game Over");
+        this.log("Game Over");
     }
     // ประมวลผลความเสียหายพร้อมส่งแจ้งเตือน Event ก่อนและหลังเกิดความเสียหาย
     damage(damage){
@@ -424,9 +424,9 @@ class Game {
         }
         // ตรวจสอบว่าเล่นการ์ดสำเร็จหรือไม่ เพื่อแสดงข้อความแจ้งเตือนที่ถูกต้องบน Log
         if (success){
-            this.ui.addLog("เลือกการ์ดต่อ หรือกด End Turn");
+            this.log("เลือกการ์ดต่อ หรือกด End Turn");
         }else{
-            this.ui.addLog("ลงการ์ดไม่สำเร็จ");
+            this.log("ลงการ์ดไม่สำเร็จ");
         }
         // ล้างข้อมูลการเลือกหลังประมวลผลเสร็จ
         this.clearSelectedCard();

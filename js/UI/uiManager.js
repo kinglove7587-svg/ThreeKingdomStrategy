@@ -7,7 +7,7 @@ class UIManager{
         this.enemyArea = document.getElementById("enemy-area");
         this.playerArea = document.getElementById("player-area");
         this.handArea = document.getElementById("hand-area");
-        this.logArea = document.getElementById("log-area");
+        this.log(Area = document.getElementById("log-area");
         this.endTurnButton = document.getElementById("end-turn");
         this.controlArea = document.getElementById("control-area");
         this.bindEvents();
@@ -182,9 +182,9 @@ class UIManager{
         // กำหนดเนื้อหาข้อความภายใน div ให้เท่ากับข้อความที่ส่งเข้ามา
         line.textContent = text;
         // นำบรรทัดข้อความใหม่ที่สร้างเสร็จแล้ว ไปต่อเพิ่มในโซน logArea บนหน้าเว็บ
-        this.logArea.appendChild(line);
+        this.log(Area.appendChild(line);
         // ปรับตำแหน่ง Scroll ของกล่อง Log ให้เลื่อนลงไปล่างสุดเสมอ เพื่อให้เห็นข้อความล่าสุดทันที
-        this.logArea.scrollTop = this.logArea.scrollHeight;
+        this.log(Area.scrollTop = this.log(Area.scrollHeight;
     }
     // ควบคุมการแสดงผลปุ่ม End Turn บนหน้าเว็บ
     renderEndTurnButton(){
