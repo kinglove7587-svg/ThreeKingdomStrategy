@@ -310,6 +310,11 @@ class UIManager{
             controller.selectStealCard(index);
             return;
         }
+        //
+        if(index === -1){
+            controller.selectCard(index);
+            return;
+        }
         // 
         this.renderCardActionButtons(index);
     }
