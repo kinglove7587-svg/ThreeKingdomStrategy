@@ -91,6 +91,9 @@ class Game {
 
         return true;
     }
+    recastCard(cardIndex = 0){
+        //
+    }
     
     playCurrentPlayerTurn(cardIndex = 0){ // เล่น 1 เทิร์นแบบย่อ
         this.playCardFromCurrentPlayer(cardIndex); // ใช้ไพ่ที่เลือก
