@@ -112,6 +112,11 @@ class UIManager{
         this.handArea.innerHTML = "";
         // ดึงตัวละครผู้เล่นที่กำลังถึงตาเล่นในปัจจุบันจาก Game Engine
         const player = this.game.getCurrentPlayer();
+        // หากอยู่ในสถานะเปิดดูไพ่บนมือเป้าหมาย ให้เรียก renderTargetHand()
+        if(player.controller.inputState === "viewingHand"){
+            this.renderTargetHand(player.controller.viewingHandTarget);
+            return;
+        }
         // หากอยู่ในสถานะรอเลือกการ์ดเพื่อขโมย (Steal) ให้เปลี่ยนไปวาดการ์ดแบบคว่ำแทนแล้วจบฟังก์ชัน
         if(player.controller.inputState === "waitingStealCard"){
             this.renderStealHand();
