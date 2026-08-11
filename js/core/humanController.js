@@ -103,6 +103,14 @@ class HumanController extends Controller{
         // คืนค่าออบเจกต์ผู้เล่นเป้าหมาย
         return this.selectedTarget;
     }
+    // เริ่มต้นสถานะการเปิดดูการ์ดบนมือของผู้เล่นเป้าหมาย
+    startViewingHand(target){
+        // กำหนดเป้าหมายที่ต้องการเปิดดูการ์ดในมือ
+        this.viewingHandTarget = target;
+        // เปลี่ยนสถานะการรับ Input เป็น "viewingHand"
+        this.inputState = "viewingHand";
+        this.game.ui.render();
+    }
     // คืนค่าผู้เล่นเป้าหมายที่ผู้เล่นมนุษย์เลือกไว้บน UI
     getTarget(card){
         // เรียกใช้ getSelectedTarget() เพื่อดึงเป้าหมายปัจจุบันที่ผู้เล่นเลือกไว้
