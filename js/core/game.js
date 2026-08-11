@@ -418,13 +418,28 @@ class Game {
     getSelectedTarget(){
         return this.selectedTarget;
     }
-    // ประมวลผลการ Recast (หลอมไพ่ใหม่): ทิ้งการ์ดลงกองทิ้ง แล้วให้ผู้เล่นจั่วไพ่ใหม่ 1 ใบ
+    // เมธอด Recast การ์ด (เปลี่ยนการ์ดใบที่ไม่ใช้เป็นจั่วการ์ดใหม่ 1 ใบ)
     recast(player, card){
-        this.log(player.name + " Recast " + card.name + "  แล้วจั่ว 1 ใบ");
-        // นำการ์ดส่งลงกองทิ้ง (discardPile)
+        // ตรวจสอบว่ามีผู้เล่นและการ์ดส่งมาจริงหรือไม่
+        if(!player || !card){
+            return false;
+        }
+        // ตรวจสอบว่าการ์ดใบนี้สามารถ Recast ได้หรือไม่
+        if(!card.canRecast()){
+            return false;
+        }
+        // หาตำแหน่ง Index ของการ์ดใบนี้ในมือผู้เล่น
+        const cardIndex = player.hand.cards.indexOf(card);
+        if(cardIndex === -1){
+            return false;
+        }
+        // นำการ์ดออกจากมือ แล้วนำลงกองทิ้ง
+        player.hand.removeCard(cardIndex);
         this.discardPile.addCard(card);
-        // ให้ผู้เล่นจั่วการ์ดใหม่ขึ้นมือ 1 ใบ
+        // ให้ผู้เล่นจั่วการ์ดใหม่ 1 ใบ พร้อมบันทึก Log
         player.drawCard(this.deck);
+        this.log(player.name + " Recast " + card.name + " แล้วจั่ว 1 ใบ");
+        return true;
     }
     // ประมวลผลเริ่มต้นการดวลเดี่ยว (Duel Engine)
     duel(attacker, defender){
