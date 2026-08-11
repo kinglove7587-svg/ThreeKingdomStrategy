@@ -104,7 +104,7 @@ class Game {
         }
         // ตรวจสอบว่า Card ใบนี้สามารถ Recast ได้หรือไม่
         if(!card.canRecast()){
-            this.ui.addLog(card.name + " ไม่สามารถ Recast ได้");
+            this.log(card.name + " ไม่สามารถ Recast ได้");
             return false;
         }
         // ตรวจสอบว่า Deck ยังมี Card ให้จั่วหรือไม่
