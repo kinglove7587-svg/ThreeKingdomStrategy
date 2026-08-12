@@ -108,12 +108,6 @@ class AIController extends Controller{
             this.finishSelection();
             return;
         }
-        // ส่งต่อสิทธิ์ให้ผู้เล่นคนถัดไป
-        const nextPlayer = zone.getCurrentPlayer();
-        
-        if(nextPlayer && nextPlayer.controller){
-            nextPlayer.controller.startSelection();
-        }
     }
     // ตัดสินใจเลือกการ์ดจาก SelectionZone (เบื้องต้นให้เลือกใบแรก index 0 ไปก่อน)
     chooseSelectionCard(){
