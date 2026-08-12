@@ -14,13 +14,11 @@ class UIManager{
     }
     // แสดงผลสถานะล่าสุดของเกมออกทาง Console
     render(){
-        // วาดข้อมูลผู้เล่นและ HP ลงบน DOM
-        this.renderPlayers();
-        // วาดปุ่มการ์ดในมือของผู้เล่นหลัก
-        this.renderHands();
+        this.controlArea.innerHTML = ""; // ล้างพื้นที่ปุ่มเดิมก่อน
+        this.renderPlayers(); // วาดข้อมูลผู้เล่นและ HP ลงบน DOM
+        this.renderHands(); // วาดปุ่มการ์ดในมือของผู้เล่นหลัก
         // อัปเดตการแสดงผลปุ่ม End Turn ตามประเภทของ Controller
         this.renderEndTurnButton();
-        this.controlArea.innerHTML = ""; // ล้างพื้นที่ปุ่มเดิมก่อน
         this.renderSkillButtons();
         this.renderPeachButtons();
     }

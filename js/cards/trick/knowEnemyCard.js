@@ -14,4 +14,16 @@ class KnowEnemyCard extends TrickCard{
     canRecast(){
         return true;
     }
+    // สั่งใช้งานการ์ดรู้เขารู้เรา โดยดึงเป้าหมายที่ถูกเลือก และเปิดดูการ์ดบนมือของเป้าหมายนั้น
+    use(player, game){
+        // ดึงออบเจกต์เป้าหมายที่ถูกเลือกจาก Controller
+        const target = player.controller.getSelectedTarget();
+        // หากไม่ได้เลือกเป้าหมาย ให้คืนค่า false เพื่อยกเลิกการใช้การ์ด
+        if(!target){
+            return false;
+        }
+        // สั่งให้ Controller เริ่มต้นสถานะเปิดดูการ์ดบนมือของเป้าหมาย
+        player.controller.startViewingHand(target);
+        return true;
+    }
 }
