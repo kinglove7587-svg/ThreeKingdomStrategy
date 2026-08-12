@@ -322,7 +322,7 @@ class UIManager{
                 
                 button.onclick = () => {
                     controller.selectBurnCard(i);
-                    console.log("เลือก card สำหรับ Burn :", controller.selectBurnCard);
+                    console.log("เลือก card สำหรับ Burn :", controller.selectedBurnCard);
                 };
                 this.handArea.appendChild(button);
             }
