@@ -149,6 +149,11 @@ class HumanController extends Controller{
         this.inputState = "waitingBurnSource";
         this.game.ui.render();
     }
+    // เปลี่ยนสถานะรับ Input เป็นรอเลือกการ์ดที่จะทำลาย
+    startBurnCardSelection(){
+        this.inputState = "waitingBurnCard";
+        this.game.ui.render();
+    }
     // รับตำแหน่ง Index ของการ์ดเป้าหมายที่ต้องการขโมย
     selectStealCard(index){
         // ดึงเป้าหมายที่เลือกไว้
@@ -217,6 +222,7 @@ class HumanController extends Controller{
                 return false;
             }
             this.selectedBurnSource = "hand";
+            this.startBurnCardSelection();
             return true;
         }
         // กรณีเลือกทำลาย "อาวุธ"
@@ -226,6 +232,7 @@ class HumanController extends Controller{
                 return false;
             }
             this.selectedBurnSource = "weapon";
+            this.startBurnCardSelection();
             return true;
         }
         // กรณีเลือกทำลาย "เกราะ"
@@ -235,6 +242,7 @@ class HumanController extends Controller{
                 return false;
             }
             this.selectedBurnSource = "armor";
+            this.startBurnCardSelection();
             return true;
         }
         return false;
