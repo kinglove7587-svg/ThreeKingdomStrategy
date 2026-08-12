@@ -21,13 +21,13 @@ class TengJiaSkill extends TriggerSkill{
         };
         // ลงทะเบียน Listener ดักจับ Event "beforeDamage"
         this.registerListener(eventManager, "beforeDamage", callback);
-        // ฟังก์ชัน Callback สำหรับดักจับการถูกโจมตีด้วยการ์ดฆ่า
+        // ฟังก์ชัน Callback สำหรับดักจับการถูกโจมตีด้วยการ์ดโจมตี
         const slashCallback = (context)=>{
             // ตรวจสอบว่าเป้าหมายคือผู้เล่นที่สวมเกราะนี้หรือไม่
             if (context.target !== player){
                 return;
             }
-            // ตรวจสอบว่าเป็นการ์ดฆ่าธรรมดาหรือไม่ (ถ้าไม่ใช่ ให้ข้ามไป)
+            // ตรวจสอบว่าเป็นการ์ดโจมตีธรรมดาหรือไม่ (ถ้าไม่ใช่ ให้ข้ามไป)
             if (!(context.card instanceof SlashCard)){
                 return;
             }
@@ -35,9 +35,9 @@ class TengJiaSkill extends TriggerSkill{
             if (context.card.damageType !== DamageType.NORMAL){
                 return;
             }
-            // ยกเลิกการถูกโจมตีด้วยการ์ดฆ่าธรรมดา
+            // ยกเลิกการถูกโจมตีด้วยการ์ดโจมตีธรรมดา
             context.canceled = true;
-            player.game.log(player.name + " เกราะหวายป้องกันการ์ดฆ่า");
+            player.game.log(player.name + " เกราะหวายป้องกันการ์ดโจมตี");
         };
         // ลงทะเบียน Listener ดักจับ Event "beforeSlashHit"
         this.registerListener(eventManager, "beforeSlashHit", slashCallback);

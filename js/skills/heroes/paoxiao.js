@@ -7,7 +7,7 @@ class Paoxiao extends TriggerSkill{
     register(eventManager, player){
         // สร้าง Callback Function สำหรับดักจับ Event beforeUseSlash
         const callback = (context)=>{
-            // ตรวจสอบว่าผู้เล่นที่กำลังจะใช้การ์ดฆ่า ใช่เจ้าของสกิลนี้หรือไม่
+            // ตรวจสอบว่าผู้เล่นที่กำลังจะใช้การ์ดโจมตี ใช่เจ้าของสกิลนี้หรือไม่
             if (context.player !== player){
                 return;
             }

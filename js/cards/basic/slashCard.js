@@ -1,23 +1,23 @@
 class SlashCard extends BasicCard{ 
     //
     constructor(suit, number, damageType = DamageType.NORMAL){
-        super("Basic", "ฆ่า", suit, number); 
-        this.damageType = damageType; // กำหนดประเภทความเสียหายของการ์ดฆ่า
+        super("Basic", "โจมตี", suit, number); 
+        this.damageType = damageType; // กำหนดประเภทความเสียหายของการ์ดโจมตี
     }
     // Override ความสามารถของการ์ด
     use(player, game){ 
-        // สร้าง Context สำหรับเช็กเงื่อนไขการใช้การ์ดฆ่า
+        // สร้าง Context สำหรับเช็กเงื่อนไขการใช้การ์ดโจมตี
         const context = {
             player : player, 
             allow : player.canUseSlash()
         };
-        // ส่ง Event ก่อนใช้การ์ดฆ่า เปิดโอกาสให้ Trigger Skill
+        // ส่ง Event ก่อนใช้การ์ดโจมตี เปิดโอกาสให้ Trigger Skill
         game.eventManager.emit("beforeUseSlash", context);
         console.log("allow =", context.allow);
         // ตรวจสอบสิทธิ์การใช้งานจาก context.allow
         if (!context.allow){
             // หากใช้ไปแล้ว ให้แสดงข้อความแจ้งเตือนใน Console
-            game.log(player.name + " ใช้ฆ่าไปแล้ว ");
+            game.log(player.name + " ใช้โจมตีไปแล้ว ");
             // ไม่อนุญาตให้ใช้งานการ์ด ส่งค่า false กลับออกไป
             return false;
         }
@@ -28,7 +28,7 @@ class SlashCard extends BasicCard{
             console.log("ยังไม่ได้เลือกเป้าหมาย");
             return false;
         }
-        // บันทึกสถานะว่าผู้เล่นคนนี้ได้ใช้งานการ์ดฆ่าเรียบร้อยแล้ว (ผ่านเมธอด markSlashUsed)
+        // บันทึกสถานะว่าผู้เล่นคนนี้ได้ใช้งานการ์ดโจมตีเรียบร้อยแล้ว (ผ่านเมธอด markSlashUsed)
         player.markSlashUsed();
         // สร้าง Context สำหรับระบบประมวลผลการหลบ (เก็บผู้โจมตี, เป้าหมาย, และสถานะการหลบ)
         const dodgeContext = {
@@ -36,7 +36,7 @@ class SlashCard extends BasicCard{
             target: target, 
             dodge: false
         };
-        // แสดงชื่อตามประเภทการ์ด เช่น ฆ่า / ฆ่าไฟ / ฆ่าสายฟ้า
+        // แสดงชื่อตามประเภทการ์ด เช่น โจมตี / โจมตีไฟ / โจมตีสายฟ้า
         game.log("→ เป้าหมาย : " + target.name); 
         // เปิดโอกาสให้สกิลต่างๆ แทรกการทำงานก่อนตรวจสอบการ์ดหลบ
         game.eventManager.emit("beforeDodge", dodgeContext);
@@ -64,7 +64,7 @@ class SlashCard extends BasicCard{
                 return true;
             }
             console.log("Slash DamageType =", this.damageType);// Debug
-            // กำหนดค่าความเสียหายพื้นฐานของการ์ดฆ่าเริ่มต้นที่ 1
+            // กำหนดค่าความเสียหายพื้นฐานของการ์ดโจมตีเริ่มต้นที่ 1
             let damageAmount = 1;
             // ตรวจสอบว่าผู้เล่นกำลังอยู่ในสถานะเมาสุราหรือไม่
             if(player.isDrunk()){
@@ -84,11 +84,11 @@ class SlashCard extends BasicCard{
         }
         return true;
     }
-    // การ์ดใบนี้จำเป็นต้องเลือกเป้าหมายก่อนใช้งาน (เช่น การ์ด ฆ่า / Slash)
+    // การ์ดใบนี้จำเป็นต้องเลือกเป้าหมายก่อนใช้งาน (เช่น การ์ด โจมตี / Slash)
     needTarget(){
         return true;
     }
-    // ตรวจสอบว่าสามารถเลือกผู้เล่นคนนี้เป็นเป้าหมายของการ์ด "ฆ่า" ได้หรือไม่
+    // ตรวจสอบว่าสามารถเลือกผู้เล่นคนนี้เป็นเป้าหมายของการ์ด "โจมตี" ได้หรือไม่
     canTarget(player, target){
         // เงื่อนไขที่ 1: ห้ามเลือกตัวเองเป็นเป้าหมาย
         if (player === target){
@@ -108,11 +108,11 @@ class SlashCard extends BasicCard{
         switch(this.damageType){
             // กรณีความเสียหายธาตุไฟ
             case DamageType.FIRE:
-                return "ฆ่าไฟ";
+                return "โจมตีไฟ";
             // กรณีความเสียหายธาตุสายฟ้า
             case DamageType.THUNDER:
-                return "ฆ่าสายฟ้า";
-            // กรณีความเสียหายปกติ คืนค่าชื่อการ์ดตั้งต้น (ฆ่า)
+                return "โจมตีสายฟ้า";
+            // กรณีความเสียหายปกติ คืนค่าชื่อการ์ดตั้งต้น (โจมตี)
             default:
                 return this.name;
         }

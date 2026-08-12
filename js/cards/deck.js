@@ -6,14 +6,14 @@ class Deck {
 
     initDeck() { // เพิ่มการ์ดลง Deck
         for (let i = 0; i <= 4; i++){ // วนลูป การ์ด 3 ใบ 4 รอบ
-            this.cards.push(new SlashCard("♠️", 1)); // เพิ่มการ์ดฆ่า
-            this.cards.push(new SlashCard("♥️", 7, DamageType.FIRE)); // การ์ดฆ่าไฟ
-            this.cards.push(new SlashCard("♠️", 12, DamageType.THUNDER)); // การ์ดฆ่าสายไฟ
+            this.cards.push(new SlashCard("♠️", 1)); // เพิ่มการ์ดโจมตี
+            this.cards.push(new SlashCard("♥️", 7, DamageType.FIRE)); // การ์ดโจมตีไฟ
+            this.cards.push(new SlashCard("♠️", 12, DamageType.THUNDER)); // การ์ดโจมตีสายไฟ
             this.cards.push(new DodgeCard("♥️", 2)); // เพิ่มการ์ดหลบ
             this.cards.push(new PeachCard("♣️", 3)); // เพิ่มการ์ดยา
             this.cards.push(new TrainingSword("♦️", 5)); // เพิ่มอาวุธ กระบี่ฝึกหัด
             this.cards.push(new CrossbowCard("♠️", 2)); // เพิ่มอาวุธ หน้าไม้จูเก่อ
-            this.cards.push(new EightTrigramsArmor("♣️", 2)); // เพิ่มเกราะแปดทิศ
+            this.cards.push(new EightTrigramsArmor("♣️", 2)); // เพิ่มเกราะเกราะแปดทิศ
             this.cards.push(new LeBuSiShuCard("♠️", 6)); // เพิ่มการ์ดหน่วงเวลา สุราลืมกลับ
             this.cards.push(new LightningCard("♠️", 2)); // เพิ่มการ์ดหน่วงเวลา สายฟ้า
             this.cards.push(new FireAttackCard("♥️", 8)); // เพิ่มการ์ดกลอุบาย เพลิงผลาญ

@@ -5,14 +5,14 @@ class Player{
         this.maxHp = 4; // เลือดสูงสุด
         this.hp = 4; // เลือดปัจจุบัน
         this.hand = new Hand(); // สร้างไพ่ในมือ player
-        this.slashUsed = false; // เช็กการใช้การ์ดฆ่า
+        this.slashUsed = false; // เช็กการใช้การ์ดโจมตี
         this.skills = []; // เก็บสกิล
         this.controller = new controllerClass(game); // ผูก controllerClass เข้ากับ game
         this.controller.setPlayer(this); // ผูก player (this) เข้ากับ Controller ใบนั้น
         this.weapon = null; // อาวุธ
         this.armor = null; // เกราะ
         this.infiniteSlash = false;
-        this.drunk = false; // สถานะมึนสุรา (ใช้เพิ่ม Damage ให้การ์ดฆ่า)
+        this.drunk = false; // สถานะมึนสุรา (ใช้เพิ่ม Damage ให้การ์ดโจมตี)
         this.delayedTricks = []; // เก็บการ์ดหน่วงเวลาที่ติดอยู่
         this.skipPlayPhase = false; // Flag สำหรับข้าม Play Phase เมื่อติดผลสุราลืมกลับ
         this.skipDrawPhase = false; // Flag สำหรับระบุสถานะข้าม Draw Phase (เฟสจั่วการ์ด)
@@ -71,18 +71,18 @@ class Player{
         this.game.log(this.name + " ฟื้น HP " + amount); // แสดง ว่าผู้เล่นคนนี้ฟื้น HP เท่าไหร่
         this.showStatus(); // แสดง HP ล่าสุด
     }
-    // เช็กว่าผู้เล่นคนนี้สามารถใช้การ์ด "ฆ่า" ในเทิร์นนี้ได้หรือไม่ (ถ้ายังไม่เคยใช้จะคืนค่า true)
+    // เช็กว่าผู้เล่นคนนี้สามารถใช้การ์ด "โจมตี" ในเทิร์นนี้ได้หรือไม่ (ถ้ายังไม่เคยใช้จะคืนค่า true)
     canUseSlash(){
-        // หากสวมใส่อาวุธที่มีสถานะ infiniteSlash (เช่น จูเก่อเหลียนหนู) จะใช้ฆ่าได้ไม่จำกัดครั้ง
+        // หากสวมใส่อาวุธที่มีสถานะ infiniteSlash (เช่น จูเก่อเหลียนหนู) จะใช้โจมตีได้ไม่จำกัดครั้ง
         if (this.infiniteSlash){
             return true;
         }
         // รีเทิร์นค่าตรงข้ามของ slashUsed (ถ้า slashUsed เป็น false จะรีเทิร์น true)
         return !this.slashUsed;
     }
-    // ทำเครื่องหมายบันทึกว่าผู้เล่นได้ใช้การ์ด "ฆ่า" ไปแล้วในเทิร์นนี้
+    // ทำเครื่องหมายบันทึกว่าผู้เล่นได้ใช้การ์ด "โจมตี" ไปแล้วในเทิร์นนี้
     markSlashUsed(){
-        // เปลี่ยนสถานะ slashUsed ให้เป็น true เพื่อป้องกันไม่ให้ลงการ์ดฆ่าซ้ำได้อีก
+        // เปลี่ยนสถานะ slashUsed ให้เป็น true เพื่อป้องกันไม่ให้ลงการ์ดโจมตีซ้ำได้อีก
         this.slashUsed = true;
     }
     // เพิ่มสกิล

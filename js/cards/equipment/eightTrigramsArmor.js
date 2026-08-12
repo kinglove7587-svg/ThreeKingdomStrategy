@@ -1,8 +1,8 @@
 class EightTrigramsArmor extends ArmorCard{
-    // สร้างเกราะแปดทิศ
+    // สร้างเกราะเกราะแปดทิศ
     constructor(suit, number){
         // เรียกใช้ constructor ของคลาสแม่ (ArmorCard)
-        super("แปดทิศ", suit, number);
+        super("เกราะแปดทิศ", suit, number);
         //
         this.skills = [new EightTrigramsSkill()];
     }

@@ -10,7 +10,7 @@ class WineCard extends BasicCard{
             player.recoverHp(1);
             return true;
         }
-        // ถ้าไม่ได้ใกล้ตาย ให้เข้าสถานะเมาสุรา (เพิ่มความเสียหายให้ไพ่ฆ่าใบถัดไป)
+        // ถ้าไม่ได้ใกล้ตาย ให้เข้าสถานะเมาสุรา (เพิ่มความเสียหายให้ไพ่โจมตีใบถัดไป)
         player.setDrunk(true);
         game.log(player.name + " ดื่มสุรา");
         return true;

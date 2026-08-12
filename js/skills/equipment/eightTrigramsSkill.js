@@ -1,5 +1,5 @@
 class EightTrigramsSkill extends TriggerSkill{
-    // ตัวสร้างออบเจกต์ EightTrigramsSkill (กำหนดชื่อสกิลแปดทิศ)
+    // ตัวสร้างออบเจกต์ EightTrigramsSkill (กำหนดชื่อสกิลเกราะแปดทิศ)
     constructor(){
         super("EightTrigrams"); // ตั้งชื่อสกิลเป็น "EightTrigrams"
     }
@@ -7,11 +7,11 @@ class EightTrigramsSkill extends TriggerSkill{
     register(eventManager, player){
         // สร้าง Callback Function สำหรับดักจับ Event beforeDodge
         const callback = (context)=>{
-            // ทำงานเฉพาะเมื่อผู้เล่นที่เป็นเป้าหมาย (target) คือเจ้าของเกราะแปดทิศนี้
+            // ทำงานเฉพาะเมื่อผู้เล่นที่เป็นเป้าหมาย (target) คือเจ้าของเกราะเกราะแปดทิศนี้
             if(context.target !== player){
                 return;
             }
-            player.game.log(player.name + " ใช้เกราะแปดทิศ");
+            player.game.log(player.name + " ใช้เกราะเกราะแปดทิศ");
             // สั่งเสี่ยงทาย (Judge) และรับค่าผลลัพธ์เป็น JudgeResult
             const result = player.game.judge(player);
             // หากเปิดไม่เจอกระดาษไพ่/กองไพ่หมด ให้ยกเลิกการทำงาน

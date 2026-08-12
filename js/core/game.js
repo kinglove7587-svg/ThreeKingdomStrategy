@@ -192,7 +192,7 @@ class Game {
     }
     // ประมวลผลช่วงเริ่มเทิร์น (Start Phase)
     startPhase(player){ 
-        // รีเซ็ตสถานะการใช้การ์ด "ฆ่า/ฟัน" (Slash) ให้ผู้เล่นกลับมาใช้ได้ใหม่ในเทิร์นนี้
+        // รีเซ็ตสถานะการใช้การ์ด "โจมตี/ฟัน" (Slash) ให้ผู้เล่นกลับมาใช้ได้ใหม่ในเทิร์นนี้
         player.slashUsed = false;  
         // ส่งข้อความ "Start Phase" ไปบันทึกและแสดงในกล่อง Log บนหน้าเว็บ
         this.ui.addLog("Start Phase");
@@ -486,15 +486,15 @@ class Game {
     // ประมวลผลเริ่มต้นการดวลเดี่ยว (Duel Engine)
     duel(attacker, defender){
         this.log(attacker.name + " เริ่ม Duel กับ " + defender.name);
-        // กำหนดให้ฝ่ายป้องกัน (Defender) ต้องเป็นฝ่ายทิ้งการ์ด "ฆ่า" ก่อน
+        // กำหนดให้ฝ่ายป้องกัน (Defender) ต้องเป็นฝ่ายทิ้งการ์ด "โจมตี" ก่อน
         let current = defender;
         let opponent = attacker;
-        // วนลูปสลับกันทิ้งการ์ด "ฆ่า" ไปเรื่อยๆ จนกว่าจะมีฝ่ายใดฝ่ายหนึ่งไม่มีการ์ด
+        // วนลูปสลับกันทิ้งการ์ด "โจมตี" ไปเรื่อยๆ จนกว่าจะมีฝ่ายใดฝ่ายหนึ่งไม่มีการ์ด
         while(true){
-            this.log(current.name + " ต้องใช้ ฆ่า");
-            // ถามหาและบังคับใช้การ์ด "ฆ่า" จากฝ่าย current
+            this.log(current.name + " ต้องใช้ โจมตี");
+            // ถามหาและบังคับใช้การ์ด "โจมตี" จากฝ่าย current
             const success = this.askSlash(current);
-            // หากฝ่าย current ไม่มีการ์ด "ฆ่า" ให้รับความเสียหายและจบการดวลทันที
+            // หากฝ่าย current ไม่มีการ์ด "โจมตี" ให้รับความเสียหายและจบการดวลทันที
             if(!success){
                 // สร้างความเสียหาย 1 หน่วย โดยมี opponent เป็นผู้สร้างความเสียหายให้ current
                 const damage = new Damage(opponent, current, 1);
@@ -517,20 +517,20 @@ class Game {
             opponent: current
         };
     }
-    // ตรวจสอบและบังคับใช้การ์ด "ฆ่า" ในมือของผู้เล่น
+    // ตรวจสอบและบังคับใช้การ์ด "โจมตี" ในมือของผู้เล่น
     askSlash(player){
-        // ส่งคำร้องขอเลือกการ์ด "ฆ่า" ไปยัง Controller ของผู้เล่น
+        // ส่งคำร้องขอเลือกการ์ด "โจมตี" ไปยัง Controller ของผู้เล่น
         const index = player.controller.askSlash(player, this);
-        // หากผู้เล่นไม่มีการ์ด "ฆ่า" บนมือ
+        // หากผู้เล่นไม่มีการ์ด "โจมตี" บนมือ
         if(index === -1){
-            this.log(player.name + " ไม่มี ฆ่า");
+            this.log(player.name + " ไม่มี โจมตี");
             return false;
         }
-        // ดึงการ์ด "ฆ่า" ออกจากมือตามตำแหน่งที่พบ
+        // ดึงการ์ด "โจมตี" ออกจากมือตามตำแหน่งที่พบ
         const slash = player.hand.removeCard(index);
-        // นำการ์ด "ฆ่า" ลงกองทิ้ง (Discard Pile) พร้อมบันทึก Log
+        // นำการ์ด "โจมตี" ลงกองทิ้ง (Discard Pile) พร้อมบันทึก Log
         this.discardPile.addCard(slash);
-        this.log(player.name + " ใช้ฆ่า");
+        this.log(player.name + " ใช้โจมตี");
         // อัปเดตหน้าจอ UI ใหม่ทันทีหลังการ์ดถูกทิ้ง
         this.ui.render();
         return true;

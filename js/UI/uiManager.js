@@ -132,7 +132,7 @@ class UIManager{
             const card = player.hand.cards[i];
             // สร้าง Element ปุ่ม <button> ขึ้นมาใหม่ในหน่วยความจำ
             const button = document.createElement("button");
-            // กำหนดข้อความบนปุ่มให้แสดงชื่อการ์ด (เช่น "ฆ่า", "ยา", "หลบ")
+            // กำหนดข้อความบนปุ่มให้แสดงชื่อการ์ด (เช่น "โจมตี", "ยา", "หลบ")
             button.textContent = card.name;
             //  กำหนด Event Handler เมื่อมีการคลิกที่ปุ่มการ์ดบนหน้า HTML
             button.onclick = () => {
@@ -153,7 +153,7 @@ class UIManager{
         for(const card of target.hand.cards){
             //สร้าง Element ปุ่ม <button> ใหม่ในหน่วยความจำ
             const button = document.createElement("button");
-            // กำหนดข้อความบนปุ่มเป็น "ชื่อดอก แต้ม" (เช่น ฆ่า ♠️ 7)
+            // กำหนดข้อความบนปุ่มเป็น "ชื่อดอก แต้ม" (เช่น โจมตี ♠️ 7)
             button.textContent = 
             card.name + " " +
             card.suit + " " + 
@@ -238,21 +238,21 @@ class UIManager{
         let text = "";
         // ตรวจสอบว่าผู้เล่นมีการสวมใส่อาวุธอยู่หรือไม่
         if(player.weapon){
-            text += "<br>อาวุธ : " + 
+            text += "<br>⚔️ : " + 
                 player.weapon.name + " " +
                 player.weapon.suit + " " +
                 player.weapon.number;
         }else{
-            text += "<br>อาวุธ : ไม่มี";
+            text += "<br>⚔️ : ไม่มี";
         }
         // ตรวจสอบว่าผู้เล่นมีการสวมใส่เกราะอยู่หรือไม่
         if(player.armor){
-            text += "<br>เกราะ : " + 
+            text += "<br>🛡️ : " + 
                 player.armor.name + " " + 
                 player.armor.suit + " " + 
                 player.armor.number;
         }else{
-            text += "<br>เกราะ : ไม่มี";
+            text += "<br>🛡️ : ไม่มี";
         }
         return text;
     }

@@ -79,7 +79,7 @@ class HumanController extends Controller{
         if (!card){
             return;
         }
-        // ถ้าการ์ดต้องเลือกเป้าหมาย (เช่น การ์ดฆ่า, ดวล) ให้ Render UI ใหม่ แล้วหยุดรอให้ผู้เล่นคลิกเลือกเป้าหมาย
+        // ถ้าการ์ดต้องเลือกเป้าหมาย (เช่น การ์ดโจมตี, ดวล) ให้ Render UI ใหม่ แล้วหยุดรอให้ผู้เล่นคลิกเลือกเป้าหมาย
         if (card.needTarget()){
             this.inputState = "waitingTarget";
             this.game.ui.render();
@@ -220,11 +220,11 @@ class HumanController extends Controller{
         // เรียกใช้เมธอด finishTurn() เพื่อเริ่มประมวลผลการใช้การ์ดกับเป้าหมาย
         this.finishTurn();
     }
-    // สอบถามการ์ด "ฆ่า" สำหรับ HumanController
+    // สอบถามการ์ด "โจมตี" สำหรับ HumanController
     askSlash(player, game){
-        // ค้นหารายการการ์ด "ฆ่า" ทั้งหมดในมือของผู้เล่น
+        // ค้นหารายการการ์ด "โจมตี" ทั้งหมดในมือของผู้เล่น
         const slashCards = player.hand.findSlashCards();
-        // หากไม่มีการ์ด "ฆ่า" ในมือเลย ให้คืนค่า -1 (ไม่มีการ์ดให้เลือก)
+        // หากไม่มีการ์ด "โจมตี" ในมือเลย ให้คืนค่า -1 (ไม่มีการ์ดให้เลือก)
         if(slashCards.length === 0){
             return -1;
         }
