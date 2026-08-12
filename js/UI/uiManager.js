@@ -92,7 +92,9 @@ class UIManager{
                 "HP : " +
                 player.hp + 
                 "/" + 
-                player.maxHp + status;
+                player.maxHp + 
+                status + 
+                this.renderEquipment(player);
             // เช็กว่าถ้าเป็นผู้เล่นคนแรก (index 0) ให้ถือว่าเป็นฝั่งเรา
             /*if (i === 0){
                 // นำ element ไปแสดงในโซน playerArea
@@ -230,6 +232,29 @@ class UIManager{
             // ซ่อนปุ่ม End Turn ไม่ให้กดได้ระหว่างที่ AI เล่น
             this.endTurnButton.style.display = "none";
         }
+    }
+    // สร้างข้อความ HTML แสดงผลอุปกรณ์ที่ผู้เล่นกำลังสวมใส่อยู่ (อาวุธ/เกราะ)
+    renderEquipment(player){
+        let text = "";
+        // ตรวจสอบว่าผู้เล่นมีการสวมใส่อาวุธอยู่หรือไม่
+        if(player.weapon){
+            text += "<br>อาวุธ : " + 
+                player.weapon.name + " " +
+                player.weapon.suit + " " +
+                player.weapon.number;
+        }else{
+            text += "<br>อาวุธ : ไม่มี";
+        }
+        // ตรวจสอบว่าผู้เล่นมีการสวมใส่เกราะอยู่หรือไม่
+        if(player.armor){
+            text += "<br>เกราะ : " + 
+                player.armor.name + " " + 
+                player.armor.suit + " " + 
+                player.armor.number;
+        }else{
+            text += "<br>เกราะ : ไม่มี";
+        }
+        return text;
     }
     // เมธอดสำหรับวาดปุ่มทางเลือกระหว่าง "เล่น" หรือ "Recast" สำหรับการ์ดที่รองรับ
     renderCardActionButtons(index){
