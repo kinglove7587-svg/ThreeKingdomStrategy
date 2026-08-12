@@ -327,6 +327,32 @@ class UIManager{
                 this.handArea.appendChild(button);
             }
         }
+        // กรณีเลือกทำลาย "อาวุธ"
+        if(controller.selectedBurnSource === "weapon"){
+            const button = document.createElement("button");
+            button.textContent = "⚔️ " + 
+                target.weapon.name + " " + 
+                target.weapon.suit + " " + 
+                target.weapon.number;
+            button.onclick = () => {
+                controller.selectBurnCard(0);
+                controller.confirmBurnSelection();
+            };
+            this.controlArea.appendChild(button);
+        }
+        // กรณีเลือกทำลาย "เกราะ"
+        if(controller.selectedBurnSource === "armor"){
+            const button = document.createElement("button");
+            button.textContent = "🛡️ " + 
+                target.armor.name + " " + 
+                target.armor.suit + " " + 
+                target.armor.number;
+            button.onclick = () => {
+                controller.selectBurnCard(0);
+                controller.confirmBurnSelection();
+            };
+            this.controlArea.appendChild(button);
+        }
         // ปุ่ม ↩️ ย้อนกลับ
         const backButton = document.createElement("button");
         backButton.textContent = "↩️ ย้อนกลับ";

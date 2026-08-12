@@ -249,7 +249,7 @@ class HumanController extends Controller{
         }
         return false;
     }
-    // เลือกการ์ดบนมือของเป้าหมายที่จะทำลาย (สะพานขาด) ตาม Index ที่ระบุ
+    // บันทึกการ์ดเป้าหมายที่จะทำลาย (มือ, อาวุธ หรือ เกราะ) ลงใน State
     selectBurnCard(index){
         const target = this.selectedBurnTarget;
         // หากไม่มีเป้าหมาย ให้ยกเลิก
@@ -265,6 +265,24 @@ class HumanController extends Controller{
             // บันทึกการ์ดและตำแหน่ง Index ที่เลือกไว้ใน State
             this.selectedBurnCard = target.hand.cards[index];
             this.selectedBurnCardIndex = index;
+            return true;
+        }
+        // กรณีเลือกทำลาย "อาวุธ" (weapon)
+        if(this.selectedBurnSource === "weapon"){
+            if(!target.weapon){
+                return false;
+            }
+            this.selectedBurnCard = target.weapon;
+            this.selectedBurnCardIndex = -1;
+            return true;
+        }
+        // กรณีเลือกทำลาย "เกราะ" (armor)
+        if(this.selectedBurnSource === "armor"){
+            if(!target.armor){
+                return false;
+            }
+            this.selectedBurnCard = target.armor;
+            this.selectedBurnCardIndex = -1;
             return true;
         }
         return false;
