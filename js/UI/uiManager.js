@@ -143,6 +143,27 @@ class UIManager{
             this.handArea.appendChild(button);
         }
     }
+    // แสดงการ์ดบนมือทั้งหมดของผู้เล่นเป้าหมาย
+    renderTargetHand(target){
+        // หากไม่มีออบเจกต์เป้าหมาย ให้ยกเลิกการทำงาน
+        if(!target){
+            return;
+        }
+        // วนลูปการ์ดทุกใบในมือของผู้เล่นเป้าหมาย
+        for(const card of target.hand.cards){
+            //สร้าง Element ปุ่ม <button> ใหม่ในหน่วยความจำ
+            const button = document.createElement("button");
+            // กำหนดข้อความบนปุ่มเป็น "ชื่อดอก แต้ม" (เช่น ฆ่า ♠️ 7)
+            button.textContent = 
+            card.name + " " +
+            card.suit + " " + 
+            card.number;
+            // ปิดการใช้งานปุ่ม (disabled) เพื่อให้เป็นเพียงการเปิดดู ห้ามคลิกเลือก
+            button.disabled = true;
+            // นำปุ่มการ์ดไปแสดงผลในโซน handArea บน UI
+            this.handArea.appendChild(button);
+        }
+    }
     // วาดการ์ดคว่ำของเป้าหมายในโหมดขโมยการ์ด (Steal)
     renderStealHand(){
         // ดึงผู้เล่นปัจจุบันที่กำลังเล่นอยู่ในขณะนี้
