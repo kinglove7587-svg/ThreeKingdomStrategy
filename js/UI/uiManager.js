@@ -315,11 +315,7 @@ class UIManager{
             for(let i = 0; i< target.hand.cards.length; i++){
                 const button = document.createElement("button");
                 
-                button.textContent = 
-                    target.hand.cards[i].name + " " +
-                    target.hand.cards[i].suit + " " + 
-                    target.hand.cards[i].number;
-                
+                button.textContent = "🂠 " + (i + 1);
                 button.onclick = () => {
                     controller.selectBurnCard(i);
                     controller.confirmBurnSelection();
