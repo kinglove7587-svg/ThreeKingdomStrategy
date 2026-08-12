@@ -23,4 +23,8 @@ class ActiveSkill extends Skill{
     use(player, game){
         return false;
     }
+    // กำหนดจำนวนการ์ดที่ต้องเลือกเพื่อใช้งานสกิลนี้
+    cardSelectionCount(player, game){
+        return 1;
+    }
 }

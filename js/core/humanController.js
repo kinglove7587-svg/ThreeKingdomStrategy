@@ -8,6 +8,7 @@ class HumanController extends Controller{
         this.viewingHandTarget = null; // เก็บออบเจกต์เป้าหมายที่กำลังถูกเปิดดูการ์ดในมือ
         this.selectedSkill = null; // บันทึกออบเจกต์ Skill ที่ผู้เล่นเลือกใช้งาน
         this.selectedSkillCardIndex = -1; // บันทึกตำแหน่ง Index ของการ์ดที่ผู้เล่นเลือกเพื่อมอบผ่านสกิล
+        this.selectedSkillCardIndices = [];
         //Steal (ฉกฉวย) State
         this.selectedStealTarget = null;
         this.selectedStealCard = null; 
@@ -494,6 +495,7 @@ class HumanController extends Controller{
         // รีเซ็ตค่าเป้าหมายและการ์ดที่เคยเลือกไว้เดิม
         this.selectedTarget = null;
         this.selectedSkillCardIndex = -1;
+        this.selectedSkillCardIndices = [];
         // ตรวจสอบว่า สกิล ต้องการให้เลือกเป้าหมายก่อนหรือไม่
         if(skill.needsTarget(this.player, this.game)){
             this.inputState = "waitingSkillTarget";
@@ -532,6 +534,7 @@ class HumanController extends Controller{
         this.setSelectedTarget(player);
         // เช็กด้วย Framework ใหม่: ถ้าสกิลต้องการให้เลือกการ์ดต่อ ให้เปลี่ยนสถานะรอเลือกการ์ด
         if(skill.needsCardSelection(this.player, this.game)){
+            this.selectedSkillCardIndices = [];
             this.inputState = "waitingSkillCard";
             this.game.ui.render();
             return;
@@ -541,7 +544,7 @@ class HumanController extends Controller{
         const success = skill.use(this.player, this.game);
         this.game.afterHumanAction(success);
     }
-    // รับตำแหน่ง Index ของการ์ดที่ผู้เล่นเลือก แล้วส่งให้สกิลประมวลผลการส่งมอบ
+    // จัดการเลือกการ์ดบนมือเพื่อใช้ Active Skill
     selectSkillCard(index){
         console.log("selectSkillCard ถูกเรียก", index);
         // ตรวจสอบสถานะว่าต้องอยู่ในช่วงรอเลือกการ์ดให้สกิลเท่านั้น
@@ -558,13 +561,28 @@ class HumanController extends Controller{
         if(!card){
             return;
         }
-        // บันทึกตำแหน่งการ์ดที่เลือกไว้ใน selectedSkillCardIndex
+        //
+        if(this.selectedSkillCardIndices.includes(index)){
+            return;
+        }
+        // บันทึก Index เข้า Array และอัปเดต selectedSkillCardIndex ให้สกิลเดิม (เช่น Rende) ใช้องค์ประกอบเดิมได้
+        this.selectedSkillCardIndices.push(index);
         this.selectedSkillCardIndex = index;
-        // เเรียกใช้ Skill ก่อน
+
+        console.log("Skill Card Selection =", this.selectedSkillCardIndices);
+        // ดึงจำนวนการ์ดที่ สกิล นั้นต้องการ
+        const requiredCount = skill.cardSelectionCount(this.player, this.game);
+        // หากยังเลือกการ์ดไม่ครบตามจำนวนที่สกิลต้องการ ให้สั่งวาด UI ใหม่แล้วรอเลือกใบถัดไป
+        if(this.selectedSkillCardIndices.length < requiredCount){
+            this.game.ui.render();
+            return;
+        }
+        // เมื่อเลือกครบตามจำนวนแล้ว ให้สั่งเรียกใช้งาน สกิล
         const success = skill.use(this.player, this.game);
         // หลัง Skill ทำงานเสร็จแล้วค่อยล้าง State
         this.selectedSkill = null;
         this.selectedSkillCardIndex = -1;
+        this.selectedSkillCardIndices = [];
         this.inputState = "idle";
         // ใช้สกิลสำเร็จแล้ว ล้างเป้าหมายของสกิล
         if(success){
