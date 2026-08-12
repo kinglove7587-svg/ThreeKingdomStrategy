@@ -693,4 +693,32 @@ class Game {
 
         this.checkGameOver();
     }
+    // เริ่มต้นระบบการ์ดส้มปอย/เก็บเกี่ยว (Bumper Harvest)
+    startBumperHarvest(){
+        // งรายชื่อเฉพาะผู้เล่นที่ยังมีชีวิตอยู่ (isAlive)
+        const livingPlayers = this.players.filter(
+            player => player.isAlive()
+        );
+        // ล้างข้อมูลเดิมใน SelectionZone
+        this.selectionZone.clear();
+        
+        const harvestCards = [];
+        // จั่วการ์ดจากกองตามจำนวนผู้เล่นที่ยังมีชีวิต
+        for(let i = 0; i < livingPlayers.length; i++){
+            const card = this.deck.draw();
+            // หากการ์ดหมดกองให้หยุดจั่ว
+            if(!card){
+                break;
+            }
+            
+            harvestCards.push(card);
+        }
+        // เริ่มรอบการเลือกการ์ดใน SelectionZone
+        this.selectionZone.startSelection(harvestCards, livingPlayers);
+        
+        console.log("Bumper Harvest:", livingPlayers.length, "ผู้เล่น", 
+            harvestCards.length, "การ์ด"
+        );
+        return true;
+    }
 }
