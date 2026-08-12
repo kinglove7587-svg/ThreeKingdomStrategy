@@ -119,6 +119,11 @@ class UIManager{
             this.renderTargetHand(player.controller.viewingHandTarget);
             return;
         }
+        // หากอยู่ในสถานะรอเลือกโซนทำลาย (มือ, อาวุธ หรือ เกราะ) ให้เรียก renderBurnSource()
+        if(player.controller.inputState === "waitingBurnSource"){
+            this.renderBurnSource();
+            return;
+        }
         // หากอยู่ในสถานะรอเลือกโซนขโมย (มือ หรือ อาวุธ) ให้เรียก renderStealSource()
         if(player.controller.inputState === "waitingStealSource"){
             this.renderStealSource();
@@ -249,6 +254,43 @@ class UIManager{
             armorButton.onclick = () => {
                 controller.selectStealSource("armor");
                 controller.confirmStealSelection();
+            };
+            this.controlArea.appendChild(armorButton);
+        }
+    }
+    // แสดงปุ่มเลือกโซนที่จะทำลายการ์ด (มือ, อาวุธ หรือ เกราะ)
+    renderBurnSource(){
+        const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
+        const target = controller.selectedBurnTarget;
+        //
+        if(!target){
+            return;
+        }
+        // ปุ่มเลือกทำลายจากมือ
+        if(target.hand.cards.length > 0){
+            const handButton = document.createElement("button");
+            handButton.textContent = "🂠 มือ";
+            handButton.onclick = () => {
+                controller.selectBurnSource("hand");
+            };
+            this.controlArea.appendChild(handButton);
+        }
+        // ปุ่มเลือกทำลายอาวุธ
+        if(target.weapon){
+            const weaponButton = document.createElement("button");
+            weaponButton.textContent = "⚔️ " + target.weapon.name;
+            weaponButton.onclick = () => {
+                controller.selectBurnSource("weapon");
+            };
+            this.controlArea.appendChild(weaponButton);
+        }
+        // ปุ่มเลือกทำลายเกราะ
+        if(target.armor){
+            const armorButton = document.createElement("button");
+            armorButton.textContent = "🛡️ " + target.armor.name;
+            armorButton.onclick = () => {
+                controller.selectBurnSource("armor");
             };
             this.controlArea.appendChild(armorButton);
         }
