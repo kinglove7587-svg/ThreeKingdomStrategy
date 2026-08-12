@@ -13,4 +13,14 @@ class BurnBridgeCard extends TrickCard{
         }
         return player.game.getDistance(player, target) <= 1;
     }
+    // ประมวลผลการใช้งานการ์ดสะพานขาด (BurnBridgeCard)
+    use(player, game){
+        // ดึงตัวควบคุม (Controller) ของผู้เล่นที่กำลังใช้การ์ด
+        const controller = player.controller;
+        // บันทึกเป้าหมายที่เลือกไว้ลงใน selectedBurnTarget
+        controller.selectedBurnTarget = controller.getSelectedTarget();
+        // เริ่มเข้าสู่โหมดรอเลือกโซนที่จะทำลาย (มือ / อาวุธ / เกราะ)
+        controller.startBurnSourceSelection();
+        return true;
+    }
 }
