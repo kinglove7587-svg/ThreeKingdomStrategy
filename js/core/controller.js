@@ -49,4 +49,12 @@ class Controller{
     isWaitingPeach(){
         return false;
     }
+    // กำหนดสถานะพื้นฐานเป็น waitingSelection
+    startSelection(){
+        this.inputState = "waitingSelection";
+    }
+    // คืนสถานะกลับเป็น idle
+    finishSelection(){
+        this.inputState = "idle";
+    }
 }
