@@ -715,6 +715,12 @@ class Game {
         }
         // เริ่มรอบการเลือกการ์ดใน SelectionZone
         this.selectionZone.startSelection(harvestCards, livingPlayers);
+        // สั่งให้ Controller ของผู้เล่นคนแรกที่ต้องเลือก สลับ State เป็น waitingSelection
+        const selectionPlayer = this.selectionZone.getCurrentPlayer();
+        
+        if(selectionPlayer && selectionPlayer.controller){
+            selectionPlayer.controller.startSelection();
+        }
 
         console.log("Bumper Harvest:", livingPlayers.length, "ผู้เล่น", 
             harvestCards.length, "การ์ด"
