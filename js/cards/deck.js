@@ -22,7 +22,7 @@ class Deck {
             this.cards.push(new DuelCard("♠️", 1)); // การ์ด ดวลเดียว
             this.cards.push(new WineCard("♦️", 9)); // การ์ด สุรา
             this.cards.push(new SomethingOutOfNothingCard("♥️", 7)); // การ์ดกลอุบาย บังเกิดมีสิ่ง
-            this.cards.push(new StealCard("♠️", 3)); // การ์ดกลอุบาย ฉกฉวย 
+            this.cards.push(new StealCard("♠️", 3)); // การ์ดกลอุบาย ฉกฉวย *ยังไม่เสร็จ
             this.cards.push(new RationsDepletedCard("♣️", 4)); // การ์ดหน่วงเวลา เสบียงหมด!
             this.cards.push(new PeachGardenCard("♥️", 1)); // การ์ดอุบาย คำสาบานสวนท้อ
             this.cards.push(new KnowEnemyCard("♣️", 3)); // การ์ดอุบาย รู้เขารู้เรา
