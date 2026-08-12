@@ -1,6 +1,6 @@
 class BurnBridgeCard extends TrickCard{
     constructor(suit, number){
-        super("สะพานขาด", suit, number);
+        super("ถอนสะพาน", suit, number);
     }
     // ระบุว่าการ์ดใบนี้ต้องเลือกเป้าหมายก่อนใช้
     needTarget(){
@@ -13,7 +13,7 @@ class BurnBridgeCard extends TrickCard{
         }
         return player.game.getDistance(player, target) <= 1;
     }
-    // ประมวลผลการใช้งานการ์ดสะพานขาด (BurnBridgeCard)
+    // ประมวลผลการใช้งานการ์ดถอนสะพาน (BurnBridgeCard)
     use(player, game){
         // ดึงตัวควบคุม (Controller) ของผู้เล่นที่กำลังใช้การ์ด
         const controller = player.controller;

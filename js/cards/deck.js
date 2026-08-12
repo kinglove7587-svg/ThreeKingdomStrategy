@@ -26,7 +26,7 @@ class Deck {
             this.cards.push(new RationsDepletedCard("♣️", 4)); // การ์ดหน่วงเวลา เสบียงหมด!
             this.cards.push(new PeachGardenCard("♥️", 1)); // การ์ดอุบาย คำสาบานสวนท้อ
             this.cards.push(new KnowEnemyCard("♣️", 3)); // การ์ดอุบาย รู้เขารู้เรา
-            this.cards.push(new BurnBridgeCard("♥️", 12)); // การ์ดอุบาย สะพานขาด
+            this.cards.push(new BurnBridgeCard("♥️", 12)); // การ์ดอุบาย ถอนสะพาน
         }
     }
     // สับไพ่

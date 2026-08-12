@@ -145,7 +145,7 @@ class HumanController extends Controller{
         this.inputState = "waitingStealSource";
         this.game.ui.render();
     }
-    // เริ่มต้นสถานะให้ผู้เล่นเลือกโซนเป้าหมายที่จะทำลายการ์ด (สะพานขาด)
+    // เริ่มต้นสถานะให้ผู้เล่นเลือกโซนเป้าหมายที่จะทำลายการ์ด (ถอนสะพาน)
     startBurnSourceSelection(){
         // เปลี่ยนสถานะการรับ Input เป็นรอเลือกโซนที่จะทำลาย
         this.inputState = "waitingBurnSource";

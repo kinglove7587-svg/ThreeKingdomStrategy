@@ -124,7 +124,7 @@ class UIManager{
             this.renderBurnSource();
             return;
         }
-        // หากอยู่ในสถานะรอเลือกการ์ดที่จะทิ้ง (สะพานขาด) ให้เรียก renderBurnCard()
+        // หากอยู่ในสถานะรอเลือกการ์ดที่จะทิ้ง (ถอนสะพาน) ให้เรียก renderBurnCard()
         if(player.controller.inputState === "waitingBurnCard"){
             this.renderBurnCard();
             return;
