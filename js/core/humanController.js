@@ -16,6 +16,8 @@ class HumanController extends Controller{
         // BurnBridge State
         this.selectedBurnTarget = null;
         this.selectedBurnSource = null;
+        this.selectedBurnCard = null;
+        this.selectedBurnCardIndex = -1;
     }
     // จัดการเทิร์นของผู้เล่นมนุษย์
     playTurn(){ 
@@ -243,6 +245,26 @@ class HumanController extends Controller{
             }
             this.selectedBurnSource = "armor";
             this.startBurnCardSelection();
+            return true;
+        }
+        return false;
+    }
+    // เลือกการ์ดบนมือของเป้าหมายที่จะทำลาย (สะพานขาด) ตาม Index ที่ระบุ
+    selectBurnCard(index){
+        const target = this.selectedBurnTarget;
+        // หากไม่มีเป้าหมาย ให้ยกเลิก
+        if(!target){
+            return false;
+        }
+        // กรณีเลือกทำลายจาก "มือ"
+        if(this.selectedBurnSource === "hand"){
+            // ตรวจสอบว่า Index อยู่ในขอบเขตการ์ดที่มีอยู่จริงหรือไม่
+            if(index < 0 || index >= target.hand.cards.length){
+                return false;
+            }
+            // บันทึกการ์ดและตำแหน่ง Index ที่เลือกไว้ใน State
+            this.selectedBurnCard = target.hand.cards[index];
+            this.selectedBurnCardIndex = index;
             return true;
         }
         return false;

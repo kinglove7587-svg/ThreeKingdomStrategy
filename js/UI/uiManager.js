@@ -321,7 +321,8 @@ class UIManager{
                     target.hand.cards[i].number;
                 
                 button.onclick = () => {
-                    console.log("เลือก card สำหรับ Burn :", i);
+                    controller.selectBurnCard(i);
+                    console.log("เลือก card สำหรับ Burn :", controller.selectBurnCard);
                 };
                 this.handArea.appendChild(button);
             }
