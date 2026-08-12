@@ -393,8 +393,9 @@ class UIManager{
                 if(this.game.selectionZone.isFinish()){
                     controller.finishSelection();
                 }else{
-                    // แก้ไขจุดสะกดผิดเป็น startSelection()
-                    controller.startSelection();
+                    // ดึงผู้เล่นคนถัดไปที่มีสิทธิ์เลือกเพื่อสั่งเริ่ม Selection
+                    const nextPlayer = this.game.selectionZone.getCurrentPlayer();
+                    nextPlayer.controller.startSelection();
                 }
             };
             this.handArea.appendChild(button);
