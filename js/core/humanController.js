@@ -13,6 +13,9 @@ class HumanController extends Controller{
         this.selectedStealCard = null; 
         this.selectedStealSource = null; 
         this.selectedStealCardIndex = -1;
+        // BurnBridge State
+        this.selectedBurnTarget = null;
+        this.selectedBurnSource = null;
     }
     // จัดการเทิร์นของผู้เล่นมนุษย์
     playTurn(){ 
