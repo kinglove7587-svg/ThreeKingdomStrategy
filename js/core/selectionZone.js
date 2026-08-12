@@ -4,6 +4,12 @@ class SelectionZone{
         this.players = []; // ผู้เล่นที่มีสิทธิ์เลือก
         this.currentPlayerIndex = 0; // Index ของผู้เล่นที่กำลังเลือก
     }
+    // เริ่มรอบการเลือกการ์ดร่วมกัน
+    startSelection(cards, players){
+        this.cards = [...cards];
+        this.players = [...players];
+        this.currentPlayerIndex = 0;
+    }
     // ล้างข้อมูลทั้งหมดใน Zone
     clear(){
         this.cards = [];
@@ -51,12 +57,6 @@ class SelectionZone{
     // ตรวจสอบว่าการเลือกการ์ดจบหรือยัง
     isFinish(){
         return this.cards.length === 0;
-    }
-    // เริ่มรอบการเลือกการ์ดร่วมกัน
-    startSelection(cards, players){
-        this.cards = [...cards];
-        this.players = [...players];
-        this.currentPlayerIndex = 0;
     }
     // เลื่อนไปยังผู้เล่นคนถัดไปที่มีสิทธิ์เลือก
     advancePlayer(){
