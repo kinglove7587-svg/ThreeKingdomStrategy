@@ -3,3 +3,10 @@
 - AllianceCard
 - RestAndReorganizationCard
 - BorrowedSwordCard
+
+
+- Green Dragon Blade ทำได้
+- Frost Sword พอได้
+- Six Swords of Wu ต้องมีพวกเดียวกัน
+- Two-bladed Trident ต้องมีหลายคน
+- Kirin Bow ต้องมีม้าก่อน
