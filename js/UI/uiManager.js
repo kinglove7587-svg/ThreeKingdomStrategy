@@ -124,6 +124,11 @@ class UIManager{
             this.renderBurnSource();
             return;
         }
+        // หากอยู่ในสถานะรอเลือกการ์ดที่จะทิ้ง (สะพานขาด) ให้เรียก renderBurnCard()
+        if(player.controller.inputState === "waitingBurnCard"){
+            this.renderBurnCard();
+            return;
+        }
         // หากอยู่ในสถานะรอเลือกโซนขโมย (มือ หรือ อาวุธ) ให้เรียก renderStealSource()
         if(player.controller.inputState === "waitingStealSource"){
             this.renderStealSource();
@@ -293,6 +298,33 @@ class UIManager{
                 controller.selectBurnSource("armor");
             };
             this.controlArea.appendChild(armorButton);
+        }
+    }
+    // แสดงปุ่มการ์ดของเป้าหมายตาม Source ที่เลือก เพื่อเตรียมทำลายการ์ด
+    renderBurnCard(){
+        // รับผู้เล่นปัจจุบัน และ Controller
+        const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
+        const target = controller.selectedBurnTarget;
+        // หากไม่มีเป้าหมายให้ยกเลิกการทำงาน
+        if(!target){
+            return;
+        }
+        // กรณีเลือกทำลายจาก "มือ" (แก้ไขเป็น selectedBurnSource)
+        if(controller.selectedBurnSource === "hand"){
+            for(let i = 0; i< target.hand.cards.length; i++){
+                const button = document.createElement("button");
+                
+                button.textContent = 
+                    target.hand.cards[i].name + " " +
+                    target.hand.cards[i].suit + " " + 
+                    target.hand.cards[i].number;
+                
+                button.onclick = () => {
+                    console.log("เลือก card สำหรับ Burn :", i);
+                };
+                this.handArea.appendChild(button);
+            }
         }
     }
     // ผูก Event ของปุ่มกดควบคุมหลัก
