@@ -205,6 +205,13 @@ class UIManager{
             // นำปุ่มที่สร้างไปแสดงผลในโซน handArea บนหน้าเว็บ
             this.handArea.appendChild(button);
         }
+        // สร้างปุ่ม ย้อนกลับ
+        const backButton = document.createElement("button");
+        backButton.textContent = "↩️ ย้อนกลับ";
+        backButton.onclick = () => {
+            controller.startStealSourceSelection();
+        };
+        this.controlArea.appendChild(backButton);
     }
     // แสดงปุ่มเลือกแหล่งที่จะขโมยการ์ด
     renderStealSource(){
@@ -230,6 +237,7 @@ class UIManager{
             weaponButton.textContent = "⚔️ " + target.weapon.name;
             weaponButton.onclick = () => {
                 controller.selectStealSource("weapon");
+                controller.confirmStealSelection();
             };
             // แสดงปุ่ม "อาวุธ" บน Control Area
             this.controlArea.appendChild(weaponButton);
