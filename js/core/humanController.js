@@ -181,6 +181,17 @@ class HumanController extends Controller{
             this.selectedStealCardIndex = -1;
             return true;
         }
+        // กรณีเลือกขโมย "เกราะ"
+        if(source === "armor"){
+            //หากเป้าหมายไม่มีเกราะ ให้ยกเลิก
+            if(!target.armor){
+                return false;
+            }
+            this.selectedStealSource = "armor";
+            this.selectedStealCard = target.armor;
+            this.selectedStealCardIndex = -1;
+            return true;
+        }
         return false;
     }
     // ทำการย้ายการ์ดที่เลือกไว้จากมือของเป้าหมาย เข้าสู่มือของผู้เล่น

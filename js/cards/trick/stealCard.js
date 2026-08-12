@@ -15,7 +15,8 @@ class StealCard extends TrickCard{
         // ต้องมีไพ่บนมืออย่างน้อย 1 ใบ หรือสวมใส่อาวุธอยู่ ถึงจะเล็งเป้าได้
         if(
             target.hand.cards.length === 0 && 
-            !target.weapon
+            !target.weapon && 
+            !target.armor
         ){
             return false;
         }
