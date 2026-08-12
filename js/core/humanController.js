@@ -208,6 +208,28 @@ class HumanController extends Controller{
         this.player.hand.addCard(card);
         return true;
     }
+    // ดำเนินการย้ายอุปกรณ์ (อาวุธ) จากผู้เล่นเป้าหมายมาให้ผู้เล่นปัจจุบันสวมใส่
+    stealSelectedEquipment(){
+        const target = this.selectedStealTarget;
+        // หากไม่มีเป้าหมาย ให้ยกเลิกการทำงาน
+        if(!target){
+            return false;
+        }
+        // หากไม่ได้เลือกแหล่งขโมยเป็น "weapon" ให้ยกเลิก
+        if(this.selectedStealSource !== "weapon"){
+            return false;
+        }
+        // หากเป้าหมายไม่มีอาวุธสวมใส่อยู่ ให้ยกเลิก
+        if(!target.weapon){
+            return false;
+        }
+        // ดึงออบเจกต์อาวุธของเป้าหมาย
+        const weapon = target.weapon;
+        // ถอดอาวุธออกจากเป้าหมาย และนำมาสวมใส่ให้ผู้เล่นปัจจุบัน
+        target.unequipWeapon();
+        this.player.equipWeapon(weapon);
+        return true;
+    }
     // ยืนยันการขโมยการ์ดที่เลือก ล้าง State และกลับสู่สถานะปกติ (idle)
     confirmStealSelection(){
         // ดำเนินการย้ายการ์ด
