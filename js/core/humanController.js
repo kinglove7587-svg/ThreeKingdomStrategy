@@ -527,4 +527,60 @@ class HumanController extends Controller{
         // แจ้งเกมหลักประมวลผลต่อหลังจาก Human ทำแอคชันเสร็จสิ้น
         this.game.afterHumanAction(success);
     }
+    // ทิ้งการ์ดที่เลือกของเป้าหมาย (มือ / อาวุธ / เกราะ) ลงในกองทิ้ง (discardPile)
+    discardSelectedBurnCard(){
+        const target = this.selectedBurnTarget;
+        // หากไม่มีเป้าหมาย ให้ยกเลิก
+        if(!target){
+            return false;
+        }
+        // กรณีเลือกทำลายจาก "มือ"
+        if(this.selectedBurnSource === "hand"){
+            const index = this.selectedBurnCardIndex;
+            // ตรวจสอบว่า Index อยู่ในขอบเขตการ์ดที่มีอยู่จริงหรือไม่
+            if(index < 0 || index >= target.hand.cards.length){
+                return false;
+            }
+            // ถอดการ์ดออกจากมือของเป้าหมาย
+            const card = target.hand.removeCard(index);
+
+            if(!card){
+                return false;
+            }
+            // นำการ์ดใบนั้นเข้ากองทิ้งของเกม
+            this.game.discardPile.addCard(card);
+            return true;
+        }
+        // กรณีเลือกทำลาย "อาวุธ" (weapon)
+        if(this.selectedBurnSource === "weapon"){
+            if(!target.weapon){
+                return false;
+            }
+            // ถอดอาวุธออกจากเป้าหมาย
+            const weapon = target.unequipWeapon();
+            
+            if(!weapon){
+                return false;
+            }
+            // นำอาวุธเข้ากองทิ้งของเกม
+            this.game.discardPile.addCard(weapon);
+            return true;
+        }
+        // กรณีเลือกทำลาย "เกราะ" (armor)
+        if(this.selectedBurnSource === "armor"){
+            if(!target.armor){
+                return false;
+            }
+            // ถอดเกราะออกจากเป้าหมาย (และยกเลิก Event Listeners ของเกราะ)
+            const armor = target.unequipArmor();
+            
+            if(!armor){
+                return false;
+            }
+            // นำเกราะเข้ากองทิ้งของเกม
+            this.game.discardPile.addCard(armor);
+            return true;
+        }
+        return false;
+    }
 }
