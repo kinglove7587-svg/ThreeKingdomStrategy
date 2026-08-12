@@ -6,30 +6,36 @@ class Deck {
 
     initDeck() { // เพิ่มการ์ดลง Deck
         for (let i = 0; i <= 4; i++){ // วนลูป การ์ด 3 ใบ 4 รอบ
-            this.cards.push(new SlashCard("♠️", 1)); // เพิ่มการ์ดโจมตี
-            this.cards.push(new SlashCard("♥️", 7, DamageType.FIRE)); // การ์ดโจมตีไฟ
-            this.cards.push(new SlashCard("♠️", 12, DamageType.THUNDER)); // การ์ดโจมตีสายไฟ
+            //============================= Basic Card ================================
+            this.cards.push(new SlashCard("♥️", 10)); // เพิ่มการ์ดโจมตี
+            this.cards.push(new SlashCard("♥️", 4, DamageType.FIRE)); // การ์ดโจมตีไฟ
+            this.cards.push(new SlashCard("♣️", 5, DamageType.THUNDER)); // การ์ดโจมตีสายไฟ
             this.cards.push(new DodgeCard("♥️", 2)); // เพิ่มการ์ดหลบ
-            this.cards.push(new PeachCard("♣️", 3)); // เพิ่มการ์ดยา
-            this.cards.push(new TrainingSword("♦️", 5)); // เพิ่มอาวุธ กระบี่ฝึกหัด
-            this.cards.push(new CrossbowCard("♠️", 2)); // เพิ่มอาวุธ หน้าไม้จูเก่อ
-            this.cards.push(new EightTrigramsArmor("♣️", 2)); // เพิ่มเกราะเกราะแปดทิศ
+            this.cards.push(new PeachCard("♥️", 3)); // เพิ่มการ์ดยา
+            this.cards.push(new WineCard("♠️", 9)); // การ์ด สุรา
+            //============================ Delayed Card ================================
+            this.cards.push(new LightningCard("♥️", 12)); // เพิ่มการ์ดหน่วงเวลา สายฟ้า
             this.cards.push(new LeBuSiShuCard("♠️", 6)); // เพิ่มการ์ดหน่วงเวลา สุราลืมกลับ
-            this.cards.push(new LightningCard("♠️", 2)); // เพิ่มการ์ดหน่วงเวลา สายฟ้า
-            this.cards.push(new FireAttackCard("♥️", 8)); // เพิ่มการ์ดกลอุบาย เพลิงผลาญ
-            this.cards.push(new TengJiaArmor("♣️", 7)); // เพิ่มอุปกรณ์เกราะ เกราะหวาย
-            this.cards.push(new IronChainCard("♣️", 12)); // การ์ด โซ่ตรวน
-            this.cards.push(new DuelCard("♠️", 1)); // การ์ด ดวลเดียว
-            this.cards.push(new WineCard("♦️", 9)); // การ์ด สุรา
-            this.cards.push(new SomethingOutOfNothingCard("♥️", 7)); // การ์ดกลอุบาย บังเกิดมีสิ่ง
-            this.cards.push(new StealCard("♠️", 3)); // การ์ดกลอุบาย ฉกฉวย *ยังไม่เสร็จ
             this.cards.push(new RationsDepletedCard("♣️", 4)); // การ์ดหน่วงเวลา เสบียงหมด!
+            //============================= TrickCard ==================================
             this.cards.push(new PeachGardenCard("♥️", 1)); // การ์ดอุบาย คำสาบานสวนท้อ
             this.cards.push(new KnowEnemyCard("♣️", 3)); // การ์ดอุบาย รู้เขารู้เรา *ยังไม่เสร็จ
             this.cards.push(new BurnBridgeCard("♥️", 12)); // การ์ดอุบาย ถอนสะพาน
             this.cards.push(new BarbarianCard ("♣️", 7)); // การ์ดอุบาย กองทัพต่างแดน
             this.cards.push(new RainingArrowsCard("♥️", 1)); // การ์ดอุบาย ฝนธนู
+            this.cards.push(new SomethingOutOfNothingCard("♥️", 7)); // การ์ดกลอุบาย บังเกิดมีสิ่ง
+            this.cards.push(new DuelCard("♦️", 1)); // การ์ด ดวลเดียว
+            this.cards.push(new StealCard("♠️", 3)); // การ์ดกลอุบาย ฉกฉวย *ยังไม่เสร็จ
+            this.cards.push(new FireAttackCard("♥️", 2)); // เพิ่มการ์ดกลอุบาย เพลิงผลาญ
+            this.cards.push(new IronChainCard("♣️", 13)); // การ์ดอุบาย โซ่ตรวน
+            this.cards.push(new BarbarianCard ("♣️", 7)); // การ์ดอุบาย กองทัพต่างแดน
             this.cards.push(new BumperHarvestCard("♥️", 3)); // การ์ดอุบาย เก็บเกี่ยวอุดมสมบูรณ์
+            //============================= Weapon ======================================
+            this.cards.push(new TrainingSword("♦️", 5)); // เพิ่มอาวุธ กระบี่ฝึกหัด
+            this.cards.push(new CrossbowCard("♠️", 2)); // เพิ่มอาวุธ หน้าไม้จูเก่อ
+            //============================= Armor ======================================
+            this.cards.push(new EightTrigramsArmor("♣️", 2)); // เพิ่มเกราะเกราะแปดทิศ         
+            this.cards.push(new TengJiaArmor("♣️", 7)); // เพิ่มอุปกรณ์เกราะ เกราะหวาย
         }
     }
     // สับไพ่
@@ -49,7 +55,7 @@ class Deck {
         return this.cards.pop(); // ถ้ามี นำใบบนสุด ให้ผู้เล่น
     }
 }
-/*1. Bumper Harvest
+/*
 2. Negation
 3. Alliance
 4. Rest and Reorganization
