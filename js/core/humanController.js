@@ -203,6 +203,42 @@ class HumanController extends Controller{
         }
         return false;
     }
+    // จัดการการเลือกโซนที่จะทำลายการ์ด (มือ, อาวุธ หรือ เกราะ) จากผู้เล่นเป้าหมาย
+    selectBurnSource(source){
+        const target = this.selectedBurnTarget;
+        // หากไม่มีเป้าหมาย ให้ยกเลิกการทำงาน
+        if(!target){
+            return false;
+        }
+        // กรณีเลือกทำลายการ์ดจาก "มือ"
+        if(source === "hand"){
+            // หากเป้าหมายไม่มีไพ่บนมือ ให้ยกเลิก
+            if(target.hand.cards.length === 0){
+                return false;
+            }
+            this.selectedBurnSource = "hand";
+            return true;
+        }
+        // กรณีเลือกทำลาย "อาวุธ"
+        if(source === "weapon"){
+            // หากเป้าหมายไม่ได้สวมใส่อาวุธ ให้ยกเลิก
+            if(!target.weapon){
+                return false;
+            }
+            this.selectedBurnSource = "weapon";
+            return true;
+        }
+        // กรณีเลือกทำลาย "เกราะ"
+        if(source === "armor"){
+            // หากเป้าหมายไม่ได้สวมใส่เกราะ ให้ยกเลิก
+            if(!target.armor){
+                return false;
+            }
+            this.selectedBurnSource = "armor";
+            return true;
+        }
+        return false;
+    }
     // ทำการย้ายการ์ดที่เลือกไว้จากมือของเป้าหมาย เข้าสู่มือของผู้เล่น
     stealSelectedCard(){
         const target = this.selectedStealTarget;
