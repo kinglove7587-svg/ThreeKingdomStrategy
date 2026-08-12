@@ -157,6 +157,32 @@ class HumanController extends Controller{
         this.selectedStealCard = target.hand.cards[index];
         this.selectedStealCardIndex = index;
     }
+    // จัดการการเลือกโซนที่จะขโมยการ์ด (มือ หรือ อาวุธ) จากผู้เล่นเป้าหมาย
+    selectStealSource(source){
+        const target = this.selectedStealTarget;
+        // หากไม่มีเป้าหมาย ให้ยกเลิกการทำงาน
+        if(!target){
+            return false;
+        }
+        // กรณีเลือกขโมยจาก "มือ"
+        if(source === "hand"){
+            this.selectedStealSource = "hand";
+            this.startStealSelection();
+            return true;
+        }
+        // กรณีเลือกขโมย "อาวุธ"
+        if(source === "weapon"){
+            // หากเป้าหมายไม่มีอาวุธ ให้ยกเลิก
+            if(!target.weapon){
+                return false;
+            }
+            this.selectedStealSource = "weapon";
+            this.selectedStealCard = target.weapon;
+            this.selectedStealCardIndex = -1;
+            return true;
+        }
+        return false;
+    }
     // ทำการย้ายการ์ดที่เลือกไว้จากมือของเป้าหมาย เข้าสู่มือของผู้เล่น
     stealSelectedCard(){
         const target = this.selectedStealTarget;

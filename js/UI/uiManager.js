@@ -220,8 +220,7 @@ class UIManager{
         const handButton = document.createElement("button");
         handButton.textContent = "🂠 มือ";
         handButton.onclick = () => {
-            controller.selectedStealSource = "hand";
-            controller.startStealSelection();
+            controller.selectStealSource("hand");
         };
         // แสดงปุ่ม "มือ" บน Control Area
         this.controlArea.appendChild(handButton);
@@ -230,8 +229,7 @@ class UIManager{
             const weaponButton = document.createElement("button");
             weaponButton.textContent = "⚔️ " + target.weapon.name;
             weaponButton.onclick = () => {
-                controller.selectedStealSource = "weapon";
-                controller.confirmStealEquipment();
+                controller.selectStealSource("weapon");
             };
             // แสดงปุ่ม "อาวุธ" บน Control Area
             this.controlArea.appendChild(weaponButton);
