@@ -119,6 +119,11 @@ class UIManager{
             this.renderTargetHand(player.controller.viewingHandTarget);
             return;
         }
+        // หากอยู่ในสถานะรอเลือกโซนขโมย (มือ หรือ อาวุธ) ให้เรียก renderStealSource()
+        if(player.controller.inputState === "waitingStealSource"){
+            this.renderStealSource();
+            return;
+        }
         // หากอยู่ในสถานะรอเลือกการ์ดเพื่อขโมย (Steal) ให้เปลี่ยนไปวาดการ์ดแบบคว่ำแทนแล้วจบฟังก์ชัน
         if(player.controller.inputState === "waitingStealCard"){
             this.renderStealHand();
@@ -199,6 +204,37 @@ class UIManager{
             };
             // นำปุ่มที่สร้างไปแสดงผลในโซน handArea บนหน้าเว็บ
             this.handArea.appendChild(button);
+        }
+    }
+    // แสดงปุ่มเลือกแหล่งที่จะขโมยการ์ด
+    renderStealSource(){
+        // ผู้เล่นปัจจุบัน และ Controller
+        const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
+        const target = controller.selectedStealTarget;
+        // หากไม่มีเป้าหมายให้ยกเลิกการทำงาน
+        if(!target){
+            return;
+        }
+        // สร้างปุ่มเลือกขโมยจาก "มือ"
+        const handButton = document.createElement("button");
+        handButton.textContent = "🂠 มือ";
+        handButton.onclick = () => {
+            controller.selectedStealSource = "hand";
+            controller.startStealSelection();
+        };
+        // แสดงปุ่ม "มือ" บน Control Area
+        this.controlArea.appendChild(handButton);
+        // ตรวจสอบว่าเป้าหมายมีการใส่อาวุธอยู่หรือไม่ หากมีให้สร้างปุ่มขโมย "อาวุธ"
+        if(target.weapon){
+            const weaponButton = document.createElement("button");
+            weaponButton.textContent = "⚔️ " + target.weapon.name;
+            weaponButton.onclick = () => {
+                controller.selectedStealSource = "weapon";
+                controller.confirmStealEquipment();
+            };
+            // แสดงปุ่ม "อาวุธ" บน Control Area
+            this.controlArea.appendChild(weaponButton);
         }
     }
     // ผูก Event ของปุ่มกดควบคุมหลัก
