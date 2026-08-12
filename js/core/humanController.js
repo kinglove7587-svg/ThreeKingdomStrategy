@@ -156,6 +156,16 @@ class HumanController extends Controller{
         this.inputState = "waitingBurnCard";
         this.game.ui.render();
     }
+    // เปลี่ยนสถานะเป็น waitingSelection เพื่อเตรียมแสดง UI หน้าเลือกการ์ดกลางโต๊ะ
+    startSelection(){
+        this.inputState = "waitingSelection";
+        this.game.ui.render();
+    }
+    // คืนสถานะกลับเป็น idle และอัปเดต UI เมื่อการเลือกการ์ดเสร็จสิ้น
+    finishSelection(){
+        this.inputState = "idle";
+        this.game.ui.render();
+    }
     // รับตำแหน่ง Index ของการ์ดเป้าหมายที่ต้องการขโมย
     selectStealCard(index){
         // ดึงเป้าหมายที่เลือกไว้

@@ -119,6 +119,11 @@ class UIManager{
             this.renderTargetHand(player.controller.viewingHandTarget);
             return;
         }
+        // หากอยู่ในสถานะรอเลือกการ์ดกลางโต๊ะ ให้แสดง UI ของ Selection Zone
+        if(player.controller.inputState === "waitingSelection"){
+            this.renderSelectionZone();
+            return;
+        }
         // หากอยู่ในสถานะรอเลือกโซนทำลาย (มือ, อาวุธ หรือ เกราะ) ให้เรียก renderBurnSource()
         if(player.controller.inputState === "waitingBurnSource"){
             this.renderBurnSource();
@@ -356,6 +361,44 @@ class UIManager{
             controller.startBurnSourceSelection();
         };
         this.controlArea.appendChild(backButton);
+    }
+    // แสดงปุ่มการ์ดกลางโต๊ะ (SelectionZone) ให้ผู้เล่นที่มีสิทธิ์เลือกในขณะนั้น
+    renderSelectionZone(){
+        // ดึงผู้เล่นที่มีสิทธิ์เลือกการ์ดคนปัจจุบันจาก SelectionZone
+        const player = this.game.selectionZone.getCurrentPlayer();
+        //
+        if(!player){
+            return;
+        }
+        
+        const controller = player.controller;
+        const zone = this.game.selectionZone;
+        // หากไม่มีการ์ดใน Zone ให้ยกเลิกการทำงาน
+        if(zone.cards.length === 0){
+            return;
+        }
+        // วนลูปสร้างปุ่มการ์ดแต่ละใบใน SelectionZone
+        for(let i = 0; i < zone.cards.length; i++){
+            const card = zone.cards[i];
+            
+            const button = document.createElement("button");
+            button.textContent = 
+                card.name + " " + 
+                card.suit + " " + 
+                card.number;
+            button.onclick = () => {
+                // เลือกการ์ดเข้ามือผู้เล่นปัจจุบัน
+                this.game.selectSelectionCard(i);
+                // ตรวจสอบว่าเลือกการ์ดจนจบหรือยัง
+                if(this.game.selectionZone.isFinish()){
+                    controller.finishSelection();
+                }else{
+                    // แก้ไขจุดสะกดผิดเป็น startSelection()
+                    controller.startSelection();
+                }
+            };
+            this.handArea.appendChild(button);
+        }
     }
     // ผูก Event ของปุ่มกดควบคุมหลัก
     bindEvents(){ 
