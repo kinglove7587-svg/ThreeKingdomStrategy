@@ -12,6 +12,6 @@ class LiuBei extends Player{ // เล่าปี่
         //this.equipArmor(new CrossbowCard("♣️", 7));
         //this.hand.addCard(new EightTrigramsArmor("♠️", 1));
         //this.hand.addCard(new PeachCard("♠️", 1));
-        this.hand.addCard(new BurnBridgeCard("♠️", 1));
+        //this.hand.addCard(new BurnBridgeCard("♠️", 1));
     }
 }
