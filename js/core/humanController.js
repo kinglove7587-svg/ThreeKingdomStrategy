@@ -263,6 +263,10 @@ class HumanController extends Controller{
         if(this.selectedStealSource === "weapon"){
             success = this.stealSelectedEquipment();
         }
+        //ขโมยเกราะที่สวมใส่อยู่
+        if(this.selectedStealSource === "armor"){
+            success = this.stealSelectedEquipment();
+        }
         // ถ้าย้ายการ์ดไม่สำเร็จ ให้ยกเลิก
         if(!success){
             return false;
