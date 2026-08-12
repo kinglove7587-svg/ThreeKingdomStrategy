@@ -12,8 +12,11 @@ class StealCard extends TrickCard{
         if(player === target){
             return false;
         }
-        // เป้าหมายต้องมีไพ่ในมืออย่างน้อย 1 ใบ
-        if(target.hand.cards.length === 0){
+        // ต้องมีไพ่บนมืออย่างน้อย 1 ใบ หรือสวมใส่อาวุธอยู่ ถึงจะเล็งเป้าได้
+        if(
+            target.hand.cards.length === 0 && 
+            !target.weapon
+        ){
             return false;
         }
         // ระยะห่าง (Distance) ต้องไม่เกิน 1
@@ -25,8 +28,8 @@ class StealCard extends TrickCard{
         const controller = player.controller;
         // บันทึกเป้าหมายที่เลือกไว้ลงใน selectedStealTarget
         controller.selectedStealTarget = controller.getSelectedTarget();
-        // เริ่มเข้าสู่โหมดรอเลือกการ์ดที่จะขโมยจากเป้าหมาย
-        controller.startStealSelection();
+        // เริ่มเข้าสู่โหมดรอเลือกแหล่งการ์ดที่จะขโมย (มือ หรือ อาวุธ)
+        controller.startStealSourceSelection();
         return true;
     }
 }
