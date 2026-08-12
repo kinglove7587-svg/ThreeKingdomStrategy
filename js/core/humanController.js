@@ -357,6 +357,24 @@ class HumanController extends Controller{
         this.game.ui.render();
         return true;
     }
+    // ยืนยันการทำลายการ์ด นำการ์ดลงกองทิ้ง ล้างค่า State ทั้งหมด
+    confirmBurnSelection(){
+        // เรียกใช้ discardSelectedBurnCard เพื่อทิ้งการ์ดลง discardPile
+        const success = this.discardSelectedBurnCard();
+        // หากทำรายการไม่สำเร็จ ให้ยกเลิก
+        if(!success){
+            return false;
+        }
+        // คืนค่าสถานะหลักกลับเป็น idle
+        this.inputState = "idle";
+        // ล้างค่าข้อมูลการเลือก Burn ทั้งหมด
+        this.selectedBurnTarget = null;
+        this.selectedBurnSource = null;
+        this.selectedBurnCard = null;
+        this.selectedBurnCardIndex = -1;
+        this.game.ui.render();
+        return true;
+    }
     // คืนค่า true แสดงว่ากำลังรอ Input จากผู้เล่นมนุษย์
     isWaitingInput(){
         return true;
