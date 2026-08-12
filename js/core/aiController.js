@@ -84,4 +84,44 @@ class AIController extends Controller{
     askPeach(player){
         return player.hand.findCardIndexByName("ยา");
     }
+    // ให้ AI เริ่มเลือกการ์ดจาก SelectionZone อัตโนมัติ
+    startSelection(){
+        this.inputState = "waitingSelection";
+        
+        const zone = this.game.selectionZone;
+        // ถ้าไม่มีการ์ดให้เลือก ให้จบ Selection
+        if(zone.cards.length === 0){
+            this.finishSelection();
+            return;
+        }
+        // ให้ AI ตัดสินใจเลือก Index การ์ด
+        const selectedIndex = this.chooseSelectionCard();
+        
+        if(selectedIndex === -1){
+            this.finishSelection();
+            return;
+        }
+        // สั่งให้ระบบเกมเลือกการ์ด Index นั้นเข้ามือ AI
+        this.game.selectSelectionCard(selectedIndex);
+        // ถ้าเลือกการ์ดจนจบ/หมดแล้ว ให้จบ Selection
+        if(zone.isFinish()){
+            this.finishSelection();
+            return;
+        }
+        // ส่งต่อสิทธิ์ให้ผู้เล่นคนถัดไป
+        const nextPlayer = zone.getCurrentPlayer();
+        
+        if(nextPlayer && nextPlayer.controller){
+            nextPlayer.controller.startSelection();
+        }
+    }
+    // ตัดสินใจเลือกการ์ดจาก SelectionZone (เบื้องต้นให้เลือกใบแรก index 0 ไปก่อน)
+    chooseSelectionCard(){
+        const zone = this.game.selectionZone;
+        
+        if(zone.cards.length === 0){
+            return -1;
+        }
+        return 0;
+    }
 }
