@@ -114,6 +114,15 @@ class UIManager{
         this.handArea.innerHTML = "";
         // ดึงตัวละครผู้เล่นที่กำลังถึงตาเล่นในปัจจุบันจาก Game Engine
         const player = this.game.getCurrentPlayer();
+        // ตรวจสอบ SelectionZone ก่อนเสมอ
+        const selectionPlayer = this.game.selectionZone.getCurrentPlayer();
+        if(
+            selectionPlayer && 
+            selectionPlayer.controller.inputState === "waitingSelection"
+        ){
+            this.renderSelectionZone();
+            return;
+        }
         // หากอยู่ในสถานะเปิดดูไพ่บนมือเป้าหมาย ให้เรียก renderTargetHand()
         if(player.controller.inputState === "viewingHand"){
             this.renderTargetHand(player.controller.viewingHandTarget);
