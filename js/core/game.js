@@ -3,6 +3,7 @@ class Game {
         this.deck = new Deck(); // สร้าง deck ใหม่
         this.deck.shuffle(); // สั่งสับไพ่
         this.discardPile = new DiscardPile(); // สร้างกองทิ้งไพ่ไว้เก็บการ์ดที่ถูกใช้งานแล้ว
+        this.selectionZone = new SelectionZone(); // ระบบโซนกลางสำหรับจัดการการเลือกการ์ดร่วมกันหลายคน
         this.eventManager = new EventManager(); // สร้าง EventManager เข้าไปเก็บไว้ เพื่อใช้เป็นศูนย์กลางส่ง Event ในเกม
         // สร้าง Listener สำหรับ Debug ดักจับ Event ความเสียหาย
         const debugListener = new DebugDamageListener();
