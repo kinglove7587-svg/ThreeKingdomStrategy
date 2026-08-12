@@ -48,11 +48,28 @@ class SelectionZone{
     hasCards(){
         return this.cards.length > 0;
     }
-    // ตรวจสอบว่าผู้เล่นเลือกครบทุกคนหรือยัง (หรือถึงคนสุดท้าย)
+    // ตรวจสอบว่าการเลือกการ์ดจบหรือยัง
     isFinish(){
-        return (
-            this.players.length > 0 && 
-            this.currentPlayerIndex === this.players.length - 1
-        );
+        return this.cards.length === 0;
+    }
+    // เริ่มรอบการเลือกการ์ดร่วมกัน
+    startSelection(cards, players){
+        this.cards = [...cards];
+        this.players = [...players];
+        this.currentPlayerIndex = 0;
+    }
+    // เลื่อนไปยังผู้เล่นคนถัดไปที่มีสิทธิ์เลือก
+    advancePlayer(){
+        if(this.players.length === 0){
+            return null;
+        }
+        
+        this.currentPlayerIndex++;
+        // หากดัชนีเกินจำนวนผู้เล่น ให้วนกลับมาที่ผู้เล่นคนแรก (index 0)
+        if(this.currentPlayerIndex >= this.players.length){
+            this.currentPlayerIndex = 0;
+        }
+        
+        return this.getCurrentPlayer();
     }
 }
