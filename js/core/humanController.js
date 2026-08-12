@@ -134,6 +134,12 @@ class HumanController extends Controller{
         this.inputState = "waitingStealCard";
         this.game.ui.render();
     }
+    // เริ่มต้นสถานะให้ผู้เล่นเลือกโซนเป้าหมายที่จะขโมย
+    startStealSourceSelection(){
+        // เปลี่ยนสถานะการรับ Input เป็นรอเลือกโซนขโมย
+        this.inputState = "waitingStealSource";
+        this.game.ui.render();
+    }
     // รับตำแหน่ง Index ของการ์ดเป้าหมายที่ต้องการขโมย
     selectStealCard(index){
         // ดึงเป้าหมายที่เลือกไว้
