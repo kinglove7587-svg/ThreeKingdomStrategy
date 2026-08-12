@@ -745,10 +745,26 @@ class Game {
         player.hand.addCard(card);
         // ตรวจสอบว่าเลือกการ์ดหมดหรือยัง (isFinish)
         if(zone.isFinish()){
+            this.finishSelection();
             return true;
         }
         // เลื่อนสิทธิ์การเลือกไปยังผู้เล่นคนถัดไป
         zone.advancePlayer();
+
+        return true;
+    }
+    // จบกระบวนการเลือกการ์ดกลางโต๊ะ (SelectionZone)
+    finishSelection(){
+        const zone = this.selectionZone;
+        // ล้างข้อมูลการ์ดและผู้เล่นทั้งหมดใน SelectionZone
+        zone.clear();
+        // คืนสถานะ Controller ของผู้เล่นทุกคนในเกมกลับเป็น idle
+        for(const player of this.players){
+            if(player.controller){
+                player.controller.finishSelection();
+            }
+        }
+        this.ui.render();
 
         return true;
     }
