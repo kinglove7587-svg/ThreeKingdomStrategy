@@ -242,6 +242,16 @@ class UIManager{
             // แสดงปุ่ม "อาวุธ" บน Control Area
             this.controlArea.appendChild(weaponButton);
         }
+        // ตรวจสอบว่าเป้าหมายมีการใส่เกราะอยู่หรือไม่ หากมีให้สร้างปุ่มขโมย "เกราะ"
+        if(target.armor){
+            const armorButton = document.createElement("button");
+            armorButton.textContent = "🛡️ " + target.armor.name;
+            armorButton.onclick = () => {
+                controller.selectStealSource("armor");
+                controller.confirmStealSelection();
+            };
+            this.controlArea.appendChild(armorButton);
+        }
     }
     // ผูก Event ของปุ่มกดควบคุมหลัก
     bindEvents(){ 
