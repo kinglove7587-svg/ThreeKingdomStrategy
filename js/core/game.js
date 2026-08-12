@@ -715,10 +715,35 @@ class Game {
         }
         // เริ่มรอบการเลือกการ์ดใน SelectionZone
         this.selectionZone.startSelection(harvestCards, livingPlayers);
-        
+
         console.log("Bumper Harvest:", livingPlayers.length, "ผู้เล่น", 
             harvestCards.length, "การ์ด"
         );
+        return true;
+    }
+    // ให้ผู้เล่นคนปัจจุบันเลือกการ์ดจาก SelectionZone เข้ามือ และเลื่อนสิทธิ์ไปยังผู้เล่นคนถัดไป
+    selectSelectionCard(index){
+        const zone = this.selectionZone;
+        const player = zone.getCurrentPlayer();
+        // หากไม่มีผู้เล่นในโซน ให้ยกเลิก
+        if(!player){
+            return false;
+        }
+        // ถอดการ์ดออกจาก SelectionZone ตาม Index ที่เลือก
+        const card = zone.removeCard(index);
+        // หากไม่มีการ์ดที่ Index นั้น ให้ยกเลิก
+        if(!card){
+            return false;
+        }
+        // นำการ์ดเข้ามือผู้เล่นปัจจุบัน
+        player.hand.addCard(card);
+        // ตรวจสอบว่าเลือกการ์ดหมดหรือยัง (isFinish)
+        if(zone.isFinish()){
+            return true;
+        }
+        // เลื่อนสิทธิ์การเลือกไปยังผู้เล่นคนถัดไป
+        zone.advancePlayer();
+
         return true;
     }
 }
