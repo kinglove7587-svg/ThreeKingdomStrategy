@@ -163,6 +163,14 @@ class UIManager{
             // นำปุ่มการ์ดไปแสดงผลในโซน handArea บน UI
             this.handArea.appendChild(button);
         }
+        // สร้างปุ่ม "กลับ" สำหรับคลิกจบการเปิดดูมือ และคืนค่า state
+        const closeButton = document.createElement("button");
+        closeButton.textContent = "กลับ";
+        closeButton.onclick = () => {
+            this.game.getCurrentPlayer().controller.finishViewingHand();
+        };
+        // นำปุ่ม "กลับ" ไปวางในโซน controlArea บน UI
+        this.controlArea.appendChild(closeButton);
     }
     // วาดการ์ดคว่ำของเป้าหมายในโหมดขโมยการ์ด (Steal)
     renderStealHand(){
