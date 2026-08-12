@@ -327,6 +327,13 @@ class UIManager{
                 this.handArea.appendChild(button);
             }
         }
+        // ปุ่ม ↩️ ย้อนกลับ
+        const backButton = document.createElement("button");
+        backButton.textContent = "↩️ ย้อนกลับ";
+        backButton.onclick = () => {
+            controller.startBurnSourceSelection();
+        };
+        this.controlArea.appendChild(backButton);
     }
     // ผูก Event ของปุ่มกดควบคุมหลัก
     bindEvents(){ 
