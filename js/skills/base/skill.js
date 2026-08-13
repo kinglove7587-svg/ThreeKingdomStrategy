@@ -27,4 +27,6 @@ class Skill{
     // ลงทะเบียน Event ของสกิล
     // TriggerSkill จะ Override เมธอดนี้
     register(eventManager, player){}
+    // สำหรับยกเลิก Event ของ Skill
+    unregister(){}
 }

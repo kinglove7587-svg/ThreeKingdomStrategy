@@ -92,6 +92,21 @@ class Player{
         // สั่งให้สกิลนั้นๆ ลงทะเบียน register รับฟัง Event กับ eventManager ของเกม โดยแนบออบเจกต์ผู้เล่น this ไปด้วย
         skill.register(this.game.eventManager, this);
     }
+    // ลบ Skill ออกจากตัวผู้เล่น
+    removeSkill(skill){
+        // ค้นหาตำแหน่ง Index ของสกิลในรายการของผู้เล่น
+        const index = this.skills.indexOf(skill);
+        // หากไม่พบสกิลในตัวผู้เล่น ให้ยกเลิกการทำงาน
+        if(index === -1){
+            return false;
+        }
+        // ยกเลิก Event หรือการลงทะเบียนของสกิล
+        skill.unregister();
+        // ลบสกิลออกจากรายการ skills
+        this.skills.splice(index, 1);
+
+        return true;
+    }
     // แสดงสกิล
     showSkills(){
         // ตรวจสอบว่าใน array skills ของตัวละครนี้ไม่มีสกิลอยู่เลยใช่หรือไม่

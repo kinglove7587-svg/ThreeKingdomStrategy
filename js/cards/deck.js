@@ -33,6 +33,7 @@ class Deck {
             //============================= Weapon ======================================
             this.cards.push(new TrainingSword("♦️", 5)); // เพิ่มอาวุธ กระบี่ฝึกหัด
             this.cards.push(new CrossbowCard("♠️", 2)); // เพิ่มอาวุธ หน้าไม้จูเก่อ
+            this.cards.push(new SerpentSpearCard("♠️", 12)); // ง้าวอสรพิษ
             //============================= Armor ======================================
             this.cards.push(new EightTrigramsArmor("♣️", 2)); // เพิ่มเกราะเกราะแปดทิศ         
             this.cards.push(new TengJiaArmor("♣️", 7)); // เพิ่มอุปกรณ์เกราะ เกราะหวาย
