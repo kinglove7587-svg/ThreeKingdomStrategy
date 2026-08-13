@@ -158,7 +158,7 @@ class Game {
         // ส่งผู้เล่นคนถัดไปกลับออกไป
         return this.players[nextIndex];
     }
-    // คืนค่าระยะห่างระหว่างผู้เล่น 2 คน บนโต๊ะแบบวงกลม
+    // คืนค่าระยะห่างระหว่างผู้เล่น 2 คน บนโต๊ะแบบวงกลม โดยคำนวณรวมกับค่าปรับระยะของ Mount (ม้า)
     getDistance(fromPlayer, toPlayer){
         // หาตำแหน่งของผู้เล่นต้นทางในอาร์เรย์ผู้เล่น
         const fromIndex = this.players.indexOf(fromPlayer);
@@ -172,11 +172,19 @@ class Game {
         const clockwise = Math.abs(fromIndex - toIndex);
         // คำนวณระยะห่างตามทิศทางวนทวนเข็มนาฬิกา
         const counterClockwise = playerCount - clockwise;
-        // เลือกระยะห่างที่สั้นที่สุดระหว่างวนตามเข็มกับวนทวนเข็ม
-        const distance = Math.min(clockwise, counterClockwise);
-        // แสดงผลลัพธ์ระยะห่างที่คำนวณได้ออกทาง Console เพื่อตรวจสอบ
+        // ระยะห่างพื้นฐานบนโต๊ะ (เลือกเส้นทางที่สั้นที่สุด)
+        const baseDistance = Math.min(clockwise, counterClockwise);
+        // อ่านค่าปรับระยะห่างจาก Mount ของฝั่งผู้เล่นต้นทาง
+        const fromMountModifier = fromPlayer.getMountDistanceModifier();
+        // อ่านค่าปรับระยะห่างจาก Mount ของฝั่งผู้เล่นปลายทาง
+        const toMountModifier = toPlayer.getMountDistanceModifier();
+        // คำนวณระยะสุทธิ (กำหนดให้ขั้นต่ำไม่ต่ำกว่า 1)
+        const distance = Math.max(1, baseDistance + fromMountModifier + toMountModifier);
+
+        console.log("Base Distance =", baseDistance);
+        console.log("Mount Modifier =", fromMountModifier, "+", toMountModifier);
         console.log("Distance =", distance);
-        // คืนค่าระยะห่างสั้นที่สุดกลับไปใช้งาน
+
         return distance;
     }
 

@@ -37,6 +37,9 @@ class Deck {
             //============================= Armor ======================================
             this.cards.push(new EightTrigramsArmor("♣️", 2)); // เพิ่มเกราะเกราะแปดทิศ         
             this.cards.push(new TengJiaArmor("♣️", 7)); // เพิ่มอุปกรณ์เกราะ เกราะหวาย
+            //============================= Mount ======================================
+            this.cards.push(new FerganaSteedCard("♠️", 13)); // การ์ด ม้าต้าหยวน
+            this.cards.push(new ShadowrunnerCard("♠️", 5)); // การ์ด ม้าเงาพยับ
         }
     }
     // สับไพ่

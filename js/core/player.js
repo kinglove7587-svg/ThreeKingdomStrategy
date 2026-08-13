@@ -11,6 +11,7 @@ class Player{
         this.controller.setPlayer(this); // ผูก player (this) เข้ากับ Controller ใบนั้น
         this.weapon = null; // อาวุธ
         this.armor = null; // เกราะ
+        this.mount = null; // ม้า
         this.infiniteSlash = false;
         this.drunk = false; // สถานะมึนสุรา (ใช้เพิ่ม Damage ให้การ์ดโจมตี)
         this.delayedTricks = []; // เก็บการ์ดหน่วงเวลาที่ติดอยู่
@@ -192,6 +193,34 @@ class Player{
             // ลงทะเบียน Event ของสกิลเกราะเข้ากับ EventManager ของเกม
             skill.register(this.game.eventManager, this);
         }
+    }
+    // สวมใส่การ์ดม้าให้ผู้เล่น (หากมีม้าเดิมอยู่แล้ว ให้ถอดลงกองทิ้งก่อน)
+    equipMount(mount){
+        // หากมีม้าเดิมอยู่ ให้ถอดออกก่อนแล้วนำลงกองทิ้ง
+        if(this.mount){
+            const oldMount = this.unequipMount();
+            oldMount.onUnequip(this);
+            this.game.discardPile.addCard(oldMount);
+        }
+        // สวมใส่การ์ดม้าใบใหม่
+        this.mount = mount;
+        // เรียกใช้งาน Hook ตอนสวมใส่
+        mount.onEquip(this);
+    }
+    // ถอดการ์ดม้าที่สวมใส่อยู่ออก
+    unequipMount(){
+        const mount = this.mount;
+        this.mount = null;
+        return mount;
+    }
+    // คืนค่าปรับระยะห่างจากม้าที่สวมใส่อยู่ (หากไม่มีม้าคืนค่า 0)
+    getMountDistanceModifier(){
+        
+        if(!this.mount){
+            return 0;
+        }
+
+        return this.mount.distanceModifier;
     }
     // ถอดเกราะของผู้เล่น
     unequipArmor(){

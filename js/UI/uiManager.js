@@ -463,6 +463,15 @@ class UIManager{
         }else{
             text += "<br>🛡️ : ไม่มี";
         }
+        //
+        if(player.mount){
+            text += "<br>🐎 : " + 
+            player.mount.name + " " + 
+            player.mount.suit + " " + 
+            player.mount.number;
+        }else{
+            text += "<br>🐎 : ไม่มี";
+        }
         return text;
     }
     // เมธอดสำหรับวาดปุ่มทางเลือกระหว่าง "เล่น" หรือ "Recast" สำหรับการ์ดที่รองรับ
