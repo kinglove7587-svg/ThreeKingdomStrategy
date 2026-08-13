@@ -518,6 +518,10 @@ class UIManager{
     renderSkillButtons(){
         // ดึงข้อมูลผู้เล่นปัจจุบันที่กำลังถึงตาเล่น
         const player = this.game.getCurrentPlayer();
+        // ระหว่างรอ Trigger Choice ห้ามเริ่ม Active Skill ใหม่
+        if(player.controller.inputState === "waitingTriggerChoice"){
+            return;
+        }
         // ถ้าผู้เล่นปัจจุบันไม่ใช่ Human ไม่ต้องสร้างปุ่ม สกิล
         if(!(player.controller instanceof HumanController)){
             return;
