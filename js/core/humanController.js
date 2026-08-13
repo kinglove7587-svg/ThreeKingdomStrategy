@@ -19,6 +19,9 @@ class HumanController extends Controller{
         this.selectedBurnSource = null;
         this.selectedBurnCard = null;
         this.selectedBurnCardIndex = -1;
+        // เก็บ Trigger Skill ที่กำลังรอการตัดสินใจ
+        this.selectedTriggerSkill = null;
+        this.triggerContext = null;
     }
     // จัดการเทิร์นของผู้เล่นมนุษย์
     playTurn(){ 
@@ -646,5 +649,41 @@ class HumanController extends Controller{
             return true;
         }
         return false;
+    }
+    // เริ่มสถานะรอการตัดสินใจของผู้เล่นสำหรับ Trigger Skill
+    startTriggerChoice(skill, context){
+        this.selectedTriggerSkill = skill;
+        this.triggerContext = context;
+        this.inputState = "waitingTriggerChoice";
+
+        this.game.ui.render();
+    }
+    // รับคำตอบจากปุ่ม UI (ใช้ / ไม่ใช้) แล้วส่งไปประมวลผลที่ Trigger Skill
+    resolveTriggerChoice(useSkill){
+        if(this.inputState !== "waitingTriggerChoice"){
+            return;
+        }
+        
+        const skill = this.selectedTriggerSkill;
+        const context = this.triggerContext;
+        
+        if(!skill){
+            return;
+        }
+        // ส่งคำตอบให้ Trigger Skill ประมวลผล
+        const success = skill.resolveChoice(
+            this.player, 
+            this.game, 
+            context, 
+            useSkill
+        );
+        // ล้าง State กลับเป็น idle
+        this.selectedTriggerSkill = null;
+        this.triggerContext = null;
+        this.inputState = "idle";
+
+        this.game.ui.render();
+
+        return success;
     }
 }

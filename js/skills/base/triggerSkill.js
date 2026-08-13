@@ -23,4 +23,8 @@ class TriggerSkill extends Skill{
         // ล้างรายการ listener
         this.listeners = [];
     }
+    // รับคำตอบจาก Generic Trigger Choice
+    resolveChoice(player , game, context, useSkill){
+        return false;
+    }
 }

@@ -21,6 +21,7 @@ class UIManager{
         this.renderEndTurnButton();
         this.renderSkillButtons();
         this.renderPeachButtons();
+        this.renderTriggerChoice();
     }
     // วาดการ์ดแสดงตัวละครฝั่งเราและฝั่งศัตรู
     renderPlayers(){
@@ -151,6 +152,10 @@ class UIManager{
         // หากอยู่ในสถานะรอเลือกการ์ดเพื่อขโมย (Steal) ให้เปลี่ยนไปวาดการ์ดแบบคว่ำแทนแล้วจบฟังก์ชัน
         if(player.controller.inputState === "waitingStealCard"){
             this.renderStealHand();
+            return;
+        }
+        // ระหว่างรอ Trigger Choice ไม่ต้องแสดงปุ่มการ์ดปกติ
+        if(player.controller.inputState === "waitingTriggerChoice"){
             return;
         }
         // ถ้าไม่ใช่ผู้เล่นมนุษย์ ไม่ต้องแสดงการ์ดในมือ
@@ -570,6 +575,34 @@ class UIManager{
         };
         // นำปุ่มทั้งสองไปใส่ในพื้นที่ controlArea
         this.controlArea.appendChild(yesButton);
+        this.controlArea.appendChild(noButton);
+    }
+    // แสดงปุ่ม "ใช้ [ชื่อสกิล]" และ "ไม่ใช้" เมื่อเข้าสู่สถานะ waitingTriggerChoice
+    renderTriggerChoice(){
+        const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
+        // ตรวจสอบว่าอยู่ในสถานะรอตัดสินใจ Trigger Choice หรือไม่
+        if(
+            controller.inputState !== "waitingTriggerChoice" || 
+            !controller.selectedTriggerSkill
+        ){
+            return;
+        }
+        
+        const skill = controller.selectedTriggerSkill;
+        // สร้างปุ่มกด "ใช้สกิล"
+        const yesButton = document.createElement("button");
+        yesButton.textContent = "ใช้ " + skill.name;
+        yesButton.onclick = () => {
+            controller.resolveTriggerChoice(true);
+        };
+        this.controlArea.appendChild(yesButton);
+        // สร้างปุ่มกด "ไม่ใช้สกิล"
+        const noButton = document.createElement("button");
+        noButton.textContent = "ไม่ใช้";
+        noButton.onclick = () => {
+            controller.resolveTriggerChoice(false);
+        };
         this.controlArea.appendChild(noButton);
     }
     // เมธอดสำหรับจัดการ Event เมื่อมีการคลิกการ์ด
