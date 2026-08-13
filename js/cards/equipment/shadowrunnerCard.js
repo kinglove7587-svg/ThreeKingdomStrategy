@@ -1,5 +1,5 @@
 class ShadowrunnerCard extends MountCard{
     constructor(suit, number){
-        super("ม้าเงาพยับ", suit, number, 1);
+        super("ม้าเงาพยับ", suit, number, 0,  1);
     }
 }

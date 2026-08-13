@@ -213,14 +213,19 @@ class Player{
         this.mount = null;
         return mount;
     }
-    // คืนค่าปรับระยะห่างจากม้าที่สวมใส่อยู่ (หากไม่มีม้าคืนค่า 0)
-    getMountDistanceModifier(){
-        
+    // คืนค่าผลของ Mount เมื่อผู้เล่นนี้เป็น "ผู้โจมตี"
+    getMountAttackDistanceModifier(){
         if(!this.mount){
             return 0;
         }
-
-        return this.mount.distanceModifier;
+        return this.mount.attackDistanceModifier;
+    }
+    // คืนค่าผลของ Mount เมื่อผู้เล่นนี้เป็น "เป้าหมายถูกโจมตี"
+    getMountDefenseDistanceModifier(){
+        if(!this.mount){
+            return 0;
+        }
+        return this.mount.defenseDistanceModifier;
     }
     // ถอดเกราะของผู้เล่น
     unequipArmor(){

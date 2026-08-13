@@ -1,8 +1,10 @@
 class MountCard extends EquipmentCard{
-    constructor(name, suit, number, distanceModifier){
+    constructor(name, suit, number, attackDistanceModifier, defenseDistanceModifier){
         super(name, suit, number);
-        // ค่าปรับระยะห่าง
-        this.distanceModifier = distanceModifier;
+        // ค่าปรับระยะเมื่อเจ้าของเป็นผู้โจมตี
+        this.attackDistanceModifier = attackDistanceModifier;
+        // ค่าปรับระยะเมื่อเจ้าของเป็นเป้าหมายถูกโจมตี
+        this.defenseDistanceModifier = defenseDistanceModifier;
     }
     // เมื่อกดใช้การ์ดม้า ให้สวมใส่ลงในตัวผู้เล่น
     use(player, game){

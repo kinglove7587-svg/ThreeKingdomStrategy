@@ -173,17 +173,9 @@ class Game {
         // คำนวณระยะห่างตามทิศทางวนทวนเข็มนาฬิกา
         const counterClockwise = playerCount - clockwise;
         // ระยะห่างพื้นฐานบนโต๊ะ (เลือกเส้นทางที่สั้นที่สุด)
-        const baseDistance = Math.min(clockwise, counterClockwise);
-        // อ่านค่าปรับระยะห่างจาก Mount ของฝั่งผู้เล่นต้นทาง
-        const fromMountModifier = fromPlayer.getMountDistanceModifier();
-        // อ่านค่าปรับระยะห่างจาก Mount ของฝั่งผู้เล่นปลายทาง
-        const toMountModifier = toPlayer.getMountDistanceModifier();
-        // คำนวณระยะสุทธิ (กำหนดให้ขั้นต่ำไม่ต่ำกว่า 1)
-        const distance = Math.max(1, baseDistance + fromMountModifier + toMountModifier);
+        const distance = Math.min(clockwise, counterClockwise);
 
-        console.log("Base Distance =", baseDistance);
-        console.log("Mount Modifier =", fromMountModifier, "+", toMountModifier);
-        console.log("Distance =", distance);
+        console.log("Base Distance =", distance);
 
         return distance;
     }
@@ -775,5 +767,33 @@ class Game {
         this.ui.render();
 
         return true;
+    }
+    // คำนวณระยะสำหรับ "ผู้โจมตี -> เป้าหมาย" โดยรวมค่าปรับจาก Mount ตามทิศทาง
+    getAttackDistance(attacker, target){
+        // ระยะพื้นฐานบนโต๊ะ
+        const baseDistance = 
+            this.getDistance(attacker, target);
+        // Modifier ฝั่งผู้โจมตี (เช่น ม้าต้าหยวน = -1)
+        const attackerModifier = 
+            attacker.getMountAttackDistanceModifier();
+        // Modifier ฝั่งเป้าหมาย (เช่น ม้าเงาพยับ = +1)
+        const targetModifier = 
+            target.getMountDefenseDistanceModifier();
+        // คำนวณระยะสำหรับการโจมตี (ขั้นต่ำไม่ต่ำกว่า 1)
+        const distance = Math.max(
+            1, 
+            baseDistance + 
+            attackerModifier + 
+            targetModifier
+        );
+
+        console.log(
+            "Attack Distance:", 
+            baseDistance, "+", 
+            attackerModifier, "+", 
+            targetModifier, "=", 
+            distance
+        );
+        return distance;
     }
 }

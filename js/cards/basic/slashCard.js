@@ -95,7 +95,7 @@ class SlashCard extends BasicCard{
             return false;
         }
         // เงื่อนไขที่ 2: คำนวณระยะห่างระหว่างผู้ใช้การ์ดกับเป้าหมายผ่านระบบ Distance ของเกม
-        const distance = player.game.getDistance(player, target);
+        const distance = player.game.getAttackDistance(player, target);
         // เงื่อนไขที่ 3: ถ้าระยะห่างจริง ไกลกว่าระยะการโจมตีจากอาวุธที่ผู้เล่นถืออยู่ จะไม่สามารถตกเป็นเป้าหมายได้
         if (distance > player.getWeaponRange()){
             return false;

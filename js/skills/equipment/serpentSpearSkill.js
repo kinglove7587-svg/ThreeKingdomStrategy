@@ -24,7 +24,7 @@ class SerpentSpearSkill extends ActiveSkill{
             return false;
         }
         
-        const distance = player.game.getDistance(player, target);
+        const distance = player.game.getAttackDistance(player, target);
         return distance <= player.getWeaponRange();
     }
     // ประมวลผลการใช้สกิล (ทิ้งการ์ด 2 ใบเพื่อร่าย Slash เสมือน)
