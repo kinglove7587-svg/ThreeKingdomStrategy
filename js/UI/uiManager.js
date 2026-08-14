@@ -23,6 +23,7 @@ class UIManager{
         this.renderPeachButtons();
         this.renderTriggerChoice();
         this.renderTriggerCardCancelButton();
+        this.renderCardSelectionStatus();
     }
     // วาดการ์ดแสดงตัวละครฝั่งเราและฝั่งศัตรู
     renderPlayers(){
@@ -185,6 +186,38 @@ class UIManager{
             const button = document.createElement("button");
             // กำหนดข้อความบนปุ่มให้แสดงชื่อการ์ด (เช่น "โจมตี", "ยา", "หลบ")
             button.textContent = card.name;
+            // แสดงลำดับการ์ดที่เลือก
+            let selectedOrder = null;
+            
+            if(
+                player.controller.inputState === "waitingSkillCard"
+            ){
+                const index = 
+                    player.controller.selectedSkillCardIndices.indexOf(i);
+
+                if(index !== -1){
+                    selectedOrder = index + 1;
+                }
+            }
+
+            if(
+                player.controller.inputState === "waitingTriggerCard"
+            ){
+                const index = 
+                    player.controller.selectedTriggerCardIndices.indexOf(i);
+
+                if(index !== -1){
+                    selectedOrder = index + 1;
+                }
+            }
+
+            if(selectedOrder !== null){
+                button.textContent = 
+                    "①②③".charAt(selectedOrder - 1) + 
+                    " " + card.name;
+                
+                button.classList.add("selected-card");
+            }
             //  กำหนด Event Handler เมื่อมีการคลิกที่ปุ่มการ์ดบนหน้า HTML
             button.onclick = () => {
                 // เรียกใช้อีเวนต์คลิกการ์ด โดยส่ง index ของการ์ดใบที่ถูกเลือกไปประมวลผล
@@ -651,6 +684,57 @@ class UIManager{
         };
         this.controlArea.appendChild(button);
     }
+    // แสดงสถานะจำนวนการ์ดที่เลือกและจำนวนที่ต้องเลือกกลางบน UI
+    renderCardSelectionStatus(){
+
+        const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
+
+        let selectedIndices = null;
+        let requiredCount = 0;
+        let title = "";
+        // Active Skill เช่น ง้าวอสรพิษ
+        if(controller.inputState === "waitingSkillCard"){
+            selectedIndices = controller.selectedSkillCardIndices;
+            const skill = controller.selectedSkill;
+
+            if(!skill){
+                return;
+            }
+
+            requiredCount = skill.cardSelectionCount(player, this.game);
+
+            title = skill.name;
+        }
+        // Trigger Skill เช่น ขวานผ่าศิลา
+        if(controller.inputState === "waitingTriggerCard"){
+            selectedIndices = controller.selectedTriggerCardIndices;
+            const skill = controller.selectedTriggerSkill;
+
+            if(!skill){
+                return;
+            }
+
+            requiredCount = skill.triggerCardSelectionCount(player, this.game);
+
+            title = skill.name;
+        }
+
+        if(!selectedIndices){
+            return;
+        }
+
+        const status = document.createElement("div");
+        status.textContent = 
+            title + 
+            " | เลือกการ์ด " + 
+            requiredCount + 
+            " ใบ | เลือกแล้ว " + 
+            selectedIndices.length + 
+            " / " + 
+            requiredCount;
+        this.controlArea.appendChild(status);
+    }
     // เมธอดสำหรับจัดการ Event เมื่อมีการคลิกการ์ด
     onCardClick(index){
         // ดึงข้อมูลผู้เล่นปัจจุบันที่กำลังถึงตาเล่น
@@ -734,4 +818,5 @@ class UIManager{
             return;
         }
     }
+    
 }
