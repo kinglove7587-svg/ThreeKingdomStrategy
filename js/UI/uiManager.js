@@ -22,6 +22,7 @@ class UIManager{
         this.renderSkillButtons();
         this.renderPeachButtons();
         this.renderTriggerChoice();
+        this.renderTriggerCardCancelButton();
     }
     // วาดการ์ดแสดงตัวละครฝั่งเราและฝั่งศัตรู
     renderPlayers(){
@@ -629,6 +630,26 @@ class UIManager{
             controller.resolveTriggerChoice(false);
         };
         this.controlArea.appendChild(noButton);
+    }
+    // แสดงปุ่ม "ไม่ใช้" บน UI ขณะผู้เล่นอยู่ในขั้นตอนเลือกการ์ด Trigger
+    renderTriggerCardCancelButton(){
+
+        const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
+
+        if(
+            controller.inputState !== "waitingTriggerCard" || 
+            !controller.selectedTriggerSkill
+        ){
+            return;
+        }
+
+        const button = document.createElement("button");
+        button.textContent = "ไม่ใช้";
+        button.onclick = () => {
+            controller.cancelTriggerCardSelection();
+        };
+        this.controlArea.appendChild(button);
     }
     // เมธอดสำหรับจัดการ Event เมื่อมีการคลิกการ์ด
     onCardClick(index){
