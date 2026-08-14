@@ -3,6 +3,7 @@ class DebugTools {
     constructor(game){
         this.game = game;
         this.pauseSlashTestSkills = [];
+        this.triggerCardPatchInstalled = false;
     }
 
     installPauseSlashTest(player = this.game.players[0]){
@@ -117,6 +118,126 @@ class DebugTools {
     resetSlash(player = this.game.players[0]){
         player.slashUsed = false;
         console.log("รีเซ็ต Slash แล้ว");
+    }
+
+    installTriggerMultiCardSupport(){
+
+        if(this.triggerCardPatchInstalled){
+            console.log("Trigger Multi Card Support ติดตั้งอยู่แล้ว");
+            return;
+        }
+
+        const originalStartTriggerCardSelection =
+            HumanController.prototype.startTriggerCardSelection;
+
+        const originalSelectTriggerCard =
+            HumanController.prototype.selectTriggerCard;
+
+        HumanController.prototype.startTriggerCardSelection = function(skill, context){
+            this.selectedTriggerCardIndices = [];
+            this.selectedTriggerCardIndex = -1;
+            originalStartTriggerCardSelection.call(this, skill, context);
+            this.selectedTriggerCardIndices = [];
+        };
+
+        HumanController.prototype.selectTriggerCard = function(index){
+
+            if(this.inputState !== "waitingTriggerCard"){
+                return;
+            }
+
+            const skill = this.selectedTriggerSkill;
+
+            if(!skill){
+                return;
+            }
+
+            const card = this.player.hand.cards[index];
+
+            if(!card){
+                return;
+            }
+
+            if(this.selectedTriggerCardIndices.includes(index)){
+                return;
+            }
+
+            const requiredCount =
+                typeof skill.triggerCardSelectionCount === "function"
+                    ? skill.triggerCardSelectionCount(
+                        this.player,
+                        this.game
+                    )
+                    : 1;
+
+            this.selectedTriggerCardIndices.push(index);
+            this.selectedTriggerCardIndex = index;
+
+            console.log(
+                "Trigger Card Selection =",
+                this.selectedTriggerCardIndices
+            );
+
+            if(this.selectedTriggerCardIndices.length < requiredCount){
+                this.game.ui.render();
+                return;
+            }
+
+            const cards = this.selectedTriggerCardIndices.map(
+                selectedIndex => this.player.hand.cards[selectedIndex]
+            );
+
+            this.triggerContext.cards = cards;
+            this.triggerContext.card = cards[0];
+
+            if(typeof skill.resolveTriggerCards === "function"){
+
+                const success = skill.resolveTriggerCards(
+                    this.player,
+                    this.game,
+                    this.triggerContext
+                );
+
+                this.selectedTriggerSkill = null;
+                this.triggerContext = null;
+                this.selectedTriggerCardIndex = -1;
+                this.selectedTriggerCardIndices = [];
+                this.inputState = "idle";
+
+                this.game.afterHumanAction(success);
+                return success;
+            }
+
+            this.inputState = "waitingTriggerTarget";
+            this.game.ui.render();
+        };
+
+        this._triggerCardOriginals = {
+            startTriggerCardSelection: originalStartTriggerCardSelection,
+            selectTriggerCard: originalSelectTriggerCard
+        };
+
+        this.triggerCardPatchInstalled = true;
+
+        console.log("ติดตั้ง Trigger Multi Card Support แล้ว");
+    }
+
+    removeTriggerMultiCardSupport(){
+
+        if(!this.triggerCardPatchInstalled){
+            return;
+        }
+
+        HumanController.prototype.startTriggerCardSelection =
+            this._triggerCardOriginals.startTriggerCardSelection;
+
+        HumanController.prototype.selectTriggerCard =
+            this._triggerCardOriginals.selectTriggerCard;
+
+        this._triggerCardOriginals = null;
+        this.triggerCardPatchInstalled = false;
+
+        console.log("ถอด Trigger Multi Card Support แล้ว");
     }
 }
 
