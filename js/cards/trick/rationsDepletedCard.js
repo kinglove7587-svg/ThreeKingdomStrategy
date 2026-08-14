@@ -40,4 +40,8 @@ class RationsDepletedCard extends DelayedTrickCard{
         // นำการ์ดเสบียงหมด! ลงกองทิ้ง (Discard Pile)
         player.game.discardPile.addCard(this);
     }
+    // คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "วางใส่ผู้เล่นอื่นที่อยู่ห่างไม่เกิน 1 เมื่อถึง Judge หากไม่ใช่ ♣️ ผู้เล่นจะข้าม Draw Phase";
+    }
 }

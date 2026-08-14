@@ -66,4 +66,8 @@ class LightningCard extends DelayedTrickCard{
         // อัปเดต UI การ์ดหน่วงเวลาบนหน้าจอ
         player.showDelayedTrick();
     }
+    // คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "วางไว้หน้าผู้เล่นตัวเอง เมื่อถึง Judge เปิดไพ่ หากเป็น ♠️ 2–9 ผู้เล่นจะได้รับความเสียหายสายฟ้า 3 มิฉะนั้นสายฟ้าจะถูกส่งต่อให้ผู้เล่นคนถัดไป";
+    }
 }

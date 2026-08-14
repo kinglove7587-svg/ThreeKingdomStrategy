@@ -54,4 +54,8 @@ class LeBuSiShuCard extends DelayedTrickCard{
         // แสดงรายการ Delayed Trick ที่เหลืออยู่
         player.showDelayedTrick();
     }
+    // คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "วางใส่ผู้เล่นอื่น เมื่อถึง Judge หากไม่ใช่ ♥️ เป้าหมายจะข้าม Play Phase หากเป็น ♥️ จะไม่เกิดผล";
+    }
 }
