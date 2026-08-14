@@ -72,6 +72,14 @@ class HumanController extends Controller{
         const success = this.playCard(cardIndex);
         // ล้างค่าเป้าหมายที่เลือกไว้ เพื่อป้องกันไม่ให้ข้อมูลเป้าหมายเดิมค้างอยู่ในเทิร์นถัดไป
         this.selectedTarget = null;
+        // รอ Trigger ที่ต่อจากการ์ดให้จบก่อน
+        if(
+            this.inputState === "waitingTriggerChoice" || 
+            this.inputState === "waitingTriggerCard" || 
+            this.inputState === "waitingTriggerTarget"
+        ){
+            return;
+        }
         // ส่งผลลัพธ์ให้ Game จัดการอัปเดตสถานะและหน้าจอถัดไป
         this.game.afterHumanAction(success);
     }
