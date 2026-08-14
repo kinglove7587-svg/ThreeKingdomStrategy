@@ -53,6 +53,17 @@ class RockCleavingAxeSkill extends TriggerSkill{
     triggerCardSelectionCount(player, game){
         return 2;
     }
+    // ยกเลิกการใช้ขวานระหว่างเลือกการ์ด
+    cancelTriggerCardSelection(player, game, context){
+        // ปลดสถานะการรอ Trigger
+        const slashContext = context.slashContext;
+
+        slashContext.waitingTrigger = false;
+
+        game.log(player.name + " ไม่ใช้ ขวานศิลา");
+        // ให้ Slash เดิมกลับมาทำงานต่อ (ยกเลิกการโจมตี)
+        return slashContext.resume();
+    }
     // ประมวลผลการทิ้งการ์ด 2 ใบ และยกเลิกการหลบเพื่อให้โจมตีโดนเป้าหมาย
     resolveTriggerCards(player, game, context){
         // ตรวจสอบว่ามีการ์ดส่งมาครบ 2 ใบหรือไม่
