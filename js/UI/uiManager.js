@@ -185,6 +185,8 @@ class UIManager{
             const card = player.hand.cards[i];
             // สร้าง Element ปุ่ม <button> ขึ้นมาใหม่ในหน่วยความจำ
             const button = document.createElement("button");
+            // แสดงรายละเอียดการ์ดเมื่อเอาเมาส์วาง
+            button.title = this.getCardTooltip(card);
             // กำหนดข้อความบนปุ่มให้แสดงชื่อการ์ด (เช่น "โจมตี", "ยา", "หลบ")
             button.textContent = card.name;
             // แสดงลำดับการ์ดที่เลือก
@@ -874,6 +876,32 @@ class UIManager{
             controller.selectTarget(player);
             return;
         }
+    }
+    // สร้างข้อความรายละเอียดการ์ดสำหรับแสดงผลบน Tooltip
+    getCardTooltip(card){
+
+        let text = 
+            card.name + "\n" + "ประเภท: " + 
+            card.type + "\n" + 
+            card.suit + " " + 
+            card.number;
+        // แสดง Range สำหรับการ์ดที่มีค่า range
+        if(card.range !== undefined){
+            text += "\nระยะ: " + card.range;
+        }
+        // แสดง Skill ที่ผูกอยู่กับการ์ด
+        if(card.skills && card.skills.length > 0){
+            text += "\n\nสกิล:";
+
+            for(const skill of card.skills){
+                text += "\n• " + skill.name;
+            }
+        }
+        // เพิ่มคำอธิบายจาก Card
+        if(typeof card.getDescription === "function"){
+            text += "\n\n" + card.getDescription();
+        }
+        return text;
     }
     
 }

@@ -26,4 +26,8 @@ class Card {
     canRecast(){
         return false;
     }
+    // ข้อความอธิบายพื้นฐานของการ์ด
+    getDescription(){
+        return this.name;
+    }
 }
