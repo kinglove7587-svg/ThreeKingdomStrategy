@@ -64,6 +64,20 @@ class UIManager{
                     div.classList.add("disabled-target");
                 }
             }
+            // ตรวจ Target ที่สองของ Trigger
+            if(
+                controller.inputState === "waitingTriggerTarget" && 
+                controller.selectedTriggerSkill
+            ){
+                if(!controller.selectedTriggerSkill.canTriggerTarget(
+                    currentPlayer, 
+                    player, 
+                    this.game, 
+                    controller.triggerContext
+                )){
+                    div.classList.add("disabled-target");
+                }
+            }
             // ประกาศตัวแปรรองรับวัตถุเป้าหมายเริ่มต้นเป็น null
             let target = null;
             // ตรวจสอบว่า Controller มีเมธอด getSelectedTarget หรือไม่
@@ -160,6 +174,10 @@ class UIManager{
         }
         // ถ้าไม่ใช่ผู้เล่นมนุษย์ ไม่ต้องแสดงการ์ดในมือ
         if (!(player.controller instanceof HumanController)){
+            return;
+        }
+        // Trigger Card Selection ใช้การคลิกการ์ดโดยตรง
+        if(player.controller.inputState === "waitingTriggerCard"){
             return;
         }
         // วนลูปแบบเก็บ index (i) เพื่อระบุตำแหน่งของการ์ดแต่ละใบบนมือ
@@ -522,6 +540,13 @@ class UIManager{
         if(player.controller.inputState === "waitingTriggerChoice"){
             return;
         }
+        // ระหว่างเลือก Card/Target ของ Trigger ห้ามเริ่ม Skill อื่น
+        if(
+            player.controller.inputState === "waitingTriggerCard" || 
+            player.controller.inputState === "waitingTriggerTarget"
+        ){
+            return;
+        }
         // ถ้าผู้เล่นปัจจุบันไม่ใช่ Human ไม่ต้องสร้างปุ่ม สกิล
         if(!(player.controller instanceof HumanController)){
             return;
@@ -619,6 +644,11 @@ class UIManager{
             controller.selectSkillCard(index);
             return;
         }
+        // หากอยู่ในสถานะรอเลือกการ์ดสำหรับ Trigger Skill
+        if(controller.inputState === "waitingTriggerCard"){
+            controller.selectTriggerCard(index);
+            return;
+        }
         // ตรวจสอบว่าถ้าอยู่ในสถานะรอเลือกการ์ดที่จะขโมย (Steal)
         if(controller.inputState === "waitingStealCard"){
             controller.selectStealCard(index);
@@ -674,6 +704,11 @@ class UIManager{
         // กรณี Controller กำลังรอเลือกเป้าหมายให้กับ สกิล (Skill)
         if(controller.inputState === "waitingSkillTarget"){
             controller.selectSkillTarget(player);
+            return;
+        }
+        // เลือกเป้าหมายที่สองสำหรับ Trigger
+        if(controller.inputState === "waitingTriggerTarget"){
+            controller.selectTriggerTarget(player);
             return;
         }
         // กรณี Controller กำลังรอเลือกเป้าหมายให้กับ การ์ดปกติ (Card)

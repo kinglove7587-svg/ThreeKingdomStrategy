@@ -22,6 +22,7 @@ class HumanController extends Controller{
         // เก็บ Trigger Skill ที่กำลังรอการตัดสินใจ
         this.selectedTriggerSkill = null;
         this.triggerContext = null;
+        this.selectedTriggerCardIndex = -1;
     }
     // จัดการเทิร์นของผู้เล่นมนุษย์
     playTurn(){ 
@@ -680,6 +681,71 @@ class HumanController extends Controller{
         // ล้าง State กลับเป็น idle
         this.selectedTriggerSkill = null;
         this.triggerContext = null;
+        this.inputState = "idle";
+
+        this.game.ui.render();
+
+        return success;
+    }
+    // เริ่มสถานะรอเลือกการ์ดจากมือสำหรับ Trigger Skill
+    startTriggerCardSelection(skill, context){
+        this.selectedTriggerSkill = skill;
+        this.triggerContext = context;
+        this.selectedTriggerCardIndex = -1;
+        this.inputState = "waitingTriggerCard";
+
+        this.game.ui.render();
+    }
+    // บันทึกการ์ดจากมือที่ถูกเลือกสำหรับ Trigger แล้วเปลี่ยนสถานะไปรอเลือกเป้าหมายที่สอง
+    selectTriggerCard(index){
+        if(this.inputState !== "waitingTriggerCard"){
+            return;
+        }
+        
+        const card = this.player.hand.cards[index];
+        if(!card){
+            return;
+        }
+        
+        this.selectedTriggerCardIndex = index;
+        this.triggerContext.card = card;
+        
+        this.inputState = "waitingTriggerTarget";
+
+        this.game.ui.render();
+    }
+    // ตรวจสอบและบันทึกเป้าหมายที่สองสำหรับ Trigger แล้วส่งไปประมวลผลผลลัพธ์ของสกิล
+    selectTriggerTarget(player){
+        if(this.inputState !== "waitingTriggerTarget"){
+            return;
+        }
+        
+        const skill = this.selectedTriggerSkill;
+        if(!skill){
+            return;
+        }
+        // ตรวจสอบว่าเป้าหมายที่เลือกถูกต้องตามเงื่อนไขของ Trigger Skill หรือไม่
+        if(!skill.canTriggerTarget(
+            this.player, 
+            player, 
+            this.game, 
+            this.triggerContext
+        )){
+            this.game.log("ไม่สามารถเลือกเป้าหมายนี้ได้");
+            return;
+        }
+        
+        this.triggerContext.secondaryTarget = player;
+        // เรียกประมวลผลผลลัพธ์ของ Trigger Skill
+        const success = skill.resolveTriggerTarget(
+            this.player, 
+            this.game, 
+            this.triggerContext
+        );
+        // ล้าง State กลับสู่ปกติ
+        this.selectedTriggerSkill = null;
+        this.triggerContext = null;
+        this.selectedTriggerCardIndex = -1;
         this.inputState = "idle";
 
         this.game.ui.render();
