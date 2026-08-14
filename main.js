@@ -19,6 +19,10 @@ const game = new Game([
         controller: AIController
     }
 ]);
+
+// NEW: เปิดใช้งานเครื่องมือทดสอบผ่าน Console
+game.debug = new DebugTools(game);
+
 // เรียกใช้เมธอด start() เพื่อเริ่มรัน Game Loop / ระบบการเล่นของเกม
 game.start();
 
