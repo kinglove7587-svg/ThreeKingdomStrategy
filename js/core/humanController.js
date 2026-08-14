@@ -691,7 +691,7 @@ class HumanController extends Controller{
         this.triggerContext = null;
         this.inputState = "idle";
 
-        this.game.ui.render();
+        this.game.afterHumanAction(success);
 
         return success;
     }
@@ -756,7 +756,7 @@ class HumanController extends Controller{
         this.selectedTriggerCardIndex = -1;
         this.inputState = "idle";
 
-        this.game.ui.render();
+        this.game.afterHumanAction(success);
 
         return success;
     }
