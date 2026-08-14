@@ -974,13 +974,41 @@ class UIManager{
     showCardTooltip(card, x, y){
 
         const tooltip = this.createCardTooltip();
-        // ใส่ข้อความรายละเอียดการ์ดลงใน Tooltip
+
         tooltip.textContent = this.getCardTooltip(card);
-        // กำหนดตำแหน่งการแสดงผล ให้ขยับออกจากหัวเมาส์เล็กน้อย (+15px)
-        tooltip.style.left = (x + 15) + "px";
-        tooltip.style.top = (y + 15) + "px";
 
         tooltip.style.display = "block";
+
+        const offset = 15;
+
+        let left = x + offset;
+        let top = y + offset;
+
+        // ต้องอ่านขนาดหลังจากแสดง Tooltip แล้ว
+        const rect = tooltip.getBoundingClientRect();
+
+        // ชนขอบขวา → ย้ายไปด้านซ้ายของเมาส์
+        if(left + rect.width > window.innerWidth){
+            left = x - rect.width - offset;
+        }
+
+        // ชนขอบล่าง → ย้ายขึ้นด้านบนของเมาส์
+        if(top + rect.height > window.innerHeight){
+            top = y - rect.height - offset;
+        }
+
+        // กันกรณี Tooltip เลยขอบซ้าย
+        if(left < 0){
+            left = 5;
+        }
+
+        // กันกรณี Tooltip เลยขอบบน
+        if(top < 0){
+            top = 5;
+        }
+
+        tooltip.style.left = left + "px";
+        tooltip.style.top = top + "px";
     }
     // ซ่อน Tooltip เมื่อเลื่อนเมาส์ออกจากพื้นที่การ์ด
     hideCardTooltip(){
