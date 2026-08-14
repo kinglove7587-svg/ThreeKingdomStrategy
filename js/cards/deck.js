@@ -9,7 +9,7 @@ class Deck {
             //============================= Basic Card ================================
             this.cards.push(new SlashCard("♥️", 10)); // เพิ่มการ์ดโจมตี
             this.cards.push(new SlashCard("♥️", 4, DamageType.FIRE)); // การ์ดโจมตีไฟ
-            this.cards.push(new SlashCard("♣️", 5, DamageType.THUNDER)); // การ์ดโจมตีสายไฟ
+            this.cards.push(new SlashCard("♣️", 5, DamageType.THUNDER)); // การ์ดสายฟ้า
             this.cards.push(new DodgeCard("♥️", 2)); // เพิ่มการ์ดหลบ
             this.cards.push(new PeachCard("♥️", 3)); // เพิ่มการ์ดยา
             this.cards.push(new WineCard("♠️", 9)); // การ์ด สุรา
@@ -36,7 +36,6 @@ class Deck {
             this.cards.push(new SerpentSpearCard("♠️", 12)); // ง้าวอสรพิษ
             this.cards.push(new KirinBowCard("♥️", 5)); // กิเลนคันธนู
             this.cards.push(new TwoBladedTridentCard("♦️", 12)); // ง้าวสามคม
-            this.cards.push(new RockCleavingAxeCard("♦️", 5)); // NEW: ขวานผ่าศิลา
             //============================= Armor ======================================
             this.cards.push(new EightTrigramsArmor("♣️", 2)); // เพิ่มเกราะเกราะแปดทิศ         
             this.cards.push(new TengJiaArmor("♣️", 7)); // เพิ่มอุปกรณ์เกราะ เกราะหวาย
