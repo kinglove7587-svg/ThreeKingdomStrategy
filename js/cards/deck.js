@@ -36,6 +36,7 @@ class Deck {
             this.cards.push(new SerpentSpearCard("♠️", 12)); // ง้าวอสรพิษ
             this.cards.push(new KirinBowCard("♥️", 5)); // กิเลนคันธนู
             this.cards.push(new TwoBladedTridentCard("♦️", 12)); // ง้าวสามคม
+            this.cards.push(new RockCleavingAxeCard("♦️", 5)); // NEW: ขวานผ่าศิลา
             //============================= Armor ======================================
             this.cards.push(new EightTrigramsArmor("♣️", 2)); // เพิ่มเกราะเกราะแปดทิศ         
             this.cards.push(new TengJiaArmor("♣️", 7)); // เพิ่มอุปกรณ์เกราะ เกราะหวาย
