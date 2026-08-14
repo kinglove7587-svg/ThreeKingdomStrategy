@@ -10,6 +10,8 @@ class UIManager{
         this.logArea = document.getElementById("log-area");
         this.endTurnButton = document.getElementById("end-turn");
         this.controlArea = document.getElementById("control-area");
+        // Tooltip สำหรับแสดงรายละเอียดการ์ด
+        this.cardTooltip = null;
         this.bindEvents();
     }
     // แสดงผลสถานะล่าสุดของเกมออกทาง Console
@@ -185,8 +187,26 @@ class UIManager{
             const card = player.hand.cards[i];
             // สร้าง Element ปุ่ม <button> ขึ้นมาใหม่ในหน่วยความจำ
             const button = document.createElement("button");
-            // แสดงรายละเอียดการ์ดเมื่อเอาเมาส์วาง
-            button.title = this.getCardTooltip(card);
+            // แสดง Custom Tooltip เมื่อเลื่อนเมาส์ชี้ไพ่
+            button.onmouseenter = (event) => {
+
+                this.showCardTooltip(card, 
+                    event.clientX, 
+                    event.clientY
+                );
+            };
+            
+            button.onmousemove = (event) => {
+
+                this.showCardTooltip(card, 
+                    event.clientX, 
+                    event.clientY
+                );
+            };
+
+            button.onmouseleave = () => {
+                this.hideCardTooltip();
+            }
             // กำหนดข้อความบนปุ่มให้แสดงชื่อการ์ด (เช่น "โจมตี", "ยา", "หลบ")
             button.textContent = card.name;
             // แสดงลำดับการ์ดที่เลือก
@@ -909,6 +929,50 @@ class UIManager{
             text += "\n\n🔄 Recast ได้";
         }
         return text;
+    }
+    // สร้าง Element สำหรับแสดง Tooltip รายละเอียดการ์ดบนหน้าจอ
+    createCardTooltip(){
+
+        if(this.cardTooltip){
+            return this.cardTooltip;
+        }
+
+        const tooltip = document.createElement("div");
+
+        tooltip.className = "card-tooltip";
+
+        tooltip.style.position = "fixed";
+        tooltip.style.display = "none";
+        tooltip.style.zIndex = "9999";
+        tooltip.style.maxWidth = "320px";
+        tooltip.style.padding = "12px";
+        tooltip.style.whiteSpace = "pre-wrap";
+        tooltip.style.pointerEvents = "none";
+
+        document.body.appendChild(tooltip);
+
+        this.cardTooltip = tooltip;
+        return tooltip;
+    }
+    // แสดง Tooltip ของการ์ด ณ ตำแหน่งพิกัดเมาส์ (x, y)
+    showCardTooltip(card, x, y){
+
+        const tooltip = this.createCardTooltip();
+        // ใส่ข้อความรายละเอียดการ์ดลงใน Tooltip
+        tooltip.textContent = this.getCardTooltip(card);
+        // กำหนดตำแหน่งการแสดงผล ให้ขยับออกจากหัวเมาส์เล็กน้อย (+15px)
+        tooltip.style.left = (x + 15) + "px";
+        tooltip.style.top = (y + 15) + "px";
+
+        tooltip.style.display = "block";
+    }
+    // ซ่อน Tooltip เมื่อเลื่อนเมาส์ออกจากพื้นที่การ์ด
+    hideCardTooltip(){
+
+        if(!this.cardTooltip){
+            return;
+        }
+        this.cardTooltip.style.display = "none";
     }
     
 }
