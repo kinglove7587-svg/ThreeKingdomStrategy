@@ -943,27 +943,6 @@ class UIManager{
 
         tooltip.className = "card-tooltip";
 
-        tooltip.style.position = "fixed";
-        tooltip.style.display = "none";
-        tooltip.style.zIndex = "9999";
-
-        tooltip.style.maxWidth = "320px";
-        tooltip.style.padding = "12px";
-
-        // รูปแบบ Tooltip
-        tooltip.style.background = "#fff8dc";
-        tooltip.style.border = "2px solid #333";
-        tooltip.style.borderRadius = "8px";
-        tooltip.style.boxShadow =
-            "0 4px 12px rgba(0, 0, 0, 0.25)";
-
-        tooltip.style.color = "#222";
-        tooltip.style.fontSize = "14px";
-        tooltip.style.lineHeight = "1.5";
-
-        tooltip.style.whiteSpace = "pre-wrap";
-        tooltip.style.pointerEvents = "none";
-
         document.body.appendChild(tooltip);
 
         this.cardTooltip = tooltip;

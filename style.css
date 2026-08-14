@@ -5,3 +5,32 @@
 .disabled-target{
     opacity:0.4;
 }
+/* =========================
+   Card Tooltip
+========================= */
+
+.card-tooltip{
+    position:fixed;
+    display:none;
+    z-index:9999;
+
+    width:max-content;
+    max-width:320px;
+
+    padding:12px 14px;
+
+    background:#fff8dc;
+    border:2px solid #5b4636;
+    border-radius:8px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,0.28);
+
+    color:#222;
+    font-size:14px;
+    line-height:1.5;
+
+    white-space:pre-wrap;
+    word-break:normal;
+
+    pointer-events:none;
+}
