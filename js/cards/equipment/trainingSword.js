@@ -11,4 +11,8 @@ class TrainingSword extends WeaponCard{
     onUnequip(player){
         console.log(player.name + " สูญเสียพลังจากดาบฝึก");
     }
+    // NEW: คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "อาวุธระยะ 2 ไม่มีความสามารถพิเศษ";
+    }
 }

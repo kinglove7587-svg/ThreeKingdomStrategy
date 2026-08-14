@@ -8,4 +8,8 @@ class BumperHarvestCard extends TrickCard{
         game.startBumperHarvest();
         return true;
     }
+    // NEW: คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "เปิดการ์ดจากใบบนสุดของกองตามจำนวนผู้เล่นทั้งหมดให้ผู้เล่นทุกคนผลัดกันเลือกหยิบการ์ดไปคนละ 1 ใบ";
+    }
 }

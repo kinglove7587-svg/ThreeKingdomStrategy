@@ -31,4 +31,8 @@ class IronChainCard extends TrickCard{
     canRecast(){
         return true;
     }
+    // NEW: คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "เลือกผู้เล่น 1 คนเพื่อสลับสถานะ โซ่ตรวน ของเป้าหมาย และ ส่งต่อความเสียหายได้ ถ้าอยู่ในสถานะโซ่ตรวน";
+    }
 }

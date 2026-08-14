@@ -6,4 +6,8 @@ class EightTrigramsArmor extends ArmorCard{
         //
         this.skills = [new EightTrigramsSkill()];
     }
+    // NEW: คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "เมื่อกำลังจะถูก โจมตี เปิดไพ่ Judge 1 ใบ หากเป็นสีแดง (♥️ หรือ ♦️) ให้หลบการโจมตีสำเร็จ";
+    }
 }

@@ -15,4 +15,8 @@ class CrossbowCard extends WeaponCard{
         player.infiniteSlash = false;
         console.log(player.name + " ถอดจูเก่อเหลียนหนู");
     }
+    // NEW: คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "อาวุธระยะ 1 เมื่อสวมใส่ สามารถใช้ โจมตี ได้ไม่จำกัดครั้งในเทิร์นนี้";
+    }
 }

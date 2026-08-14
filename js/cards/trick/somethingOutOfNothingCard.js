@@ -11,4 +11,8 @@ class SomethingOutOfNothingCard extends TrickCard{
         player.drawCard(game.deck);
         return true;
     }
+    // NEW: คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "จั่วการ์ด 2 ใบ";
+    }
 }

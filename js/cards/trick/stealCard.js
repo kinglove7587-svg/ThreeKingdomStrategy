@@ -33,4 +33,8 @@ class StealCard extends TrickCard{
         controller.startStealSourceSelection();
         return true;
     }
+    // NEW: คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "เลือกผู้เล่นอื่นที่อยู่ห่างไม่เกิน 1 และ มีการ์ดหรืออุปกรณ์ จากนั้นเลือกขโมยจาก มือ อาวุธ หรือ เกราะ";
+    }
 }

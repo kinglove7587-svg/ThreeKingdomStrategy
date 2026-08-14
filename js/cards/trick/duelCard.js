@@ -24,4 +24,8 @@ class DuelCard extends TrickCard{
     needTarget(){
         return true;
     }
+    // NEW: คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "เลือกผู้เล่นอื่นเพื่อเริ่มการดวล โดยการใช้การ์ดโจมตีในการดวล";
+    }
 }
