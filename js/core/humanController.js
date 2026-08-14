@@ -23,6 +23,7 @@ class HumanController extends Controller{
         this.selectedTriggerSkill = null;
         this.triggerContext = null;
         this.selectedTriggerCardIndex = -1;
+        this.selectedTriggerCardIndices = [];
     }
     // จัดการเทิร์นของผู้เล่นมนุษย์
     playTurn(){ 
@@ -700,6 +701,7 @@ class HumanController extends Controller{
         this.selectedTriggerSkill = skill;
         this.triggerContext = context;
         this.selectedTriggerCardIndex = -1;
+        this.selectedTriggerCardIndices = [];
         this.inputState = "waitingTriggerCard";
 
         this.game.ui.render();
@@ -709,15 +711,63 @@ class HumanController extends Controller{
         if(this.inputState !== "waitingTriggerCard"){
             return;
         }
+
+        const skill = this.selectedTriggerSkill;
+        if(!skill){
+            return;
+        }
         
         const card = this.player.hand.cards[index];
         if(!card){
             return;
         }
-        
+        // ป้องกันเลือกการ์ดใบเดิมซ้า 
+        if(this.selectedTriggerCardIndices.includes(index)){
+            return;
+        }
+        // เก็บ Index การ์ดที่เลือก
+        this.selectedTriggerCardIndices.push(index);
         this.selectedTriggerCardIndex = index;
-        this.triggerContext.card = card;
-        
+
+        console.log(
+            "Trigger Card Selection =", 
+            this.selectedTriggerCardIndices
+        );
+        // Trigger กำหนดเองได้ว่าต้องใช้การ์ดกี่ใบ
+        const requiredCount = 
+            typeof skill.triggerCardSelectionCount === "function" 
+                ? skill.triggerCardSelectionCount(this.player, this.game) : 1;
+        // ถ้ายังเลือกไม่ครบ ให้รอเลือกใบต่อไป
+        if(this.selectedTriggerCardIndices.length < requiredCount){
+            this.game.ui.render();
+            return;
+        }
+        // แปลง Index ที่เลือกเป็นการ์ดจริง
+        const cards = this.selectedTriggerCardIndices.map(
+            selectedIndex => this.player.hand.cards[selectedIndex]
+        );
+        // ส่งการ์ดหลายใบเข้า Trigger Context
+        this.triggerContext.cards = cards;
+        this.triggerContext.card = cards[0];
+        // Trigger ที่ใช้การ์ดหลายใบสามารถประมวลผลทันทีหลังเลือกครบ
+        if(typeof skill.resolveTriggerCards === "function"){
+            const success = skill.resolveTriggerCards(
+                this.player, 
+                this.game, 
+                this.triggerContext
+            );
+            
+            this.selectedTriggerSkill = null;
+            this.triggerContext = null;
+            this.selectedTriggerCardIndex = -1;
+            this.selectedTriggerCardIndices = [];
+            this.inputState = "idle";
+
+            this.game.afterHumanAction(success);
+
+            return success;
+        }
+        // เดิม: หากเป็น Trigger แบบเลือก Target ต่อ (เช่น ง้าวสามคม)
         this.inputState = "waitingTriggerTarget";
 
         this.game.ui.render();
