@@ -714,8 +714,10 @@ class UIManager{
             if(!skill){
                 return;
             }
-
-            requiredCount = skill.triggerCardSelectionCount(player, this.game);
+            // รองรับ Trigger ที่เลือกการ์ด 1 ใบแบบเดิม
+            requiredCount = 
+                typeof skill.triggerCardSelectionCount === "function" 
+                    ? skill.triggerCardSelectionCount(player, this.game) : 1;
 
             title = skill.name;
         }
