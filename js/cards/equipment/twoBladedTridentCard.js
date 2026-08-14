@@ -22,4 +22,8 @@ class TwoBladedTridentCard extends WeaponCard{
 
         console.log(player.name + " ถอดง้าวสามคม");
     }
+    // คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "เมื่อ Slash ของคุณสร้างความเสียหายสำเร็จ สามารถทิ้งการ์ด 1 ใบ เพื่อโจมตีผู้เล่นคนอื่นที่อยู่ห่างจากเป้าหมายเดิมไม่เกิน 1 ด้วยความเสียหาย 1"
+    }
 }

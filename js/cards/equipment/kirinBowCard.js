@@ -25,4 +25,8 @@ class KirinBowCard extends WeaponCard{
 
         console.log(player.name + " ถอดกิเลนคันธนู");
     }
+    // คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "หลังคุณใช้ โจมตี และสร้างความเสียหายสำเร็จ หากเป้าหมายมีม้า สามารถใช้สกิลเพื่อทิ้งม้าของเป้าหมาย"
+    }
 }

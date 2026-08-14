@@ -23,4 +23,8 @@ class SerpentSpearCard extends WeaponCard{
 
         console.log(player.name + " ถอดง้าวอสรพิษ");
     }
+    // คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "เลือกเป้าหมายในระยะ แล้วทิ้งการ์ด 2 ใบ เพื่อใช้ โจมตี เสมือน 1 ครั้ง"
+    }
 }
