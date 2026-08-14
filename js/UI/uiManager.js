@@ -16,6 +16,7 @@ class UIManager{
     }
     // แสดงผลสถานะล่าสุดของเกมออกทาง Console
     render(){
+        this.hideCardTooltip();
         this.controlArea.innerHTML = ""; // ล้างพื้นที่ปุ่มเดิมก่อน
         this.renderPlayers(); // วาดข้อมูลผู้เล่นและ HP ลงบน DOM
         this.renderHands(); // วาดปุ่มการ์ดในมือของผู้เล่นหลัก
@@ -243,6 +244,7 @@ class UIManager{
             }
             //  กำหนด Event Handler เมื่อมีการคลิกที่ปุ่มการ์ดบนหน้า HTML
             button.onclick = () => {
+                this.hideCardTooltip();
                 // เรียกใช้อีเวนต์คลิกการ์ด โดยส่ง index ของการ์ดใบที่ถูกเลือกไปประมวลผล
                 this.onCardClick(i);
             };
