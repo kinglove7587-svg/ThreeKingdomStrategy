@@ -18,4 +18,8 @@ class PeachCard extends BasicCard{
         // คืนค่า true เฉพาะเมื่อเป้าหมายคือคนเดียวกับผู้ใช้การ์ด
         return player === target;
     }
+    // คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "ฟื้นฟู HP 1 ให้ตัวเอง";
+    }
 }

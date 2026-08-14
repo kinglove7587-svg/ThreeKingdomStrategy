@@ -126,4 +126,16 @@ class SlashCard extends BasicCard{
                 return this.name;
         }
     }
+    // คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+
+        switch(this.damageType){
+            case DamageType.FIRE: 
+                return "สร้างความเสียหายไฟ 1 ให้เป้าหมาย";
+            case DamageType.THUNDER: 
+                return "สร้างความเสียหายสายฟ้า 1 ให้เป้าหมาย";
+            default: 
+                return "สร้างความเสียหายปกติ 1 ให้เป้าหมาย";
+        }
+    }
 }

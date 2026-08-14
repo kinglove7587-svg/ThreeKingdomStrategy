@@ -15,4 +15,8 @@ class WineCard extends BasicCard{
         game.log(player.name + " ดื่มสุรา");
         return true;
     }
+    // คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "ทำให้ โจมตี ครั้งถัดไปสร้างความเสียหายเพิ่ม 1 และ ถ้าเข้าสู่สถานะใกล้ตาย ฟื้นฟู HP 1 ได้"
+    }
 }

@@ -7,4 +7,8 @@ class DodgeCard extends BasicCard{
     use(player, game){
         return false;
     }
+    // คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "ใช้ตอบสนองเมื่อถูก โจมตี เพื่อป้องกันการโจมตี";
+    }
 }
