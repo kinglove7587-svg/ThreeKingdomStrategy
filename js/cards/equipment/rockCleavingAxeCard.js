@@ -22,4 +22,8 @@ class RockCleavingAxeCard extends WeaponCard{
 
         console.log(player.name + " ถอดขวานศิลา");
     }
+    // คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "เมื่อการโจมตีของคุณถูกหลบ สามารถทิ้งการ์ด 2 ใบ เพื่อบังคับให้การโจมตีโดนเป้าหมาย";
+    }
 }
