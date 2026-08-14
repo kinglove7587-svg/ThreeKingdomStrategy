@@ -24,6 +24,7 @@ class UIManager{
         this.renderTriggerChoice();
         this.renderTriggerCardCancelButton();
         this.renderCardSelectionStatus();
+        this.renderTargetSelectionStatus();
     }
     // วาดการ์ดแสดงตัวละครฝั่งเราและฝั่งศัตรู
     renderPlayers(){
@@ -735,6 +736,60 @@ class UIManager{
             selectedIndices.length + 
             " / " + 
             requiredCount;
+        this.controlArea.appendChild(status);
+    }
+    // แสดงข้อความแนะนำเมื่อกำลังรอเลือกเป้าหมาย (Target)
+    renderTargetSelectionStatus(){
+
+        const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
+
+        let message = null;
+        // การ์ดปกติ เช่น โจมตี / ดวล / การ์ดที่ต้องเลือกเป้าหมาย
+        if(controller.inputState === "waitingTarget"){
+            const card = controller.getSelectedCard();
+
+            if(card){
+                if(card.name === "โจมตี"){
+                    message = "เลือกเป้าหมายที่จะโจมตี";
+                }else{
+                    message = "เลือกเป้าหมายสำหรับ " + card.name;
+                }
+            }
+        }
+        // Active Skill เช่น ง้าวอสรพิษ
+        if(
+            controller.inputState === "waitingSkillTarget" && 
+            controller.selectedSkill
+        ){
+            const skill = controller.selectedSkill;
+
+            if(skill.name === "ง้าวอสรพิษ"){
+                message = "เลือกเป้าหมายที่จะโจมตี";
+            }else{
+                message = "เลือกเป้าหมายสำหรับสกิล " + skill.name;
+            }
+        }
+        // Trigger Target เช่น ง้าวสามคม
+        if(
+            controller.inputState === "waitingTriggerTarget" && 
+            controller.selectedTriggerSkill
+        ){
+            const skill = controller.selectedTriggerSkill;
+
+            if(skill.name === "ง้าวสามคม"){
+                message = "เลือกเป้าหมายที่จะโจมตี";
+            }else{
+                message = "เลือกเป้าหมายสำหรับ " + skill.name;
+            }
+        }
+
+        if(!message){
+            return;
+        }
+
+        const status = document.createElement("div");
+        status.textContent = message;
         this.controlArea.appendChild(status);
     }
     // เมธอดสำหรับจัดการ Event เมื่อมีการคลิกการ์ด
