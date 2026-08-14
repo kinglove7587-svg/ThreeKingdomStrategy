@@ -10,4 +10,8 @@ class PeachGardenCard extends TrickCard{
         }
         return true;
     }
+    // NEW: คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "ผู้เล่นทุกคนฟื้นฟู HP 1";
+    }
 }
