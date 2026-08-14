@@ -41,7 +41,7 @@ class SlashCard extends BasicCard{
         // เปิดโอกาสให้สกิลต่างๆ แทรกการทำงานก่อนตรวจสอบการ์ดหลบ
         game.eventManager.emit("beforeDodge", dodgeContext);
         // สร้าง Context ของ Slash ก่อนตรวจสอบผลการหลบ
-        const context = {
+        const slashContext = {
             source: player, 
             target: target, 
             card: this, 
@@ -52,16 +52,16 @@ class SlashCard extends BasicCard{
             game.log(target.name + " หลบการโจมตี"); 
         // หากไม่ได้หลบด้วยสกิล ให้ตรวจสอบการ์ดหลบในมือต่อ
         }else if(game.askDodge(target)){
-            context.canceled = true;
+            slashContext.canceled = true;
         }else{
             console.log(target.name + " ไม่มีการ์ดหลบ "); // แจ้งว่าหลบไม่ได้
         }
         // ส่ง Event ก่อนการโจมตีโดนเป้าหมาย
-        game.eventManager.emit("beforeSlashHit", context);
+        game.eventManager.emit("beforeSlashHit", slashContext);
         // เก็บขั้นตอนหลัง Trigger ไว้เพื่อให้ Slash เดิมกลับมาทำงานต่อได้
-        context.resume = () => {
+        slashContext.resume = () => {
             // หากมีการยกเลิกการโจมตี
-            if (context.canceled){
+            if (slashContext.canceled){
                 game.log(target.name + " ป้องกันการโจมตี");
                 return true;
             }
@@ -87,10 +87,10 @@ class SlashCard extends BasicCard{
             return true;
         };
         // ถ้ามี Trigger รอการตัดสินใจ ให้หยุด Slash ไว้ก่อน
-        if(context.waitingTrigger){
+        if(slashContext.waitingTrigger){
             return true;
         }
-        return context.resume();
+        return slashContext.resume();
         
     }
     // การ์ดใบนี้จำเป็นต้องเลือกเป้าหมายก่อนใช้งาน (เช่น การ์ด โจมตี / Slash)
