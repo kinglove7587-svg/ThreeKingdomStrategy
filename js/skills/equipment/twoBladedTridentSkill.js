@@ -85,15 +85,14 @@ class TwoBladedTridentSkill extends TriggerSkill{
         
         const damage = new Damage(player, context.secondaryTarget, 1);
         damage.card = this;
-        
-        game.damage(damage);
 
         game.log(player.name + 
             " ใช้ง้าวสามคม โจมตี " + 
             context.secondaryTarget.name + 
             " เพิ่ม 1 Damage"
         );
-
+        
+        game.damage(damage);
         return true;
     }
 }
