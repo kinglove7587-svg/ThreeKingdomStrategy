@@ -176,10 +176,6 @@ class UIManager{
         if (!(player.controller instanceof HumanController)){
             return;
         }
-        // Trigger Card Selection ใช้การคลิกการ์ดโดยตรง
-        if(player.controller.inputState === "waitingTriggerCard"){
-            return;
-        }
         // วนลูปแบบเก็บ index (i) เพื่อระบุตำแหน่งของการ์ดแต่ละใบบนมือ
         for (let i = 0; i < player.hand.cards.length; i++){
             // ดึงข้อมูลการ์ดในลำดับ index ที่ i

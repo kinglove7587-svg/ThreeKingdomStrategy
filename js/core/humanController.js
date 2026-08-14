@@ -678,6 +678,14 @@ class HumanController extends Controller{
             context, 
             useSkill
         );
+        // Trigger ที่มีขั้นตอนต่อไม่ต้องล้าง State
+        if(
+            this.inputState === "waitingTriggerCard" || 
+            this.inputState === "waitingTriggerTarget"
+        ){
+            this.game.ui.render();
+            return success;
+        }
         // ล้าง State กลับเป็น idle
         this.selectedTriggerSkill = null;
         this.triggerContext = null;
