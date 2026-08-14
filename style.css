@@ -34,3 +34,45 @@
 
     pointer-events:none;
 }
+.card-tooltip-title{
+    font-size:18px;
+    font-weight:bold;
+
+    padding-bottom:8px;
+    margin-bottom:8px;
+
+    border-bottom:1px solid #9b8068;
+}
+
+.card-tooltip-info{
+    line-height:1.6;
+}
+
+.card-tooltip-section{
+    margin-top:10px;
+    padding-top:8px;
+
+    border-top:1px solid #d2bfa7;
+}
+
+.card-tooltip-section-title{
+    font-weight:bold;
+    margin-bottom:4px;
+}
+
+.card-tooltip-skill{
+    margin-left:4px;
+}
+
+.card-tooltip-description{
+    line-height:1.6;
+}
+
+.card-tooltip-recast{
+    margin-top:10px;
+    padding-top:8px;
+
+    border-top:1px solid #d2bfa7;
+
+    font-weight:bold;
+}

@@ -932,6 +932,97 @@ class UIManager{
         }
         return text;
     }
+    // แยกส่วนสร้าง HTML Structure ของ Tooltip
+    renderCardTooltipContent(card, tooltip){
+        // ล้างข้อมูลเดิม 
+        tooltip.innerHTML = "";
+
+        // ========================
+        // ชื่อการ์ด
+        // ========================
+
+        const title = document.createElement("div");
+
+        title.className = "card-tooltip-title";
+        title.textContent = card.name;
+
+        tooltip.appendChild(title);
+
+        // ========================
+        // ข้อมูลพื้นฐาน
+        // ========================
+
+        const info = document.createElement("div");
+
+        info.className = "card-tooltip-info";
+
+        info.textContent = 
+            "ประเภท: " + card.type + "\n" + 
+            card.suit + " " + card.number;
+        
+        if(card.range !== undefined){
+            info.textContent += "\nระยะ: " + card.range;
+        }
+        tooltip.appendChild(info);
+
+        // =========================
+        // Skill
+        // =========================
+
+        if(card.skills && card.skills.length > 0){
+
+            const skillSection = document.createElement("div");
+            skillSection.className = "card-tooltip-section";
+
+            const skillTitle = document.createElement("div");
+            skillTitle.className = "card-tooltip-section-title";
+            skillTitle.textContent = "สกิล";
+            skillSection.appendChild(skillTitle);
+
+            for(const skill of card.skills){
+                const skillItem = document.createElement("div");
+                skillItem.className = "card-tooltip-skill";
+                skillItem.textContent = "• " + skill.name;
+                skillSection.appendChild(skillItem);
+            }
+            tooltip.appendChild(skillSection);
+        }
+
+        // ===========================
+        // ความสามารถ
+        // ===========================
+
+        if(typeof card.getDescription === "function"){
+
+            const description = document.createElement("div");
+            description.className = "card-tooltip-section";
+
+            const descriptionTitle = document.createElement("div");
+            descriptionTitle.className = "card-tooltip-section-title";
+            descriptionTitle.textContent = "ความสามารถ";
+            description.appendChild(descriptionTitle);
+
+            const descriptionText = document.createElement("div");
+            descriptionText.className = "card-tooltip-description";
+            descriptionText.textContent = card.getDescription();
+            description.appendChild(descriptionText);
+            tooltip.appendChild(description);
+        }
+
+        // ===========================
+        // Recast
+        // ===========================
+
+        if(
+            typeof card.canRecast === "function" && 
+            card.canRecast()
+        ){
+            const recast = document.createElement("div");
+            recast.className = "card-tooltip-recast";
+            recast.textContent = "🔄 Recast ได้";
+            tooltip.appendChild(recast);
+        }
+    }
     // สร้าง Element สำหรับแสดง Tooltip รายละเอียดการ์ดบนหน้าจอ
     createCardTooltip(){
 
@@ -954,7 +1045,7 @@ class UIManager{
 
         const tooltip = this.createCardTooltip();
 
-        tooltip.textContent = this.getCardTooltip(card);
+        this.renderCardTooltipContent(card, tooltip);
 
         tooltip.style.display = "block";
 
