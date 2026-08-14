@@ -777,7 +777,6 @@ class HumanController extends Controller{
         }
         // เดิม: หากเป็น Trigger แบบเลือก Target ต่อ (เช่น ง้าวสามคม)
         this.inputState = "waitingTriggerTarget";
-        this.game.log("เลือกเป้าหมายที่จะโจมตี");
 
         this.game.ui.render();
     }
