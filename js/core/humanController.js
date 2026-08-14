@@ -780,6 +780,36 @@ class HumanController extends Controller{
 
         this.game.ui.render();
     }
+    // ยกเลิกการใช้ Trigger ระหว่างขั้นตอนเลือกการ์ด (เมื่อกดปุ่มไม่ใช้)
+    cancelTriggerCardSelection(){
+
+        if(this.inputState !== "waitingTriggerCard"){
+            return;
+        }
+
+        const skill = this.selectedTriggerSkill;
+        const context = this.triggerContext;
+
+        if(!skill || !context){
+            return;
+        }
+        // เรียกใช้เมธอดยกเลิกของ Skill เพื่อ Resume กระบวนการเดิม
+        const success = skill.cancelTriggerCardSelection(
+            this.player, 
+            this.game, 
+            context
+        );
+        // รีเซ็ตสถานะ Controller กลับสู่ idle
+        this.selectedTriggerSkill = null;
+        this.triggerContext = null;
+        this.selectedTriggerCardIndex = -1;
+        this.selectedTriggerCardIndices = [];
+        this.inputState = "idle";
+        // แจ้งการทำงานเสร็จสิ้นแก่ Game
+        this.game.afterHumanAction(success);
+
+        return success;
+    }
     // ตรวจสอบและบันทึกเป้าหมายที่สองสำหรับ Trigger แล้วส่งไปประมวลผลผลลัพธ์ของสกิล
     selectTriggerTarget(player){
         if(this.inputState !== "waitingTriggerTarget"){
