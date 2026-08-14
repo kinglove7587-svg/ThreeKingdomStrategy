@@ -901,6 +901,13 @@ class UIManager{
         if(typeof card.getDescription === "function"){
             text += "\n\n" + card.getDescription();
         }
+        // แสดงว่า Recast ได้หรือไม่
+        if(
+            typeof card.canRecast === "function" && 
+            card.canRecast()
+        ){
+            text += "\n\n🔄 Recast ได้";
+        }
         return text;
     }
     

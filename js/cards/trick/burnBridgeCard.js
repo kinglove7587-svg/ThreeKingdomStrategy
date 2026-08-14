@@ -23,4 +23,8 @@ class BurnBridgeCard extends TrickCard{
         controller.startBurnSourceSelection();
         return true;
     }
+    // NEW: คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "เลือกผู้เล่นอื่นที่อยู่ห่างไม่เกิน 1 แล้วเลือกทำลายการ์ดจากมือ อาวุธ หรือเกราะของเป้าหมาย";
+    }
 }

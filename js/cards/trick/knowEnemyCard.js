@@ -30,4 +30,8 @@ class KnowEnemyCard extends TrickCard{
         player.controller.startViewingHand(target);
         return true;
     }
+    // NEW: คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "เลือกผู้เล่นอื่นเพื่อเปิดดูการ์ดบนมือของเขา";
+    }
 }

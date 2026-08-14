@@ -21,4 +21,8 @@ class BarbarianCard extends TrickCard{
         }
         return true;
     }
+    // NEW: คำอธิบายความสามารถสำหรับ Tooltip
+    getDescription(){
+        return "ผู้เล่นทุกคนยกเว้นผู้ใช้ต้องใช้ โจมตี ตอบ หากไม่สามารถใช้ โจมตี ได้ จะได้รับความเสียหาย 1";
+    }
 }
