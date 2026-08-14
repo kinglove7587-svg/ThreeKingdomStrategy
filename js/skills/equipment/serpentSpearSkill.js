@@ -48,6 +48,10 @@ class SerpentSpearSkill extends ActiveSkill{
                 return false;
             }
         }
+        // ตรวจว่า Slash ยังใช้ได้ก่อนทิ้งการ์ด
+        if(!player.canUseSlash()){
+            return false;
+        }
         // เรียงลำดับ Index จากมากไปน้อย เพื่อป้องกัน Index เลื่อนเวลานำการ์ดออกจากมือ
         const sortedIndices = [...indices].sort((a, b) => b - a);
         
