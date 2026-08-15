@@ -932,6 +932,22 @@ class UIManager{
         }
         return text;
     }
+    // คืนค่าชื่อ Class CSS ตามประเภทของการ์ด เพื่อใช้แยกสี Tooltip
+    getCardTypeClass(card){
+
+        switch(card.type){
+            case "Basic":
+                return "card-type-basic";
+            case "Trick":
+                return "card-type-trick";
+            case "DelayedTrick": 
+                return "card-type-deleayed";
+            case "Equipment":
+                return "card-type-equipment";
+            default:
+                return "card-type-default";
+        }
+    }
     // แยกส่วนสร้าง HTML Structure ของ Tooltip
     renderCardTooltipContent(card, tooltip){
         // ล้างข้อมูลเดิม 
@@ -953,15 +969,23 @@ class UIManager{
         // ========================
 
         const info = document.createElement("div");
-
         info.className = "card-tooltip-info";
 
-        info.textContent = 
-            "ประเภท: " + card.type + "\n" + 
-            card.suit + " " + card.number;
-        
+        const typeLine = document.createElement("div");
+        typeLine.className = 
+            "card-tooltip-type " + this.getCardTypeClass(card);
+        typeLine.textContent = "ประเภท: " + card.type;
+        info.appendChild(typeLine);
+
+        const cardNumber = document.createElement("div");
+        cardNumber.textContent = card.suit + " " + card.number;
+        info.appendChild(cardNumber);
+
         if(card.range !== undefined){
-            info.textContent += "\nระยะ: " + card.range;
+            
+            const rangeLine = document.createElement("div");
+            rangeLine.textContent = "ระยะ: " + card.range;
+            info.appendChild(rangeLine);
         }
         tooltip.appendChild(info);
 

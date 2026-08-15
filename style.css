@@ -76,3 +76,26 @@
 
     font-weight:bold;
 }
+.card-tooltip-type{
+    font-weight:bold;
+}
+
+.card-type-basic{
+    color:#2f5d9b;
+}
+
+.card-type-trick{
+    color:#7a3e8e;
+}
+
+.card-type-delayed{
+    color:#b05a22;
+}
+
+.card-type-equipment{
+    color:#5b4636;
+}
+
+.card-type-default{
+    color:#222;
+}
