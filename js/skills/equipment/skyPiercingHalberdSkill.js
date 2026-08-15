@@ -30,7 +30,7 @@ class SkyPiercingHalberdSkill extends TriggerSkill{
             context.skyPiercingHalberdActive = true;
             player.game.log(player.name + " ง้าวฟ้าทะลวงทำงาน");
             
-            context.waitingAdditionalTargetSelection = true;
+            context.waitingAdditionalTargets = true;
             // เปิดสถานะให้ผู้เล่นเลือกเป้าหมายเพิ่มเติม
             if(player.controller instanceof HumanController){
                 player.controller.startAdditionalTargetSelection(
