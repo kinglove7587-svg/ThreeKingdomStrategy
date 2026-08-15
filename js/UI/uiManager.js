@@ -571,10 +571,11 @@ class UIManager{
         if(
             controller.inputState === "waitingAdditionalTargets"
         ){
+            this.endTurnButton.style.display = "none";
             return;
         }
         // ตรวจสอบว่าผู้เล่นปัจจุบันเป็นมนุษย์ (HumanController) หรือไม่
-        if (player.controller instanceof HumanController){
+        if (controller instanceof HumanController){
             // แสดงปุ่ม End Turn บนหน้าเว็บ
             this.endTurnButton.style.display = "inline-block";
         }else{
