@@ -929,5 +929,37 @@ class HumanController extends Controller{
         this.selectedAdditionalTargets = [];
         this.game.ui.render();
     }
+    // เตรียมคิวรายชื่อเป้าหมาย Slash จาก Context และตั้งค่า Index เริ่มต้นที่ 0
+    preparePendingSlashTargets(context){
+        
+        if(!context || !Array.isArray(context.targets)){
+            return false;
+        }
+        
+        this.pendingSlashContext = context;
+        this.pendingSlashTargets = [...context.targets];
+        this.pendingSlashTargetIndex = 0;
+        console.log("เตรียมเป้าหมาย Slash:", 
+            this.pendingSlashTargets.map(target => target.name)
+        );
+        return true;
+    }
+    // ดึงออบเจกต์เป้าหมายปัจจุบันตามตำแหน่ง pendingSlashTargetIndex
+    getPendingSlashTarget(){
+        
+        if(
+            this.pendingSlashTargetIndex < 0 || 
+            this.pendingSlashTargetIndex >= this.pendingSlashTargets.length
+        ){
+            return null;
+        }
+        return this.pendingSlashTargets[this.pendingSlashTargetIndex];
+    }
+    // เลื่อนตำแหน่ง Index ไปยังเป้าหมายถัดไป (+1) แล้วคืนค่าเป้าหมายใหม่
+    advancePendingSlashTarget(){
+
+        this.pendingSlashTargetIndex++;
+        return this.getPendingSlashTarget();
+    }
 
 }
