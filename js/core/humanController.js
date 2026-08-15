@@ -961,5 +961,28 @@ class HumanController extends Controller{
         this.pendingSlashTargetIndex++;
         return this.getPendingSlashTarget();
     }
+    // ประมวลผล Slash สำหรับเป้าหมายปัจจุบันในคิว และเลื่อน Index ถัดไปเมื่อประมวลผลสำเร็จ
+    resolvePendingSlashTargets(){
+        
+        const target = this.getPendingSlashTarget();
+        if(!target){
+            console.log("ไม่มีเป้าหมาย Slash ที่รอประมวลผล");
+            return false;
+        }
+        
+        const card = this.pendingSlashContext?.card;
+        if(!card){
+            console.log("ไม่พบ Slash Card ใน pendingSlashContext");
+            return false;
+        }
+        console.log("กำลังประมวลผล Pending Slash", target.name);
+        
+        const success = card.resolveSlashTarget(this.player, target, this.game);
+        if(success){
+            console.log("ประมวลผล Pending Slash สำเร็จ:", target.name);
+            this.advancePendingSlashTarget();
+        }
+        return success;
+    }
 
 }
