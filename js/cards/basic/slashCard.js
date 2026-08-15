@@ -43,70 +43,69 @@ class SlashCard extends BasicCard{
         if(targetContext.waitingAdditionalTargets){
             return true;
         }
-        // บันทึกสถานะว่าผู้เล่นคนนี้ได้ใช้งานการ์ดโจมตีเรียบร้อยแล้ว (ผ่านเมธอด markSlashUsed)
+        // บันทึกว่าใช้ Slash แล้ว
         player.markSlashUsed();
-        // สร้าง Context สำหรับระบบประมวลผลการหลบ (เก็บผู้โจมตี, เป้าหมาย, และสถานะการหลบ)
+        // ประมวลผลเป้าหมายหลัก
+        return this.resolveSlashTarget(player, target, game);
+    }
+    // ประมวลผลการใช้ Slash ต่อ 1 เป้าหมาย (เช็กหลบ -> emit beforeSlashHit -> ทำความเสียหาย)
+    resolveSlashTarget(player, target, game){
+        
+        game.log("→ เป้าหมาย : " + target.name);
+        // เปิดโอกาสให้ Skill แทรกก่อน Dodge
         const dodgeContext = {
             attacker: player, 
             target: target, 
             dodge: false
         };
-        // แสดงชื่อตามประเภทการ์ด เช่น โจมตี / โจมตีไฟ / โจมตีสายฟ้า
-        game.log("→ เป้าหมาย : " + target.name); 
-        // เปิดโอกาสให้สกิลต่างๆ แทรกการทำงานก่อนตรวจสอบการ์ดหลบ
         game.eventManager.emit("beforeDodge", dodgeContext);
-        // สร้าง Context ของ Slash ก่อนตรวจสอบผลการหลบ
+        // สร้าง Context ของ Slash ก่อนโดนเป้าหมาย
         const slashContext = {
             source: player, 
             target: target, 
             card: this, 
             canceled: false
         };
-        // ตรวจสอบเงื่อนไขการหลบจากสกิลก่อนเป็นอันดับแรก
-        if (dodgeContext.dodge){
-            game.log(target.name + " หลบการโจมตี"); 
-        // หากไม่ได้หลบด้วยสกิล ให้ตรวจสอบการ์ดหลบในมือต่อ
+        // ตรวจสอบการหลบจาก Skill หรือการ์ดหลบ
+        if(dodgeContext.dodge){
+            game.log(target.name + " หลบการโจมตี");
+
         }else if(game.askDodge(target)){
             slashContext.canceled = true;
         }else{
-            console.log(target.name + " ไม่มีการ์ดหลบ "); // แจ้งว่าหลบไม่ได้
+
+            console.log(target.name + " ไม่มีการ์ดหลบ ");
         }
-        // ส่ง Event ก่อนการโจมตีโดนเป้าหมาย
-        game.eventManager.emit("beforeSlashHit", slashContext);
-        // เก็บขั้นตอนหลัง Trigger ไว้เพื่อให้ Slash เดิมกลับมาทำงานต่อได้
+        // Event ก่อนการโจมตีโดน
+        game.eventManager.emit("beforeSlahHit", slashContext);
+        // กำหนดวิธี Resume หลัง Trigger
         slashContext.resume = () => {
-            // หากมีการยกเลิกการโจมตี
-            if (slashContext.canceled){
+            if(slashContext.canceled){
                 game.log(target.name + " ป้องกันการโจมตี");
                 return true;
             }
-            console.log("Slash DamageType =", this.damageType);// Debug
-            // กำหนดค่าความเสียหายพื้นฐานของการ์ดโจมตีเริ่มต้นที่ 1
+            console.log("Slash DamageType =", this.damageType);
+            // Damage เริ่มต้น
             let damageAmount = 1;
-            // ตรวจสอบว่าผู้เล่นกำลังอยู่ในสถานะเมาสุราหรือไม่
+            // ผลของสุรา
             if(player.isDrunk()){
-                // หากเมาสุรา ให้เพิ่มค่าความเสียหายขึ้นอีก 1 (รวมเป็น 2)
                 damageAmount++;
-                // รีเซ็ตสถานะเมาสุราของผู้เล่นกลับเป็น false ทันที เพื่อไม่ให้ผลติดไปในการโจมตีครั้งถัดไป
                 player.setDrunk(false);
                 game.log(player.name + " ได้รับผลของสุรา ความเสียหาย +1");
             }
-            // สร้าง Object ความเสียหาย (Damage) โดยส่งตัวละครผู้โจมตี, เป้าหมาย, จำนวนความเสียหายที่คำนวณได้ และประเภทความเสียหาย
+            // สร้าง Damage และบันทึกการ์ดต้นทาง
             const damage = new Damage(player, target, damageAmount, this.damageType);
-            // บันทึกว่าดาเมจนี้เกิดจากการ์ดใบไหน
             damage.card = this;
-            // ส่งออบเจกต์ความเสียหายให้ Game เป็นศูนย์กลางประมวลผล
+            // ส่ง Damage เข้าระบบ
             game.damage(damage);
             console.log(player.isDrunk());
-
             return true;
         };
-        // ถ้ามี Trigger รอการตัดสินใจ ให้หยุด Slash ไว้ก่อน
+        // ถ้ามี Trigger รอ Resume
         if(slashContext.waitingTrigger){
             return true;
         }
         return slashContext.resume();
-        
     }
     // การ์ดใบนี้จำเป็นต้องเลือกเป้าหมายก่อนใช้งาน (เช่น การ์ด โจมตี / Slash)
     needTarget(){
