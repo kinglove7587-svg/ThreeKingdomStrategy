@@ -927,7 +927,11 @@ class HumanController extends Controller{
         this.additionalTargetContext = null;
         this.additionalTargetLimit = 0;
         this.selectedAdditionalTargets = [];
-        this.game.ui.render();
+        // เริ่มประมวลผลเป้าหมายแรกทันที
+        const success = this.startPendingSlashResolution();
+        if(!success){
+            this.game.ui.render();
+        }
     }
     // เตรียมคิวรายชื่อเป้าหมาย Slash จาก Context และตั้งค่า Index เริ่มต้นที่ 0
     preparePendingSlashTargets(context){
@@ -943,6 +947,20 @@ class HumanController extends Controller{
             this.pendingSlashTargets.map(target => target.name)
         );
         return true;
+    }
+    // เริ่มต้นเตรียมคิวเป้าหมายและยิงประมวลผล Slash เป้าหมายแรกทันที
+    startPendingSlashResolution(){
+
+        if(!this.pendingSlashContext){
+            console.log("ไม่พบ Pending Slash Context");
+            return false;
+        }
+        // เตรียมคิวเป้าหมายทั้งหมดลง pendingSlashTargets
+        const success = this.preparePendingSlashTargets(this.pendingSlashContext);
+        if(!success){
+            return false;
+        }
+        return this.resolvePendingSlashTarget();
     }
     // ดึงออบเจกต์เป้าหมายปัจจุบันตามตำแหน่ง pendingSlashTargetIndex
     getPendingSlashTarget(){
