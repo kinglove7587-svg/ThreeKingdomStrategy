@@ -1054,5 +1054,25 @@ class HumanController extends Controller{
         console.log("Pending Slash ประมวลผลครบทุกเป้าหมาย");
         return true;
     }
+    // จบกระบวนการ Pending Slash และคืน Flow กลับสู่เกมปกติ
+    finishPendingSlashResolution(){
+
+        if(!this.isPendingSlashComplete()){
+            console.log("Pending Slash ยังประมวลผลไม่ครบ");
+            return false;
+        }
+        console.log("จบ Pending Slash ของง้าวฟ้าทะลวง");
+        // ล้าง State ของ Pending Slash
+        this.pendingSlashContext = null;
+        this.pendingSlashTargets = [];
+        this.pendingSlashTargetIndex = 0;
+        // คืน Controller กลับสู่สถานะปกติ
+        this.inputState = "idle";
+        this.selectedCardIndex = -1;
+        this.selectedTarget = null;
+        // แจ้ง Game ว่า Action นี้เสร็จสมบูรณ์
+        this.game.afterHumanAction(true);
+        return true;
+    }
 
 }
