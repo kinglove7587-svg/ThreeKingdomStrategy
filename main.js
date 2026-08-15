@@ -11,13 +11,13 @@ const game = new Game([
         hero: ZhangFei, 
         name: "เตียวหุย", 
         controller: HumanController//AIController//
-    }/*,
+    },
     //
     {
         hero: TestHero, 
-        name: "ทดสอบ", 
+        name: "AI 01", 
         controller: AIController
-    }*/
+    }
 ]);
 
 // NEW: เปิดใช้งานเครื่องมือทดสอบผ่าน Console
