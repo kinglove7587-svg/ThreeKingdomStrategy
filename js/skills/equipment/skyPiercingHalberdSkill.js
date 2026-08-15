@@ -35,6 +35,7 @@ class SkyPiercingHalberdSkill extends TriggerSkill{
             if(player.controller instanceof HumanController){
                 player.controller.startAdditionalTargetSelection(
                     {
+                        card: context.card, 
                         primaryTarget: context.primaryTarget
                     }, 2 
                 );

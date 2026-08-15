@@ -962,17 +962,23 @@ class HumanController extends Controller{
         return this.getPendingSlashTarget();
     }
     // ประมวลผล Slash สำหรับเป้าหมายปัจจุบันในคิว และเลื่อน Index ถัดไปเมื่อประมวลผลสำเร็จ
-    resolvePendingSlashTargets(){
+    resolvePendingSlashTarget(){
         
         const target = this.getPendingSlashTarget();
         if(!target){
             console.log("ไม่มีเป้าหมาย Slash ที่รอประมวลผล");
             return false;
         }
+
+        const context = this.pendingSlashContext;
+        if(!context){
+            console.log("ไม่พบ Pending Slash Context");
+            return false;
+        }
         
-        const card = this.pendingSlashContext?.card;
+        const card = context.card;
         if(!card){
-            console.log("ไม่พบ Slash Card ใน pendingSlashContext");
+            console.log("ไม่พบ Slash Card ใน Pending Slash Context");
             return false;
         }
         console.log("กำลังประมวลผล Pending Slash", target.name);
