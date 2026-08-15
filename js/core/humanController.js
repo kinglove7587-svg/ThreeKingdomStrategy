@@ -28,6 +28,7 @@ class HumanController extends Controller{
         this.selectedAdditionalTargets = [];
         this.additionalTargetLimit = 0;
         this.additionalTargetContext = null;
+        this.pendingSlashContext = null;
     }
     // จัดการเทิร์นของผู้เล่นมนุษย์
     playTurn(){ 
@@ -81,7 +82,7 @@ class HumanController extends Controller{
             this.inputState === "waitingTriggerChoice" || 
             this.inputState === "waitingTriggerCard" || 
             this.inputState === "waitingTriggerTarget" || 
-            this.inputState === "waitingAdditionalTarget"
+            this.inputState === "waitingAdditionalTargets"
         ){
             return;
         }
@@ -895,23 +896,35 @@ class HumanController extends Controller{
     }
     // ยืนยันการเลือกเป้าหมายเพิ่มเติมทั้งหมด แล้วรวบรวมเป้าหมายส่งกลับเข้า Context
     finishAdditionalTargetSelection(){
-
+        // ตรวจสอบสถานะว่ากำลังอยู่ในช่วงรอเลือกเป้าหมายเพิ่มเติมหรือไม่
         if(this.inputState !== "waitingAdditionalTargets"){
             return;
         }
-        this.inputState = "idle";
-
+        // ดึง Context ของง้าวฟ้าทะลวงที่บันทึกไว้
         const context = this.additionalTargetContext;
-        this.additionalTargetContext = null;
-        this.additionalTargetLimit = 0;
-
+        if(!context){
+            return;
+        }
+        // รวบรวมเป้าหมายหลัก (primaryTarget) และเป้าหมายเพิ่มเติม
         const targets = [
-            ...(context ? [context.primaryTarget] : []), 
+            context.primaryTarget, 
             ...this.selectedAdditionalTargets
         ];
-        this.selectedAdditionalTargets = [];
+        // บันทึกเป้าหมายทั้งหมดกลับเข้า Context
         context.targets = targets;
-        this.game.resumeSlashAfterAdditionalTargets(context);
+        // เก็บ Context ไว้รอ Resume Slash ในอนาคต
+        this.pendingSlashContext = context;
+
+        console.log(
+            "ง้าวฟ้าทะลวง เลือกเป้าหมายแล้ว:", 
+            targets.map(target => target.name)
+        );
+        // รีเซ็ต State ตัวควบคุมกลับเป็น idle และล้างตัวแปรเลือกเป้าหมาย
+        this.inputState = "idle";
+        this.additionalTargetContext = null;
+        this.additionalTargetLimit = 0;
+        this.selectedAdditionalTargets = [];
+        this.game.ui.render();
     }
 
 }
