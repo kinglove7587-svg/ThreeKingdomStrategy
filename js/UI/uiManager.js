@@ -566,6 +566,13 @@ class UIManager{
     renderEndTurnButton(){
         // ดึงผู้เล่นปัจจุบันที่กำลังถึงตาเล่น
         const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
+        // ระหว่างเลือกเป้าหมายเพิ่ม ห้ามแสดง End Turn
+        if(
+            controller.inputState === "waitingAdditionalTargets"
+        ){
+            return;
+        }
         // ตรวจสอบว่าผู้เล่นปัจจุบันเป็นมนุษย์ (HumanController) หรือไม่
         if (player.controller instanceof HumanController){
             // แสดงปุ่ม End Turn บนหน้าเว็บ
