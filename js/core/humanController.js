@@ -1024,5 +1024,35 @@ class HumanController extends Controller{
         }
         return success;
     }
+    // ประมวลผล Pending Slash ทุกเป้าหมายต่อเนื่อง โดยหยุดทันทีหากพบ Trigger ที่ต้องรอ Input
+    resolvePendingSlashTargets(){
+
+        if(!this.pendingSlashContext){
+            console.log("ไม่พบ Pending Slash Context");
+            return false;
+        }
+        // วนลูปประมวลผลจนกว่าจะครบทุกเป้าหมายในคิว
+        while(!this.isPendingSlashComplete()){
+
+            const success = this.resolvePendingSlashTarget();
+            if(!success){
+                return false;
+            }
+            // หากมี Trigger รอการตัดสินใจ ให้หยุดวนลูปชั่วคราว
+            if(
+                this.inputState === "waitingTriggerChoice" || 
+                this.inputState === "waitingTriggerCard" || 
+                this.inputState === "waitingTriggerTarget"
+            ){
+                console.log(
+                    "Pending Slash หยุดรอ Trigger ที่ Target Index", 
+                    this.pendingSlashTargetIndex
+                );
+                return true;
+            }
+        }
+        console.log("Pending Slash ประมวลผลครบทุกเป้าหมาย");
+        return true;
+    }
 
 }
