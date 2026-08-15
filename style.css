@@ -99,3 +99,19 @@
 .card-type-default{
     color:#222;
 }
+.player-card{
+    display:inline-block;
+    padding:4px 8px;
+    margin:3px;
+    outline:1px dashed #999;
+    cursor:pointer;
+}
+
+.selected-target{
+    outline:3px solid red;
+    border-radius:6px;
+}
+
+.disabled-target{
+    opacity:0.4;
+}
