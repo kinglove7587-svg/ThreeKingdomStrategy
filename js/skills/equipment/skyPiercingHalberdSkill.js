@@ -23,7 +23,7 @@ class SkyPiercingHalberdSkill extends TriggerSkill{
                 return;
             }
             // การ์ดโจมตีต้องเป็นการ์ดใบสุดท้ายในมือ
-            if(player.hand.cards.length !== 1){
+            if(player.hand.cards.length !== 0){
                 return;
             }
             // เปิดการทำงานของง้าวฟ้าทะลวง
