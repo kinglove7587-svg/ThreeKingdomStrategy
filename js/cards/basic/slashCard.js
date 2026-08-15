@@ -8,8 +8,10 @@ class SlashCard extends BasicCard{
     use(player, game){ 
         // สร้าง Context สำหรับเช็กเงื่อนไขการใช้การ์ดโจมตี
         const context = {
-            player : player, 
-            allow : player.canUseSlash()
+            player: player, 
+            card: this, 
+            allow: player.canUseSlash(), 
+            skyPiercingHalberdActive: false
         };
         // ส่ง Event ก่อนใช้การ์ดโจมตี เปิดโอกาสให้ Trigger Skill
         game.eventManager.emit("beforeUseSlash", context);
