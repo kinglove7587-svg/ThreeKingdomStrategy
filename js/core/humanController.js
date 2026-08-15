@@ -931,7 +931,14 @@ class HumanController extends Controller{
         const success = this.startPendingSlashResolution();
         if(!success){
             this.game.ui.render();
+            return;
         }
+        
+        if(this.isPendingSlashComplete()){
+            this.finishPendingSlashResolution();
+            return;
+        }
+        this.game.ui.render();
     }
     // เตรียมคิวรายชื่อเป้าหมาย Slash จาก Context และตั้งค่า Index เริ่มต้นที่ 0
     preparePendingSlashTargets(context){
@@ -960,7 +967,7 @@ class HumanController extends Controller{
         if(!success){
             return false;
         }
-        return this.resolvePendingSlashTarget();
+        return this.resolvePendingSlashTargets();
     }
     // ดึงออบเจกต์เป้าหมายปัจจุบันตามตำแหน่ง pendingSlashTargetIndex
     getPendingSlashTarget(){
