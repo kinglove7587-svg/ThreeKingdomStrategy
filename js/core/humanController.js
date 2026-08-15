@@ -28,7 +28,10 @@ class HumanController extends Controller{
         this.selectedAdditionalTargets = [];
         this.additionalTargetLimit = 0;
         this.additionalTargetContext = null;
+        // State สำหรับประมวลผล Slash แบบหลายเป้าหมายทีละลำดับ
         this.pendingSlashContext = null;
+        this.pendingSlashTargets = [];
+        this.pendingSlashTargetIndex = 0;
     }
     // จัดการเทิร์นของผู้เล่นมนุษย์
     playTurn(){ 
