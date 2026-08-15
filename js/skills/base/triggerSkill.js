@@ -27,4 +27,12 @@ class TriggerSkill extends Skill{
     resolveChoice(player , game, context, useSkill){
         return false;
     }
+    // คืนค่าจำนวนการ์ดที่ต้องเลือกสำหรับ Trigger Skill (ค่าเริ่มต้นคือ 1 ใบ)
+    triggerCardSelectionCount(player, game){
+        return 1;
+    }
+    // ตรวจสอบว่าสามารถเลือกเป้าหมาย target นี้ได้หรือไม่ (ค่าเริ่มต้นคือ false)
+    canTriggerTarget(player, target, game, context){
+        return false;
+    }
 }
