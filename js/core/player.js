@@ -149,8 +149,6 @@ class Player{
         if (this.weapon){
             // ถอดอาวุธเดิมออกมาก่อน
             const oldWeapon = this.unequipWeapon();
-            // เรียกใช้ความสามารถ/ผลลัพธ์ที่จะเกิดขึ้นเมื่อถอดอาวุธเดิม
-            oldWeapon.onUnequip(this);
             // นำอาวุธเดิมส่งลงกองทิ้งไพ่ (discardPile) ของเกม
             this.game.discardPile.addCard(oldWeapon);
         }
@@ -164,6 +162,10 @@ class Player{
         // เก็บอาวุธเดิมไว้ก่อน
         const weapon = this.weapon;
         // ล้างช่องอาวุธให้เป็น null
+        this.weapon = null;
+        // แจ้งอาวุธว่าถูกถอดออก
+        weapon.onUnequip(this);
+        // ล้างช่องอาวุธ
         this.weapon = null;
         // คืนค่าอาวุธเดิมออกไป เพื่อนำไปจัดการต่อ (เช่น ย้ายลงกองทิ้ง)
         return weapon;
@@ -199,7 +201,6 @@ class Player{
         // หากมีม้าเดิมอยู่ ให้ถอดออกก่อนแล้วนำลงกองทิ้ง
         if(this.mount){
             const oldMount = this.unequipMount();
-            oldMount.onUnequip(this);
             this.game.discardPile.addCard(oldMount);
         }
         // สวมใส่การ์ดม้าใบใหม่
@@ -210,6 +211,8 @@ class Player{
     // ถอดการ์ดม้าที่สวมใส่อยู่ออก
     unequipMount(){
         const mount = this.mount;
+        this.mount = null;
+        mount.onUnequip(this);
         this.mount = null;
         return mount;
     }
