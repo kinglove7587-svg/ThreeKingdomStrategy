@@ -30,6 +30,19 @@ class SlashCard extends BasicCard{
             console.log("ยังไม่ได้เลือกเป้าหมาย");
             return false;
         }
+        // สร้าง Context สำหรับ Event หลังเลือกเป้าหมายหลัก
+        const targetContext = {
+            player: player, 
+            card: this, 
+            primaryTarget: target, 
+            skyPiercingHalberdActive: context.skyPiercingHalberdActive, 
+            waitingAdditionalTargets: false
+        };
+        game.eventManager.emit("beforeSlashTarget", targetContext);
+        // หากกำลังรอเลือกเป้าหมายเพิ่มเติม ให้หยุด Slash ไว้ชั่วคราว
+        if(targetContext.waitingAdditionalTargets){
+            return true;
+        }
         // บันทึกสถานะว่าผู้เล่นคนนี้ได้ใช้งานการ์ดโจมตีเรียบร้อยแล้ว (ผ่านเมธอด markSlashUsed)
         player.markSlashUsed();
         // สร้าง Context สำหรับระบบประมวลผลการหลบ (เก็บผู้โจมตี, เป้าหมาย, และสถานะการหลบ)

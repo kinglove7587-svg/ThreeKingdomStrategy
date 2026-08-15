@@ -38,6 +38,6 @@ class SkyPiercingHalberdSkill extends TriggerSkill{
                 );
             }
         };
-        this.registerListener(eventManager, "beforeUseSlash", callback);
+        this.registerListener(eventManager, "beforeSlashTarget", callback);
     }
 }
