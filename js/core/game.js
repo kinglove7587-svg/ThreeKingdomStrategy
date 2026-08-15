@@ -181,6 +181,10 @@ class Game {
     }
 
     startTurn(){ // เริ่ม ตา
+        // ถ้าเกมจบแล้ว ห้ามเริ่มเทิร์น
+        if(this.isGameOver){
+            return;
+        }
         const player = this.getCurrentPlayer();
         const zhangFei = this.players.find(p => p.name === "เตียวหุย");
         if (zhangFei) {
@@ -311,6 +315,10 @@ class Game {
     }
 
     nextTurn(){ // เปลี่ยน ตา
+        // ถ้าเกมจบแล้ว ห้ามเริ่มเทิร์นใหม่
+        if(this.isGameOver){
+            return;
+        }
         if(this.deck.cards.length === 0){
             this.ui.addLog("ไพ่หมด");
             return;
@@ -359,6 +367,7 @@ class Game {
         //
         this.isGameOver = true;
         this.ui.addLog("Game Over");
+        this.ui.render();
     }
     // ประมวลผลความเสียหายพร้อมส่งแจ้งเตือน Event ก่อนและหลังเกิดความเสียหาย
     damage(damage){
