@@ -979,6 +979,13 @@ class HumanController extends Controller{
         this.pendingSlashTargetIndex++;
         return this.getPendingSlashTarget();
     }
+    // ตรวจสอบว่า Pending Slash ประมวลผลครบทุกเป้าหมายแล้วหรือยัง
+    isPendingSlashComplete(){
+        return (
+            this.pendingSlashTargetIndex >= 
+            this.pendingSlashTargets.length
+        );
+    }
     // ประมวลผล Slash สำหรับเป้าหมายปัจจุบันในคิว และเลื่อน Index ถัดไปเมื่อประมวลผลสำเร็จ
     resolvePendingSlashTarget(){
         
