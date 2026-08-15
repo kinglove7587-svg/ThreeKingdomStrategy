@@ -12,7 +12,42 @@ class UIManager{
         this.controlArea = document.getElementById("control-area");
         // Tooltip สำหรับแสดงรายละเอียดการ์ด
         this.cardTooltip = null;
+        this.tooltipShiftDown = false;
+        this.tooltipHoverCard = null;
+        this.tooltipMouseX = 0;
+        this.tooltipMouseY = 0;
+        
         this.bindEvents();
+        // Event เมื่อกดปุ่ม Shift ค้างไว้เพื่อเปิด Tooltip ทันที
+        document.addEventListener("keydown", (event) => {
+
+            if(event.key !== "Shift"){
+                return;
+            }
+
+            if(this.tooltipShiftDown){
+                return;
+            }
+            this.tooltipShiftDown = true;
+            //
+            if(this.tooltipHoverCard){
+
+                this.showCardTooltip(
+                    this.tooltipHoverCard, 
+                    this.tooltipMouseX, 
+                    this.tooltipMouseY
+                );
+            }
+        });
+        // Event เมื่อปล่อยปุ่ม Shift ให้ซ่อน Tooltip ทันที
+        document.addEventListener("keyup", (event) => {
+
+            if(event.key !== "Shift"){
+                return;
+            }
+            this.tooltipShiftDown = false;
+            this.hideCardTooltip();
+        });
     }
     // แสดงผลสถานะล่าสุดของเกมออกทาง Console
     render(){
@@ -188,26 +223,40 @@ class UIManager{
             const card = player.hand.cards[i];
             // สร้าง Element ปุ่ม <button> ขึ้นมาใหม่ในหน่วยความจำ
             const button = document.createElement("button");
-            // แสดง Custom Tooltip เมื่อเลื่อนเมาส์ชี้ไพ่
+            // ระบบ Shift + Hover Tooltip
             button.onmouseenter = (event) => {
 
-                this.showCardTooltip(card, 
-                    event.clientX, 
-                    event.clientY
-                );
+                this.tooltipHoverCard = card;
+                this.tooltipMouseX = event.clientX;
+                this.tooltipMouseY = event.clientY;
+
+                if(this.tooltipShiftDown){
+
+                    this.showCardTooltip(card, 
+                        event.clientX, 
+                        event.clientY
+                    );
+                }
             };
-            
+
             button.onmousemove = (event) => {
 
-                this.showCardTooltip(card, 
-                    event.clientX, 
-                    event.clientY
-                );
+                this.tooltipMouseX = event.clientX;
+                this.tooltipMouseY = event.clientY;
+
+                if(this.tooltipShiftDown){
+
+                    this.showCardTooltip(card, 
+                        event.clientX, 
+                        event.clientY
+                    );
+                }
             };
 
             button.onmouseleave = () => {
+                this.tooltipHoverCard = null;
                 this.hideCardTooltip();
-            }
+            };
             // กำหนดข้อความบนปุ่มให้แสดงชื่อการ์ด (เช่น "โจมตี", "ยา", "หลบ")
             button.textContent = card.name;
             // แสดงลำดับการ์ดที่เลือก
