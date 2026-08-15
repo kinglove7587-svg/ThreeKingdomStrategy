@@ -24,6 +24,10 @@ class HumanController extends Controller{
         this.triggerContext = null;
         this.selectedTriggerCardIndex = -1;
         this.selectedTriggerCardIndices = [];
+        // Sky Piercing Halberd State
+        this.selectedAdditionalTargets = [];
+        this.additionalTargetLimit = 0;
+        this.additionalTargetContext = null;
     }
     // จัดการเทิร์นของผู้เล่นมนุษย์
     playTurn(){ 
@@ -714,6 +718,15 @@ class HumanController extends Controller{
 
         this.game.ui.render();
     }
+    // เริ่มต้นสถานะรอเลือกเป้าหมายเพิ่มเติม
+    startAdditionalTargetSelection(context, maxTargets){
+
+        this.selectedAdditionalTargets = [];
+        this.additionalTargetLimit = maxTargets;
+        this.additionalTargetContext = context;
+        this.inputState = "waitingAdditionalTargets";
+        this.game.ui.render();
+    }
     // บันทึกการ์ดจากมือที่ถูกเลือกสำหรับ Trigger แล้วเปลี่ยนสถานะไปรอเลือกเป้าหมายที่สอง
     selectTriggerCard(index){
         if(this.inputState !== "waitingTriggerCard"){
@@ -848,4 +861,56 @@ class HumanController extends Controller{
 
         return success;
     }
+    // เลือกผู้เล่นเป้าหมายเพิ่มเติม
+    selectAdditionalTarget(player){
+
+        if(this.inputState !== "waitingAdditionalTargets"){
+            return;
+        }
+        // ห้ามเลือกตัวเอง
+        if(player === this.player){
+            return;
+        }
+        // ห้ามเลือกเป้าหมายหลักซ้ำ
+        if(
+            this.additionalTargetContext && 
+            player === this.additionalTargetContext.primaryTarget
+        ){
+            return;
+        }
+        // ห้ามเลือกเป้าหมายเดิมซ้ำ
+        if(this.selectedAdditionalTargets.includes(player)){
+            return;
+        }
+        // ตรวจจำนวนสูงสุด
+        if(
+            this.selectedAdditionalTargets.length >= 
+            this.additionalTargetLimit
+        ){
+            return;
+        }
+        this.selectedAdditionalTargets.push(player);
+        this.game.ui.render();
+    }
+    // ยืนยันการเลือกเป้าหมายเพิ่มเติมทั้งหมด แล้วรวบรวมเป้าหมายส่งกลับเข้า Context
+    finishAdditionalTargetSelection(){
+
+        if(this.inputState !== "waitingAdditionalTargets"){
+            return;
+        }
+        this.inputState = "idle";
+
+        const context = this.additionalTargetContext;
+        this.additionalTargetContext = null;
+        this.additionalTargetLimit = 0;
+
+        const targets = [
+            ...(context ? [context.primaryTarget] : []), 
+            ...this.selectedAdditionalTargets
+        ];
+        this.selectedAdditionalTargets = [];
+        context.targets = targets;
+        this.game.resumeSlashAfterAdditionalTargets(context);
+    }
+
 }

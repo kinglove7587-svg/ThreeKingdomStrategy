@@ -940,6 +940,11 @@ class UIManager{
             controller.selectTriggerTarget(player);
             return;
         }
+        // เพิ่มการรับ Event เลือกเป้าหมายเพิ่มเติม
+        if(controller.inputState === "waitingAdditionalTargets"){
+            controller.selectAdditionalTarget(player);
+            return;
+        }
         // กรณี Controller กำลังรอเลือกเป้าหมายให้กับ การ์ดปกติ (Card)
         if(controller.inputState === "waitingTarget"){
             controller.selectTarget(player);
