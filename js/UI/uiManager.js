@@ -63,6 +63,7 @@ class UIManager{
         this.renderTriggerCardCancelButton();
         this.renderCardSelectionStatus();
         this.renderTargetSelectionStatus();
+        this.renderAdditionalTargetSelection();
     }
     // วาดการ์ดแสดงตัวละครฝั่งเราและฝั่งศัตรู
     renderPlayers(){
@@ -129,6 +130,13 @@ class UIManager{
             // ตรวจสอบว่าผู้เล่นในรอบลูปนี้ตรงกับเป้าหมายที่เลือกไว้หรือไม่
             if (player === target){
                 // เพิ่ม class "selected-target" เพื่อปรับแต่งรูปแบบ CSS (เช่น ใส่กรอบสีแดง)
+                div.classList.add("selected-target");
+            }
+            // ไฮไลต์เป้าหมายเพิ่มเติม
+            if(
+                controller.inputState === "waitingAdditionalTargets" && 
+                controller.selectedAdditionalTargets.includes(player)
+            ){
                 div.classList.add("selected-target");
             }
             // กำหนด Event เมื่อผู้เล่นคลิกที่กรอบของตัวละคร เพื่อส่งข้อมูลผู้เล่นใบนั้นไปประมวลผล
@@ -1163,6 +1171,30 @@ class UIManager{
             return;
         }
         this.cardTooltip.style.display = "none";
+    }
+    // แสดง UI สถานะเลือกเป้าหมายเพิ่ม
+    renderAdditionalTargetSelection(){
+
+        const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
+
+        if(controller.inputState !== "waitingAdditionalTargets"){
+            return;
+        }
+
+        const status = document.createElement("div");
+        status.textContent = 
+            "ง้าวฟ้าทะลวง | เลือกเป้าหมายเพิ่ม " + 
+            controller.selectedAdditionalTargets.length + " / " + 
+            controller.additionalTargetLimit;
+        this.controlArea.appendChild(status);
+        // ปุ่มเสร็จสิ้น
+        const button = document.createElement("button");
+        button.textContent = "เสร็จสิ้น";
+        button.onclick = () => {
+            controller.finishAdditionalTargetSelection();
+        };
+        this.controlArea.appendChild(button);
     }
     
 }
