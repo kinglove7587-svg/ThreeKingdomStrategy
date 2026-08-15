@@ -1003,6 +1003,15 @@ class HumanController extends Controller{
         
         const success = card.resolveSlashTarget(this.player, target, this.game);
         if(success){
+            // หาก Slash หยุดรอ Trigger ห้ามเลื่อน Index ไปเป้าหมายถัดไป
+            if(
+                this.inputState === "waitingTriggerChoice" || 
+                this.inputState === "waitingTriggerCard" || 
+                this.inputState === "waitingTriggerTarget"
+            ){
+                console.log("Pending Slash หยุดรอ Trigger", target.name);
+                return true;
+            }
             console.log("ประมวลผล Pending Slash สำเร็จ:", target.name);
             this.advancePendingSlashTarget();
         }
