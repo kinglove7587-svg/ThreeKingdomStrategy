@@ -142,8 +142,6 @@ class UIManager{
             }
             // กำหนดข้อความ HTML ภายใน div ให้แสดงชื่อ (ตัวหนา) และ พลังชีวิต HP
             div.innerHTML = 
-                "----------------" + 
-                "</b><br>" + 
                 "<b>" + 
                 player.name + 
                 "</b><br>" + 

@@ -100,9 +100,12 @@
     color:#222;
 }
 .player-card{
-    display:inline-block;
+    display:block;
+    width:max-content;
+
     padding:4px 8px;
-    margin:3px;
+    margin:4px 0;
+
     outline:1px dashed #999;
     cursor:pointer;
 }
