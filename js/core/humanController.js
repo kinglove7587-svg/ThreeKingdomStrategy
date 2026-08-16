@@ -698,6 +698,13 @@ class HumanController extends Controller{
 
         this.game.ui.render();
     }
+    // เริ่มต้นสถานะรอตอบ Reaction สำหรับ Human Controller
+    startReaction(context){
+
+        this.reactionContext = context;
+        this.inputState = "waitingReaction";
+        this.game.ui.render();
+    }
     // รับคำตอบจากปุ่ม UI (ใช้ / ไม่ใช้) แล้วส่งไปประมวลผลที่ Trigger Skill
     resolveTriggerChoice(useSkill){
         if(this.inputState !== "waitingTriggerChoice"){
