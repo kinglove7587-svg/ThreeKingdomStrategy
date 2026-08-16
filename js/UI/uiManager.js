@@ -62,6 +62,7 @@ class UIManager{
         this.renderSkillButtons();
         this.renderPeachButtons();
         this.renderTriggerChoice();
+        this.renderReactionChoice();
         this.renderTriggerCardCancelButton();
         this.renderCardSelectionStatus();
         this.renderTargetSelectionStatus();
