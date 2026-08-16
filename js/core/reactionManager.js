@@ -80,10 +80,12 @@ class ReactionManager{
         // ยังมีผู้เล่นคนถัดไปในรายการ
         if(this.responderIndex < this.responders.length){
 
-            this.currentResponder = this.responders[this.responderIndex];
-            this.currentResponder.controller.startReaction(this.context);
-            console.log("Responder → ผู้ตอบคนถัดไป:", this.currentResponder.name);
-            return this.currentResponder;
+            const nextResponder = this.responders[this.responderIndex];
+            this.currentResponder = nextResponder;
+            console.log("Responder → ผู้ตอบคนถัดไป:", nextResponder);
+            // เรียก startReaction ของ Controller คนถัดไป
+            nextResponder.controller.startReaction(this.context);
+            return nextResponder;
         }
         // ไม่มีผู้เล่นเหลือแล้ว สั่งปิด Reaction Window
         return null;
