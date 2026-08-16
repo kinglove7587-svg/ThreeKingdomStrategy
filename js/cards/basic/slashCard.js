@@ -36,7 +36,8 @@ class SlashCard extends BasicCard{
             card: this, 
             primaryTarget: target, 
             skyPiercingHalberdActive: context.skyPiercingHalberdActive, 
-            waitingAdditionalTargets: false
+            waitingAdditionalTargets: false, 
+            ignoreArmor: false
         };
         game.eventManager.emit("beforeSlashTarget", targetContext);
         // หากกำลังรอเลือกเป้าหมายเพิ่มเติม ให้หยุด Slash ไว้ชั่วคราว
@@ -46,17 +47,18 @@ class SlashCard extends BasicCard{
         // บันทึกว่าใช้ Slash แล้ว
         player.markSlashUsed();
         // ประมวลผลเป้าหมายหลัก
-        return this.resolveSlashTarget(player, target, game);
+        return this.resolveSlashTarget(player, target, game, targetContext);
     }
     // ประมวลผลการใช้ Slash ต่อ 1 เป้าหมาย (เช็กหลบ -> emit beforeSlashHit -> ทำความเสียหาย)
-    resolveSlashTarget(player, target, game){
+    resolveSlashTarget(player, target, game, targetContext = null){
         
         game.log("→ เป้าหมาย : " + target.name);
         // เปิดโอกาสให้ Skill แทรกก่อน Dodge
         const dodgeContext = {
             attacker: player, 
             target: target, 
-            dodge: false
+            dodge: false, 
+            ignoreArmor: targetContext ? targetContext.ignoreArmor : false
         };
         game.eventManager.emit("beforeDodge", dodgeContext);
         // สร้าง Context ของ Slash ก่อนโดนเป้าหมาย
@@ -64,7 +66,8 @@ class SlashCard extends BasicCard{
             source: player, 
             target: target, 
             card: this, 
-            canceled: false
+            canceled: false, 
+            ignoreArmor: targetContext ? targetContext.ignoreArmor : false
         };
         // ตรวจสอบการหลบจาก Skill หรือการ์ดหลบ
         if(dodgeContext.dodge){
@@ -96,6 +99,7 @@ class SlashCard extends BasicCard{
             // สร้าง Damage และบันทึกการ์ดต้นทาง
             const damage = new Damage(player, target, damageAmount, this.damageType);
             damage.card = this;
+            damage.ignoreArmor = slashContext.ignoreArmor;
             // ส่ง Damage เข้าระบบ
             game.damage(damage);
             console.log(player.isDrunk());

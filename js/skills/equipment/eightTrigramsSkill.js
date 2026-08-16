@@ -1,4 +1,4 @@
-class EightTrigramsSkill extends TriggerSkill{
+class EightTrigramsSkill extends ArmorSkill{
     // ตัวสร้างออบเจกต์ EightTrigramsSkill (กำหนดชื่อสกิลเกราะแปดทิศ)
     constructor(){
         super("EightTrigrams"); // ตั้งชื่อสกิลเป็น "EightTrigrams"

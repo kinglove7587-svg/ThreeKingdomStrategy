@@ -1,4 +1,4 @@
-class TengJiaSkill extends TriggerSkill{
+class TengJiaSkill extends ArmorSkill{
     // ตัวสร้างออบเจกต์สกิลประเภท Trigger "เกราะหวาย" (Vine Armor Skill)
     constructor(){
         super("เกราะหวาย");
