@@ -844,6 +844,46 @@ class UIManager{
         };
         this.controlArea.appendChild(noButton);
     }
+    // แสดงปุ่มตัดสินใจ Reaction สำหรับผู้เล่นที่กำลังถูกถาม
+    renderReactionChoice(){
+
+        const reactionManager = this.game.reactionManager;
+
+        if(!reactionManager || !reactionManager.active){
+            return;
+        }
+        // ดึงผู้เล่นที่มีสิทธิ์ตอบ Reaction ในลำดับปัจจุบัน
+        const player = reactionManager.getCurrentResponder();
+
+        if(!player){
+            return;
+        }
+
+        const controller = player.controller;
+
+        if(!(controller instanceof HumanController)){
+            return;
+        }
+
+        if(controller.inputState !== "waitingReaction"){
+            return;
+        }
+        // ปุ่ม "ใช้" Reaction
+        const yesButton = document.createElement("button");
+        yesButton.textContent = "ใช้";
+        yesButton.onclick = () => {
+            controller.resolveReaction(true);
+        };
+        this.controlArea.appendChild(yesButton);
+        // ปุ่ม "ไม่ใช้" Reaction
+        const noButton = document.createElement("button");
+        noButton.textContent = "ไม่ใช้";
+        noButton.onclick = () => {
+            controller.resolveReaction(false);
+        };
+        this.controlArea.appendChild(noButton);
+
+    }
     // แสดงปุ่ม "ไม่ใช้" บน UI ขณะผู้เล่นอยู่ในขั้นตอนเลือกการ์ด Trigger
     renderTriggerCardCancelButton(){
 
