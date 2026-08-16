@@ -351,15 +351,21 @@ class UIManager{
                     selectedOrder = index + 1;
                 }
             }
+            // ตรวจสอบเงื่อนไขการเลือก TriggerCard (เช่น เพลิงผลาญ)
+            let triggerCardAllowed = true;
 
             if(
-                player.controller.inputState === "waitingTriggerCard"
+                player.controller.inputState === "waitingTriggerCard" && 
+                player.controller.selectedTriggerSkill && 
+                typeof player.controller.selectedTriggerSkill.canSelectTriggerCard === "function"
             ){
-                const index = 
-                    player.controller.selectedTriggerCardIndices.indexOf(i);
-
-                if(index !== -1){
-                    selectedOrder = index + 1;
+                triggerCardAllowed = player.controller.selectedTriggerSkill.canSelectTriggerCard(
+                    player, card, player.controller.triggerContext
+                );
+                // ปิดใช้งานปุ่มถ้าเลือกไม่ได้
+                if(!triggerCardAllowed){
+                    button.disabled = true;
+                    button.classList.add("disabled-card");
                 }
             }
 
@@ -372,6 +378,9 @@ class UIManager{
             }
             //  กำหนด Event Handler เมื่อมีการคลิกที่ปุ่มการ์ดบนหน้า HTML
             button.onclick = () => {
+                if(!triggerCardAllowed){
+                    return;
+                }
                 this.hideCardTooltip();
                 // เรียกใช้อีเวนต์คลิกการ์ด โดยส่ง index ของการ์ดใบที่ถูกเลือกไปประมวลผล
                 this.onCardClick(i);

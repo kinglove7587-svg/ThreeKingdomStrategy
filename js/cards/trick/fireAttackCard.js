@@ -66,13 +66,45 @@ class FireAttackCard extends TrickCard{
     resolveChoice(player, game, context, useSkill){
         // หากผู้เล่นเลือกไม่ใช้ (useSkill = false)
         if(!useSkill){
-            game.log(player.name + " ไม่ทิ้งการ์ดเพื่อ เพลิงผลาญ");
+            game.log(player.name + " ไม่ใช้ เพลิงผลาญ");
             return false;
         }
-        // ตรวจสอบว่าไพ่ที่บันทึกไว้ยังอยู่ในมือจริงหรือไม่
-        const index = player.hand.cards.indexOf(context.card);
+        // เปลี่ยนไปเลือกการ์ดที่จะทิ้งจริง
+        player.controller.startTriggerCardSelection(this, context);
+        return true;
+    }
+    // ตรวจสอบว่าการ์ดที่เลือกบนมือผู้เล่น มีดอก (Suit) ตรงกับการ์ดที่ฝ่ายตรงข้ามเปิดเผยหรือไม่
+    canSelectTriggerCard(player, card, context){
+
+        if(!card){
+            return false;
+        }
+
+        if(!context || !context.revealCard){
+            return false;
+        }
+        return card.suit === context.revealCard.suit;
+    }
+    // จัดการเมื่อผู้เล่นยกเลิกการเลือกการ์ด Trigger (เลือกไม่ใช้เพลิงผลาญ)
+    cancelTriggerCardSelection(player, game, context){
+        game.log(player.name + " ไม่ใช้ เพลิงผลาญ");
+        return true;
+    }
+    // ประมวลผลเมื่อเลือกการ์ดสำเร็จ ทิ้งการ์ดลงกอง และทำความเสียหายธาตุไฟ 1 แต้มใส่เป้าหมาย
+    resolveTriggerCards(player, game, context){
+        // ตรวจสอบว่าเลือกการ์ดถูกต้อง 1 ใบหรือไม่
+        if(!context.cards || context.cards.length !== 1){
+            return false;
+        }
+
+        const card = context.cards[0];
+        // ตรวจสอบเงื่อนไขดอกไพ่ซ้ำอีกครั้งเพื่อความปลอดภัย
+        if(!this.canSelectTriggerCard(player, card, context)){
+            return false;
+        }
+        // ค้นหาตำแหน่งการ์ดในมือ
+        const index = player.hand.cards.indexOf(card);
         if(index === -1){
-            game.log(player.name + " ไม่พบการ์ดที่ต้องทิ้ง");
             return false;
         }
         // ดึงการ์ดออกจากมือผู้เล่น
@@ -80,10 +112,10 @@ class FireAttackCard extends TrickCard{
         if(!discardCard){
             return false;
         }
-        // นำการ์ดลงกองทิ้งและลง Log
+        // นำลงกองทิ้งและลง Log
         game.discardPile.addCard(discardCard);
         game.log(player.name + " ทิ้ง " + discardCard.name + " " + discardCard.suit);
-        // สร้างความเสียหายธาตุไฟ (Fire Damage) 1 แต้มใส่เป้าหมาย
+        // สร้างความเสียหายธาตุไฟ 1 แต้มใส่เป้าหมาย
         const damage = new Damage(player, context.target, 1, DamageType.FIRE);
         damage.card = this;
         game.damage(damage);

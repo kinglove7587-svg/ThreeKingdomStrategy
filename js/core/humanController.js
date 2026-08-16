@@ -765,9 +765,16 @@ class HumanController extends Controller{
         if(!skill){
             return;
         }
-        
+        // ดึงการ์ดตาม index
         const card = this.player.hand.cards[index];
         if(!card){
+            return;
+        }
+        // ตรวจสอบเงื่อนไขว่าสกิลอนุญาตให้เลือกการ์ดใบนี้หรือไม่
+        if(
+            typeof skill.canSelectTriggerCard === "function" && 
+            !skill.canSelectTriggerCard(this.player, card, this.triggerContext)
+        ){
             return;
         }
         // ป้องกันเลือกการ์ดใบเดิมซ้า 
