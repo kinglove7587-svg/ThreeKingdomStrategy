@@ -184,6 +184,54 @@ class UIManager{
                         this.hideCardTooltip();
                     };
                 }
+                // ผูก Event Tooltip ให้กับอาวุธที่สวมอยู่
+                const weaponElement = div.querySelector(".equipped-weapon");
+                if(weaponElement && player.weapon){
+
+                    weaponElement.onmouseenter = (event) => {
+                        this.showCardTooltip(
+                            player.weapon, 
+                            event.clientX, 
+                            event.clientY
+                        );
+                    };
+
+                    weaponElement.onmousemove = (event) => {
+                        this.showCardTooltip(
+                            player.weapon, 
+                            event.clientX, 
+                            event.clientY
+                        );
+                    };
+
+                    weaponElement.onmouseleave = () => {
+                        this.hideCardTooltip();
+                    };
+                }
+                // ผูก Event Tooltip ให้กับม้าที่สวมอยู่
+                const mountElement = div.querySelector(".equipped-mount");
+                if(mountElement && player.mount){
+
+                    mountElement.onmouseenter = (event) => {
+                        this.showCardTooltip(
+                            player.mount, 
+                            event.clientX, 
+                            event.clientY
+                        );
+                    };
+
+                    mountElement.onmousemove = (event) => {
+                        this.showCardTooltip(
+                            player.mount, 
+                            event.clientX, 
+                            event.clientY
+                        );
+                    };
+
+                    mountElement.onmouseleave = (event) => {
+                        this.hideCardTooltip();
+                    };
+                }
             // เช็กว่าถ้าเป็นผู้เล่นคนแรก (index 0) ให้ถือว่าเป็นฝั่งเรา
             /*if (i === 0){
                 // นำ element ไปแสดงในโซน playerArea
@@ -614,9 +662,11 @@ class UIManager{
         // ตรวจสอบว่าผู้เล่นมีการสวมใส่อาวุธอยู่หรือไม่
         if(player.weapon){
             text += "<br>⚔️ : " + 
+                "<span class=\"equipped-card equipped-weapon\">" + 
                 player.weapon.name + " " +
                 player.weapon.suit + " " +
-                player.weapon.number;
+                player.weapon.number + 
+                "</span>";
         }else{
             text += "<br>⚔️ : ไม่มี";
         }
@@ -634,9 +684,11 @@ class UIManager{
         //
         if(player.mount){
             text += "<br>🐎 : " + 
+            "<span class=\"equipped-card equipped-mount\">" + 
             player.mount.name + " " + 
             player.mount.suit + " " + 
-            player.mount.number;
+            player.mount.number + 
+            "</span>";
         }else{
             text += "<br>🐎 : ไม่มี";
         }
