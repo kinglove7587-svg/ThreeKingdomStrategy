@@ -818,6 +818,8 @@ class HumanController extends Controller{
             this.selectedTriggerCardIndex = -1;
             this.selectedTriggerCardIndices = [];
             this.inputState = "idle";
+            this.selectedCardIndex = -1;
+            this.selectedTarget = null;
 
             this.game.afterHumanAction(success);
 
