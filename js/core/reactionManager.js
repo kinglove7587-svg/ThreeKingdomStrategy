@@ -43,8 +43,8 @@ class ReactionManager{
 
         this.responderIndex = 0;
         this.currentResponder = this.responders[this.responderIndex];
-        this.currentResponder.controller.startReaction(this.context);
         this.active = true;
+        this.currentResponder.controller.startReaction(this.context);
         console.log(
             "Reaction Window เปิด:", this.context.card 
             ? this.context.card.name : "(ไม่มีการ์ด)"
