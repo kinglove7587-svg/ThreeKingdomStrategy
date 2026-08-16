@@ -938,11 +938,6 @@ class HumanController extends Controller{
             this.game.ui.render();
             return;
         }
-        
-        if(this.isPendingSlashComplete()){
-            this.finishPendingSlashResolution();
-            return;
-        }
         this.game.ui.render();
     }
     // เตรียมคิวรายชื่อเป้าหมาย Slash จาก Context และตั้งค่า Index เริ่มต้นที่ 0
@@ -1064,7 +1059,7 @@ class HumanController extends Controller{
             }
         }
         console.log("Pending Slash ประมวลผลครบทุกเป้าหมาย");
-        return true;
+        return this.finishPendingSlashResolution();
     }
     // ทำงานต่อหลัง Trigger afterDamage สิ้นสุด โดยเลื่อน Index ไปเป้าหมายถัดไป และประมวลผลต่อ
     resumePendingSlashAfterTrigger(){
