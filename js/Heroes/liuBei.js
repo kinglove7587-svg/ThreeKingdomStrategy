@@ -12,6 +12,6 @@ class LiuBei extends Player{ // เล่าปี่
         //this.equipWeapon(new SkyPiercingHalberdCard("♣️", 7));
         //this.hand.addCard(new EightTrigramsArmor("♠️", 1));
         //this.hand.addCard(new SlashCard("♠️", 1));
-        this.hand.addCard(new SkyPiercingHalberdCard("♠️", 1));
+        //this.hand.addCard(new SkyPiercingHalberdCard("♠️", 1));
     }
 }
