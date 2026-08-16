@@ -13,7 +13,8 @@ class SlashCard extends BasicCard{
             allow: player.canUseSlash(), 
             skyPiercingHalberdActive: false, 
             waitingTriggerChoice: false, 
-            damageType: this.damageType
+            damageType: this.damageType, 
+            target: player.controller.getTarget(this)
         };
         // ฟังก์ชัน callback สำหรับรัน Flow การโจมตีต่อหลังผ่าน Trigger
         context.resume = () => {
@@ -24,7 +25,7 @@ class SlashCard extends BasicCard{
                 return false;
             }
             // ดึงเป้าหมายที่เลือก
-            const target = player.controller.getTarget(this);
+            const target = context.target;
             if(target === null){
                 console.log("ยังไม่ได้เลือกเป้าหมาย");
                 return false
