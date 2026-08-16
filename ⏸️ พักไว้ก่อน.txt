@@ -5,7 +5,7 @@
 การ์ด อุบาลที่ยังไม่ได้ทำ
 - NegationCard ยกเลิกอุบาย
 - AllianceCard ต้องมีฝ่ายก่อน
-- RestAndReorganizationCard
+- RestAndReorganizationCard เพิ่มเลือด ซับซ้อน เกิน
 - BorrowedSwordCard
 
 การ์ด weapon ที่ยังไม่ได้ทำ
