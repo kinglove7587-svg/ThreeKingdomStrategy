@@ -90,6 +90,8 @@ class HumanController extends Controller{
         ){
             return;
         }
+        // การ์กจบการทำงานสมบูรณ์แล้ว
+        this.selectedCardIndex = -1;
         // ส่งผลลัพธ์ให้ Game จัดการอัปเดตสถานะและหน้าจอถัดไป
         this.game.afterHumanAction(success);
     }
