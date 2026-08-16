@@ -88,6 +88,32 @@ class ReactionManager{
             );
         });
     }
+    // ดำเนินการใช้การ์ดตอบโต้ของผู้เล่นปัจจุบัน (ถ้ามี)
+    useReactionCard(){
+
+        const reactionCards = this.getAvailableReactionCards();
+
+        if(reactionCards.length === 0){
+            return false;
+        }
+
+        const card = reactionCards[0];
+        const responder = this.getCurrentResponder();
+
+        if(!responder){
+            return false;
+        }
+
+        const cardIndex = responder.hand.cards.indexOf(card);
+
+        if(cardIndex === -1){
+            return false;
+        }
+        // นำการ์ดออกจากมือของผู้ตอบ
+        responder.hand.cards.splice(cardIndex, 1);
+        console.log(responder.name + " ใช้ " + card.name);
+        return card;
+    }
     // เลื่อนไปถาม Reaction ผู้เล่นคนถัดไปในลำดับ
     moveToNextResponder(){
 
