@@ -110,8 +110,20 @@ class ReactionManager{
             return false;
         }
         console.log("Reaction:", responder.name, useReaction ? "ใช้" : "ไม่ใช้");
-        // ขยับไปยังผู้เล่นคนถัดไปในรายการ
-        this.moveToNextResponder();
+        // กรณีเลือก "ไม่ใช้"
+        if(!useReaction){
+            
+            const nextResponder = this.moveToNextResponder();
+            // ยังมีผู้เล่นคนถัดไป ให้รอรับคำตอบต่อ
+            if(nextResponder){
+                return true;
+            }
+            // ไม่มีผู้เล่นเหลือแล้ว สั่งปิด Window และ Resume Effect
+            return this.resumeEffect();
+        }
+        // กรณีเลือก "ใช้" Reaction (เตรียมไว้สำหรับ NegationCard)
+        console.log("DEBUG: Reaction ใช้ แต่ยังไม่มี Effect ของ Reaction");
+        
         return true;
     }
     // ปิด Reaction Window และสั่งรัน Effect
