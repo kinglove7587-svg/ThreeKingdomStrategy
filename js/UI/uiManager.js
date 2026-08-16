@@ -899,12 +899,20 @@ class UIManager{
             controller.selectStealCard(index);
             return;
         }
-        //
+        // หากกดจบเทิร์น (index เป็น -1) ให้ส่งให้ Controller สั่งจบเทิร์น
         if(index === -1){
             controller.selectCard(index);
             return;
         }
-        // 
+        // ถ้ากำลังรอเลือกเป้าหมาย แล้วกดการ์ดใบเดิมซ้ำ -> ส่งให้ Controller ยกเลิกการเลือกทันที (รวมการ์ด Recast)
+        if(
+            controller.inputState === "waitingTarget" && 
+            controller.selectedCardIndex === index
+        ){
+            controller.selectCard(index);
+            return;
+        }
+        // กรณีปกติ: แสดงปุ่ม Action (เล่น / Recast)
         this.renderCardActionButtons(index);
     }
      // จัดการคำสั่งการตัดสินใจใช้/ไม่ใช้การ์ดยา จากปุ่มกดบนหน้าจอ UI
