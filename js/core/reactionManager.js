@@ -144,6 +144,8 @@ class ReactionManager{
             return false;
         }
         // ดำเนินการรัน Effect ต่อ
-        return context.resume();
+        const result = context.resume();
+        this.game.ui.render();
+        return result;
     }
 }
