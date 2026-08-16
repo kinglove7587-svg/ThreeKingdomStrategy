@@ -87,4 +87,15 @@ class ReactionManager{
         this.closeReactionWindow();
         return null;
     }
+    // ล้างข้อมูลและปิด Reaction Window หลังจบการสอบถาม Reaction ทุกคน
+    closeReactionWindow(){
+        console.log("Reaction Window ปิด");
+        // รีเซ็ตสถานะทั้งหมด
+        this.active = false;
+        this.context = null;
+        this.currentResponder = null;
+        this.responders = [];
+        this.responderIndex = -1;
+        return true;
+    }
 }
