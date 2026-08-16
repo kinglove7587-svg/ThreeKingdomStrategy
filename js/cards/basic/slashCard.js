@@ -12,7 +12,8 @@ class SlashCard extends BasicCard{
             card: this, 
             allow: player.canUseSlash(), 
             skyPiercingHalberdActive: false, 
-            waitingTriggerChoice: false
+            waitingTriggerChoice: false, 
+            damageType: this.damageType
         };
         // ฟังก์ชัน callback สำหรับรัน Flow การโจมตีต่อหลังผ่าน Trigger
         context.resume = () => {
@@ -36,7 +37,8 @@ class SlashCard extends BasicCard{
                 primaryTarget: target, 
                 skyPiercingHalberdActive: context.skyPiercingHalberdActive, 
                 waitingAdditionalTargets: false, 
-                ignoreArmor: false
+                ignoreArmor: false, 
+                damageType: context.damageType
             };
             // ส่ง Event ตรวจสอบเป้าหมาย
             game.eventManager.emit("beforeSlashTarget", targetContext);
@@ -78,7 +80,8 @@ class SlashCard extends BasicCard{
             target: target, 
             card: this, 
             canceled: false, 
-            ignoreArmor: targetContext ? targetContext.ignoreArmor : false
+            ignoreArmor: targetContext ? targetContext.ignoreArmor : false, 
+            damageType: targetContext ? targetContext.damageType : this.damageType
         };
         // ตรวจสอบการหลบจาก Skill หรือการ์ดหลบ
         if(dodgeContext.dodge){
@@ -98,7 +101,7 @@ class SlashCard extends BasicCard{
                 game.log(target.name + " ป้องกันการโจมตี");
                 return true;
             }
-            console.log("Slash DamageType =", this.damageType);
+            console.log("Slash DamageType =", slashContext.damageType);
             // Damage เริ่มต้น
             let damageAmount = 1;
             // ผลของสุรา
@@ -108,7 +111,7 @@ class SlashCard extends BasicCard{
                 game.log(player.name + " ได้รับผลของสุรา ความเสียหาย +1");
             }
             // สร้าง Damage และบันทึกการ์ดต้นทาง
-            const damage = new Damage(player, target, damageAmount, this.damageType);
+            const damage = new Damage(player, target, damageAmount, slashContext.damageType);
             damage.card = this;
             damage.ignoreArmor = slashContext.ignoreArmor;
             // ส่ง Damage เข้าระบบ
