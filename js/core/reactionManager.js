@@ -53,4 +53,19 @@ class ReactionManager{
         
         
     }
+    // รับผู้เล่นที่กำลังตอบ Reaction อยู่ในขณะนี้
+    getCurrentResponder(){
+        // ถ้า Reaction Window ไม่ได้เปิดอยู่ ให้คืนค่า null
+        if(!this.active){
+            return null;
+        }
+        // ถ้า index ของผู้ตอบไม่ถูกต้อง ให้คืนค่า null
+        if(
+            this.responderIndex < 0 || 
+            this.responderIndex >= this.responders.length
+        ){
+            return null;
+        }
+        return this.responders[this.responderIndex];
+    }
 }
