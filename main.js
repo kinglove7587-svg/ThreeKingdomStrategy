@@ -10,7 +10,7 @@ const game = new Game([
     {
         hero: ZhangFei, 
         name: "เตียวหุย", 
-        controller: HumanController//AIController//
+        controller: AIController//HumanController//
     },
     //
     {
