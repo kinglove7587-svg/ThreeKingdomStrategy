@@ -705,6 +705,27 @@ class HumanController extends Controller{
         this.inputState = "waitingReaction";
         this.game.ui.render();
     }
+    // รับคำตอบการตัดสินใจตอบโต้ (Reaction) 
+    resolveReaction(useReaction){
+
+        if(this.inputState !== "waitingReaction"){
+            return false;
+        }
+
+        const context = this.reactionContext;
+        if(!context){
+            return false;
+        }
+        console.log(this.player.name, useReaction 
+            ? "ใช้ Reaction" : "ไม่ใช้ Reaction"
+        );
+        // รีเซ็ต State ของ Human Controller กลับเป็นปกติ
+        this.reactionContext = null;
+        this.inputState = "idle";
+        // ส่งคำตอบให้ ReactionManager ประมวลผลต่อ
+        return this.game.reactionManager.resolveReaction(useReaction);
+        
+    }
     // รับคำตอบจากปุ่ม UI (ใช้ / ไม่ใช้) แล้วส่งไปประมวลผลที่ Trigger Skill
     resolveTriggerChoice(useSkill){
         if(this.inputState !== "waitingTriggerChoice"){
