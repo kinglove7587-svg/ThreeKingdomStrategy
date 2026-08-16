@@ -30,6 +30,7 @@ class Deck {
             this.cards.push(new IronChainCard("♣️", 13)); // การ์ดอุบาย โซ่ตรวน
             this.cards.push(new BarbarianCard ("♣️", 7)); // การ์ดอุบาย กองทัพต่างแดน
             this.cards.push(new BumperHarvestCard("♥️", 3)); // การ์ดอุบาย เก็บเกี่ยวอุดมสมบูรณ์
+            this.cards.push(new NegationCard("♣️", 13)); // หักล้าง
             //============================= Weapon ======================================
             this.cards.push(new TrainingSword("♦️", 5)); // เพิ่มอาวุธ กระบี่ฝึกหัด
             this.cards.push(new CrossbowCard("♠️", 2)); // เพิ่มอาวุธ หน้าไม้จูเก่อ
