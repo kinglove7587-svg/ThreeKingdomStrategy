@@ -638,6 +638,7 @@ class UIManager{
             return;
         }
         // --- กรณีการ์ด canRecast() === true ---
+        this.cardActionIndex = index;
         // สร้างปุ่ม "เล่น" สำหรับการสั่งใช้การ์ดปกติ
         const playButton = document.createElement("button");
         playButton.textContent = "เล่น";
