@@ -3,7 +3,7 @@
 *ตัวละครต้องแสดงเพศ
 *ยังไม่ได้ทำ ฝ่ายตัวละคร
 การ์ด อุบาลที่ยังไม่ได้ทำ
-- NegationCard
+- NegationCard ยกเลิกอุบาย
 - AllianceCard
 - RestAndReorganizationCard
 - BorrowedSwordCard
@@ -14,4 +14,3 @@
 - Six Swords of Wu ต้องมีพวกเดียวกัน
 - Yin-Yang Swords ต้องมีตัวละคร หลายเพศ
 
-แก้เพลิงผลาญ ให้ถามก่อนลงการ์ด 
