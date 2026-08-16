@@ -909,6 +909,14 @@ class UIManager{
             controller.selectCard(index);
             return;
         }
+        // ให้ Controller จัดการ Toggle ยกเลิก
+        if(
+            controller.inputState === "waitingTarget" && 
+            controller.selectedCardIndex === index
+        ){
+            controller.selectCard(index);
+            return;
+        }
         // ถ้ากดการ์ดใบเดิมซ้ำขณะเปิดเมนูอยู่ ให้ยกเลิกและปิดเมนู
         if(this.cardActionIndex === index){
             console.log("ยกเลิกเมนูการ์ด:", 
@@ -921,14 +929,6 @@ class UIManager{
             this.game.ui.render();
             return;
 
-        }
-        // ให้ Controller จัดการ Toggle ยกเลิก
-        if(
-            controller.inputState === "waitingTarget" && 
-            controller.selectedCardIndex === index
-        ){
-            controller.selectCard(index);
-            return;
         }
         // เปิดเมนู / เล่นการ์ด
         this.renderCardActionButtons(index);
