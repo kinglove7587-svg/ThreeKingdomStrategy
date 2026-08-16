@@ -709,6 +709,10 @@ class HumanController extends Controller{
         this.selectedTriggerSkill = null;
         this.triggerContext = null;
         this.inputState = "idle";
+        // ถ้า Trigger นี้เกิดหลัง Damage ระหว่าง Pending Slash
+        if(this.pendingSlashTriggerAfterDamage){
+            return this.resumePendingSlashAfterTrigger();
+        }
 
         this.game.afterHumanAction(success);
 
@@ -1061,6 +1065,28 @@ class HumanController extends Controller{
         }
         console.log("Pending Slash ประมวลผลครบทุกเป้าหมาย");
         return true;
+    }
+    // ทำงานต่อหลัง Trigger afterDamage สิ้นสุด โดยเลื่อน Index ไปเป้าหมายถัดไป และประมวลผลต่อ
+    resumePendingSlashAfterTrigger(){
+
+        if(!this.pendingSlashContext){
+            console.log("ไม่พบ Pending Slash Context สำหรับ Resume");
+            return false;
+        }
+        
+        if(!this.pendingSlashTriggerAfterDamage){
+            console.log("Pending Slash Trigger นี้ไม่ใช่ afterDamage");
+            return false;
+        }
+        // Damage ของเป้าหมายปัจจุบันจบไปแล้ว ขยับไปเป้าหมายถัดไป
+        this.pendingSlashTriggerAfterDamage = false;
+        this.advancePendingSlashTarget();
+        // ถ้าไม่มีเป้าหมายเหลือแล้ว ให้จบกระบวนการ
+        if(this.isPendingSlashComplete()){
+            return this.finishPendingSlashResolution();
+        }
+        // ประมวลผล Target ถัดไปต่อ
+        return this.resolvePendingSlashTargets();
     }
     // จบกระบวนการ Pending Slash และคืน Flow กลับสู่เกมปกติ
     finishPendingSlashResolution(){
