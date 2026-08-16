@@ -22,6 +22,11 @@ const game = new Game([
         hero: TestHero, 
         name: "AI 02", 
         controller: AIController
+    },
+    {
+        hero: TestHero, 
+        name: "AI 03", 
+        controller: AIController
     }
 ]);
 

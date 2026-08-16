@@ -888,8 +888,13 @@ class HumanController extends Controller{
         ){
             return;
         }
-        // ห้ามเลือกเป้าหมายเดิมซ้ำ
-        if(this.selectedAdditionalTargets.includes(player)){
+        // ถ้าคลิกเป้าหมายที่เลือกไว้แล้ว ให้ยกเลิกการเลือก (Unselect)
+        const selectedIndex = this.selectedAdditionalTargets.indexOf(player);
+        if(selectedIndex !== -1){
+
+            this.selectedAdditionalTargets.splice(selectedIndex, 1);
+            console.log("ยกเลิกเป้าหมายเพิ่มเติม:", player.name);
+            this.game.ui.render();
             return;
         }
         // ตรวจจำนวนสูงสุด
