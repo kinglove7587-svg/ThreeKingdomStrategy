@@ -68,4 +68,23 @@ class ReactionManager{
         }
         return this.responders[this.responderIndex];
     }
+    // เลื่อนไปถาม Reaction ผู้เล่นคนถัดไปในลำดับ
+    moveToNextResponder(){
+
+        if(!this.active){
+            return null;
+        }
+        
+        this.responderIndex++;
+        // ยังมีผู้เล่นคนถัดไปในรายการ
+        if(this.responderIndex < this.responders.length){
+
+            this.currentResponder = this.responders[this.responderIndex];
+            console.log("Responder → ผู้ตอบคนถัดไป:", this.currentResponder.name);
+            return this.currentResponder;
+        }
+        // ไม่มีผู้เล่นเหลือแล้ว สั่งปิด Reaction Window
+        this.closeReactionWindow();
+        return null;
+    }
 }
