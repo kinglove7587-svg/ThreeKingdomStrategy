@@ -39,6 +39,11 @@ class TwoBladedTridentSkill extends TriggerSkill{
             game.log(player.name + " ไม่ใช้ ง้าวสามคม");
             return false;
         }
+        // ถ้ามือไม่มีการ์ด จะไม่สามารถใช้สกิลได้
+        if(player.hand.cards.length === 0){
+            game.log(player.name + " ไม่มีการ์ดในมือ ไม่สามารถใช้ง้าวสามคม");
+            return false;
+        }
         
         player.controller.startTriggerCardSelection(this, context);
 
