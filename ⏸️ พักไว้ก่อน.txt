@@ -4,7 +4,7 @@
 *ยังไม่ได้ทำ ฝ่ายตัวละคร
 การ์ด อุบาลที่ยังไม่ได้ทำ
 - NegationCard ยกเลิกอุบาย
-- AllianceCard
+- AllianceCard ต้องมีฝ่ายก่อน
 - RestAndReorganizationCard
 - BorrowedSwordCard
 

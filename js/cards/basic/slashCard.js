@@ -4,7 +4,7 @@ class SlashCard extends BasicCard{
         super("Basic", "โจมตี", suit, number); 
         this.damageType = damageType; // กำหนดประเภทความเสียหายของการ์ดโจมตี
     }
-    // Override ความสามารถของการ์ด
+    // ประมวลผลการใช้การ์ดโจมตี (SlashCard)
     use(player, game){ 
         // สร้าง Context สำหรับเช็กเงื่อนไขการใช้การ์ดโจมตี
         const context = {
@@ -14,45 +14,51 @@ class SlashCard extends BasicCard{
             skyPiercingHalberdActive: false, 
             waitingTriggerChoice: false
         };
+        // ฟังก์ชัน callback สำหรับรัน Flow การโจมตีต่อหลังผ่าน Trigger
+        context.resume = () => {
+            console.log(player.name + " Resume Slash หลัง Trigger");
+            // ตรวจสอบสิทธิ์การใช้ Slash
+            if(!context.allow){
+                game.log(player.name + " ใช้โจมตีไปแล้ว ");
+                return false;
+            }
+            // ดึงเป้าหมายที่เลือก
+            const target = player.controller.getTarget(this);
+            if(target === null){
+                console.log("ยังไม่ได้เลือกเป้าหมาย");
+                return false
+                
+            }
+            // สร้าง Context หลังเลือกเป้าหมาย
+            const targetContext = {
+                player: player, 
+                card: this, 
+                primaryTarget: target, 
+                skyPiercingHalberdActive: context.skyPiercingHalberdActive, 
+                waitingAdditionalTargets: false, 
+                ignoreArmor: false
+            };
+            // ส่ง Event ตรวจสอบเป้าหมาย
+            game.eventManager.emit("beforeSlashTarget", targetContext);
+            // ถ้ามีการรอเลือกเป้าหมายเพิ่ม
+            if(targetContext.waitingAdditionalTargets){
+                return true;
+            }
+            // ทำเครื่องหมายว่าใช้ Slash ไปแล้วในรอบนี้
+            player.markSlashUsed();
+            // ประมวลผลเป้าหมายหลัก
+            return this.resolveSlashTarget(player, target, game, targetContext);
+            
+        };
         // ส่ง Event ก่อนใช้การ์ดโจมตี เปิดโอกาสให้ Trigger Skill
         game.eventManager.emit("beforeUseSlash", context);
-
+        console.log("allow =", context.allow);
+        // ถ้า Trigger ขอหยุดรอการตัดสินใจของผู้เล่น (Trigger Choice) ให้หยุดรอ
         if(context.waitingTriggerChoice){
             return true;
         }
-        console.log("allow =", context.allow);
-        // ตรวจสอบสิทธิ์การใช้งานจาก context.allow
-        if (!context.allow){
-            // หากใช้ไปแล้ว ให้แสดงข้อความแจ้งเตือนใน Console
-            game.log(player.name + " ใช้โจมตีไปแล้ว ");
-            // ไม่อนุญาตให้ใช้งานการ์ด ส่งค่า false กลับออกไป
-            return false;
-        }
-        // ดึงผู้เล่นเป้าหมายจาก Controller ของผู้เล่นผ่านเมธอด getTarget() แบบ Polymorphism
-        const target = player.controller.getTarget(this);
-        // ถ้ายังไม่ได้เลือกเป้าหมาย ให้แสดงข้อความแจ้งเตือนและยกเลิกการใช้การ์ด
-        if (target === null){
-            console.log("ยังไม่ได้เลือกเป้าหมาย");
-            return false;
-        }
-        // สร้าง Context สำหรับ Event หลังเลือกเป้าหมายหลัก
-        const targetContext = {
-            player: player, 
-            card: this, 
-            primaryTarget: target, 
-            skyPiercingHalberdActive: context.skyPiercingHalberdActive, 
-            waitingAdditionalTargets: false, 
-            ignoreArmor: false
-        };
-        game.eventManager.emit("beforeSlashTarget", targetContext);
-        // หากกำลังรอเลือกเป้าหมายเพิ่มเติม ให้หยุด Slash ไว้ชั่วคราว
-        if(targetContext.waitingAdditionalTargets){
-            return true;
-        }
-        // บันทึกว่าใช้ Slash แล้ว
-        player.markSlashUsed();
-        // ประมวลผลเป้าหมายหลัก
-        return this.resolveSlashTarget(player, target, game, targetContext);
+        // ดำเนินการ Slash ต่อทันที
+        return context.resume();
     }
     // ประมวลผลการใช้ Slash ต่อ 1 เป้าหมาย (เช็กหลบ -> emit beforeSlashHit -> ทำความเสียหาย)
     resolveSlashTarget(player, target, game, targetContext = null){
