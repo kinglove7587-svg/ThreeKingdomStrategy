@@ -33,6 +33,8 @@ class HumanController extends Controller{
         this.pendingSlashTargets = [];
         this.pendingSlashTargetIndex = 0;
         this.pendingSlashTriggerAfterDamage = false;
+        // State สำหรับเก็บ Context ของ Reaction
+        this.reactionContext = null;
     }
     // จัดการเทิร์นของผู้เล่นมนุษย์
     playTurn(){ 
