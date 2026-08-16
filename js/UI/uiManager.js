@@ -161,6 +161,29 @@ class UIManager{
                 player.maxHp + 
                 status + 
                 this.renderEquipment(player);
+                // ผูก Event Tooltip ให้กับเกราะที่สวมอยู่
+                const armorElement = div.querySelector(".equipped-armor");
+                if(armorElement && player.armor){
+                    armorElement.onmouseenter = (event) => {
+                        this.showCardTooltip(
+                            player.armor, 
+                            event.clientX, 
+                            event.clientY
+                        );
+                    };
+
+                    armorElement.onmousemove = (event) => {
+                        this.showCardTooltip(
+                            player.armor, 
+                            event.clientX, 
+                            event.clientY
+                        );
+                    };
+
+                    armorElement.onmouseleave = () => {
+                        this.hideCardTooltip();
+                    };
+                }
             // เช็กว่าถ้าเป็นผู้เล่นคนแรก (index 0) ให้ถือว่าเป็นฝั่งเรา
             /*if (i === 0){
                 // นำ element ไปแสดงในโซน playerArea
@@ -600,9 +623,11 @@ class UIManager{
         // ตรวจสอบว่าผู้เล่นมีการสวมใส่เกราะอยู่หรือไม่
         if(player.armor){
             text += "<br>🛡️ : " + 
+                "<span class=\"equipped-card equipped-armor\">" + 
                 player.armor.name + " " + 
                 player.armor.suit + " " + 
-                player.armor.number;
+                player.armor.number + 
+                "</span>";
         }else{
             text += "<br>🛡️ : ไม่มี";
         }
