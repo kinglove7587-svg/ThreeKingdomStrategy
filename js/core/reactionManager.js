@@ -69,6 +69,25 @@ class ReactionManager{
         }
         return this.responders[this.responderIndex];
     }
+    // ค้นหาและดึงรายการการ์ดบนมือของผู้ตอบปัจจุบัน ที่สามารถใช้ตอบโต้ Context นี้ได้
+    getAvailableReactionCards(){
+
+        const responder = this.getCurrentResponder();
+
+        if(!responder){
+            return [];
+        }
+
+        if(!responder.hand || !responder.hand.cards){
+            return [];
+        }
+        return responder.hand.cards.filter(card => {
+            return(
+                typeof card.canReact === "function" && 
+                card.canReact(this.context)
+            );
+        });
+    }
     // เลื่อนไปถาม Reaction ผู้เล่นคนถัดไปในลำดับ
     moveToNextResponder(){
 
