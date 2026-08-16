@@ -95,6 +95,22 @@ class HumanController extends Controller{
     }
     // เมธอด API ที่เปิดไว้ให้ส่วน UI (เช่น HTML/DOM Event) เรียกใช้งานเพื่ออัปเดตการ์ดที่เลือก
     selectCard(index){
+        // หากกำลังรอเลือกเป้าหมายอยู่ แล้วผู้เล่นกดเลือกการ์ดใบเดิมซ้ำ -> ให้ยกเลิกการเลือกการ์ด
+        if(
+            this.inputState === "waitingTarget" && 
+            this.selectedCardIndex === index
+        ){
+            
+            const card = this.getSelectedCard();
+            console.log("ยกเลิกการเลือกการ์ด", card ? card.name : "(ไม่พบการ์ด)");
+
+            this.selectedCardIndex = -1;
+            this.selectedTarget = null;
+            this.inputState = "idle";
+            this.game.ui.render();
+            return;
+            
+        }
         // บันทึก index การ์ดที่เลือกลงใน Controller
         this.selectedCardIndex = index;
         // ถ้าผู้เล่นกดจบเทิร์น (index เป็น -1) ให้สั่งจบเทิร์นทันที
