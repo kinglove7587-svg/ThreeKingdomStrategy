@@ -1,10 +1,15 @@
 ⏸️ พักไว้ก่อน
+
+*ตัวละครต้องแสดงเพศ
+*ยังไม่ได้ทำ ฝ่ายตัวละคร
+การ์ด อุบาลที่ยังไม่ได้ทำ
 - NegationCard
 - AllianceCard
 - RestAndReorganizationCard
 - BorrowedSwordCard
 
-
+การ์ด weapon ที่ยังไม่ได้ทำ
 - Green Dragon Blade ทำได้
 - Frost Sword พอได้
 - Six Swords of Wu ต้องมีพวกเดียวกัน
+- Yin-Yang Swords ต้องมีตัวละคร หลายเพศ
