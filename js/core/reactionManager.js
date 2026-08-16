@@ -98,4 +98,20 @@ class ReactionManager{
         this.responderIndex = -1;
         return true;
     }
+    // ประมวลผลคำตอบ Reaction จากผู้เล่นปัจจุบัน
+    resolveReaction(useReaction){
+
+        if(!this.active){
+            return false;
+        }
+        // ตรวจสอบว่ามีผู้เล่นที่กำลังตอบอยู่หรือไม่
+        const responder = this.getCurrentResponder();
+        if(!responder){
+            return false;
+        }
+        console.log("Reaction:", responder.name, useReaction ? "ใช้" : "ไม่ใช้");
+        // ขยับไปยังผู้เล่นคนถัดไปในรายการ
+        this.moveToNextResponder();
+        return true;
+    }
 }
