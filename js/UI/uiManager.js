@@ -633,6 +633,7 @@ class UIManager{
         this.controlArea.innerHTML = "";
         // ถ้าการ์ดใบนี้ Recast ไม่ได้ ให้สั่งเลือกการ์ดเล่นแบบเดิมทันที
         if(!card.canRecast()){
+            this.cardActionIndex = -1;
             controller.selectCard(index);
             return;
         }
@@ -921,8 +922,15 @@ class UIManager{
             return;
 
         }
-        // เปิดเมนูของการ์ดใบใหม่
-        this.cardActionIndex = index;
+        // ให้ Controller จัดการ Toggle ยกเลิก
+        if(
+            controller.inputState === "waitingTarget" && 
+            controller.selectedCardIndex === index
+        ){
+            controller.selectCard(index);
+            return;
+        }
+        // เปิดเมนู / เล่นการ์ด
         this.renderCardActionButtons(index);
     }
      // จัดการคำสั่งการตัดสินใจใช้/ไม่ใช้การ์ดยา จากปุ่มกดบนหน้าจอ UI
