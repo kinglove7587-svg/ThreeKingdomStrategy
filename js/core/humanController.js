@@ -727,6 +727,8 @@ class HumanController extends Controller{
         this.selectedTriggerSkill = null;
         this.triggerContext = null;
         this.inputState = "idle";
+        this.selectedCardIndex = -1;
+        this.selectedTarget = null;
         // ถ้า Trigger นี้เกิดหลัง Damage ระหว่าง Pending Slash
         if(this.pendingSlashTriggerAfterDamage){
             return this.resumePendingSlashAfterTrigger();
