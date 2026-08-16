@@ -49,6 +49,10 @@ class Controller{
     isWaitingPeach(){
         return false;
     }
+    // เริ่มต้น Reaction สำหรับ Controller
+    startReaction(context){
+        return false;
+    }
     // กำหนดสถานะพื้นฐานเป็น waitingSelection
     startSelection(){
         this.inputState = "waitingSelection";
