@@ -170,8 +170,15 @@ class ReactionManager{
             // ไม่มีผู้เล่นเหลือแล้ว สั่งปิด Window และ Resume Effect
             return this.resumeEffect();
         }
-        // กรณีเลือก "ใช้" Reaction (เตรียมไว้สำหรับ NegationCard)
-        console.log("DEBUG: Reaction ใช้ แต่ยังไม่มี Effect ของ Reaction");
+        // กรณีเลือก "ใช้" Reaction
+        const card = this.useReactionCard();
+
+        if(!card){
+            return false;
+        }
+        // ปิด Reaction Window และ Render หน้าจอใหม่
+        this.closeReactionWindow();
+        this.game.ui.render();
         
         return true;
     }
