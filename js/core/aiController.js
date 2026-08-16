@@ -75,6 +75,13 @@ class AIController extends Controller{
     isHuman(){
         return false;
     }
+    // จัดการการตัดสินใจ Reaction ของ AI Controller
+    startReaction(context){
+        console.log(this.player.name + " กำลังตัดสินใจ Reaction");
+        // เบื้องต้นส่ง false เพื่อข้ามสิทธิ์การใช้ Reaction
+        this.game.reactionManager.resolveReaction(false);
+        return true;
+    }
     // สอบถามและค้นหาตำแหน่งการ์ด "หลบ" ในมือของผู้เล่น
     askDodge(player){
         // คืนค่าตำแหน่งดรรชนี (Index) ของการ์ด "หลบ" ที่พบในมือ (หากไม่พบจะคืนค่า -1)
