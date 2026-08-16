@@ -650,6 +650,11 @@ class UIManager{
         // ดึงผู้เล่นปัจจุบันที่กำลังถึงตาเล่น
         const player = this.game.getCurrentPlayer();
         const controller = player.controller;
+        // ระหว่าง Reaction ห้ามกด End Turn (ซ่อนปุ่มทันที)
+        if(this.game.reactionManager && this.game.reactionManager.active){
+            this.endTurnButton.style.display = "none";
+            return;
+        }
         // ระหว่างเลือกเป้าหมายเพิ่ม ห้ามแสดง End Turn
         if(
             controller.inputState === "waitingAdditionalTargets"
