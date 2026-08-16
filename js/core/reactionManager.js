@@ -81,6 +81,7 @@ class ReactionManager{
         if(this.responderIndex < this.responders.length){
 
             this.currentResponder = this.responders[this.responderIndex];
+            this.currentResponder.controller.startReaction(this.context);
             console.log("Responder → ผู้ตอบคนถัดไป:", this.currentResponder.name);
             return this.currentResponder;
         }
