@@ -10,6 +10,8 @@ class UIManager{
         this.logArea = document.getElementById("log-area");
         this.endTurnButton = document.getElementById("end-turn");
         this.controlArea = document.getElementById("control-area");
+        // Index ของการ์ดที่กำลังเปิดเมนู "เล่น / Recast"
+        this.cardActionIndex = -1;
         // Tooltip สำหรับแสดงรายละเอียดการ์ด
         this.cardTooltip = null;
         this.tooltipShiftDown = false;
@@ -639,6 +641,7 @@ class UIManager{
         const playButton = document.createElement("button");
         playButton.textContent = "เล่น";
         playButton.onclick = () => {
+            this.cardActionIndex = -1;
             controller.selectCard(index);
         };
         this.controlArea.appendChild(playButton);
@@ -646,6 +649,7 @@ class UIManager{
         const recastButton = document.createElement("button");
         recastButton.textContent = "Recast";
         recastButton.onclick = () => {
+            this.cardActionIndex = -1;
             controller.recastCard(index);
         };
         this.controlArea.appendChild(recastButton);
@@ -904,15 +908,21 @@ class UIManager{
             controller.selectCard(index);
             return;
         }
-        // ถ้ากำลังรอเลือกเป้าหมาย แล้วกดการ์ดใบเดิมซ้ำ -> ส่งให้ Controller ยกเลิกการเลือกทันที (รวมการ์ด Recast)
-        if(
-            controller.inputState === "waitingTarget" && 
-            controller.selectedCardIndex === index
-        ){
-            controller.selectCard(index);
+        // ถ้ากดการ์ดใบเดิมซ้ำขณะเปิดเมนูอยู่ ให้ยกเลิกและปิดเมนู
+        if(this.cardActionIndex === index){
+            console.log("ยกเลิกเมนูการ์ด:", 
+                player.hand.cards[index] 
+                ? player.hand.cards[index].name : "(ไม่พบการ์ด)"
+            );
+
+            this.cardActionIndex = -1;
+            this.controlArea.innerHTML = "";
+            this.game.ui.render();
             return;
+
         }
-        // กรณีปกติ: แสดงปุ่ม Action (เล่น / Recast)
+        // เปิดเมนูของการ์ดใบใหม่
+        this.cardActionIndex = index;
         this.renderCardActionButtons(index);
     }
      // จัดการคำสั่งการตัดสินใจใช้/ไม่ใช้การ์ดยา จากปุ่มกดบนหน้าจอ UI
