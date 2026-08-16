@@ -48,7 +48,7 @@ class ReactionManager{
             "Reaction Window เปิด:", this.context.card 
             ? this.context.card.name : "(ไม่มีการ์ด)"
         );
-        console.log("ผู้ตอบครแรก:", this.currentResponder.name);
+        console.log("ผู้ตอบคนแรก:", this.currentResponder.name);
         return true;
         
         
@@ -113,5 +113,22 @@ class ReactionManager{
         // ขยับไปยังผู้เล่นคนถัดไปในรายการ
         this.moveToNextResponder();
         return true;
+    }
+    // ปิด Reaction Window และสั่งรัน Effect
+    resumeEffect(){
+
+        if(!this.context){
+            return false;
+        }
+        // ตรวจสอบว่ามีฟังก์ชัน resume ให้รันต่อหรือไม่
+        const context = this.context;
+        // สั่งปิด Reaction Window เพื่อรีเซ็ตสถานะ
+        this.closeReactionWindow();
+        // ตรวจสอบว่ามีฟังก์ชัน resume ให้รันต่อหรือไม่
+        if(typeof context.resume !== "function"){
+            return false;
+        }
+        // ดำเนินการรัน Effect ต่อ
+        return context.resume();
     }
 }
