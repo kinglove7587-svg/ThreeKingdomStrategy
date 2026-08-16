@@ -11,10 +11,15 @@ class SlashCard extends BasicCard{
             player: player, 
             card: this, 
             allow: player.canUseSlash(), 
-            skyPiercingHalberdActive: false
+            skyPiercingHalberdActive: false, 
+            waitingTriggerChoice: false
         };
         // ส่ง Event ก่อนใช้การ์ดโจมตี เปิดโอกาสให้ Trigger Skill
         game.eventManager.emit("beforeUseSlash", context);
+
+        if(context.waitingTriggerChoice){
+            return true;
+        }
         console.log("allow =", context.allow);
         // ตรวจสอบสิทธิ์การใช้งานจาก context.allow
         if (!context.allow){
