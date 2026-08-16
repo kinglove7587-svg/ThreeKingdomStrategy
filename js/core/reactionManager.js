@@ -84,7 +84,6 @@ class ReactionManager{
             return this.currentResponder;
         }
         // ไม่มีผู้เล่นเหลือแล้ว สั่งปิด Reaction Window
-        this.closeReactionWindow();
         return null;
     }
     // ล้างข้อมูลและปิด Reaction Window หลังจบการสอบถาม Reaction ทุกคน
