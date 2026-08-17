@@ -6,7 +6,6 @@ class ReactionManager{
         this.context = null;
         this.currentResponder = null;
         this.active = false;
-        this.openedForAction = false;
     }
     // เปิด Reaction Window โดยถามเฉพาะผู้เล่นที่เป็น Target ของ Effect
     openReactionWindow(context){
@@ -31,12 +30,19 @@ class ReactionManager{
         this.context = context;
         this.currentResponder = target;
         this.active = true;
-        this.openedForAction = true;
 
         // NEW: ตรวจเฉพาะ Target ว่ามี Reaction Card ที่ใช้ได้หรือไม่
         if(this.getAvailableReactionCards().length === 0){
             this.closeReactionWindow();
             return false;
+        }
+
+        // NEW: บันทึกว่า Source Action นี้ต้องรอผลจาก Reaction
+        if(
+            this.context.source &&
+            this.context.source.controller
+        ){
+            this.context.source.controller.reactionContext = this.context;
         }
 
         console.log(
@@ -45,13 +51,6 @@ class ReactionManager{
         );
         console.log("ผู้ตอบ:", this.currentResponder.name);
         this.currentResponder.controller.startReaction(this.context);
-        //
-        if(
-            this.context.source && 
-            this.context.source.controller
-        ){
-            this.context.source.controller.reactionContext = this.context;
-        }
 
         return true;
     }
@@ -119,8 +118,25 @@ class ReactionManager{
         this.active = false;
         this.context = null;
         this.currentResponder = null;
-        this.openedForAction = false;
         return true;
+    }
+    // NEW: แจ้ง Source Human ว่า Action ที่ผ่าน Reaction จบแล้ว
+    finishSourceHumanAction(source, result){
+        if(
+            !source ||
+            !source.controller ||
+            !source.controller.isHuman()
+        ){
+            return;
+        }
+
+        // NEW: ต้องรอให้ Call Stack ของการ์ดปัจจุบันจบก่อน
+        // เพื่อป้องกัน afterHumanAction() ถูกเรียกซ้ำใน finishTurn()
+        setTimeout(() => {
+            // NEW: ล้าง Reaction Context ก่อนเริ่ม Action ถัดไป
+            source.controller.reactionContext = null;
+            this.game.afterHumanAction(result);
+        }, 0);
     }
     // ประมวลผลคำตอบ Reaction จาก Target
     resolveReaction(useReaction){
@@ -149,19 +165,16 @@ class ReactionManager{
         if(!card){
             return false;
         }
+
         // เก็บ Source ไว้ก่อนปิด Reaction Window
         const source = this.context.source;
+
         // ปิด Reaction Window และ Render หน้าจอใหม่
         this.closeReactionWindow();
         this.game.ui.render();
-        // หลัง Target ใช้ Reaction สำเร็จ จึงค่อยจบ Human Action
-        if(
-            source && 
-            source.controller && 
-            source.controller.isHuman()
-        ){
-            this.game.afterHumanAction(true);
-        }
+
+        // NEW: จบ Human Action หลัง Call Stack ปัจจุบันจบ
+        this.finishSourceHumanAction(source, true);
 
         return true;
     }
@@ -176,23 +189,22 @@ class ReactionManager{
         const context = this.context;
         // เก็บ Source ไว้ก่อนปิด Reaction Window
         const source = context.source;
+
         // สั่งปิด Reaction Window เพื่อรีเซ็ตสถานะ
         this.closeReactionWindow();
+
         // ตรวจสอบว่ามีฟังก์ชัน resume ให้รันต่อหรือไม่
         if(typeof context.resume !== "function"){
             return false;
         }
+
         // ดำเนินการรัน Effect ต่อ
         const result = context.resume();
         this.game.ui.render();
 
-        if(
-            source && 
-            source.controller && 
-            source.controller.isHuman()
-        ){
-            this.game.afterHumanAction(result);
-        }
+        // NEW: จบ Human Action หลัง Effect ทำงานเสร็จ
+        this.finishSourceHumanAction(source, result);
+
         return result;
     }
 }
