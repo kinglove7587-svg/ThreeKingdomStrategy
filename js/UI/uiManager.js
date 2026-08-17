@@ -124,6 +124,12 @@ class UIManager{
                     div.classList.add("disabled-target");
                 }
             }
+            // Borrowed Sword - ล็อกเป้าหมายที่ผู้ถูกบังคับโจมตีไม่ได้
+            if(controller.inputState === "waitingBorrowedSwordTarget"){
+                if(!controller.canSelectBorrowedSwordTarget(player)){
+                    div.classList.add("disabled-target");
+                }
+            }
             // ประกาศตัวแปรรองรับวัตถุเป้าหมายเริ่มต้นเป็น null
             let target = null;
             // ตรวจสอบว่า Controller มีเมธอด getSelectedTarget หรือไม่
@@ -1019,6 +1025,10 @@ class UIManager{
             }else{
                 message = "เลือกเป้าหมายสำหรับ " + skill.name;
             }
+        }
+        // Borrowed Sword - แจ้งให้ผู้เล่นเลือกเป้าหมายที่ 2
+        if(controller.inputState === "waitingBorrowedSwordTarget"){
+            message = "เลือกเป้าหมายที่จะโจมตี";
         }
 
         if(!message){
