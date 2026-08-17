@@ -9,7 +9,7 @@ class LiuBei extends Player{ // เล่าปี่
         // เรียกใช้ addSkill() เพื่อเพิ่มสกิลและลงทะเบียน Event สกิลจิตเมตตา (Rende) อัตโนมัติ
         this.addSkill(new Rende());
         //this.setChained(true);
-        //this.equipWeapon(new TwoBladedTridentCard("♣️", 7));
+        this.equipWeapon(new TwoBladedTridentCard("♣️", 7));
         //this.hand.addCard(new EightTrigramsArmor("♠️", 1));
         this.hand.addCard(new BorrowedSwordCard("♠️", 1));
         //this.hand.addCard(new SlashCard("♠️", 1));

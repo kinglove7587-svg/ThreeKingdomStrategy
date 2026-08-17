@@ -1027,6 +1027,19 @@ class HumanController extends Controller{
         this.inputState = "waitingBorrowedSwordTarget";
         this.game.ui.render();
     }
+    // ตรวจสอบว่า Target สามารถเป็นเป้าหมายที่ 2
+    canSelectBorrowedSwordTarget(player){
+
+        if(this.inputState !== "waitingBorrowedSwordTarget"){
+            return false;
+        }
+
+        const context = this.borrowedSwordContext;
+        if(!context || !context.attacker || !context.slashCard){
+            return false;
+        }
+        return context.slashCard.card.canTarget(context.attacker, player);
+    }
     // รับการเลือกเป้าหมายที่ 2 และตรวจสอบระยะทำการโจมตีของผู้ถูกบังคับ
     selectBorrowedSwordTarget(player){
 
@@ -1039,7 +1052,7 @@ class HumanController extends Controller{
             return;
         }
         // เป้าหมายที่ 2 ต้องอยู่ในระยะโจมตีของผู้ถูกบังคับ (attacker)
-        if(!context.slashCard.card.canTarget(context.attacker, player)){
+        if(!this.canSelectBorrowedSwordTarget(player)){
             this.game.log("ไม่สามารถเลือกเป้าหมายนี้ได้");
             return;
         }
