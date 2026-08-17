@@ -78,7 +78,14 @@ class AIController extends Controller{
     // จัดการการตัดสินใจ Reaction ของ AI Controller
     startReaction(context){
         console.log(this.player.name + " กำลังตัดสินใจ Reaction");
-        // เบื้องต้นส่ง false เพื่อข้ามสิทธิ์การใช้ Reaction
+        // ตรวจสอบการ์ด Reaction ที่ Target สามารถใช้ได้
+        const reactionCards = this.game.reactionManager.getAvailableReactionCards();
+        // ถ้ามี Reaction Card ให้ AI ใช้ทันที
+        if(reactionCards.length > 0){
+            this.game.reactionManager.resolveReaction(true);
+            return true;
+        }
+        // ถ้าไม่มี Reaction Card ให้ AI ไม่ใช้
         this.game.reactionManager.resolveReaction(false);
         return true;
     }
