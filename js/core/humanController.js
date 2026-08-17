@@ -94,6 +94,10 @@ class HumanController extends Controller{
         }
         // การ์กจบการทำงานสมบูรณ์แล้ว
         this.selectedCardIndex = -1;
+        // ถ้ากำลังรอ Reaction ให้ ReactionManager จัดการจบ Action หลัง Reaction เสร็จ
+        if(this.game.reactionManager && this.game.reactionManager.active){
+            return;
+        }
         // ส่งผลลัพธ์ให้ Game จัดการอัปเดตสถานะและหน้าจอถัดไป
         this.game.afterHumanAction(success);
     }

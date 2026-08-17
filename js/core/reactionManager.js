@@ -77,9 +77,6 @@ class ReactionManager{
             );
         });
     }
-    // DELETE: findNextAvailableResponder() ไม่จำเป็น เพราะ Reaction ถามเฉพาะ Target
-    // DELETE: moveToNextResponder() ไม่จำเป็น เพราะไม่มีการวนถามผู้เล่นคนอื่น
-
     // ดำเนินการใช้การ์ดตอบโต้ของ Target ปัจจุบัน
     useReactionCard(){
 
@@ -145,10 +142,19 @@ class ReactionManager{
         if(!card){
             return false;
         }
-
+        // เก็บ Source ไว้ก่อนปิด Reaction Window
+        const source = this.context.source;
         // ปิด Reaction Window และ Render หน้าจอใหม่
         this.closeReactionWindow();
         this.game.ui.render();
+        // หลัง Target ใช้ Reaction สำเร็จ จึงค่อยจบ Human Action
+        if(
+            source && 
+            source.controller && 
+            source.controller.isHuman()
+        ){
+            this.game.afterHumanAction(true);
+        }
 
         return true;
     }
@@ -161,18 +167,25 @@ class ReactionManager{
 
         // เก็บ Context ก่อนล้าง Reaction State
         const context = this.context;
-
+        // เก็บ Source ไว้ก่อนปิด Reaction Window
+        const source = context.source;
         // สั่งปิด Reaction Window เพื่อรีเซ็ตสถานะ
         this.closeReactionWindow();
-
         // ตรวจสอบว่ามีฟังก์ชัน resume ให้รันต่อหรือไม่
         if(typeof context.resume !== "function"){
             return false;
         }
-
         // ดำเนินการรัน Effect ต่อ
         const result = context.resume();
         this.game.ui.render();
+        // เมื่อ Effect ทำงานเสร็จแล้ว จึงค่อยจบ Human Action
+        if(
+            source && 
+            source.controller && 
+            source.controller.isHuman()
+        ){
+            this.game.afterHumanAction(result);
+        }
         return result;
     }
 }
