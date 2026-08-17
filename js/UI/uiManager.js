@@ -94,7 +94,7 @@ class UIManager{
                 card = controller.getSelectedCard();
             }
             // ตรวจสอบว่ามีการเลือกการ์ดอยู่ และการ์ดใบนั้นต้องระบุเป้าหมายหรือไม่
-            if (card && card.needTarget()){
+            if (card && card.needTarget() && controller.inputState !== "waitingBorrowedSwordTarget"){
                 // ถ้าผู้เล่นคนนี้ไม่สามารถเลือกเป็นเป้าหมายได้ (เช่น เลือกตัวเองไม่ได้)
                 if (!card.canTarget(currentPlayer, player)){
                     // เพิ่ม class เพื่อแสดงผลว่ากดเลือกไม่ได้ (เช่น ปรับ opacity จางลง)
