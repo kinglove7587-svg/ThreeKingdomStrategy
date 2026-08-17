@@ -79,6 +79,13 @@ class HumanController extends Controller{
         }
         // แจ้ง Game ให้บันทึก Log
         this.game.log("เลือกการ์ดลำดับ : " + cardIndex);
+        // จำไว้ว่า Action นี้เปิด Reaction หรือไม่ ก่อนที่ Reaction จะทำงาน
+        const reactionWasOpened = !!(
+            this.game.reactionManager && 
+            this.game.reactionManager.active
+        );
+        // ล้าง Reaction Context เก่าก่อนเริ่ม Action ใหม่
+        this.reactionContext = null;
         // สั่ง Controller เล่นการ์ดใบที่เลือก และรับผลลัพธ์ (true/false)
         const success = this.playCard(cardIndex);
         // ล้างค่าเป้าหมายที่เลือกไว้ เพื่อป้องกันไม่ให้ข้อมูลเป้าหมายเดิมค้างอยู่ในเทิร์นถัดไป
@@ -94,8 +101,8 @@ class HumanController extends Controller{
         }
         // การ์กจบการทำงานสมบูรณ์แล้ว
         this.selectedCardIndex = -1;
-        // ถ้ากำลังรอ Reaction ให้ ReactionManager จัดการจบ Action หลัง Reaction เสร็จ
-        if(this.game.reactionManager && this.game.reactionManager.active){
+        // ReactionManager จะเป็นคนเรียก afterHumanAction()
+        if(this.reactionContext){
             return;
         }
         // ส่งผลลัพธ์ให้ Game จัดการอัปเดตสถานะและหน้าจอถัดไป

@@ -5,9 +5,8 @@ class ReactionManager{
         //
         this.context = null;
         this.currentResponder = null;
-        // DELETE: this.responders = [];
-        // DELETE: this.responderIndex = -1;
         this.active = false;
+        this.openedForAction = false;
     }
     // เปิด Reaction Window โดยถามเฉพาะผู้เล่นที่เป็น Target ของ Effect
     openReactionWindow(context){
@@ -32,6 +31,7 @@ class ReactionManager{
         this.context = context;
         this.currentResponder = target;
         this.active = true;
+        this.openedForAction = true;
 
         // NEW: ตรวจเฉพาะ Target ว่ามี Reaction Card ที่ใช้ได้หรือไม่
         if(this.getAvailableReactionCards().length === 0){
@@ -44,8 +44,14 @@ class ReactionManager{
             ? this.context.card.name : "(ไม่มีการ์ด)"
         );
         console.log("ผู้ตอบ:", this.currentResponder.name);
-
         this.currentResponder.controller.startReaction(this.context);
+        //
+        if(
+            this.context.source && 
+            this.context.source.controller
+        ){
+            this.context.source.controller.reactionContext = this.context;
+        }
 
         return true;
     }
@@ -113,6 +119,7 @@ class ReactionManager{
         this.active = false;
         this.context = null;
         this.currentResponder = null;
+        this.openedForAction = false;
         return true;
     }
     // ประมวลผลคำตอบ Reaction จาก Target
