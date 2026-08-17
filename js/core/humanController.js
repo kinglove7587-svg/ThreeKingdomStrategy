@@ -1033,6 +1033,10 @@ class HumanController extends Controller{
         if(this.inputState !== "waitingBorrowedSwordTarget"){
             return false;
         }
+        // ผู้ใช้ Borrowed Sword ห้ามเป็นเป้าหมายที่ 2
+        if(player === this.player){
+            return false;
+        }
 
         const context = this.borrowedSwordContext;
         if(!context || !context.attacker || !context.slashCard){
