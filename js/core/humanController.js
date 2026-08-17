@@ -98,7 +98,8 @@ class HumanController extends Controller{
             this.inputState === "waitingTriggerChoice" || 
             this.inputState === "waitingTriggerCard" || 
             this.inputState === "waitingTriggerTarget" || 
-            this.inputState === "waitingAdditionalTargets"
+            this.inputState === "waitingAdditionalTargets" || 
+            this.inputState === "waitingBorrowedSwordTarget"
         ){
             return;
         }
