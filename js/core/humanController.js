@@ -1080,6 +1080,7 @@ class HumanController extends Controller{
         this.inputState = "idle";
         this.borrowedSwordContext = null;
         this.selectedBorrowedSwordTarget = null;
+        this.selectedCardIndex = -1;
         this.game.ui.render();
         // ส่ง Flow กลับไปยังผู้เล่นที่ใช้ Borrowed Sword
         this.game.afterHumanAction(success);
