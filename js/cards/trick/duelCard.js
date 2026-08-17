@@ -12,9 +12,32 @@ class DuelCard extends TrickCard{
             return false;
         }
         game.log("→ เป้าหมาย : " + target.name);
-        // เรียกใช้ระบบการดวล (Duel Engine) ใน Game
-        game.duel(player, target);
-        return true;
+        // สร้าง Context สำหรับให้เป้าหมายมีโอกาสใช้ Negation ก่อนเริ่ม Duel
+        const context = {
+            card: this, 
+            source: player, 
+            target: target, 
+            canceled: false,
+
+            resume: () => {
+                // ถ้าถูก Negation ยกเลิก ไม่ต้องเริ่ม Duel
+                if(context.canceled){
+                    console.log("Duel ถูกหักล้าง");
+                    return true;
+                }
+                // เริ่ม Duel หลัง Reaction จบ
+                game.duel(player, target);
+                return true;
+            }
+        };
+        // เปิด Reaction Window ก่อนเริ่ม Effect
+        const opened = game.reactionManager.openReactionWindow(context);
+        // ถ้าเปิด Reaction Window สำเร็จ ให้รอการตอบโต้ก่อน
+        if(opened){
+            return true;
+        }
+        // กรณีเปิด Reaction ไม่สำเร็จ ให้ทำ Effect ต่อทันที
+        return context.resume();
     }
     // ตรวจสอบเงื่อนไขเป้าหมายของการ์ด (เลือกใครก็ได้ที่ไม่ใช่ตัวเอง)
     canTarget(player, target){
