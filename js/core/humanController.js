@@ -28,6 +28,9 @@ class HumanController extends Controller{
         this.selectedAdditionalTargets = [];
         this.additionalTargetLimit = 0;
         this.additionalTargetContext = null;
+        // State สำหรับ Borrowed Sword
+        this.borrowedSwordContext = null;
+        this.selectedBorrowedSwordTarget = null;
         // State สำหรับประมวลผล Slash แบบหลายเป้าหมายทีละลำดับ
         this.pendingSlashContext = null;
         this.pendingSlashTargets = [];
@@ -1013,6 +1016,40 @@ class HumanController extends Controller{
             this.game.ui.render();
             return;
         }
+        this.game.ui.render();
+    }
+    // เริ่มเข้าสู่ State เลือกเป้าหมายที่ 2 ของการ์ดยืมดาบสังหาร
+    startBorrowedSwordTargetSelection(context){
+
+        this.borrowedSwordContext = context;
+        this.selectedBorrowedSwordTarget = null;
+        this.inputState = "waitingBorrowedSwordTarget";
+        this.game.ui.render();
+    }
+    // รับการเลือกเป้าหมายที่ 2 และตรวจสอบระยะทำการโจมตีของผู้ถูกบังคับ
+    selectBorrowedSwordTarget(player){
+
+        if(this.inputState !== "waitingBorrowedSwordTarget"){
+            return;
+        }
+
+        const context = this.borrowedSwordContext;
+        if(!context || !context.attacker || !context.slashCard){
+            return;
+        }
+        // เป้าหมายที่ 2 ต้องอยู่ในระยะโจมตีของผู้ถูกบังคับ (attacker)
+        if(!context.slashCard.canTarget(context.attacker, player)){
+            this.game.log("ไม่สามารถเลือกเป้าหมายนี้ได้");
+            return;
+        }
+
+        this.selectedBorrowedSwordTarget = player;
+        this.borrowedSwordContext.secondaryTarget = player;
+        console.log("Borrowed Sword เป้าหมายที่ 2 :", player.name);
+        // รอบนี้ยังหยุดไว้แค่การเลือก Target
+        this.inputState = "idle";
+        this.borrowedSwordContext = null;
+        this.selectedBorrowedSwordTarget = null;
         this.game.ui.render();
     }
     // เตรียมคิวรายชื่อเป้าหมาย Slash จาก Context และตั้งค่า Index เริ่มต้นที่ 0

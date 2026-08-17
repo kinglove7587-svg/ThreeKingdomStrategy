@@ -29,8 +29,12 @@ class BorrowedSwordCard extends TrickCard{
         game.log("→ เป้าหมาย : " + target.name);
         // ตรวจสอบว่า Target มีการ์ดโจมตีหรือไม่
         const slashCards = target.hand.findSlashCards();
-        // กรณี Target มีการ์ดโจมตี (รอทำ Forced Slash ในขั้นถัดไป)
+        // กรณี Target มีการ์ดโจมตี ให้ผู้ใช้เลือกเป้าหมายที่ 2 ที่จะให้ Target โจมตีใส่
         if(slashCards.length > 0){
+            player.controller.startBorrowedSwordTargetSelection({
+                attacker: target, 
+                slashCard: slashCards[0]
+            });
             return true;
         }
         // กรณี Target ไม่มีโจมตี ให้ขโมยอาวุธเข้ามือผู้ใช้ทันที

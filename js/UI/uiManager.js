@@ -1132,6 +1132,11 @@ class UIManager{
             controller.selectAdditionalTarget(player);
             return;
         }
+        // เลือกเป้าหมายที่ 2 สำหรับ Borrowed Sword
+        if(controller.inputState === "waitingBorrowedSwordTarget"){
+            controller.selectBorrowedSwordTarget(player);
+            return;
+        }
         // กรณี Controller กำลังรอเลือกเป้าหมายให้กับ การ์ดปกติ (Card)
         if(controller.inputState === "waitingTarget"){
             controller.selectTarget(player);
