@@ -1,15 +1,15 @@
 class ReactionManager{
-    // จัดการระบบ Reaction กลางของเกม (รองรับ Negation, Skill ตอบโต้ และการ์ด Reactive)
+    // จัดการระบบ Reaction กลางของเกม โดยถามเฉพาะ Target ที่ได้รับผลจาก Effect
     constructor(game){
         this.game = game;
         //
         this.context = null;
         this.currentResponder = null;
-        this.responders = [];
-        this.responderIndex = -1;
+        // DELETE: this.responders = [];
+        // DELETE: this.responderIndex = -1;
         this.active = false;
     }
-    // เปิด Reaction Window สำหรับ Effect หรือการ์ดที่กำลังรอการตอบโต้/หักล้าง
+    // เปิด Reaction Window โดยถามเฉพาะผู้เล่นที่เป็น Target ของ Effect
     openReactionWindow(context){
         // ป้องกันการเปิด Window ซ้ำถ้ากำลังทำงานอยู่
         if(this.active){
@@ -19,63 +19,45 @@ class ReactionManager{
         if(!context){
             return false;
         }
-        // เก็บ Effect ที่กำลังรอ Reaction
-        this.context = context;
-        // เตรียมรายชื่อผู้เล่นที่จะมีสิทธิ์ตอบ Reaction
-        this.responders = [];
-        // เริ่มวนหาผู้เล่นถัดจากเจ้าของ Effect (source)
-        const source = context.source;
-        if(!source){
+
+        // NEW: Reaction ใหม่ใช้ Target เพียงคนเดียว
+        const target = context.target;
+
+        if(!target){
+            // NEW: Effect ที่ไม่มี Target ไม่ต้องเปิด Reaction
             return false;
         }
 
-        let player = this.game.getNextPlayerOf(source);
-        while(player && player !== source){
-            
-            this.responders.push(player);
-            player = this.game.getNextPlayerOf(player);
-        }
-        // ถ้าไม่มีผู้เล่นคนอื่นให้ตอบ ให้ปิด Window
-        if(this.responders.length === 0){
-            this.closeReactionWindow();
-            return false;
-        }
-        // เปิดสถานะ Reaction ก่อนค้นหา Responder
+        // เก็บ Effect ที่กำลังรอ Reaction
+        this.context = context;
+        this.currentResponder = target;
         this.active = true;
-        // ค้นหา Responder คนแรกที่มี Reaction Card ใช้ได้
-        const firstResponderIndex = this.findNextAvailableResponder(0);
-        // ถ้าไม่มีผู้เล่นคนใดมีการ์ด Reaction ให้ปิด Window แล้วเล่น Effect ต่อ
-        if(firstResponderIndex === -1){
+
+        // NEW: ตรวจเฉพาะ Target ว่ามี Reaction Card ที่ใช้ได้หรือไม่
+        if(this.getAvailableReactionCards().length === 0){
             this.closeReactionWindow();
             return false;
         }
-        this.responderIndex = firstResponderIndex;
+
         console.log(
-            "Reaction Window เปิด:", this.context.card 
+            "Reaction Window เปิด:", this.context.card
             ? this.context.card.name : "(ไม่มีการ์ด)"
         );
-        console.log("ผู้ตอบครแรก:", this.currentResponder.name);
+        console.log("ผู้ตอบ:", this.currentResponder.name);
+
         this.currentResponder.controller.startReaction(this.context);
-        
+
         return true;
-        
     }
-    // รับผู้เล่นที่กำลังตอบ Reaction อยู่ในขณะนี้
+    // รับผู้เล่น Target ที่กำลังตอบ Reaction อยู่
     getCurrentResponder(){
-        // ถ้า Reaction Window ไม่ได้เปิดอยู่ ให้คืนค่า null
         if(!this.active){
             return null;
         }
-        // ถ้า index ของผู้ตอบไม่ถูกต้อง ให้คืนค่า null
-        if(
-            this.responderIndex < 0 || 
-            this.responderIndex >= this.responders.length
-        ){
-            return null;
-        }
-        return this.responders[this.responderIndex];
+
+        return this.currentResponder;
     }
-    // ค้นหาและดึงรายการการ์ดบนมือของผู้ตอบปัจจุบัน ที่สามารถใช้ตอบโต้ Context นี้ได้
+    // ค้นหาและดึงรายการการ์ดบนมือของ Target ที่สามารถใช้ตอบโต้ Context นี้ได้
     getAvailableReactionCards(){
 
         const responder = this.getCurrentResponder();
@@ -87,27 +69,18 @@ class ReactionManager{
         if(!responder.hand || !responder.hand.cards){
             return [];
         }
+
         return responder.hand.cards.filter(card => {
             return(
-                typeof card.canReact === "function" && 
+                typeof card.canReact === "function" &&
                 card.canReact(this.context)
             );
         });
     }
-    // ค้นหา Responder คนถัดไปที่มี Reaction Card ใช้ได้
-    findNextAvailableResponder(startIndex){
+    // DELETE: findNextAvailableResponder() ไม่จำเป็น เพราะ Reaction ถามเฉพาะ Target
+    // DELETE: moveToNextResponder() ไม่จำเป็น เพราะไม่มีการวนถามผู้เล่นคนอื่น
 
-        for(let i = startIndex; i < this.responders.length; i++){
-            this.responderIndex = i;
-            this.currentResponder = this.responders[i];
-            // ตรวจสอบว่าผู้ตอบคนนี้มี Reaction Card ให้ใช้หรือไม่
-            if(this.getAvailableReactionCards().length > 0){
-                return i;
-            }
-        }
-        return -1;
-    }
-    // ดำเนินการใช้การ์ดตอบโต้ของผู้เล่นปัจจุบัน (ถ้ามี)
+    // ดำเนินการใช้การ์ดตอบโต้ของ Target ปัจจุบัน
     useReactionCard(){
 
         const reactionCards = this.getAvailableReactionCards();
@@ -128,77 +101,55 @@ class ReactionManager{
         if(cardIndex === -1){
             return false;
         }
-        // นำการ์ดออกจากมือของผู้ตอบ
+
+        // นำการ์ดออกจากมือของ Target
         responder.hand.cards.splice(cardIndex, 1);
         this.game.discardPile.addCard(card);
         this.context.canceled = true;
         console.log(responder.name + " ใช้ " + card.name);
         return card;
     }
-    // เลื่อนไปถาม Reaction ผู้เล่นคนถัดไปในลำดับ
-    moveToNextResponder(){
-
-        if(!this.active){
-            return null;
-        }
-        // ค้นหา Responder คนถัดไปที่มี Reaction Card ใช้ได้
-        const nextResponderIndex = this.findNextAvailableResponder(this.responderIndex +1);
-        // ไม่มี Responder ที่มี Reaction Card เหลือแล้ว
-        if(nextResponderIndex === -1){
-            return null;
-        }
-        
-        this.responderIndex = nextResponderIndex;
-        const nextResponder = this.responders[this.responderIndex];
-        console.log("Responder → ผู้ตอบคนถัดไป:", nextResponder);
-        // เรียก startReaction ของ Controller คนถัดไป
-        nextResponder.controller.startReaction(this.context);
-        return nextResponder;
-    }
-    // ล้างข้อมูลและปิด Reaction Window หลังจบการสอบถาม Reaction ทุกคน
+    // ล้างข้อมูลและปิด Reaction Window
     closeReactionWindow(){
         console.log("Reaction Window ปิด");
         // รีเซ็ตสถานะทั้งหมด
         this.active = false;
         this.context = null;
         this.currentResponder = null;
-        this.responders = [];
-        this.responderIndex = -1;
         return true;
     }
-    // ประมวลผลคำตอบ Reaction จากผู้เล่นปัจจุบัน
+    // ประมวลผลคำตอบ Reaction จาก Target
     resolveReaction(useReaction){
 
         if(!this.active){
             return false;
         }
-        // ตรวจสอบว่ามีผู้เล่นที่กำลังตอบอยู่หรือไม่
+
+        // ตรวจสอบว่ามี Target ที่กำลังตอบอยู่หรือไม่
         const responder = this.getCurrentResponder();
+
         if(!responder){
             return false;
         }
+
         console.log("Reaction:", responder.name, useReaction ? "ใช้" : "ไม่ใช้");
-        // กรณีเลือก "ไม่ใช้"
+
+        // NEW: Target ไม่ใช้ Reaction ให้ Effect ทำงานต่อทันที
         if(!useReaction){
-            
-            const nextResponder = this.moveToNextResponder();
-            // ยังมีผู้เล่นคนถัดไป ให้รอรับคำตอบต่อ
-            if(nextResponder){
-                return true;
-            }
-            // ไม่มีผู้เล่นเหลือแล้ว สั่งปิด Window และ Resume Effect
             return this.resumeEffect();
         }
-        // กรณีเลือก "ใช้" Reaction
+
+        // กรณี Target เลือกใช้ Reaction
         const card = this.useReactionCard();
 
         if(!card){
             return false;
         }
+
         // ปิด Reaction Window และ Render หน้าจอใหม่
         this.closeReactionWindow();
         this.game.ui.render();
-        
+
         return true;
     }
     // ปิด Reaction Window และสั่งรัน Effect
@@ -207,14 +158,18 @@ class ReactionManager{
         if(!this.context){
             return false;
         }
-        // ตรวจสอบว่ามีฟังก์ชัน resume ให้รันต่อหรือไม่
+
+        // เก็บ Context ก่อนล้าง Reaction State
         const context = this.context;
+
         // สั่งปิด Reaction Window เพื่อรีเซ็ตสถานะ
         this.closeReactionWindow();
+
         // ตรวจสอบว่ามีฟังก์ชัน resume ให้รันต่อหรือไม่
         if(typeof context.resume !== "function"){
             return false;
         }
+
         // ดำเนินการรัน Effect ต่อ
         const result = context.resume();
         this.game.ui.render();
