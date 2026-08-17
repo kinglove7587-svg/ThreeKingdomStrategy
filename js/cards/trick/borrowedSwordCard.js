@@ -19,14 +19,27 @@ class BorrowedSwordCard extends TrickCard{
         }
         return true;
     }
-    //  Effect จะทำในขั้นถัดไป
+    //  ตรวจสอบ Target และขโมยอาวุธเมื่อไม่มีการ์ดโจมตี
     use(player, game){
 
         const target = player.controller.getSelectedTarget();
         if(!target){
             return false;
         }
-        console.log("→ เป้าหมาย : " + target.name);
+        game.log("→ เป้าหมาย : " + target.name);
+        // ตรวจสอบว่า Target มีการ์ดโจมตีหรือไม่
+        const slashCards = target.hand.findSlashCards();
+        // กรณี Target มีการ์ดโจมตี (รอทำ Forced Slash ในขั้นถัดไป)
+        if(slashCards.length > 0){
+            return true;
+        }
+        // กรณี Target ไม่มีโจมตี ให้ขโมยอาวุธเข้ามือผู้ใช้ทันที
+        const weapon = target.unequipWeapon();
+        if(!weapon){
+            return false;
+        }
+        player.hand.addCard(weapon);
+        game.log(player.name + " ขโมย " + weapon.name + " จาก " + target.name);
         return true;
     }
     // คำอธิบายการ์ด
