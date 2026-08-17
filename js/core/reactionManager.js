@@ -40,9 +40,14 @@ class ReactionManager{
             this.closeReactionWindow();
             return false;
         }
-
-        this.responderIndex = 0;
-        this.currentResponder = this.responders[this.responderIndex];
+        // ค้นหา Responder คนแรกที่มี Reaction Card ใช้ได้
+        const firstResponderIndex = this.findNextAvailableResponder(0);
+        // ถ้าไม่มีผู้เล่นคนใดมีการ์ด Reaction ให้ปิด Window แล้วเล่น Effect ต่อ
+        if(firstResponderIndex === -1){
+            this.closeReactionWindow();
+            return false;
+        }
+        this.responderIndex = firstResponderIndex;
         this.active = true;
         console.log(
             "Reaction Window เปิด:", this.context.card 
@@ -52,7 +57,6 @@ class ReactionManager{
         this.currentResponder.controller.startReaction(this.context);
         
         return true;
-        
         
     }
     // รับผู้เล่นที่กำลังตอบ Reaction อยู่ในขณะนี้
@@ -89,6 +93,18 @@ class ReactionManager{
             );
         });
     }
+    // ค้นหา Responder คนถัดไปที่มี Reaction Card ใช้ได้
+    findNextAvailableResponder(startIndex){
+
+        for(let i = startIndex; i < this.responders.length; i++){
+            this.currentResponder = this.responders[i];
+            // ตรวจสอบว่าผู้ตอบคนนี้มี Reaction Card ให้ใช้หรือไม่
+            if(this.getAvailableReactionCards().length > 0){
+                return i;
+            }
+        }
+        return -1;
+    }
     // ดำเนินการใช้การ์ดตอบโต้ของผู้เล่นปัจจุบัน (ถ้ามี)
     useReactionCard(){
 
@@ -123,20 +139,19 @@ class ReactionManager{
         if(!this.active){
             return null;
         }
-        
-        this.responderIndex++;
-        // ยังมีผู้เล่นคนถัดไปในรายการ
-        if(this.responderIndex < this.responders.length){
-
-            const nextResponder = this.responders[this.responderIndex];
-            this.currentResponder = nextResponder;
-            console.log("Responder → ผู้ตอบคนถัดไป:", nextResponder);
-            // เรียก startReaction ของ Controller คนถัดไป
-            nextResponder.controller.startReaction(this.context);
-            return nextResponder;
+        // ค้นหา Responder คนถัดไปที่มี Reaction Card ใช้ได้
+        const nextResponderIndex = this.findNextAvailableResponder(this.responderIndex +1);
+        // ไม่มี Responder ที่มี Reaction Card เหลือแล้ว
+        if(nextResponderIndex === -1){
+            return null;
         }
-        // ไม่มีผู้เล่นเหลือแล้ว สั่งปิด Reaction Window
-        return null;
+        
+        this.responderIndex = nextResponderIndex;
+        const nextResponder = this.responders[this.responderIndex];
+        console.log("Responder → ผู้ตอบคนถัดไป:", nextResponder);
+        // เรียก startReaction ของ Controller คนถัดไป
+        nextResponder.controller.startReaction(this.context);
+        return nextResponder;
     }
     // ล้างข้อมูลและปิด Reaction Window หลังจบการสอบถาม Reaction ทุกคน
     closeReactionWindow(){
