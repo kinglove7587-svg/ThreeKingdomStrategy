@@ -1046,11 +1046,29 @@ class HumanController extends Controller{
         this.selectedBorrowedSwordTarget = player;
         this.borrowedSwordContext.secondaryTarget = player;
         console.log("Borrowed Sword เป้าหมายที่ 2 :", player.name);
-        // รอบนี้ยังหยุดไว้แค่การเลือก Target
+        // ดึงการ์ดโจมตีที่ถูกบังคับให้นำมาใช้
+        const attacker = context.attacker;
+        const slashCard = context.slashCard.card;
+        const slashCardIndex = context.slashCard.index;
+        // นำการ์ดโจมตีออกจากมือของผู้ถูกบังคับ
+        const removeSlash = attacker.hand.removeCard(slashCardIndex);
+        if(!removeSlash){
+            this.game.log(attacker.name + " ไม่สามารถใช้โจมตีได้");
+            return;
+        }
+        // ทิ้งการ์ดโจมตีลงกองทิ้ง
+        this.game.discardPile.addCard(removeSlash);
+        // บันทึกว่าผู้ถูกบังคับใช้โจมตีแล้ว
+        attacker.markSlashUsed();
+        // ประมวลผลการโจมตีไปยังเป้าหมายที่ 2
+        const success = slashCard.resolveSlashTarget(attacker, player, this.game);
+        // ล้าง Borrowed Sword State
         this.inputState = "idle";
         this.borrowedSwordContext = null;
         this.selectedBorrowedSwordTarget = null;
         this.game.ui.render();
+        // ส่ง Flow กลับไปยังผู้เล่นที่ใช้ Borrowed Sword
+        this.game.afterHumanAction(success);
     }
     // เตรียมคิวรายชื่อเป้าหมาย Slash จาก Context และตั้งค่า Index เริ่มต้นที่ 0
     preparePendingSlashTargets(context){
