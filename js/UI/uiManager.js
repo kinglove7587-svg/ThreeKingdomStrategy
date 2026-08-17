@@ -867,6 +867,15 @@ class UIManager{
         }
 
         const controller = player.controller;
+        // ค้นหา Player Card ใน DOM ตาม index ของผู้เล่น
+        const playerCard = document.querySelector(
+            '.player-card[data-player-index="' + 
+            this.game.players.indexOf(player) + '"]' 
+        );
+
+        if(!playerCard){
+            return;
+        }
 
         if(!(controller instanceof HumanController)){
             return;
@@ -881,14 +890,14 @@ class UIManager{
         yesButton.onclick = () => {
             controller.resolveReaction(true);
         };
-        this.controlArea.appendChild(yesButton);
+        playerCard.appendChild(yesButton);
         // ปุ่ม "ไม่ใช้" Reaction
         const noButton = document.createElement("button");
         noButton.textContent = "ไม่ใช้";
         noButton.onclick = () => {
             controller.resolveReaction(false);
         };
-        this.controlArea.appendChild(noButton);
+        playerCard.appendChild(noButton);
 
     }
     // แสดงปุ่ม "ไม่ใช้" บน UI ขณะผู้เล่นอยู่ในขั้นตอนเลือกการ์ด Trigger
