@@ -98,6 +98,7 @@ class ReactionManager{
     findNextAvailableResponder(startIndex){
 
         for(let i = startIndex; i < this.responders.length; i++){
+            this.responderIndex = i;
             this.currentResponder = this.responders[i];
             // ตรวจสอบว่าผู้ตอบคนนี้มี Reaction Card ให้ใช้หรือไม่
             if(this.getAvailableReactionCards().length > 0){
