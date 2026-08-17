@@ -6,5 +6,6 @@ class TestHero extends Player{
         this.hp = 4;
 
         //this.equipArmor(new TengJiaArmor("♣️", 7));
+        this.hand.addCard(new NegationCard("♠️", 1));
     }
 }

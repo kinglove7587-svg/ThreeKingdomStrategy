@@ -13,6 +13,6 @@ class ZhangFei extends Player{ // เตียวหุย
         //this.setChained(true);
         //this.hand.addCard(new IronChainCard("♥️", 1));
         //this.hand.addCard(new DodgeCard("♠️", 1));
-        //this.hand.addCard(new NegationCard("♠️", 1));
+        this.hand.addCard(new NegationCard("♠️", 1));
     }
 }

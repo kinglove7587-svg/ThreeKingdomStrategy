@@ -40,6 +40,8 @@ class ReactionManager{
             this.closeReactionWindow();
             return false;
         }
+        // เปิดสถานะ Reaction ก่อนค้นหา Responder
+        this.active = true;
         // ค้นหา Responder คนแรกที่มี Reaction Card ใช้ได้
         const firstResponderIndex = this.findNextAvailableResponder(0);
         // ถ้าไม่มีผู้เล่นคนใดมีการ์ด Reaction ให้ปิด Window แล้วเล่น Effect ต่อ
@@ -48,7 +50,6 @@ class ReactionManager{
             return false;
         }
         this.responderIndex = firstResponderIndex;
-        this.active = true;
         console.log(
             "Reaction Window เปิด:", this.context.card 
             ? this.context.card.name : "(ไม่มีการ์ด)"
