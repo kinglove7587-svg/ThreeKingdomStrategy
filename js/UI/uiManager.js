@@ -887,14 +887,16 @@ class UIManager{
         // ปุ่ม "ใช้" Reaction
         const yesButton = document.createElement("button");
         yesButton.textContent = "ใช้";
-        yesButton.onclick = () => {
+        yesButton.onclick = (event) => {
+            event.stopPropagation();
             controller.resolveReaction(true);
         };
         playerCard.appendChild(yesButton);
         // ปุ่ม "ไม่ใช้" Reaction
         const noButton = document.createElement("button");
         noButton.textContent = "ไม่ใช้";
-        noButton.onclick = () => {
+        noButton.onclick = (event) => {
+            event.stopPropagation();
             controller.resolveReaction(false);
         };
         playerCard.appendChild(noButton);
