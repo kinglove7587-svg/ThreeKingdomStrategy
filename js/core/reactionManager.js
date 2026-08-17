@@ -112,6 +112,7 @@ class ReactionManager{
         }
         // นำการ์ดออกจากมือของผู้ตอบ
         responder.hand.cards.splice(cardIndex, 1);
+        this.game.discardPile.addCard(card);
         this.context.canceled = true;
         console.log(responder.name + " ใช้ " + card.name);
         return card;
