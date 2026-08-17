@@ -103,7 +103,7 @@ class ReactionManager{
         responder.hand.cards.splice(cardIndex, 1);
         this.game.discardPile.addCard(card);
         this.context.canceled = true;
-        console.log(responder.name + " ใช้ " + card.name);
+        this.game.log(responder.name + " ใช้ " + card.name);
         return card;
     }
     // ล้างข้อมูลและปิด Reaction Window
@@ -178,7 +178,7 @@ class ReactionManager{
         // ดำเนินการรัน Effect ต่อ
         const result = context.resume();
         this.game.ui.render();
-        // เมื่อ Effect ทำงานเสร็จแล้ว จึงค่อยจบ Human Action
+
         if(
             source && 
             source.controller && 
