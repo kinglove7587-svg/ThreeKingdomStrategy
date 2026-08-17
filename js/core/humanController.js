@@ -1038,7 +1038,7 @@ class HumanController extends Controller{
             return;
         }
         // เป้าหมายที่ 2 ต้องอยู่ในระยะโจมตีของผู้ถูกบังคับ (attacker)
-        if(!context.slashCard.canTarget(context.attacker, player)){
+        if(!context.slashCard.card.canTarget(context.attacker, player)){
             this.game.log("ไม่สามารถเลือกเป้าหมายนี้ได้");
             return;
         }
