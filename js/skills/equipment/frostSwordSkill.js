@@ -39,6 +39,8 @@ class FrostSwordSkill extends TriggerSkill{
         }
 
         if(useSkill){
+            
+            context.damage.canceled = true;
             game.log(player.name + " เลือกใช้ กระบี่น้ำแข็ง");
 
         }else{
