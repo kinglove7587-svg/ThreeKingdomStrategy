@@ -162,6 +162,9 @@ class FrostSwordSkill extends TriggerSkill{
                 selection.source + " ด้วย กระบี่น้ำแข็ง"
             );
         }
-        return true;
+        // เคลียร์ State และ Resume Damage
+        player.controller.selectedFrostSwordCards = [];
+        context.damage.waitingTrigger = false;
+        return context.damage.resume();
     }
 }
