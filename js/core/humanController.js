@@ -376,6 +376,17 @@ class HumanController extends Controller{
             this.selectedBurnCardIndex = -1;
             return true;
         }
+        // กรณีเลือกทำลายจาก Judgement Zone
+        if(this.selectedBurnSource === "judgement"){
+
+            if(index < 0 || index >= target.delayedTricks.length){
+                return false;
+            }
+
+            this.selectedBurnCard = target.delayedTricks[index];
+            this.selectedBurnCardIndex = index;
+            return true;
+        }
         return false;
     }
     // ทำการย้ายการ์ดที่เลือกไว้จากมือของเป้าหมาย เข้าสู่มือของผู้เล่น
