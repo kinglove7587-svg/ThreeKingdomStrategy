@@ -23,7 +23,8 @@ class FrostSwordSkill extends TriggerSkill{
             return;
         }
         console.log(player.name + " กระบี่น้ำแข็ง: Slash สร้าง Damage ให้ " + damage.target.name);
-        // todo รอบแรกยังไม่ยกเลิก Damage
+        // กำหนดให้ Damage หยุดรอคำตอบจากผู้เล่น
+        damage.waitingTrigger = true;
         // ถามผู้ใช้ว่าต้องการเปิดใช้สกิลหรือไม่
         player.controller.startTriggerChoice(this, 
             {
@@ -39,7 +40,7 @@ class FrostSwordSkill extends TriggerSkill{
         }
 
         if(useSkill){
-            
+
             context.damage.canceled = true;
             game.log(player.name + " เลือกใช้ กระบี่น้ำแข็ง");
 
