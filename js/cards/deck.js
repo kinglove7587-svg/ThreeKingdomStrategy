@@ -42,6 +42,7 @@ class Deck {
             this.cards.push(new SkyPiercingHalberdCard("♦️", 12)); // ง้าวฟ้าทะลวง
             this.cards.push(new BlueSteelSwordCard("♠️", 6)); // กระบี่เหล็กกล้า
             this.cards.push(new FeatheredFanCard("♦️", 13)); // พัดขนนก
+            this.cards.push(new GreenDragonBladeCard("♠️", 5)); // ง้าวมังกรเขียว
             //============================= Armor ======================================
             this.cards.push(new EightTrigramsArmor("♣️", 2)); // เพิ่มเกราะเกราะแปดทิศ         
             this.cards.push(new TengJiaArmor("♣️", 7)); // เพิ่มอุปกรณ์เกราะ เกราะหวาย
