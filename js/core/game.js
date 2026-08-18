@@ -187,10 +187,7 @@ class Game {
             return;
         }
         const player = this.getCurrentPlayer();
-        const zhangFei = this.players.find(p => p.name === "เตียวหุย");
-        if (zhangFei) {
-            zhangFei.showHand();
-        }
+        
         this.ui.addLog("=============");
         this.ui.addLog(player.name + " Turn ");
         this.ui.addLog("=============");
