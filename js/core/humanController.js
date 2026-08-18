@@ -1448,6 +1448,74 @@ class HumanController extends Controller{
         // แจ้ง Game ว่า Action นี้เสร็จสมบูรณ์
         this.game.afterHumanAction(true);
         return true;
+    }    
+    // เลือกการ์ดที่จะทิ้งจากสกิลกระบี่น้ำแข็ง
+    selectFrostSwordCard(source, index){
+
+        if(this.inputState !== "waitingFrostSwordCard"){
+            return false;
+        }
+        // ป้องกันการเลือกเกิน 2 ใบ
+        if(this.selectedFrostSwordCards.length >= 2){
+            return false;
+        }
+
+        let card = null;
+        // เลือกจากมือ
+        if(source === "hand"){
+
+            if(index < 0 || index >= this.player.hand.cards.length){
+                return false;
+            }
+
+            card = this.player.hand.cards[index];
+        }
+        // เลือกจากอาวุธ
+        if(source === "weapon"){
+            if(!this.player.weapon){
+                return false;
+            }
+            card = this.player.weapon;
+        }
+        // เลือกจากเกราะ
+        if(source === "armor"){
+            if(!this.player.armor){
+                return false;
+            }
+            card = this.player.armor;
+        }
+        // เลือกจากม้า
+        if(source === "mount"){
+            if(!this.player.mount){
+                return false;
+            }
+            card = this.player.mount;
+        }
+
+        if(!card){
+            return false;
+        }
+        // ตรวจสอบว่าเลือกการ์ดใบนี้ไปแล้วหรือยัง
+        const alreadySelected = this.selectedFrostSwordCards.some(
+            selected => selected.card === card
+        );
+        
+        if(alreadySelected){
+            return false;
+        }
+        // บันทึกการ์ดที่เลือกลง State
+        this.selectedFrostSwordCards.push({
+            source: source, 
+            index: index, 
+            card: card
+        });
+        console.log("Frost Sword Selection =", this.selectedFrostSwordCards);
+        
+        if(this.selectedFrostSwordCards.length >= 2){
+            return true;
+        }
+        this.game.ui.render();
+        return true;
     }
 
 }
