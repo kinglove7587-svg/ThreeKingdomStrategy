@@ -536,6 +536,27 @@ class UIManager{
             };
             this.controlArea.appendChild(armorButton);
         }
+        // ปุ่มเลือกทำลายม้า
+        if(target.mount){
+
+            const mountButton = document.createElement("button");
+            mountButton.textContent = "🐎 " + target.mount.name;
+            mountButton.onclick = () => {
+                controller.selectBurnSource("mount");
+            };
+            this.controlArea.appendChild(mountButton);
+        }
+        // ปุ่มเลือกทำลาย Judgement Zone
+        if(target.delayedTricks.length > 0){
+
+            const judgementButton = document.createElement("button");
+            judgementButton.textContent = "⚡ Judgement (" + 
+                target.delayedTricks.length + ")";
+            judgementButton.onclick = () => {
+                controller.selectBurnSource("judgement");
+            };
+            this.controlArea.appendChild(judgementButton);
+        }
     }
     // แสดงปุ่มการ์ดของเป้าหมายตาม Source ที่เลือก เพื่อเตรียมทำลายการ์ด
     renderBurnCard(){
@@ -585,6 +606,38 @@ class UIManager{
                 controller.confirmBurnSelection();
             };
             this.controlArea.appendChild(button);
+        }
+        // กรณีเลือกทำลาย "ม้า"
+        if(controller.selectedBurnSource === "mount"){
+
+            const button = document.createElement("button");
+            button.textContent = "🐎 " + 
+                target.mount.name + " " + 
+                target.mount.suit + " " + 
+                target.mount.number;
+            button.onclick = () => {
+                controller.selectBurnCard(0);
+                controller.confirmBurnSelection();
+            };
+            this.controlArea.appendChild(button);
+        }
+        // กรณีเลือกทำลาย "Judgement Zone"
+        if(controller.selectedBurnSource === "judgement"){
+
+            for(let i = 0; i < target.delayedTricks.length; i++){
+
+                const card = target.delayedTricks[i];
+                const button = document.createElement("button");
+                button.textContent = "⚡ " + 
+                    card.name + " " + 
+                    card.suit + " " + 
+                    card.number;
+                button.onclick = () => {
+                    controller.selectBurnCard(i);
+                    controller.confirmBurnSelection();
+                };
+                this.controlArea.appendChild(button);
+            }
         }
         // ปุ่ม ↩️ ย้อนกลับ
         const backButton = document.createElement("button");

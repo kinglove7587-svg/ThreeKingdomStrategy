@@ -279,7 +279,7 @@ class HumanController extends Controller{
         }
         return false;
     }
-    // จัดการการเลือกโซนที่จะทำลายการ์ด (มือ, อาวุธ หรือ เกราะ) จากผู้เล่นเป้าหมาย
+    // เลือกตำแหน่ง (Zone) ที่จะทำลายการ์ดของเป้าหมาย (รองรับ 5 Zone)
     selectBurnSource(source){
         const target = this.selectedBurnTarget;
         // หากไม่มีเป้าหมาย ให้ยกเลิกการทำงาน
@@ -313,6 +313,28 @@ class HumanController extends Controller{
                 return false;
             }
             this.selectedBurnSource = "armor";
+            this.startBurnCardSelection();
+            return true;
+        }
+        // กรณีเลือกทำลาย "ม้า"
+        if(source === "mount"){
+
+            if(!target.mount){
+                return false;
+            }
+
+            this.selectedBurnSource = "mount";
+            this.startBurnCardSelection();
+            return true;
+        }
+        // กรณีเลือกทำลาย "Judgement Zone"
+        if(source === "judgement"){
+            
+            if(target.delayedTricks.length === 0){
+                return false;
+            }
+
+            this.selectedBurnSource = "judgement";
             this.startBurnCardSelection();
             return true;
         }
@@ -701,6 +723,37 @@ class HumanController extends Controller{
             }
             // นำเกราะเข้ากองทิ้งของเกม
             this.game.discardPile.addCard(armor);
+            return true;
+        }
+        // กรณีเลือกทำลาย "ม้า"
+        if(this.selectedBurnSource === "mount"){
+
+            if(!target.mount){
+                return false;
+            }
+
+            const mount = target.unequipMount();
+            if(!mount){
+                return false;
+            }
+
+            this.game.discardPile.addCard(mount);
+            return true;
+        }
+        // กรณีเลือกทำลาย "Judgement Zone"
+        if(this.selectedBurnSource === "judgement"){
+
+            const index = this.selectedBurnCardIndex;
+            if(index < 0 || index >= target.delayedTricks.length){
+                return false;
+            }
+
+            const card = target.delayedTricks.splice(index, 1)[0];
+            if(!card){
+                return false;
+            }
+
+            this.game.discardPile.addCard(card);
             return true;
         }
         return false;

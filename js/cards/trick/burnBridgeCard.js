@@ -6,12 +6,23 @@ class BurnBridgeCard extends TrickCard{
     needTarget(){
         return true;
     }
-    // ตรวจสอบว่าเป้าหมายอยู่ในระยะที่เลือกได้หรือไม่ (ห้ามเลือกตัวเอง และระยะห่างไม่เกิน 1)
+    // ตรวจสอบเป้าหมายของถอนสะพาน
     canTarget(player, target){
+        // ห้ามเลือกตัวเอง
         if(player === target){
             return false;
         }
-        return player.game.getDistance(player, target) <= 1;
+        // ต้องมีการ์ดอย่างน้อย 1 ใบให้ทิ้งได้
+        if(
+            target.hand.cards.length === 0 && 
+            !target.weapon && 
+            !target.armor && 
+            !target.mount && 
+            target.delayedTricks.length === 0
+        ){
+            return false;
+        }
+        return true;
     }
     // ประมวลผลการใช้งานการ์ดถอนสะพาน (BurnBridgeCard)
     use(player, game){
