@@ -369,46 +369,51 @@ class Game {
     }
     // ประมวลผลความเสียหายพร้อมส่งแจ้งเตือน Event ก่อนและหลังเกิดความเสียหาย
     damage(damage){
-        // ส่ง Event แจ้งเตือนก่อนเกิดความเสียหาย เพื่อเปิดโอกาสให้เกราะหรือสกิลเข้ามาแก้ไขค่า Damage หรือยกเลิกได้
+        // สร้างฟังก์ชัน resume สำหรับประมวลผลความเสียหายต่อเมื่อพ้นช่วง Trigger
+        damage.resume = () => {
+            if(damage.canceled){
+                this.log("ความเสียหายถูกยกเลิก");
+                return;
+            }
+            // ตรวจสอบ source หากไม่มีผู้สร้างความเสียหาย
+            const sourceName = damage.source ? damage.source.name : "สายฟ้า";
+            // กำหนดชื่อประเภทความเสียหายภาษาไทย
+            let damageName = "";
+            // แปลงประเภท Damage เป็นข้อความ
+            switch(damage.type){
+                case DamageType.FIRE:
+                    damageName = "ไฟ";
+                    break;
+                case DamageType.THUNDER:
+                    damageName = "สายฟ้า";
+                    break;
+                default:
+                    damageName = "ปกติ";
+            }
+            this.log(sourceName + " ทำความเสียหาย " + damageName + " " + 
+                damage.amount + " ให้ " + damage.target.name
+            );
+            // เช็กว่ามีความเสียหายที่เกิดจากการ์ดหรือไม่
+            if(damage.card){
+                console.log("Damage Card :", damage.card.name);
+                
+            }
+            // ลด HP ของเป้าหมายตามจำนวนความเสียหาย
+            damage.target.loseHp(damage.amount);
+            // ตรวจสอบสถานะใกล้ตาย
+            if(damage.target.isDying()){
+                this.enterDying(damage.target);
+            }
+            // ส่ง Event หลังเกิด Damage
+            this.eventManager.emit("afterDamage", damage);
+        }
+        // ส่ง Event ก่อนเกิด Damage
         this.eventManager.emit("beforeDamage", damage);
         // หยุดการทำงานชั่วคราวหากมี Trigger Skill
         if(damage.waitingTrigger){
             return true;
         }
-        // หากความเสียหายถูกยกเลิก ให้ลง Log และจบการทำงานทันที
-        if (damage.canceled){
-            this.log("ความเสียหายถูกยกเลิก");
-            return;
-        }
-        // ตรวจสอบ source หากไม่มีผู้สร้างความเสียหาย (เช่น สายฟ้า) ให้ใช้ชื่อ "สายฟ้า" แทน เพื่อป้องกัน Error
-        const sourceName = damage.source ? damage.source.name : "สายฟ้า";
-        // กำหนดชื่อประเภทความเสียหายภาษาไทย
-        let damageName = "";
-        // แปลงประเภท Damage เป็นข้อความ
-        switch(damage.type){
-            case DamageType.FIRE: damageName = "ไฟ";
-            break;
-            case DamageType.THUNDER: damageName = "สายฟ้า";
-            break;
-            default: damageName = "ปกติ";
-        }
-        // แสดง Log ผลความเสียหาย
-        this.log(sourceName + " ทำความเสียหาย " + damageName + " " +
-            damage.amount +  " ให้ " + damage.target.name
-        );
-        // เช็กว่ามีความเสียหายที่เกิดจากการ์ดหรือไม่ ถ้ามีให้แสดงชื่อการ์ดที่เป็นต้นเหตุ
-        if (damage.card){
-            console.log("Damage Card :", damage.card.name);
-        }
-        // ลด HP ของเป้าหมายตามจำนวนความเสียหายที่กำหนดในออบเจกต์ Damage
-        damage.target.loseHp(damage.amount);
-        // ตรวจสอบสถานะใกล้ตายของผู้เล่นเป้าหมาย
-        if(damage.target.isDying()){
-            // เข้าสู่กระบวนการสถานะใกล้ตาย
-            this.enterDying(damage.target);
-        }
-        // ส่ง Event แจ้งเตือนหลังเกิดความเสียหาย เพื่อเปิดโอกาสให้สกิลที่ทำงานหลังโดนดาเมจ (เช่น สกิลดูดเลือด/โต้กลับ) ทำงาน
-        this.eventManager.emit("afterDamage", damage);
+        return damage.resume();
     }
     // ระบบกลางสำหรับการเสี่ยงทาย (Judge Phase)
     judge(player){
