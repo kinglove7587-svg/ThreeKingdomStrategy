@@ -47,7 +47,7 @@ class GreenDragonBladeSkill extends TriggerSkill{
             return slashContext.resume();
         }
         // ค้นหาการ์ดโจมตีใบใหม่ในมือ
-        const SlashCards = player.hand.findSlashCards();
+        const slashCards = player.hand.findSlashCards();
         // กรณีไม่มีการ์ดโจมตีเหลือในมือ
         if(slashCards.length === 0){
             slashContext.waitingTrigger = false;
