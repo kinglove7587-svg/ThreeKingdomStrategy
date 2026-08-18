@@ -371,6 +371,10 @@ class Game {
     damage(damage){
         // ส่ง Event แจ้งเตือนก่อนเกิดความเสียหาย เพื่อเปิดโอกาสให้เกราะหรือสกิลเข้ามาแก้ไขค่า Damage หรือยกเลิกได้
         this.eventManager.emit("beforeDamage", damage);
+        // หยุดการทำงานชั่วคราวหากมี Trigger Skill
+        if(damage.waitingTrigger){
+            return true;
+        }
         // หากความเสียหายถูกยกเลิก ให้ลง Log และจบการทำงานทันที
         if (damage.canceled){
             this.log("ความเสียหายถูกยกเลิก");
