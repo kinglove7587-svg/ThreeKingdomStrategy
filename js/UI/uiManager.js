@@ -153,10 +153,13 @@ class UIManager{
             div.onclick = () => {
                 this.onPlayerClick(player);
             };
-            // กำหนดสถานะโซ่ตรวน
+            // กำหนดสถานะ
             let status = "";
             if(player.isChained()){
                 status += "<br>⛓";
+            }
+            if(player.delayedTricks.some(card => card instanceof LigthtningCard)){
+                status += "<br>⚡";
             }
             // กำหนดข้อความ HTML ภายใน div ให้แสดงชื่อ (ตัวหนา) และ พลังชีวิต HP
             div.innerHTML = 
