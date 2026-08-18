@@ -6,7 +6,6 @@
 - NegationCard ยกเลิกอุบาย ยังไม่เสร็จ ต้องรอไพ่ อุบายครบก่อน
 - AllianceCard ต้องมีฝ่ายก่อน
 - RestAndReorganizationCard เพิ่มเลือด ซับซ้อน เกิน
-- BorrowedSwordCard ตัดสินใจหลายคน
 
 การ์ด weapon ที่ยังไม่ได้ทำ
 - Green Dragon Blade ทำได้
