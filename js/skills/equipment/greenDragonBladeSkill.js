@@ -26,6 +26,28 @@ class GreenDragonBladeSkill extends TriggerSkill{
             player.name + " ง้าวมังกรเขียว: Slash ถูกหลบโดย " +
             context.target.name
         );
+        // หยุด Slash เดิมไว้ก่อน เพื่อรอการตัดสินใจใช้ Trigger Choice
+        context.waitingTrigger = true;
+        // เรียก Controller เริ่มถามผู้เล่นว่าจะใช้ความสามารถง้าวมังกรเขียวหรือไม่
+        player.controller.startTriggerChoice(this, 
+            {
+                slashContext: context
+            }
+        );
         
+    }
+    // ประมวลผลเมื่อผู้เล่นเลือก [ใช้] หรือ [ไม่ใช้]
+    resolveChoice(player, game, context, useSkill){
+
+        const slashContext = context.slashContext;
+        if(!useSkill){
+            slashContext.waitingTrigger = false;
+            game.log(player.name + " ไม่ใช้ ง้าวมังกรเขียว");
+            return slashContext.resume();
+        }
+        // กรณีเลือกใช้ 
+        slashContext.waitingTrigger = false;
+        game.log(player.name + " ใช้ ง้าวมังกรเขียว");
+        return true;
     }
 }
