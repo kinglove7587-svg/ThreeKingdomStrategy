@@ -64,6 +64,7 @@ class UIManager{
         this.renderTriggerChoice();
         this.renderReactionChoice();
         this.renderTriggerCardCancelButton();
+        this.renderFrostSwordSelection();
         this.renderCardSelectionStatus();
         this.renderTargetSelectionStatus();
         this.renderAdditionalTargetSelection();
@@ -297,6 +298,11 @@ class UIManager{
         // หากอยู่ในสถานะรอเลือกการ์ดเพื่อขโมย (Steal) ให้เปลี่ยนไปวาดการ์ดแบบคว่ำแทนแล้วจบฟังก์ชัน
         if(player.controller.inputState === "waitingStealCard"){
             this.renderStealHand();
+            return;
+        }
+        // หากอยู่ในสถานะรอเลือกการ์ด Frost Sword ให้เรียก renderFrostSwordHand()
+        if(player.controller.inputState === "waitingFrostSwordCard"){
+            this.renderFrostSwordHand();
             return;
         }
         // ระหว่างรอ Trigger Choice ไม่ต้องแสดงปุ่มการ์ดปกติ
@@ -1203,6 +1209,11 @@ class UIManager{
             controller.selectSkillCard(index);
             return;
         }
+        // ตรวจสอบว่าถ้าอยู่ในสถานะรอเลือกการ์ดสำหรับ Frost Sword
+        if(controller.inputState === "waitingFrostSwordCard"){
+            controller.selectFrostSwordCard("hand", index);
+            return;
+        }
         // หากอยู่ในสถานะรอเลือกการ์ดสำหรับ Trigger Skill
         if(controller.inputState === "waitingTriggerCard"){
             controller.selectTriggerCard(index);
@@ -1543,6 +1554,88 @@ class UIManager{
             controller.finishAdditionalTargetSelection();
         };
         this.controlArea.appendChild(button);
+    }
+    // วาดปุ่มเลือกการ์ด/อุปกรณ์เพื่อทิ้งสำหรับสกิลกระบี่น้ำแข็ง
+    renderFrostSwordHand(){
+        
+        const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
+        const selectedCards = controller.selectedFrostSwordCards;
+        // วาดปุ่มเลือกไพ่บนมือ (แสดงที่ handArea)
+        for(let i = 0; i < player.hand.cards.length; i++){
+            
+            const card = player.hand.cards[i];
+            const button = document.createElement("button");
+            button.textContent = card.name;
+            
+            const selectedIndex = selectedCards.findIndex(selected => 
+                selected.source === "hand" && 
+                selected.card === card
+            );
+            
+            if(selectedIndex !== -1){
+
+                button.textContent = (selectedIndex + 1) + ". " + card.name;
+                button.classList.add("selected-card");
+            };
+            button.onclick = () => {
+                const success = controller.selectFrostSwordCard("hand", i);
+                if(success){
+                    this.game.ui.render();
+                }
+            };
+            this.handArea.appendChild(button);
+        }
+        // รายการอุปกรณ์ (อาวุธ, เกราะ, ม้า)
+        const equipment = [
+            {
+                source: "weapon", 
+                card: player.weapon, 
+                icon: "⚔️"
+            },
+            {
+                source: "armor", 
+                card: player.armor, 
+                icon: "🛡️"
+            },
+            {
+                source: "mount", 
+                card: player.mount, 
+                icon: "🐎"
+            }
+        ];
+        // วาดปุ่มเลือกอุปกรณ์ (แสดงที่ controlArea)
+        for(const item of equipment){
+
+            if(!item.card){
+                continue;
+            }
+            
+            const button = document.createElement("button");
+            button.textContent = item.icon + " " + item.card.name;
+            
+            const selectedIndex = selectedCards.findIndex(selected => 
+                selected.source === item.source && 
+                selected.card === item.card
+            );
+            
+            if(selectedIndex !== -1){
+                button.textContent = (selectedIndex + 1) + ". " + 
+                    item.icon + " " + item.card.name;
+                button.classList.add("selected-card");
+            }
+            
+            if(selectedCards.length >= 2 && selectedIndex === -1){
+                button.disabled = true;
+            }
+            button.onclick = () => {
+                const success = controller.selectFrostSwordCard(item.source, -1);
+                if(success){
+                    this.game.ui.render();
+                }
+            };
+            this.controlArea.appendChild(button);
+        }
     }
     
 }
