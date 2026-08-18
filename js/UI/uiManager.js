@@ -64,7 +64,6 @@ class UIManager{
         this.renderTriggerChoice();
         this.renderReactionChoice();
         this.renderTriggerCardCancelButton();
-        this.renderFrostSwordSelection();
         this.renderCardSelectionStatus();
         this.renderTargetSelectionStatus();
         this.renderAdditionalTargetSelection();
