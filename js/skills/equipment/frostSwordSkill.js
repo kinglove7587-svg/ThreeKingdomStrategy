@@ -32,6 +32,26 @@ class FrostSwordSkill extends TriggerSkill{
             }
         );
     }
+    // นับจำนวนการ์ดทั้งหมดของเป้าหมาย (มือ + อาวุธ + เกราะ + ม้า)
+    countFrostSwordCards(player){
+
+        let count = 0;
+        // นับจำนวนไพ่บนมือ
+        count += player.hand.cards.length;
+        // นับอุปกรณ์: อาวุธ
+        if(player.weapon){
+            count++;
+        }
+        // นับอุปกรณ์: เกราะ
+        if(player.armor){
+            count++;
+        }
+        // นับอุปกรณ์: ม้า
+        if(player.mount){
+            count++;
+        }
+        return count;
+    }
     // จัดการคำตอบ [ใช้ / ไม่ใช้] จากผู้เล่น
     resolveChoice(player, game, context, useSkill){
 
