@@ -40,14 +40,34 @@ class GreenDragonBladeSkill extends TriggerSkill{
     resolveChoice(player, game, context, useSkill){
 
         const slashContext = context.slashContext;
+        // กรณีไม่ใช้ความสามารถ
         if(!useSkill){
             slashContext.waitingTrigger = false;
             game.log(player.name + " ไม่ใช้ ง้าวมังกรเขียว");
             return slashContext.resume();
         }
-        // กรณีเลือกใช้ 
+        // ค้นหาการ์ดโจมตีใบใหม่ในมือ
+        const SlashCards = player.hand.findSlashCards();
+        // กรณีไม่มีการ์ดโจมตีเหลือในมือ
+        if(slashCards.length === 0){
+            slashContext.waitingTrigger = false;
+            game.log(player.name + " ไม่มี โจมตี ให้ใช้ ง้าวมังกรเขียว");
+            return slashContext.resume();
+        }
+        // ใช้การ์ดโจมตีใบแรกที่พบ
+        const slashInfo = slashCards[0];
+        const slashCard = slashInfo.card;
+        // นำการ์ดโจมตีออกจากมือ
+        const removeSlash = player.hand.removeCard(slashInfo.index);
+        if(!removeSlash){
+            slashContext.waitingTrigger = false;
+            return slashContext.resume();
+        }
+        // ทิ้งการ์ดลงกองทิ้ง
+        game.discardPile.addCard(removeSlash);
         slashContext.waitingTrigger = false;
-        game.log(player.name + " ใช้ ง้าวมังกรเขียว");
-        return true;
+        game.log(player.name + " ใช้ ง้าวมังกรเขียว → โจมตี " + slashContext.target.name);
+        // ยิง Slash ใบใหม่ใส่เป้าหมายเดิม
+        return slashCard.resolveSlashTarget(player, slashContext.target, game);
     }
 }
