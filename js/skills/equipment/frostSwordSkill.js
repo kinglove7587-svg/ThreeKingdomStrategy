@@ -40,13 +40,17 @@ class FrostSwordSkill extends TriggerSkill{
         }
 
         if(useSkill){
-
+            // ยกเลิก Damage และ Resume กระบวนการ
+            context.damage.waitingTrigger = false;
             context.damage.canceled = true;
             game.log(player.name + " เลือกใช้ กระบี่น้ำแข็ง");
+            return context.damage.resume();
 
         }else{
+            // ดำเนินการ Damage ต่อตามปกติ
             game.log(player.name + " ไม่ใช้ กระบี่น้ำแข็ง");
+            context.damage.waitingTrigger = false;
+            return context.damage.resume();
         }
-        return true;
     }
 }
