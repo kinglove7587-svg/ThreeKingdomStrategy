@@ -60,14 +60,24 @@ class FrostSwordSkill extends TriggerSkill{
         }
 
         if(useSkill){
-            // ยกเลิก Damage และ Resume กระบวนการ
-            context.damage.waitingTrigger = false;
+            // นับจำนวนการ์ดที่สามารถทิ้งได้
+            const availableCount = this.countFrostSwordCards(player);
+            // กรณีการ์ดไม่ถึง 2 ใบ (ใช้สกิลไม่ได้ -> ทำ Damage ต่อตามปกติ)
+            if(availableCount < 2){
+                // ยกเลิก Damage และ Resume กระบวนการ
+                context.damage.waitingTrigger = false;
+                context.damage.canceled = false;
+                game.log(player.name + " ไม่สามารถใช้ กระบี่น้ำแข็งได้ เพราะมีการ์ดให้ทิ้งไม่ถึง 2 ใบ");
+                return context.damage.resume();
+            }
+            // กรณีการ์ดตั้งแต่ 2 ใบขึ้นไป (ใช้สกิลสำเร็จ -> ยกเลิก Damage แล้วเข้าสู่หน้าเลือกการ์ด 2 ใบ)
             context.damage.canceled = true;
             game.log(player.name + " เลือกใช้ กระบี่น้ำแข็ง");
-            return context.damage.resume();
+            player.controller.startFrostSwordCardSelection(this, context);
+            return true;
 
         }else{
-            // ดำเนินการ Damage ต่อตามปกติ
+            // กรณีไม่ใช้สกิล -> ดำเนินการ Damage ต่อตามปกติ
             game.log(player.name + " ไม่ใช้ กระบี่น้ำแข็ง");
             context.damage.waitingTrigger = false;
             return context.damage.resume();
