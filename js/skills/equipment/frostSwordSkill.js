@@ -65,7 +65,7 @@ class FrostSwordSkill extends TriggerSkill{
         }
         // ตรวจสอบว่าผู้เล่นเลือกการ์ดทิ้งครบ 2 ใบหรือไม่
         const selections = player.controller.selectedFrostSwordCards;
-        if(!selection || selection.length !== 2){
+        if(!selections || selections.length !== 2){
             return false;
         }
         // ตรวจสอบความถูกต้องของการ์ดทั้ง 2 ใบก่อนลบ
