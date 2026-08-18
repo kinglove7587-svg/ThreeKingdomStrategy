@@ -11,8 +11,7 @@ class LiuBei extends Player{ // เล่าปี่
         //this.setChained(true);
         //this.equipWeapon(new TwoBladedTridentCard("♣️", 7));
         //this.hand.addCard(new EightTrigramsArmor("♠️", 1));
-        this.hand.addCard(new GreenDragonBladeCard("♠️", 1));
-        this.hand.addCard(new SlashCard("♠️", 1));
-        this.hand.addCard(new SlashCard("♠️", 1));
+        //this.hand.addCard(new GreenDragonBladeCard("♠️", 1));
+        //this.hand.addCard(new SlashCard("♠️", 1));
     }
 }

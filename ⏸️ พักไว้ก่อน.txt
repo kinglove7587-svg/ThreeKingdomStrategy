@@ -8,7 +8,6 @@
 - RestAndReorganizationCard เพิ่มเลือด ซับซ้อน เกิน
 
 การ์ด weapon ที่ยังไม่ได้ทำ
-- Green Dragon Blade ทำได้
 - Frost Sword พอได้
 - Six Swords of Wu ต้องมีพวกเดียวกัน
 - Yin-Yang Swords ต้องมีตัวละคร หลายเพศ
