@@ -762,6 +762,7 @@ class HumanController extends Controller{
         );
         // Trigger ที่มีขั้นตอนต่อไม่ต้องล้าง State
         if(
+            this.inputState === "waitingTriggerChoice" || 
             this.inputState === "waitingTriggerCard" || 
             this.inputState === "waitingTriggerTarget"
         ){
