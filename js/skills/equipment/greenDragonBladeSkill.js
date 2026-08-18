@@ -39,11 +39,16 @@ class GreenDragonBladeSkill extends TriggerSkill{
     // ประมวลผลเมื่อผู้เล่นเลือก [ใช้] หรือ [ไม่ใช้]
     resolveChoice(player, game, context, useSkill){
 
+        const controller = player.controller;
         const slashContext = context.slashContext;
         // กรณีไม่ใช้ความสามารถ
         if(!useSkill){
             slashContext.waitingTrigger = false;
             game.log(player.name + " ไม่ใช้ ง้าวมังกรเขียว");
+            // จบ Trigger ปัจจุบันก่อน Resume Slash เดิม
+            controller.inputState = "idle";
+            controller.selectedTriggerSkill = null;
+            controller.triggerContext = null;
             return slashContext.resume();
         }
         // ค้นหาการ์ดโจมตีใบใหม่ในมือ
@@ -52,6 +57,10 @@ class GreenDragonBladeSkill extends TriggerSkill{
         if(slashCards.length === 0){
             slashContext.waitingTrigger = false;
             game.log(player.name + " ไม่มี โจมตี ให้ใช้ ง้าวมังกรเขียว");
+            
+            controller.inputState = "idle";
+            controller.selectedTriggerSkill = null;
+            controller.triggerContext = null;
             return slashContext.resume();
         }
         // ใช้การ์ดโจมตีใบแรกที่พบ
@@ -61,12 +70,20 @@ class GreenDragonBladeSkill extends TriggerSkill{
         const removeSlash = player.hand.removeCard(slashInfo.index);
         if(!removeSlash){
             slashContext.waitingTrigger = false;
+
+            controller.inputState = "idle";
+            controller.selectedTriggerSkill = null;
+            controller.triggerContext = null;
             return slashContext.resume();
         }
         // ทิ้งการ์ดลงกองทิ้ง
         game.discardPile.addCard(removeSlash);
         slashContext.waitingTrigger = false;
         game.log(player.name + " ใช้ ง้าวมังกรเขียว → โจมตี " + slashContext.target.name);
+        
+        controller.inputState = "idle";
+        controller.selectedTriggerSkill = null;
+        controller.triggerContext = null;
         // ยิง Slash ใบใหม่ใส่เป้าหมายเดิม
         return slashCard.resolveSlashTarget(player, slashContext.target, game);
     }
