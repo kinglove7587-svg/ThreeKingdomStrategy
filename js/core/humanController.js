@@ -376,6 +376,17 @@ class HumanController extends Controller{
             this.selectedBurnCardIndex = -1;
             return true;
         }
+        // กรณีเลือกทำลาย "ม้า" (mount)
+        if(this.selectedBurnSource === "mount"){
+
+            if(!target.mount){
+                return false;
+            }
+
+            this.selectedBurnCard = target.mount;
+            this.selectedBurnCardIndex = -1;
+            return true;
+        }
         // กรณีเลือกทำลายจาก Judgement Zone
         if(this.selectedBurnSource === "judgement"){
 
