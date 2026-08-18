@@ -16,7 +16,9 @@ class StealCard extends TrickCard{
         if(
             target.hand.cards.length === 0 && 
             !target.weapon && 
-            !target.armor
+            !target.armor && 
+            !target.mount && 
+            target.delayedTricks.length === 0
         ){
             return false;
         }
@@ -35,6 +37,6 @@ class StealCard extends TrickCard{
     }
     // NEW: คำอธิบายความสามารถสำหรับ Tooltip
     getDescription(){
-        return "เลือกผู้เล่นอื่นที่อยู่ห่างไม่เกิน 1 และ มีการ์ดหรืออุปกรณ์ จากนั้นเลือกขโมยจาก มือ อาวุธ หรือ เกราะ";
+        return "เลือกผู้เล่นอื่นที่อยู่ห่างไม่เกิน 1 และ มีการ์ดหรืออุปกรณ์ จากนั้นเลือกขโมยจาก มือ อาวุธ ม้า  หรือ เกราะ และ Jusgement";
     }
 }

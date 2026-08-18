@@ -192,7 +192,6 @@ class HumanController extends Controller{
     startStealSelection(){
         // ล้างค่าการ์ดและแหล่งที่มาจากการ Steal ครั้งก่อน
         this.selectedStealCard = null;
-        this.selectedStealSource = null;
         this.selectedStealCardIndex = -1;
         // เปลี่ยนสถานะเป็นรอเลือกการ์ดที่จะขโมย
         this.inputState = "waitingStealCard";
@@ -225,7 +224,7 @@ class HumanController extends Controller{
         this.inputState = "idle";
         this.game.ui.render();
     }
-    // รับตำแหน่ง Index ของการ์ดเป้าหมายที่ต้องการขโมย
+    // เลือกการ์ดที่จะขโมยจากเป้าหมายตาม Zone ที่ระบุ
     selectStealCard(index){
         // ดึงเป้าหมายที่เลือกไว้
         const target = this.selectedStealTarget;
@@ -233,14 +232,62 @@ class HumanController extends Controller{
         if(!target){
             return;
         }
-        // ตรวจสอบว่า Index อยู่ในขอบเขตการ์ดบนมือของเป้าหมายหรือไม่
-        if(index < 0 || index >= target.hand.cards.length){
-            return;
+        // กรณีเลือกขโมยจาก "มือ"
+        if(this.selectedStealSource === "hand"){
+
+            if(index < 0 || index >= target.hand.cards.length){
+                return false;
+            }
+
+            this.selectedStealCard = target.hand.cards[index];
+            this.selectedStealCardIndex = index;
+            return true;
         }
-        // บันทึกข้อมูลการเลือก
-        this.selectedStealSource = "hand";
-        this.selectedStealCard = target.hand.cards[index];
-        this.selectedStealCardIndex = index;
+        // กรณีเลือกขโมย "อาวุธ"
+        if(this.selectedStealSource === "weapon"){
+
+            if(!target.weapon){
+                return false;
+            }
+
+            this.selectedStealCard = target.weapon;
+            this.selectedStealCardIndex = -1;
+            return true;
+        }
+        // กรณีเลือกขโมย "เกราะ"
+        if(this.selectedStealSource === "armor"){
+
+            if(!target.armor){
+                return false;
+            }
+
+            this.selectedStealCard = target.armor;
+            this.selectedStealCardIndex = -1;
+            return true;
+        }
+        // กรณีเลือกขโมย "ม้า"
+        if(this.selectedStealSource === "mount"){
+
+            if(!target.mount){
+                return false;
+            }
+
+            this.selectedStealCard = target.mount;
+            this.selectedStealCardIndex = -1;
+            return true;
+        }
+        // กรณีเลือกขโมยจาก "Judgement Zone"
+        if(this.selectedStealSource === "judgement"){
+
+            if(index < 0 || index >= target.delayedTricks.length){
+                return false;
+            }
+
+            this.selectedStealCard = target.delayedTricks[index];
+            this.selectedStealCardIndex = index;
+            return true;
+        }
+        return false;
     }
     // จัดการการเลือกโซนที่จะขโมยการ์ด (มือ หรือ อาวุธ) จากผู้เล่นเป้าหมาย
     selectStealSource(source){
@@ -262,8 +309,7 @@ class HumanController extends Controller{
                 return false;
             }
             this.selectedStealSource = "weapon";
-            this.selectedStealCard = target.weapon;
-            this.selectedStealCardIndex = -1;
+            this.startStealSelection();
             return true;
         }
         // กรณีเลือกขโมย "เกราะ"
@@ -273,8 +319,27 @@ class HumanController extends Controller{
                 return false;
             }
             this.selectedStealSource = "armor";
-            this.selectedStealCard = target.armor;
-            this.selectedStealCardIndex = -1;
+            this.startStealSelection();
+            return true;
+        }
+        // กรณีเลือกขโมย "ม้า" (mount)
+        if(source === "mount"){
+
+            if(!target.mount){
+                return false;
+            }
+            this.selectedStealSource = "mount";
+            this.startStealSelection();
+            return true;
+        }
+        // กรณีเลือกขโมยจาก "Judgement Zone" (delayedTricks)
+        if(source === "judgement"){
+
+            if(target.delayedTricks.length === 0){
+                return false;
+            }
+            this.selectedStealSource = "judgement";
+            this.startStealSelection();
             return true;
         }
         return false;
@@ -425,7 +490,7 @@ class HumanController extends Controller{
         this.player.hand.addCard(card);
         return true;
     }
-    // ดำเนินการย้ายอุปกรณ์ (อาวุธ หรือ เกราะ) จากผู้เล่นเป้าหมายมาให้ผู้เล่นปัจจุบันสวมใส่
+    // ขโมยอุปกรณ์ (อาวุธ/เกราะ/ม้า) จากเป้าหมายเข้ามือของผู้เล่น
     stealSelectedEquipment(){
         const target = this.selectedStealTarget;
         // หากไม่มีเป้าหมาย ให้ยกเลิกการทำงาน
@@ -437,11 +502,13 @@ class HumanController extends Controller{
             if(!target.weapon){
                 return false;
             }
-            // ดึงออบเจกต์อาวุธของเป้าหมาย
-            const weapon = target.weapon;
-            // ถอดอาวุธออกจากเป้าหมาย และนำมาสวมใส่ให้ผู้เล่นปัจจุบัน
-            target.unequipWeapon();
-            this.player.equipWeapon(weapon);
+            
+            const weapon = target.unequipWeapon();
+            if(!weapon){
+                return false;
+            }
+
+            this.player.hand.addCard(weapon);
             return true;
         }
         // กรณีขโมย "เกราะ" (armor)
@@ -449,29 +516,71 @@ class HumanController extends Controller{
             if(!target.armor){
                 return false;
             }
-            // ดึงออบเจกต์เกราะของเป้าหมาย
-            const armor = target.armor;
-            // ถอดเกราะออกจากเป้าหมาย และนำมาสวมใส่ให้ผู้เล่นปัจจุบัน
-            target.unequipArmor();
-            this.player.equipArmor(armor);
+            
+            const armor = target.unequipArmor();
+            if(!armor){
+                return false;
+            }
+
+            this.player.hand.addCard(armor);
+            return true;
+        }
+        // กรณีขโมย "ม้า"
+        if(this.selectedStealSource === "mount"){
+
+            if(!target.mount){
+                return false;
+            }
+
+            const mount = target.unequipMount();
+            if(!mount){
+                return false;
+            }
+
+            this.player.hand.addCard(mount);
             return true;
         }
         return false;
     }
-    // ยืนยันการขโมยการ์ด/อุปกรณ์ที่เลือก ดำเนินการขโมย ล้าง State
+    // ขโมยการ์ดจาก Judgement Zone
+    stealSelectedJudgement(){
+        // ดึงเป้าหมายที่เลือกไว้
+        const target = this.selectedStealTarget;
+        if(!target){
+            return false;
+        }
+        // ตรวจสอบว่าแหล่งที่เลือกเป็น Judgement Zone
+        const index = this.selectedStealCardIndex;
+        if(index < 0 || index >= target.delayedTricks.length){
+            return false;
+        }
+        // ดึงการ์ดออก
+        const card = target.delayedTricks.splice(index, 1)[0];
+        if(!card){
+            return false;
+        }
+
+        this.player.hand.addCard(card);
+        return true;
+    }
+    // ยืนยันการขโมยการ์ด นำการ์ดเข้ามือ ล้าง State การขโมยทั้งหมด
     confirmStealSelection(){
         let success = false;
         // ขโมยไพ่จากมือ
         if(this.selectedStealSource === "hand"){
             success = this.stealSelectedCard();
         }
-        // ขโมยอาวุธที่สวมใส่อยู่
-        if(this.selectedStealSource === "weapon"){
+        // ขโมยอุปกรณ์ (อาวุธ/เกราะ/ม้า)
+        if(
+            this.selectedStealSource === "weapon" || 
+            this.selectedStealSource === "armor" || 
+            this.selectedStealSource === "mount"
+        ){
             success = this.stealSelectedEquipment();
         }
-        //ขโมยเกราะที่สวมใส่อยู่
-        if(this.selectedStealSource === "armor"){
-            success = this.stealSelectedEquipment();
+        // ขโมยจาก Judgement Zone
+        if(this.selectedStealSource === "judgement"){
+            success = this.stealSelectedJudgement();
         }
         // ถ้าย้ายการ์ดไม่สำเร็จ ให้ยกเลิก
         if(!success){

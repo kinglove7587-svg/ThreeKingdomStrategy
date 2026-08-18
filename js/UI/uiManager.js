@@ -429,7 +429,7 @@ class UIManager{
         // นำปุ่ม "กลับ" ไปวางในโซน controlArea บน UI
         this.controlArea.appendChild(closeButton);
     }
-    // วาดการ์ดคว่ำของเป้าหมายในโหมดขโมยการ์ด (Steal)
+    // แสดงรายการการ์ด/อุปกรณ์จาก Zone ที่เลือก เพื่อให้ผู้เล่นคลิกขโมย
     renderStealHand(){
         // ดึงผู้เล่นปัจจุบันที่กำลังเล่นอยู่ในขณะนี้
         const player = this.game.getCurrentPlayer();
@@ -441,19 +441,84 @@ class UIManager{
         if(!target){
             return;
         }
+        // กรณีเลือกขโมยจาก "มือ" (แสดงไพ่คว่ำที่ handArea)
+        if(controller.selectedStealSource === "hand"){
         // วนลูปสร้างปุ่มไพ่คว่ำตามจำนวนการ์ดบนมือของเป้าหมาย
-        for(let i = 0; i < target.hand.cards.length; i++){
-            // สร้าง Element ปุ่ม <button> ขึ้นมาใหม่
+            for(let i = 0; i < target.hand.cards.length; i++){
+                // สร้าง Element ปุ่ม <button> ขึ้นมาใหม่
+                const button = document.createElement("button");
+                // กำหนดข้อความบนปุ่มเป็นไอคอนไพ่คว่ำ พร้อมหมายเลข
+                button.textContent = "🂠 " + (i + 1);
+                // กำหนด Event เมื่อกดคลิก ให้เรียกใช้เมธอด selectStealCard
+                button.onclick = () => {
+                    if(!controller.selectStealCard(i)){
+                        return;
+                    }
+                    controller.confirmStealSelection();
+                };
+                // นำปุ่มที่สร้างไปแสดงผลในโซน handArea บนหน้าเว็บ
+                this.handArea.appendChild(button);
+            }
+        }
+        // กรณีเลือกขโมย "อาวุธ"
+        if(controller.selectedStealSource === "weapon"){
+
             const button = document.createElement("button");
-            // กำหนดข้อความบนปุ่มเป็นไอคอนไพ่คว่ำ พร้อมหมายเลข
-            button.textContent = "🂠 " + (i + 1);
-            // กำหนด Event เมื่อกดคลิก ให้เรียกใช้เมธอด selectStealCard
+            button.textContent = "⚔️ " + 
+                target.weapon.name + " " + 
+                target.weapon.suit + " " + 
+                target.weapon.number;
             button.onclick = () => {
-                controller.selectStealCard(i);
+                controller.selectStealCard(0);
                 controller.confirmStealSelection();
             };
-            // นำปุ่มที่สร้างไปแสดงผลในโซน handArea บนหน้าเว็บ
-            this.handArea.appendChild(button);
+            this.controlArea.appendChild(button);
+        }
+        // กรณีเลือกขโมย "เกราะ"
+        if(controller.selectedStealSource === "armor"){
+
+            const button = document.createElement("button");
+            button.textContent = "🛡️ " + 
+                target.armor.name + " " + 
+                target.armor.suit + " " + 
+                target.armor.number;
+            button.onclick = () => {
+                controller.selectStealCard(0);
+                controller.confirmStealSelection();
+            };
+            this.controlArea.appendChild(button);
+        }
+        // กรณีเลือกขโมย "ม้า"
+        if(controller.selectedStealSource === "mount"){
+
+            const button = document.createElement("button");
+            button.textContent = "🐎 " + 
+                target.mount.name + " " + 
+                target.mount.suit + " " + 
+                target.mount.number;
+            button.onclick = () => {
+                controller.selectStealCard(0);
+                controller.confirmStealSelection();
+            };
+            this.controlArea.appendChild(button);
+        }
+        // กรณีเลือกขโมยจาก "Judgement Zone"
+        if(controller.selectedStealSource === "judgement"){
+
+            for(let i = 0; i < target.delayedTricks.length; i++){
+
+                const card = target.delayedTricks[i];
+                const button = document.createElement("button");
+                button.textContent = "⚡ " + 
+                    card.name + " " + 
+                    card.suit + " " + 
+                    card.number;
+                button.onclick = () => {
+                    controller.selectStealCard(i);
+                    controller.confirmStealSelection();
+                };
+                this.controlArea.appendChild(button);
+            }
         }
         // สร้างปุ่ม ย้อนกลับ
         const backButton = document.createElement("button");
@@ -463,7 +528,7 @@ class UIManager{
         };
         this.controlArea.appendChild(backButton);
     }
-    // แสดงปุ่มเลือกแหล่งที่จะขโมยการ์ด
+    // แสดงปุ่มเลือกตำแหน่ง (Zone) ที่จะขโมยการ์ดจากเป้าหมาย
     renderStealSource(){
         // ผู้เล่นปัจจุบัน และ Controller
         const player = this.game.getCurrentPlayer();
@@ -474,20 +539,21 @@ class UIManager{
             return;
         }
         // สร้างปุ่มเลือกขโมยจาก "มือ"
-        const handButton = document.createElement("button");
-        handButton.textContent = "🂠 มือ";
-        handButton.onclick = () => {
-            controller.selectStealSource("hand");
-        };
-        // แสดงปุ่ม "มือ" บน Control Area
-        this.controlArea.appendChild(handButton);
+        if(target.hand.cards.length > 0){
+            const handButton = document.createElement("button");
+            handButton.textContent = "🂠 มือ";
+            handButton.onclick = () => {
+                controller.selectStealSource("hand");
+            };
+            // แสดงปุ่ม "มือ" บน Control Area
+            this.controlArea.appendChild(handButton);
+        }
         // ตรวจสอบว่าเป้าหมายมีการใส่อาวุธอยู่หรือไม่ หากมีให้สร้างปุ่มขโมย "อาวุธ"
         if(target.weapon){
             const weaponButton = document.createElement("button");
             weaponButton.textContent = "⚔️ " + target.weapon.name;
             weaponButton.onclick = () => {
                 controller.selectStealSource("weapon");
-                controller.confirmStealSelection();
             };
             // แสดงปุ่ม "อาวุธ" บน Control Area
             this.controlArea.appendChild(weaponButton);
@@ -498,10 +564,42 @@ class UIManager{
             armorButton.textContent = "🛡️ " + target.armor.name;
             armorButton.onclick = () => {
                 controller.selectStealSource("armor");
-                controller.confirmStealSelection();
             };
             this.controlArea.appendChild(armorButton);
         }
+        // ปุ่มขโมย "ม้า"
+        if(target.mount){
+
+            const mountButton = document.createElement("button");
+            mountButton.textContent = "🐎 " + target.mount.name;
+            mountButton.onclick = () => {
+                controller.selectStealSource("mount");
+            };
+            this.controlArea.appendChild(mountButton);
+        }
+        // ปุ่มขโมยจาก "Judgement Zone"
+        if(target.delayedTricks.length > 0){
+
+            const judgementButton = document.createElement("button");
+            judgementButton.textContent = "⚡ Judgement (" + 
+                target.delayedTricks.length + ")";
+            judgementButton.onclick = () => {
+                controller.selectStealSource("judgement");
+            };
+            this.controlArea.appendChild(judgementButton);
+        }
+        // ปุ่ม "ไม่ขโมย" (ยกเลิกและล้าง State)
+        const cancelButton = document.createElement("button");
+        cancelButton.textContent = "ไม่ขโมย";
+        cancelButton.onclick = () => {
+            controller.inputState = "idle";
+            controller.selectedStealTarget = null;
+            controller.selectedStealSource = null;
+            controller.selectedStealCard = null;
+            controller.selectedStealCardIndex = -1;
+            controller.game.ui.render();
+        };
+        this.controlArea.appendChild(cancelButton);
     }
     // แสดงปุ่มเลือกโซนที่จะทำลายการ์ด (มือ, อาวุธ หรือ เกราะ)
     renderBurnSource(){
