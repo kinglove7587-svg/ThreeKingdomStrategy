@@ -24,6 +24,8 @@ class HumanController extends Controller{
         this.triggerContext = null;
         this.selectedTriggerCardIndex = -1;
         this.selectedTriggerCardIndices = [];
+        // Frost Sword State
+        this.selectedFrostSwordCards = [];
         // Sky Piercing Halberd State
         this.selectedAdditionalTargets = [];
         this.additionalTargetLimit = 0;
@@ -99,7 +101,8 @@ class HumanController extends Controller{
             this.inputState === "waitingTriggerCard" || 
             this.inputState === "waitingTriggerTarget" || 
             this.inputState === "waitingAdditionalTargets" || 
-            this.inputState === "waitingBorrowedSwordTarget"
+            this.inputState === "waitingBorrowedSwordTarget" || 
+            this.inputState === "waitingFrostSwordCard"
         ){
             return;
         }
@@ -976,6 +979,15 @@ class HumanController extends Controller{
         this.selectedTriggerCardIndices = [];
         this.inputState = "waitingTriggerCard";
 
+        this.game.ui.render();
+    }
+    // เริ่มต้นสถานะเลือกการ์ด 2 ใบสำหรับ Frost Sword
+    startFrostSwordCardSelection(skill, context){
+
+        this.selectedTriggerSkill = skill;
+        this.triggerContext = context;
+        this.selectedFrostSwordCards = [];
+        this.inputState = "waitingFrostSwordCard";
         this.game.ui.render();
     }
     // เริ่มต้นสถานะรอเลือกเป้าหมายเพิ่มเติม
