@@ -158,7 +158,7 @@ class UIManager{
             if(player.isChained()){
                 status += "<br>⛓";
             }
-            if(player.delayedTricks.some(card => card instanceof LigthtningCard)){
+            if(player.delayedTricks.some(card => card instanceof LightningCard)){
                 status += "<br>⚡";
             }
             // กำหนดข้อความ HTML ภายใน div ให้แสดงชื่อ (ตัวหนา) และ พลังชีวิต HP
