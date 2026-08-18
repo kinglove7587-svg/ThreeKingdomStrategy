@@ -13,6 +13,10 @@ class FireAttackCard extends TrickCard{
         if (player === target){
             return false;
         }
+        // ผู้ใช้ต้องมีไพ่อื่นนอกจาก เพลิงผลาญ อย่างน้อย 1 ใบ
+        if(player.hand.cards.length <= 1){
+            return false;
+        }
         // เป้าหมายต้องมีไพ่บนมืออย่างน้อย 1 ใบ
         if (target.hand.cards.length === 0){
             return false;
