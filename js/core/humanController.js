@@ -1511,9 +1511,21 @@ class HumanController extends Controller{
             card: card
         });
         console.log("Frost Sword Selection =", this.selectedFrostSwordCards);
-        
+        // เมื่อเลือกครบ 2 ใบ ประมวลผลทิ้งการ์ดทันที
         if(this.selectedFrostSwordCards.length >= 2){
-            return true;
+            
+            const skill = this.selectedTriggerSkill;
+            const context = this.triggerContext;
+            const success = skill.resolveFrostSwordCards(this.player, this.game, context);
+            
+            if(success){
+                this.selectedTriggerSkill = null;
+                this.triggerContext = null;
+                this.selectedFrostSwordCards = [];
+                this.inputState = "idle";
+                this.game.ui.render();
+            }
+            return success;
         }
         this.game.ui.render();
         return true;
