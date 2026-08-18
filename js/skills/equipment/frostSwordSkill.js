@@ -53,4 +53,85 @@ class FrostSwordSkill extends TriggerSkill{
             return context.damage.resume();
         }
     }
+    // ตรวจสอบการ์ดที่เลือกทิ้ง 2 ใบ นำออกจากมือ/ช่องอุปกรณ์ แล้วส่งเข้า discardPile
+    resolveFrostSwordCards(player, game, context){
+
+        if(!context){
+            return false;
+        }
+
+        if(!player.controller){
+            return false;
+        }
+        // ตรวจสอบว่าผู้เล่นเลือกการ์ดทิ้งครบ 2 ใบหรือไม่
+        const selections = player.controller.selectedFrostSwordCards;
+        if(!selection || selection.length !== 2){
+            return false;
+        }
+        // ตรวจสอบความถูกต้องของการ์ดทั้ง 2 ใบก่อนลบ
+        for(const selection of selections){
+            if(!selection.card){
+                return false;
+            }
+            if(
+                selection.source === "hand" && 
+                !player.hand.cards.includes(selection.card)
+            ){
+                return false;
+            }
+            if(
+                selection.source === "weapon" && 
+                player.weapon !== selection.card
+            ){
+                return false;
+            }
+            if(
+                selection.source === "armor" && 
+                player.armor !== selection.card
+            ){
+                return false;
+            }
+            if(
+                selection.source === "mount" && 
+                player.mount !== selection.card
+            ){
+                return false;
+            }
+        }
+        // เริ่มดำเนินการถอดการ์ดออกและทิ้งลง discardPile
+        for(const selection of selections){
+
+            let removeCard = null;
+            if(selection.source === "hand"){
+                const index = player.hand.cards.indexOf(selection.card);
+
+                if(index === -1){
+                    return false;
+                }
+                removeCard = player.hand.removeCard(index);
+            }
+
+            if(selection.source === "weapon"){
+                removeCard = player.unequipWeapon();
+            }
+
+            if(selection.source === "armor"){
+                removeCard = player.unequipArmor();
+            }
+
+            if(selection.source === "mount"){
+                removeCard = player.unequipMount();
+            }
+
+            if(!removeCard){
+                return false;
+            }
+
+            game.discardPile.addCard(removeCard);
+            game.log(player.name + " ทิ้ง " + removeCard.name + " จาก " + 
+                selection.source + " ด้วย กระบี่น้ำแข็ง"
+            );
+        }
+        return true;
+    }
 }
