@@ -95,7 +95,7 @@ class SlashCard extends BasicCard{
             console.log(target.name + " ไม่มีการ์ดหลบ ");
         }
         // Event ก่อนการโจมตีโดน
-        game.eventManager.emit("beforeSlahHit", slashContext);
+        game.eventManager.emit("beforeSlashHit", slashContext);
         // กำหนดวิธี Resume หลัง Trigger
         slashContext.resume = () => {
             if(slashContext.canceled){
