@@ -95,6 +95,8 @@ class FrostSwordSkill extends TriggerSkill{
         if(!player.controller){
             return false;
         }
+        // ดึงตัวละครเป้าหมายที่จะโดนทิ้งการ์ด
+        const target = context.damage.target;
         // ตรวจสอบว่าผู้เล่นเลือกการ์ดทิ้งครบ 2 ใบหรือไม่
         const selections = player.controller.selectedFrostSwordCards;
         if(!selections || selections.length !== 2){
@@ -107,25 +109,25 @@ class FrostSwordSkill extends TriggerSkill{
             }
             if(
                 selection.source === "hand" && 
-                !player.hand.cards.includes(selection.card)
+                !target.hand.cards.includes(selection.card)
             ){
                 return false;
             }
             if(
                 selection.source === "weapon" && 
-                player.weapon !== selection.card
+                target.weapon !== selection.card
             ){
                 return false;
             }
             if(
                 selection.source === "armor" && 
-                player.armor !== selection.card
+                target.armor !== selection.card
             ){
                 return false;
             }
             if(
                 selection.source === "mount" && 
-                player.mount !== selection.card
+                target.mount !== selection.card
             ){
                 return false;
             }
@@ -135,24 +137,24 @@ class FrostSwordSkill extends TriggerSkill{
 
             let removeCard = null;
             if(selection.source === "hand"){
-                const index = player.hand.cards.indexOf(selection.card);
+                const index = target.hand.cards.indexOf(selection.card);
 
                 if(index === -1){
                     return false;
                 }
-                removeCard = player.hand.removeCard(index);
+                removeCard = target.hand.removeCard(index);
             }
 
             if(selection.source === "weapon"){
-                removeCard = player.unequipWeapon();
+                removeCard = target.unequipWeapon();
             }
 
             if(selection.source === "armor"){
-                removeCard = player.unequipArmor();
+                removeCard = target.unequipArmor();
             }
 
             if(selection.source === "mount"){
-                removeCard = player.unequipMount();
+                removeCard = target.unequipMount();
             }
 
             if(!removeCard){
@@ -160,7 +162,7 @@ class FrostSwordSkill extends TriggerSkill{
             }
 
             game.discardPile.addCard(removeCard);
-            game.log(player.name + " ทิ้ง " + removeCard.name + " จาก " + 
+            game.log(target.name + " ทิ้ง " + removeCard.name + " จาก " + 
                 selection.source + " ด้วย กระบี่น้ำแข็ง"
             );
         }
