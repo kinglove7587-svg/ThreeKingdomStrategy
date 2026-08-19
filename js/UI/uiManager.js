@@ -1561,6 +1561,8 @@ class UIManager{
         const controller = player.controller;
         const selectedCards = controller.selectedFrostSwordCards;
         const target = controller.triggerContext.damage.target;
+        const orderSymbols = ["①", "②"];
+
         // วาดปุ่มเลือกไพ่บนมือ (แสดงที่ handArea)
         for(let i = 0; i < target.hand.cards.length; i++){
             
@@ -1574,8 +1576,7 @@ class UIManager{
             );
             
             if(selectedIndex !== -1){
-                const orderSymbols = ["①", "②"];
-                button.textContent = orderSymbols[selectedIndex] + (i + 1) + " 🂠 ";
+                button.textContent = orderSymbols[selectedIndex] + " 🂠";
                 button.classList.add("selected-card");
             };
             if(selectedCards.length >= 2 && selectedIndex === -1){
@@ -1623,7 +1624,7 @@ class UIManager{
             );
             
             if(selectedIndex !== -1){
-                button.textContent = (selectedIndex + 1) + ". " + 
+                button.textContent = orderSymbols[selectedIndex] + " " + 
                     item.icon + " " + item.card.name;
                 button.classList.add("selected-card");
             }
