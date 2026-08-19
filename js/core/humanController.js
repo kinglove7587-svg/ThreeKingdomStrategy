@@ -19,6 +19,9 @@ class HumanController extends Controller{
         this.selectedBurnSource = null;
         this.selectedBurnCard = null;
         this.selectedBurnCardIndex = -1;
+        // Wooden Cart State
+        this.selectedWoodenCartCard = null;
+        this.selectedWoodenCartTarget = null;
         // เก็บ Trigger Skill ที่กำลังรอการตัดสินใจ
         this.selectedTriggerSkill = null;
         this.triggerContext = null;
