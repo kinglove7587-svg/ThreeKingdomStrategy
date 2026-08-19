@@ -33,21 +33,21 @@ class FrostSwordSkill extends TriggerSkill{
         );
     }
     // นับจำนวนการ์ดทั้งหมดของเป้าหมาย (มือ + อาวุธ + เกราะ + ม้า)
-    countFrostSwordCards(player){
+    countFrostSwordCards(target){
 
         let count = 0;
         // นับจำนวนไพ่บนมือ
-        count += player.hand.cards.length;
+        count += target.hand.cards.length;
         // นับอุปกรณ์: อาวุธ
-        if(player.weapon){
+        if(target.weapon){
             count++;
         }
         // นับอุปกรณ์: เกราะ
-        if(player.armor){
+        if(target.armor){
             count++;
         }
         // นับอุปกรณ์: ม้า
-        if(player.mount){
+        if(target.mount){
             count++;
         }
         return count;
@@ -61,7 +61,9 @@ class FrostSwordSkill extends TriggerSkill{
 
         if(useSkill){
             // นับจำนวนการ์ดที่สามารถทิ้งได้
-            const availableCount = this.countFrostSwordCards(player);
+            const target = context.damage.target;
+            // นับจำนวนการ์ดที่สามารถทิ้งได้
+            const availableCount = this.countFrostSwordCards(target);
             // กรณีการ์ดไม่ถึง 2 ใบ (ใช้สกิลไม่ได้ -> ทำ Damage ต่อตามปกติ)
             if(availableCount < 2){
                 // ยกเลิก Damage และ Resume กระบวนการ
