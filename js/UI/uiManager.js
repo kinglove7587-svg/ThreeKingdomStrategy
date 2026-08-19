@@ -1566,7 +1566,7 @@ class UIManager{
             
             const card = target.hand.cards[i];
             const button = document.createElement("button");
-            button.textContent = "🂠 " + (i + 1);
+            button.textContent = "🂠";
             
             const selectedIndex = selectedCards.findIndex(selected => 
                 selected.source === "hand" && 
@@ -1574,8 +1574,8 @@ class UIManager{
             );
             
             if(selectedIndex !== -1){
-
-                button.textContent = (selectedIndex + 1) + ". 🂠 " + (i + 1);
+                const orderSymbols = ["①", "②"];
+                button.textContent = orderSymbols[selectedIndex] + " 🂠 ";
                 button.classList.add("selected-card");
             };
             if(selectedCards.length >= 2 && selectedIndex === -1){
