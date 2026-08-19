@@ -6,7 +6,7 @@ class Player{
         this.hp = 4; // เลือดปัจจุบัน
         this.hand = new Hand(); // สร้างไพ่ในมือ player
         this.slashUsed = false; // เช็กการใช้การ์ดโจมตี
-        this.woodenCartUse = false; // ช็กการใช้รถไม้ใน Play Phase นี้
+        this.woodenCartUsed = false; // ช็กการใช้รถไม้ใน Play Phase นี้
         this.skills = []; // เก็บสกิล
         this.controller = new controllerClass(game); // ผูก controllerClass เข้ากับ game
         this.controller.setPlayer(this); // ผูก player (this) เข้ากับ Controller ใบนั้น
