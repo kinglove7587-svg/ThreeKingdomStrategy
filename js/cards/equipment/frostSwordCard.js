@@ -16,4 +16,16 @@ class FrostSwordCard extends WeaponCard{
         console.log(player.name + " สวมกระบี่น้ำแข็ง");
         
     }
+    // ทำงานเมื่อผู้เล่นถอดอาวุธกระบี่น้ำแข็ง
+    onUnequip(player){
+
+        const skill = this.skills[0];
+        player.removeSkill(skill);
+        console.log(player.name + " ถอดกระบี่น้ำเข็ง");
+        
+    }
+    //
+    getDescription(){
+        return "คุณเลือกได้เพียงแค่ว่าจะ ทำความเสียหาย 1 หน่วยตามปกติ หรือ ยกเลิกความเสียหาย แล้วทิ้งการ์ดเป้าหมาย 2 ใบ"
+    }
 }
