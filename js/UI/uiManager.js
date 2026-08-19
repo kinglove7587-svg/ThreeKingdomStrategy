@@ -1566,7 +1566,7 @@ class UIManager{
             
             const card = target.hand.cards[i];
             const button = document.createElement("button");
-            button.textContent = card.name;
+            button.textContent = "🂠 " + (i + 1);
             
             const selectedIndex = selectedCards.findIndex(selected => 
                 selected.source === "hand" && 
@@ -1575,9 +1575,12 @@ class UIManager{
             
             if(selectedIndex !== -1){
 
-                button.textContent = (selectedIndex + 1) + ". " + card.name;
+                button.textContent = (selectedIndex + 1) + ". 🂠 " + (i + 1);
                 button.classList.add("selected-card");
             };
+            if(selectedCards.length >= 2 && selectedIndex === -1){
+                button.disabled = true;
+            }
             button.onclick = () => {
                 const success = controller.selectFrostSwordCard("hand", i);
                 if(success){
