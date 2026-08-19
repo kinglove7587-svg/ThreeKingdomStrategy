@@ -651,6 +651,55 @@ class HumanController extends Controller{
     isWaitingInput(){
         return true;
     }
+    // ยืนยันการใช้ Wooden Cart มอบการ์ดให้เป้าหมาย และทิ้ง
+    resolveWoodenCart(){
+
+        const card = this.selectedWoodenCartCard;
+        const target = this.selectedWoodenCartTarget;
+        if(!card || !target){
+            return false;
+        }
+        if(target === this.player){
+            return false;
+        }
+        // ตรวจสอบตำแหน่งการ์ดทั้งสองใบ
+        const cardIndex = this.player.hand.cards.indexOf(card);
+        if(cardIndex === -1){
+            return false;
+        }
+
+        const cartIndex = this.player.hand.cards.findIndex(
+            handCard => handCard instanceof WoodenCartCard
+        );
+        if(cartIndex === -1){
+            return false;
+        }
+        // ถอดการ์ดที่จะมอบ ออกจากมือ แล้วส่งให้ target
+        const removeCard = this.player.hand.removeCard(cardIndex);
+        if(!removeCard){
+            return false;
+        }
+
+        target.hand.addCard(removeCard);
+        // ค้นหาตำแหน่งรถไม้อีกครั้งหลังถอดการ์ดใบแรก
+        const currentCartIndex = this.player.hand.cards.findIndex(
+            handCard => handCard instanceof WoodenCartCard
+        );
+
+        if(currentCartIndex === -1){
+            return false;
+        }
+        // ถอดการ์ดรถไม้ แล้วทิ้งลง discardPile
+        const cart = this.player.hand.removeCard(currentCardIndex);
+        this.game.discardPile.addCard(cart);
+        // บันทึก Log และเคลียร์ State
+        this.game.log(this.player.name + " ใช้รถไม้ มอบ " + 
+            removeCard.name + " ให้ " + target.name);
+        this.selectedWoodenCartCard = null;
+        this.selectedWoodenCartTarget = null;
+        this.inputState = "idle";
+        return true;
+    }
     // รับ Event เลือกเป้าหมาย ตรวจสอบเงื่อนไข รีเซ็ต State กลับเป็น idle และสั่งประมวลผล
     selectTarget(player){
         // Wooden Cart: เลือกผู้เล่นที่จะได้รับการ์ด
