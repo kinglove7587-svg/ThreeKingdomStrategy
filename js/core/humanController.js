@@ -147,6 +147,10 @@ class HumanController extends Controller{
         const card = this.getSelectedCard();
         // Wooden Cart ต้องเลือกการ์ดที่จะมอบก่อน
         if(card instanceof WoodenCartCard){
+            if(this.player.WoodenCartCard){
+                this.game.log("รถไม้ ใช้ไปแล้วใน Play Phase นี้");
+                return;
+            }
             this.inputState = "waitingWoodenCartCard";
             this.game.ui.render();
             return;
