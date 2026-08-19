@@ -1560,10 +1560,11 @@ class UIManager{
         const player = this.game.getCurrentPlayer();
         const controller = player.controller;
         const selectedCards = controller.selectedFrostSwordCards;
+        const target = controller.triggerContext.damage.target;
         // วาดปุ่มเลือกไพ่บนมือ (แสดงที่ handArea)
-        for(let i = 0; i < player.hand.cards.length; i++){
+        for(let i = 0; i < target.hand.cards.length; i++){
             
-            const card = player.hand.cards[i];
+            const card = target.hand.cards[i];
             const button = document.createElement("button");
             button.textContent = card.name;
             
@@ -1589,17 +1590,17 @@ class UIManager{
         const equipment = [
             {
                 source: "weapon", 
-                card: player.weapon, 
+                card: target.weapon, 
                 icon: "⚔️"
             },
             {
                 source: "armor", 
-                card: player.armor, 
+                card: target.armor, 
                 icon: "🛡️"
             },
             {
                 source: "mount", 
-                card: player.mount, 
+                card: target.mount, 
                 icon: "🐎"
             }
         ];
