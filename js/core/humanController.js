@@ -701,6 +701,7 @@ class HumanController extends Controller{
         // บันทึก Log และเคลียร์ State
         this.game.log(this.player.name + " ใช้รถไม้ มอบ " + 
             removeCard.name + " ให้ " + target.name);
+        this.player.WoodenCartUsed = true;
         this.selectedWoodenCartCard = null;
         this.selectedWoodenCartTarget = null;
         this.inputState = "idle";
