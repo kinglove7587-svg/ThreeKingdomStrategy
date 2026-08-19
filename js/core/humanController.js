@@ -1456,6 +1456,8 @@ class HumanController extends Controller{
         if(this.inputState !== "waitingFrostSwordCard"){
             return false;
         }
+        //
+        const target = this.triggerContext.damage.target;
         // ป้องกันการเลือกเกิน 2 ใบ
         if(this.selectedFrostSwordCards.length >= 2){
             return false;
@@ -1465,32 +1467,32 @@ class HumanController extends Controller{
         // เลือกจากมือ
         if(source === "hand"){
 
-            if(index < 0 || index >= this.player.hand.cards.length){
+            if(index < 0 || index >= target.hand.cards.length){
                 return false;
             }
 
-            card = this.player.hand.cards[index];
+            card = target.hand.cards[index];
         }
         // เลือกจากอาวุธ
         if(source === "weapon"){
-            if(!this.player.weapon){
+            if(!target.weapon){
                 return false;
             }
-            card = this.player.weapon;
+            card = target.weapon;
         }
         // เลือกจากเกราะ
         if(source === "armor"){
-            if(!this.player.armor){
+            if(!target.armor){
                 return false;
             }
-            card = this.player.armor;
+            card = target.armor;
         }
         // เลือกจากม้า
         if(source === "mount"){
-            if(!this.player.mount){
+            if(!target.mount){
                 return false;
             }
-            card = this.player.mount;
+            card = target.mount;
         }
 
         if(!card){
