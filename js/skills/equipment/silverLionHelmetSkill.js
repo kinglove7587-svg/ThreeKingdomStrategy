@@ -14,9 +14,11 @@ class SilverLionHelmetSkill extends ArmorSkill{
             if(damage.target !== player){
                 return;
             }
-            // ทอนความเสียหายลงเหลือ 1
-            damage.amount = 1;
-            player.game.log(player.name + " ได้รับผลของหมวกสิงโตเงิน ความเสียหายเหลือ 1");
+            // ทอนความเสียหายลงเหลือ 1 เฉพาะเมื่อความเสียหายมากกว่า 1
+            if(damage.amount > 1){
+                damage.amount = 1;
+                player.game.log(player.name + " ได้รับผลของหมวกสิงโตเงิน ความเสียหายเหลือ 1");
+            }
         };
         this.registerListener(eventManager, "beforeDamage", callback);
     }
