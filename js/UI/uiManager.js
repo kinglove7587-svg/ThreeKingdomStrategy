@@ -1639,6 +1639,11 @@ class UIManager{
             };
             this.controlArea.appendChild(button);
         }
+        // แสดงข้อความ Status ตามรูปแบบที่กำหนด
+        const status = document.createElement("div");
+        status.className = "status-message";
+        status.textContent = "เลือกการ์ด 2 ใบ | เลือกแล้ว " + selectedCards.length + " / 2";
+        this.controlArea.appendChild(status);
     }
     
 }
