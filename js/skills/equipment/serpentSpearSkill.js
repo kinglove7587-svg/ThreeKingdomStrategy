@@ -8,7 +8,7 @@ class SerpentSpearSkill extends ActiveSkill{
     }
     // ตรวจสอบเงื่อนไขว่าผู้เล่นมีการ์ดบนมืออย่างน้อย 2 ใบหรือไม่
     canUse(player, game){
-        return player.hand.cards.length >= 2;
+        return player.hand.cards.length >= 2 && player.canUseSlash();
     }
     // สกิลนี้ต้องการการเลือกเป้าหมายผู้เล่น
     needsTarget(player, game){

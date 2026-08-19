@@ -8,8 +8,8 @@ class ZhangFei extends Player{ // เตียวหุย
         this.hp = 4;
         // เรียกใช้ addSkill() เพื่อเพิ่มและลงทะเบียน Event สกิลพิโรธคำราม (Paoxiao) อัตโนมัติ
         this.addSkill(new Paoxiao());
-        this.equipWeapon(new CrossbowCard("♣️", 7));
-        this.equipMount(new FerganaSteedCard("♣️", 7));
+        //this.equipWeapon(new CrossbowCard("♣️", 7));
+        //this.equipMount(new FerganaSteedCard("♣️", 7));
         //this.setChained(true);
         //this.hand.addCard(new IronChainCard("♥️", 1));
         //this.hand.addCard(new DodgeCard("♠️", 1));
