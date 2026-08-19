@@ -145,6 +145,12 @@ class HumanController extends Controller{
         }
         // ดึงวัตถุการ์ดผ่าน getSelectedCard()
         const card = this.getSelectedCard();
+        // Wooden Cart ต้องเลือกการ์ดที่จะมอบก่อน
+        if(card instanceof WoodenCartCard){
+            this.inputState = "waitingWoodenCartCard";
+            this.game.ui.render();
+            return;
+        }
         // ดัก Error: ถ้าไม่พบวัตถุการ์ด ให้ยกเลิกการทำงาน
         if (!card){
             return;
@@ -157,6 +163,26 @@ class HumanController extends Controller{
         }
         // ถ้าการ์ดไม่ต้องเลือกเป้าหมาย (เช่น การ์ดยา) ให้สั่งจบ/ประมวลผลการเล่นการ์ดทันที
         this.finishTurn();
+    }
+    // รับเลือกการ์ดจากมือที่จะส่งมอบด้วย Wooden Cart
+    selectWoodenCartCard(index){
+        
+        if(this.inputState !== "waitingWoodenCartCard"){
+            return;
+        }
+        
+        const card = this.player.hand.cards[index];
+        if(!card){
+            return;
+        }
+        // ป้องกันไม่ให้เลือก Wooden Cart ของตัวเองเป็นตัวส่งมอบ
+        if(card instanceof WoodenCartCard){
+            return;
+        }
+        
+        this.selectedWoodenCartCard = card;
+        this.inputState = "waitingWoodenCartTarget";
+        this.game.ui.render();
     }
     // คืนวัตถุการ์ดที่ผู้เล่นกำลังเลือกอยู่ในปัจจุบัน
     getSelectedCard(){
