@@ -19,6 +19,7 @@ class NioShieldSkill extends ArmorSkill{
                 return;
             }
             player.game.log(player.name + " ใช้โล่เหรินหวัง ป้องกัน " + context.card.getName());
+            context.fromArmor = true;
             context.dodge = true;
         };
         this.registerListener(eventManager, "beforeDodge", callback);
