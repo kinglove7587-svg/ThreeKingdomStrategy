@@ -196,7 +196,8 @@ class Game {
     // ประมวลผลช่วงเริ่มเทิร์น (Start Phase)
     startPhase(player){ 
         // รีเซ็ตสถานะการใช้การ์ด "โจมตี/ฟัน" (Slash) ให้ผู้เล่นกลับมาใช้ได้ใหม่ในเทิร์นนี้
-        player.slashUsed = false;  
+        player.slashUsed = false;
+        player.woodenCartUsed = false;
         // ส่งข้อความ "Start Phase" ไปบันทึกและแสดงในกล่อง Log บนหน้าเว็บ
         this.ui.addLog("Start Phase");
         // ส่ง Event "onTurnStart" เจาะจงไปยังผู้เล่นเป้าหมาย เพื่อกระตุ้นสกิลที่ทำงานช่วงเริ่มเทิร์น
