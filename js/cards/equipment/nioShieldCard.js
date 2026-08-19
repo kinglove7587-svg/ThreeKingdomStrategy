@@ -6,6 +6,6 @@ class NioShieldCard extends ArmorCard{
         this.addSkill(new NioShieldSkill());
     }
     getDescription(){
-        return "ป้องกันผลของการ์ดโจมตี ♠️ และ ♣️ ";
+        return "ป้องกันผลของการ์ดโจมตีสีดำ (♠️ และ ♣️)";
     }
 }
