@@ -81,6 +81,9 @@ class FrostSwordSkill extends TriggerSkill{
         }else{
             // กรณีไม่ใช้สกิล -> ดำเนินการ Damage ต่อตามปกติ
             game.log(player.name + " ไม่ใช้ กระบี่น้ำแข็ง");
+            player.controller.selectedTriggerSkill = null;
+            player.controller.triggerContext = null;
+            player.controller.inputState = "idle";
             context.damage.waitingTrigger = false;
             return context.damage.resume();
         }
