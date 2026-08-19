@@ -71,6 +71,7 @@ class SlashCard extends BasicCard{
         const dodgeContext = {
             attacker: player, 
             target: target, 
+            card: this, 
             dodge: false, 
             ignoreArmor: targetContext ? targetContext.ignoreArmor : false
         };
