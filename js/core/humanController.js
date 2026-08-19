@@ -653,6 +653,20 @@ class HumanController extends Controller{
     }
     // รับ Event เลือกเป้าหมาย ตรวจสอบเงื่อนไข รีเซ็ต State กลับเป็น idle และสั่งประมวลผล
     selectTarget(player){
+        // Wooden Cart: เลือกผู้เล่นที่จะได้รับการ์ด
+        if(this.inputState === "waitingWoodenCartTarget"){
+            // ห้ามเลือกตัวเองเป็นเป้าหมาย
+            if(player === this.player){
+                this.game.log("ไม่สามารถเลือกตัวเองเป็นเป้าหมายได้");
+                return;
+            }
+            this.selectedWoodenCartTarget = player;
+            console.log("Wooden Cart Target =", player.name);
+            // รีเซ็ต State กลับเป็น idle แล้ว Render UI ใหม่
+            this.inputState = "idle";
+            this.game.ui.render();
+            return;
+        }
         console.log("selectTarget ถูกเรียก", player.name); // Debug
         // ดึงการ์ดที่ผู้เล่นเลือกไว้บนมือ
         const card = this.getSelectedCard();
