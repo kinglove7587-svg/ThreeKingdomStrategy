@@ -87,7 +87,9 @@ class SlashCard extends BasicCard{
         };
         // ตรวจสอบการหลบจาก Skill หรือการ์ดหลบ
         if(dodgeContext.dodge){
-            game.log(target.name + " หลบการโจมตี");
+            if(!dodgeContext.fromArmor){
+                game.log(target.name + " หลบการโจมตี");
+            }
             slashContext.canceled = true;
 
         }else if(game.askDodge(target)){
