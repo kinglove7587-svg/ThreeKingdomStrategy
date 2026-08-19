@@ -52,6 +52,8 @@ class Deck {
             //============================= Mount ======================================
             this.cards.push(new FerganaSteedCard("♠️", 13)); // การ์ด ม้าต้าหยวน
             this.cards.push(new ShadowrunnerCard("♠️", 5)); // การ์ด ม้าเงาพยับ
+            //============================= Treasure ======================================
+            this.cards.push(new WoodenCartCard("♦️", 5)); // รถไม้
         }
     }
     // สับไพ่
