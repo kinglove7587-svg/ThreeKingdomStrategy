@@ -48,6 +48,7 @@ class Deck {
             this.cards.push(new EightTrigramsArmor("♣️", 2)); // เพิ่มเกราะเกราะแปดทิศ         
             this.cards.push(new TengJiaArmor("♣️", 7)); // เพิ่มอุปกรณ์เกราะ เกราะหวาย
             this.cards.push(new NioShieldCard("♣️", 2)); // โล่เหรินหวัง
+            this.cards.push(new SilverLionHelmetCard("♣️", 13)); // หมวกสิงโตเงิน
             //============================= Mount ======================================
             this.cards.push(new FerganaSteedCard("♠️", 13)); // การ์ด ม้าต้าหยวน
             this.cards.push(new ShadowrunnerCard("♠️", 5)); // การ์ด ม้าเงาพยับ
