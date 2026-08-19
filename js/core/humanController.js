@@ -1524,8 +1524,9 @@ class HumanController extends Controller{
                 this.selectedTriggerSkill = null;
                 this.triggerContext = null;
                 this.selectedFrostSwordCards = [];
+                this.selectedCardIndex = -1;
                 this.inputState = "idle";
-                this.game.ui.render();
+                this.game.afterHumanAction(success);
             }
             return success;
         }
