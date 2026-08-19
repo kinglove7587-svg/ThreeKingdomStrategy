@@ -85,7 +85,8 @@ class FrostSwordSkill extends TriggerSkill{
             player.controller.triggerContext = null;
             player.controller.inputState = "idle";
             context.damage.waitingTrigger = false;
-            return context.damage.resume();
+            context.damage.resume();
+            return true;
         }
     }
     // ตรวจสอบการ์ดที่เลือกทิ้ง 2 ใบ นำออกจากมือ/ช่องอุปกรณ์ แล้วส่งเข้า discardPile
