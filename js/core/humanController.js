@@ -662,7 +662,7 @@ class HumanController extends Controller{
         if(target === this.player){
             return false;
         }
-        // ตรวจสอบตำแหน่งการ์ดทั้งสองใบ
+        // ตรวจสอบตำแหน่งการ์ดทั้งสองใบก่อนเริ่มกระบวนการ
         const cardIndex = this.player.hand.cards.indexOf(card);
         if(cardIndex === -1){
             return false;
@@ -674,23 +674,25 @@ class HumanController extends Controller{
         if(cartIndex === -1){
             return false;
         }
-        // ถอดการ์ดที่จะมอบ ออกจากมือ แล้วส่งให้ target
+        // ถอดการ์ดที่จะมอบออกจากมือ
         const removeCard = this.player.hand.removeCard(cardIndex);
         if(!removeCard){
             return false;
         }
-
-        target.hand.addCard(removeCard);
-        // ค้นหาตำแหน่งรถไม้อีกครั้งหลังถอดการ์ดใบแรก
+        // ค้นหาและถอดการ์ดรถไม้ออกจากมือ
         const currentCartIndex = this.player.hand.cards.findIndex(
             handCard => handCard instanceof WoodenCartCard
         );
-
         if(currentCartIndex === -1){
             return false;
         }
-        // ถอดการ์ดรถไม้ แล้วทิ้งลง discardPile
-        const cart = this.player.hand.removeCard(currentCardIndex);
+
+        const cart = this.player.hand.removeCard(currentCartIndex);
+        if(!cart){
+            return false;
+        }
+        // ย้ายการ์ดให้เป้าหมายและทิ้งรถไม้ลง discardPile
+        target.hand.addCard(removeCard);
         this.game.discardPile.addCard(cart);
         // บันทึก Log และเคลียร์ State
         this.game.log(this.player.name + " ใช้รถไม้ มอบ " + 
@@ -711,9 +713,12 @@ class HumanController extends Controller{
             }
             this.selectedWoodenCartTarget = player;
             console.log("Wooden Cart Target =", player.name);
-            // รีเซ็ต State กลับเป็น idle แล้ว Render UI ใหม่
-            this.inputState = "idle";
-            this.game.ui.render();
+            // เรียกประมวลผลการมอบการ์ดและถอดรถไม้
+            const success = this.resolveWoodenCart();
+            if(success){
+                this.selectedCardIndex = -1;
+                this.game.afterHumanAction(true);
+            }
             return;
         }
         console.log("selectTarget ถูกเรียก", player.name); // Debug
