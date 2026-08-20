@@ -15,7 +15,7 @@ class WoodenCartCard extends EquipmentCard{
     use(player, game){
         // ตรวจสอบว่าเคยใช้รถไม้ใน Play Phase นี้ไปแล้วหรือยัง
         if(player.woodenCartUsed){
-            game.log(player.name + " รถไม้ใช้ไปแล้วใน Play Phase นี้");
+            game.log(player.name + " ใช้รถไม้ไปแล้ว Play Phase นี้");
             return false;
         }    
         // ดึงผู้เล่นเป้าหมายที่เลือกไว้ผ่าน waitingTarget

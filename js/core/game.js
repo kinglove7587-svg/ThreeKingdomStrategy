@@ -455,6 +455,7 @@ class Game {
             this.ui.addLog("เลือกการ์ดต่อ หรือกด End Turn");
         }else{
             this.ui.addLog("ลงการ์ดไม่สำเร็จ");
+            this.ui.addLog("เลือกการ์ดต่อ หรือกด End Turn");
         }
         // ล้างข้อมูลการเลือกหลังประมวลผลเสร็จ
         this.clearSelectedCard();
