@@ -101,6 +101,13 @@ class UIManager{
                     div.classList.add("disabled-target");
                 }
             }
+            // Wooden Cart - ล็อกผู้เล่นหลัก
+            if(
+                controller.inputState === "waitingWoodenCartCard" && 
+                player === currentPlayer
+            ){
+                div.classList.add("disabled-target");
+            }
             // ตรวจสอบเงื่อนไข Disabled Target สำหรับ สกิล
             if(
                 controller.inputState === "waitingSkillTarget" && 
@@ -136,6 +143,13 @@ class UIManager{
             if (typeof controller.getSelectedTarget === "function"){
                 // ดึงเป้าหมายที่เลือกไว้จาก Controller
                 target = controller.getSelectedTarget();
+            }
+            // Wooden Cart - ถ้าอยู่ใน state waitingWoodenCartCard
+            if(
+                controller.inputState === "waitingWoodenCartCard" && 
+                controller.selectedWoodenCartTarget
+            ){
+                target.controller.selectedWoodenCartTarget;
             }
             // ตรวจสอบว่าผู้เล่นในรอบลูปนี้ตรงกับเป้าหมายที่เลือกไว้หรือไม่
             if (player === target){
@@ -1159,6 +1173,13 @@ class UIManager{
                 }
             }
         }
+        // แสดงข้อความคำแนะนำสำหรับ Wooden Cart
+        if(controller.inputState === "waitingWoodenCartCard"){
+            const target = controller.selectedWoodenCartTarget;
+            if(target){
+                message = "เลือกการ์ด 1 ใบเพื่อมอบให้ " + target.name;
+            }
+        }
         // Active Skill เช่น ง้าวอสรพิษ
         if(
             controller.inputState === "waitingSkillTarget" && 
@@ -1314,6 +1335,11 @@ class UIManager{
         // เลือกเป้าหมายที่ 2 สำหรับ Borrowed Sword
         if(controller.inputState === "waitingBorrowedSwordTarget"){
             controller.selectBorrowedSwordTarget(player);
+            return;
+        }
+        // ตรวจสอบสถานะ waitingWoodenCartCard หากคลิกเลือกผู้เล่นอื่น ให้เปลี่ยนเป้าหมายรับการ์ดทันที
+        if(controller.inputState === "waitingWoodenCartCard"){
+            controller.selectWoodenCartTarget(player);
             return;
         }
         // กรณี Controller กำลังรอเลือกเป้าหมายให้กับ การ์ดปกติ (Card)

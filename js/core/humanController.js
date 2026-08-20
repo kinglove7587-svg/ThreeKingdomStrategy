@@ -180,6 +180,21 @@ class HumanController extends Controller{
         this.inputState = "idle";
         this.resolveWoodenCart();
     }
+    // เปลี่ยนเป้าหมายผู้ที่จะได้รับการ์ดขณะอยู่ในสถานะ waitingWoodenCartCard
+    selectWoodenCartTarget(player){
+
+        const card = this.pendingWoodenCart;
+        if(!card){
+            return;
+        }
+        // ตรวจสอบเงื่อนไขว่าสามารถเลือกผู้เล่นคนนี้เป็นเป้าหมายได้หรือไม่
+        if(!card.canTarget(this.player, player)){
+            return;
+        }
+        // อัปเดตเป้าหมายใหม่และสั่ง Render UI ใหม่ทันที
+        this.selectedWoodenCartTarget = player;
+        this.game.ui.render();
+    }
     // คืนวัตถุการ์ดที่ผู้เล่นกำลังเลือกอยู่ในปัจจุบัน
     getSelectedCard(){
         // ใช้ผู้เล่นที่ Controller ควบคุมอยู่โดยตรง (this.player) แทนการเรียกผ่าน game
