@@ -689,8 +689,6 @@ class HumanController extends Controller{
         target.hand.addCard(removeCard);
         this.game.discardPile.addCard(cart);
         // บันทึก Log และเคลียร์ State
-        this.game.log(this.player.name + " ใช้รถไม้ มอบ " + 
-            removeCard.name + " ให้ " + target.name);
         this.player.woodenCartUsed = true;
         this.pendingWoodenCart = null;
         this.selectedWoodenCartCard = null;
