@@ -175,10 +175,14 @@ class UIManager{
             if(player.delayedTricks.some(card => card instanceof LightningCard)){
                 status += "<br>⚡";
             }
+            //
+            const genderIcon = this.getGenderIcon(player.gender);
             // กำหนดข้อความ HTML ภายใน div ให้แสดงชื่อ (ตัวหนา) และ พลังชีวิต HP
             div.innerHTML = 
                 "<b>" + 
                 player.name + 
+                " " + 
+                genderIcon + 
                 "</b><br>" + 
                 "HP : " +
                 player.hp + 
