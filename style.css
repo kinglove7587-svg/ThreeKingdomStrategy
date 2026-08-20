@@ -118,3 +118,18 @@
 .disabled-target{
     opacity:0.4;
 }
+.faction-shu{
+    color: green;
+}
+
+.faction-wei{
+    color: blue;
+}
+
+.faction-wu{
+    color: red;
+}
+
+.faction-qun{
+    color: goldenrod;
+}

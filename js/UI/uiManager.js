@@ -177,12 +177,15 @@ class UIManager{
             }
             //
             const genderIcon = this.getGenderIcon(player.gender);
+            const factionIcon = this.getFactionIcon(player.faction);
             // กำหนดข้อความ HTML ภายใน div ให้แสดงชื่อ (ตัวหนา) และ พลังชีวิต HP
             div.innerHTML = 
                 "<b>" + 
                 player.name + 
                 " " + 
                 genderIcon + 
+                " " + 
+                factionIcon +
                 "</b><br>" + 
                 "HP : " +
                 player.hp + 
@@ -1697,19 +1700,19 @@ class UIManager{
     getFactionIcon(faction){
 
         if(faction === "Shu"){
-            return "🟢蜀";
+            return '<span class="faction-shu">[蜀]</span>';
         }
 
         if(faction === "Wei"){
-            return "🔵魏";
+            return '<span class="faction-wei">[魏]</span>';
         }
 
         if(faction === "Wu"){
-            return "🟠吴";
+            return '<span class="faction-wu">[吴]</span>';
         }
 
         if(faction === "Qun"){
-            return "⚪群";
+            return '<span class="faction-qun">[群]</span>';
         }
         return "";
     }
