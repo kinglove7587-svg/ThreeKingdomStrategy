@@ -1439,21 +1439,26 @@ class UIManager{
         name.className = "character-tooltip-name";
         name.textContent = player.name;
         header.appendChild(name);
-        // ไอคอนเพศ (เช่น ♂️ / ♀️)
-        const gender = document.createElement("span");
-        gender.textContent = " " + this.getGenderIcon(player.gender);
-        header.appendChild(gender);
-        // ไอคอน/ตัวหนังสือฝ่าย
-        const faction = document.createElement("span");
-        faction.innerHTML = " " + this.getFactionIcon(player.faction);
-        header.appendChild(faction);
         // พลังชีวิตสูงสุด
         const hp = document.createElement("span");
         hp.className = "character-tooltip-hp";
-        hp.textContent = " ❤️".repeat(player.maxHp);
+        hp.textContent = "HP : " + "❤️".repeat(player.maxHp);
         header.appendChild(hp);
-        // นำส่วนหัวไปต่อไว้ที่ Tooltip หลัก
-        tooltip.appendChild(header);
+
+        const factionInfo = document.createElement("div");
+        factionInfo.className = "character-tooltip-faction-info";
+
+        const genderIcon = this.getGenderIcon(player.gender);
+        const factionIcon = this.getFactionIcon(player.faction);
+
+        factionInfo.innerHTML =
+            "เพศ : " +
+            genderIcon +
+            "    " +
+            "ฝ่าย : " +
+            factionIcon;
+
+        tooltip.appendChild(factionInfo);
 
         // Skill ======================================================
 

@@ -213,3 +213,16 @@
 
     cursor:pointer;
 }
+.character-tooltip-faction-info{
+    padding-bottom:10px;
+    margin-bottom:10px;
+
+    border-bottom:1px solid #9b8068;
+}
+
+.character-tooltip-faction-info .faction-shu,
+.character-tooltip-faction-info .faction-wei,
+.character-tooltip-faction-info .faction-wu,
+.character-tooltip-faction-info .faction-qun{
+    font-weight:bold;
+}
