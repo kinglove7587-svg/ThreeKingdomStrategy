@@ -1316,11 +1316,6 @@ class UIManager{
             controller.selectBorrowedSwordTarget(player);
             return;
         }
-        // ตรวจสอบสถานะการเลือกการ์ดสำหรับ Wooden Cart
-        if(controller.inputState === "waitingWoodenCartTarget"){
-            controller.selectTarget(player);
-            return;
-        }
         // กรณี Controller กำลังรอเลือกเป้าหมายให้กับ การ์ดปกติ (Card)
         if(controller.inputState === "waitingTarget"){
             controller.selectTarget(player);

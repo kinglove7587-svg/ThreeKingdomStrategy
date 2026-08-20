@@ -107,8 +107,7 @@ class HumanController extends Controller{
             this.inputState === "waitingAdditionalTargets" || 
             this.inputState === "waitingBorrowedSwordTarget" || 
             this.inputState === "waitingFrostSwordCard" || 
-            this.inputState === "waitingWoodenCartCard" || 
-            this.inputState === "waitingWoodenCartTarget"
+            this.inputState === "waitingWoodenCartCard"
         ){
             return;
         }
@@ -178,8 +177,8 @@ class HumanController extends Controller{
         }
         
         this.selectedWoodenCartCard = card;
-        this.inputState = "waitingWoodenCartTarget";
-        this.game.ui.render();
+        this.inputState = "idle";
+        this.resolveWoodenCart();
     }
     // คืนวัตถุการ์ดที่ผู้เล่นกำลังเลือกอยู่ในปัจจุบัน
     getSelectedCard(){
@@ -689,23 +688,6 @@ class HumanController extends Controller{
     }
     // รับ Event เลือกเป้าหมาย ตรวจสอบเงื่อนไข รีเซ็ต State กลับเป็น idle และสั่งประมวลผล
     selectTarget(player){
-        // Wooden Cart: เลือกผู้เล่นที่จะได้รับการ์ด
-        if(this.inputState === "waitingWoodenCartTarget"){
-            // ห้ามเลือกตัวเองเป็นเป้าหมาย
-            if(player === this.player){
-                this.game.log("ไม่สามารถเลือกตัวเองเป็นเป้าหมายได้");
-                return;
-            }
-            this.selectedWoodenCartTarget = player;
-            console.log("Wooden Cart Target =", player.name);
-            // เรียกประมวลผลการมอบการ์ดและถอดรถไม้
-            const success = this.resolveWoodenCart();
-            if(success){
-                this.selectedCardIndex = -1;
-                this.game.afterHumanAction(true);
-            }
-            return;
-        }
         console.log("selectTarget ถูกเรียก", player.name); // Debug
         // ดึงการ์ดที่ผู้เล่นเลือกไว้บนมือ
         const card = this.getSelectedCard();
