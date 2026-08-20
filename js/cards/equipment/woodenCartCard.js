@@ -7,6 +7,10 @@ class WoodenCartCard extends EquipmentCard{
     needTarget(){
         return true;
     }
+    //
+    canTarget(player, target){
+        return player !== target;
+    }
     // เริ่มใช้งานการ์ดรถไม้ (Wooden Cart) โดยตั้งค่า Pending State และเปลี่ยนสถานะให้ผู้เล่นเลือกการ์ดที่จะมอบ
     use(player, game){
         // ตรวจสอบว่าเคยใช้รถไม้ใน Play Phase นี้ไปแล้วหรือยัง
