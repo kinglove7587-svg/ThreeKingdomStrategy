@@ -110,15 +110,19 @@ class Game {
             return false;
         }
         // นำ Card ที่ต้องการ Recast ออกจากมือผู้เล่น
-        const cardToRecast = player.hand.removeCard(cardIndex);
-        this.discardPile.addCard(cardToRecast);
-        // จั่ว Card ใบใหม่จากกองจั่ว (Deck)
         const newCard = this.drawCardFromDeck();
         if(newCard === null){
             this.log("ไพ่หมดทั้งกองจั่วและกองทิ้ง ไม่สามารถ Recast ได้");
-            player.hand.addCard(cardToRecast);
             return false;
         }
+        // นำ Card ที่ต้องการ Recast ออกจากมือผู้เล่น
+        const cardToRecast = player.hand.removeCard(cardIndex);
+        if(!cardToRecast){
+            player.hand.addCard(newCard);
+            return false;
+        }
+        // นำการ์ดเดิมลงกองทิ้ง
+        this.discardPile.addCard(cardToRecast);
         // นำ Card ใบใหม่ใส่เพิ่มเข้ามือผู้เล่น
         player.hand.addCard(newCard);
         this.ui.render();
