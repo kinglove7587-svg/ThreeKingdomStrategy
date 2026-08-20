@@ -1653,6 +1653,21 @@ class HumanController extends Controller{
             return false;
         }
         this.yinYangContext = context;
+        // กรณีที่เป้าหมายเป็น AI ให้เลือกทิ้งใบแรกให้อัตโนมัติ
+        if(!target.controller.isHuman()){
+            // ให้ AI เลือกการ์ดเอง
+            const discardIndex = 0;
+            const discardedCard = target.hand.removeCard(discardIndex);
+            if(!discardedCard){
+                return false;
+            }
+            this.game.discardPile.addCard(discardedCard);
+            this.game.log(target.name + " ทิ้งการ์ด 1 ใบด้วยกระบี่คู่หยินหยาง");
+            this.yinYangContext = null;
+            context.damage.waitingTrigger = false;
+            context.damage.resume();
+            return true;
+        }
         // ใช้ Controller ของผู้เล่นที่กำลังถึงเทิร์นเป็นตัวถือ State
         this.inputState = "waitingYinYangDiscard";
         this.game.ui.render();

@@ -1882,7 +1882,7 @@ class UIManager{
         for(let i = 0; i < target.hand.cards.length; i++){
 
             const button = document.createElement("button");
-            button.textContent = (i + 1) + "🂠 ";
+            button.textContent = (i + 1) + ". 🂠 ";
             button.onclick = () => {
                 controller.selectYinYangDiscard(i);
             };
