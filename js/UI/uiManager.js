@@ -1693,5 +1693,25 @@ class UIManager{
         }
         return "";
     }
+    // icon faction
+    getFactionIcon(faction){
+
+        if(faction === "Shu"){
+            return "🟢蜀";
+        }
+
+        if(faction === "Wei"){
+            return "🔵魏";
+        }
+
+        if(faction === "Wu"){
+            return "🟠吴";
+        }
+
+        if(faction === "Qun"){
+            return "⚪群";
+        }
+        return "";
+    }
     
 }
