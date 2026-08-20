@@ -6,7 +6,7 @@ class ZhangFei extends Player{ // เตียวหุย
         // กำหนดพลังชีวิตสูงสุดและพลังชีวิตปัจจุบันเป็น 4 หน่วย
         this.maxHp = 4;
         this.hp = 4;
-        this.faction = "shu";
+        this.faction = "Shu";
         this.gender = "male";
         this.addSkill(new Paoxiao());
         //this.equipWeapon(new CrossbowCard("♣️", 7));
