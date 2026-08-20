@@ -4,7 +4,7 @@ class Deck {
         this.initDeck(); // เพิ่มการ์ด ลง กอง
     }
 
-    initDeck() { // เพิ่มการ์ดลง Deck
+    /*initDeck2() { // เพิ่มการ์ดลง Deck
         for (let i = 0; i <= 4; i++){ // วนลูป การ์ด 3 ใบ 4 รอบ
             //============================= Basic Card ================================
             this.cards.push(new SlashCard("♥️", 10)); // เพิ่มการ์ดโจมตี
@@ -54,7 +54,85 @@ class Deck {
             this.cards.push(new ShadowrunnerCard("♠️", 5)); // การ์ด ม้าเงาพยับ
             //============================= Treasure ======================================
             this.cards.push(new WoodenCartCard("♦️", 5)); // รถไม้
-        }
+        }*/
+    }
+    // ไพ่ทั้งหมด
+    initDeck(){
+        
+        const suit = ["♥️", "♠️", "♣️", "♦️"];
+        let = suitIndex = 0;
+        let = number = 1;
+        const addCard = (CardClass, ...args) => {
+
+            const suit = suits[suitIndex];
+            this.cards.push(new CardClass(suit, number, ...args));
+            suitIndex = (suitIndex + 1) % suits.length;
+            number++;
+
+            if(number > 13){
+                number = 1;
+            }
+        };
+
+        const addCard = (CardClass, count, ...args) => {
+
+            for(let i = 0; i < count; i++){
+                addCard(CardClass, ...args);
+            }
+        };
+        // Basic Cards ===================================================================
+        addCards(SlashCard, 30); // การ์ดโจมตี
+        addCards(DodgeCard, 15); // การ์ดหลบ
+        addCards(PeachCard, 8); // การ์ดยา
+        addCards(WineCard, 5); // การ์ดสุรา
+        addCards(SlashCard, 5, DamageType.FIRE); // การ์ดโจมตีไฟ 
+        addCards(SlashCard, 4, DamageType.THUNDER); // การ์ดโจมตีสายฟ้า
+        // Delayed Card ==================================================================
+        addCards(LightningCard, 1); // การ์ดสายฟ้า
+        addCards(LeBuSiShuCard, 3); // การ์ดสุราลืมกลับ
+        addCards(RationsDepletedCard, 3); // การ์ดเสบียงหมด!
+        // TrickCard =====================================================================
+        addCards(StealCard, 6); // ฉกฉวย
+        addCards(BurnBridgeCard, 6); // ถอนสะพาน
+        addCards(BarbarianCard, 3); // กองทัพต่างแดน
+        addCards(RainingArrowsCard, 3); // ฝนธนู
+        addCards(SomethingOutOfNothingCard, 2); // บังเกิดมีสิ่ง
+        addCards(BorrowedSwordCard, 2); // ยืมดาบสังหาร
+        addCards(DuelCard, 2); // ดวลเดียว
+        addCards(BumperHarvestCard, 2); // เก็บเกี่ยวอุดมสมบูรณ์
+        addCards(PeachGardenCard, 1); // คำสาบานสวนท้อ
+        addCards(IronChainCard, 6); // โซ่ตรวน
+        addCards(KnowEnemyCard, 4); // รู้เขารู้เรา
+        addCards(FireAttackCard, 2); // เพลิงผลาญ
+        // Weapon =========================================================================
+        addCards(TrainingSword, 1); // กระบี่ฝึกหัด
+        addCards(CrossbowCard, 1); // หน้าไม้จูเก่อ
+        addCards(SerpentSpearCard, 1); // ง้าวอสรพิษ
+        addCards(KirinBowCard, 1); // กิเลนคันธนู
+        addCards(TwoBladedTridentCard, 1); // ง้าวสามคม
+        addCards(RockCleavingAxeCard, 1); // ขวานผ่าศิลา
+        addCards(SkyPiercingHalberdCard, 1); // ง้าวฟ้าทะลวง
+        addCards(BlueSteelSwordCard, 1); // กระบี่เหล็กกล้า
+        addCards(FeatheredFanCard, 1); // พัดขนนก
+        addCards(GreenDragonBladeCard, 1); // ง้าวมังกรเขียว
+        addCards(FrostSwordCard, 1); // กระบี่น้ำแข็ง
+        // Armor ==========================================================================    
+        addCards(SilverLionHelmetCard, 1); // หมวกสิงโตเงิน
+        addCards(TengJiaArmor, 1); // เกราะหวาย
+        addCards(EightTrigramsArmor, 1); // เกราะแปดทิศ 
+        addCards(NioShieldCard, 1); // โล่เหรินหวัง
+        // Mount ==========================================================================
+        addCards(FerganaSteedCard, 2); // ม้าต้าหยวน
+        addCards(ShadowrunnerCard, 2); // ม้าเงาพยับ
+        // Treasure
+        addCards(WoodenCartCard, 1); // รถไม้
+        // ========================== ยังไม่ได้ทำ ================================
+        // addCards(NegationCard, 6);
+        // addCards(AllianceCard, 2);
+        // addCards(RestAndReorganizationCard, 2);
+        // addCards(SixSwordsOfWu, 1);
+        // addCards(YinYangSwords, 1);
+
     }
     // สับไพ่
     shuffle() {
@@ -73,8 +151,4 @@ class Deck {
         return this.cards.pop(); // ถ้ามี นำใบบนสุด ให้ผู้เล่น
     }
 }
-/*
-2. Negation
-3. Alliance
-4. Rest and Reorganization
-5. Borrowed Sword*/
+
