@@ -4,6 +4,8 @@ class Player{
         this.game = game; // บันทึกออบเจกต์ของเกม game เข้ามาเก็บไว้ในตัวละครผู้เล่น เพื่อใช้เข้าถึง EventManager ของเกม
         this.maxHp = 4; // เลือดสูงสุด
         this.hp = 4; // เลือดปัจจุบัน
+        this.faction = null; // ฝ่าย/อาณาจักรของตัวละคร
+        this.gender = null; // เพศของตัวละคร
         this.hand = new Hand(); // สร้างไพ่ในมือ player
         this.slashUsed = false; // เช็กการใช้การ์ดโจมตี
         this.woodenCartUsed = false; // ช็กการใช้รถไม้ใน Play Phase นี้
