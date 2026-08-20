@@ -145,16 +145,6 @@ class HumanController extends Controller{
         }
         // ดึงวัตถุการ์ดผ่าน getSelectedCard()
         const card = this.getSelectedCard();
-        // Wooden Cart ต้องเลือกการ์ดที่จะมอบก่อน
-        if(card instanceof WoodenCartCard){
-            if(this.player.woodenCartUsed){
-                this.game.log("รถไม้ ใช้ไปแล้วใน Play Phase นี้");
-                return;
-            }
-            this.inputState = "waitingWoodenCartCard";
-            this.game.ui.render();
-            return;
-        }
         // ดัก Error: ถ้าไม่พบวัตถุการ์ด ให้ยกเลิกการทำงาน
         if (!card){
             return;
