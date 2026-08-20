@@ -54,16 +54,16 @@ class Deck {
             this.cards.push(new ShadowrunnerCard("♠️", 5)); // การ์ด ม้าเงาพยับ
             //============================= Treasure ======================================
             this.cards.push(new WoodenCartCard("♦️", 5)); // รถไม้
-        }*/
-    }
+        }
+    }*/
     // ไพ่ทั้งหมด
     initDeck(){
         
-        const suit = ["♥️", "♠️", "♣️", "♦️"];
-        let = suitIndex = 0;
-        let = number = 1;
+        const suits = ["♥️", "♠️", "♣️", "♦️"];
+        let suitIndex = 0;
+        let number = 1;
+        // ฟังก์ชันสร้างการ์ด 1 ใบ
         const addCard = (CardClass, ...args) => {
-
             const suit = suits[suitIndex];
             this.cards.push(new CardClass(suit, number, ...args));
             suitIndex = (suitIndex + 1) % suits.length;
@@ -73,8 +73,8 @@ class Deck {
                 number = 1;
             }
         };
-
-        const addCard = (CardClass, count, ...args) => {
+        // ฟังก์ชันสร้างการ์ดตามจำนวน count ใบ
+        const addCards = (CardClass, count, ...args) => {
 
             for(let i = 0; i < count; i++){
                 addCard(CardClass, ...args);
