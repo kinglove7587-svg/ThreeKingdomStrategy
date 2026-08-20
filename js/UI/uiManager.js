@@ -1223,6 +1223,11 @@ class UIManager{
             controller.selectStealCard(index);
             return;
         }
+        // ตรวจสอบสถานะการเลือกการ์ดสำหรับ Wooden Cart
+        if(controller.inputState === "waitingWoodenCartCard"){
+            controller.selectWoodenCartCard(index);
+            return;
+        }
         // หากกดจบเทิร์น (index เป็น -1) ให้ส่งให้ Controller สั่งจบเทิร์น
         if(index === -1){
             controller.selectCard(index);
@@ -1309,6 +1314,11 @@ class UIManager{
         // เลือกเป้าหมายที่ 2 สำหรับ Borrowed Sword
         if(controller.inputState === "waitingBorrowedSwordTarget"){
             controller.selectBorrowedSwordTarget(player);
+            return;
+        }
+        // ตรวจสอบสถานะการเลือกการ์ดสำหรับ Wooden Cart
+        if(controller.inputState === "waitingWoodenCartTarget"){
+            controller.selectTarget(player);
             return;
         }
         // กรณี Controller กำลังรอเลือกเป้าหมายให้กับ การ์ดปกติ (Card)
