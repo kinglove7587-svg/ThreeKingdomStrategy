@@ -5,9 +5,52 @@
 การ์ด อุบาลที่ยังไม่ได้ทำ
 - NegationCard ยกเลิกอุบาย ยังไม่เสร็จ ต้องรอไพ่ อุบายครบก่อน
 - AllianceCard ต้องมีฝ่ายก่อน
-- RestAndReorganizationCard เพิ่มเลือด ซับซ้อน เกิน
+- RestAndReorganizationCard ต้องมีฝ่ายก่อน
 
 การ์ด weapon ที่ยังไม่ได้ทำ
 - Six Swords of Wu ต้องมีพวกเดียวกัน
 - Yin-Yang Swords ต้องมีตัวละคร หลายเพศ
 
+การ์ดพื้นฐาน (Basic Cards)
+
+Attack (โจมตี): 30 ใบ
+
+Dodge (หลบ): 15 ใบ
+
+Peach (ลูกท้อ): 8 ใบ
+
+Wine (สุรา): 5 ใบ
+
+Fire Attack (โจมตีไฟ): 5 ใบ
+
+Thunder Attack (โจมตีสายฟ้า): 4 ใบ
+------------------------------
+การ์ดกลยุทธ์ (Stratagem Cards)
+
+Negation (ไร้ผล): 6 ใบ ยังไม่เสร็จ
+
+Steal (ขโมย) & Burning Bridges (ทำลาย): อย่างละ 6 ใบ (รวม 12 ใบ)
+
+Barbarian Invasion (เผ่าเถื่อน invasion) & Raining Arrows (ฝนธนู): อย่างละ 3 ใบ (รวม 6 ใบ)
+
+Something Out of Nothing (จั่ว 2 ใบ) & Borrowed Sword (ยืมดาบ): อย่างละ 2 ใบ (รวม 4 ใบ)
+
+Duel (ประลอง) & Bumper Harvest (เก็บเกี่ยว): อย่างละ 2 ใบ (รวม 4 ใบ)
+
+Peach Garden (สาบานสวนท้อ) & Lightning (สายฟ้า): อย่างละ 1 ใบ (รวม 2 ใบ)
+
+LeBuSiShuCard (สุราลืมกลับ) & Rations Depleted (ขาดเสบียง): อย่างละ 3 ใบ (รวม 6 ใบ)
+
+Iron Chains (โซ่ตรวน): 6 ใบ
+
+Rest and Reorganization (พักพลจัดทัพ): 2 ใบ ยังไม่ได้ทำ
+
+Know your Enemy (รู้เขาสำรวจมิตร): 4 ใบ
+
+Alliance (พันธมิตร): 2 ใบ ยังไม่ทำ
+
+FireAttackCard (พลิงผลาญ): 2 ใบ
+-------------------------------------
+การ์ดอุปกรณ์ (Equipment Cards)
+อย่างละ1ใบ
+ม้า อย่างละ2ใบ

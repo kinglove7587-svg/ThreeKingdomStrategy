@@ -19,7 +19,7 @@ class Deck {
             this.cards.push(new RationsDepletedCard("♣️", 4)); // การ์ดหน่วงเวลา เสบียงหมด!
             //============================= TrickCard ==================================
             this.cards.push(new PeachGardenCard("♥️", 1)); // การ์ดอุบาย คำสาบานสวนท้อ
-            this.cards.push(new KnowEnemyCard("♣️", 3)); // การ์ดอุบาย รู้เขารู้เรา *ยังไม่เสร็จ
+            this.cards.push(new KnowEnemyCard("♣️", 3)); // การ์ดอุบาย รู้เขารู้เรา
             this.cards.push(new BurnBridgeCard("♥️", 12)); // การ์ดอุบาย ถอนสะพาน
             this.cards.push(new BarbarianCard ("♣️", 7)); // การ์ดอุบาย กองทัพต่างแดน
             this.cards.push(new RainingArrowsCard("♥️", 1)); // การ์ดอุบาย ฝนธนู
