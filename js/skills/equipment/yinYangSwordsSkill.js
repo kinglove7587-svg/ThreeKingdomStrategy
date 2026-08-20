@@ -51,6 +51,17 @@ class YinYangSwordsSkill extends TriggerSkill{
 
         if(judgeResult.isBlack()){
             console.log("ผลตัดสิน = สีดำ");
+            // หยุด Damage ชั่วคราว
+            damage.waitingTrigger = true;
+            // เก็บ Context สำหรับการเลือกการ์ดของเป้าหมาย
+            const context = {
+                damage: damage, 
+                attacker: player, 
+                target: target
+            };
+            // เริ่มเข้าสู่ขั้นตอนให้เป้าหมายทิ้งการ์ด
+            player.controller.startYinYangDiscardSelection(context);
+            return;
             
         }else if(judgeResult.isRed()){
             console.log("ผลตัดสิน = สีแดง");
