@@ -30,6 +30,8 @@ class HumanController extends Controller{
         this.selectedTriggerCardIndices = [];
         // Frost Sword State
         this.selectedFrostSwordCards = [];
+        // Yin-Yang Swords State
+        this.yinYangContext = null;
         // Sky Piercing Halberd State
         this.selectedAdditionalTargets = [];
         this.additionalTargetLimit = 0;
@@ -1633,6 +1635,59 @@ class HumanController extends Controller{
         this.selectedWoodenCartTarget = null;
         this.inputState = "waitingWoodenCartCard";
         this.game.ui.render();
+        return true;
+    }
+    // เริ่มการเลือกการ์ดที่จะทิ้งเมื่อใช้การ์ด Yin Yang
+    startYinYangDiscardSelection(context){
+
+        if(!context){
+            return false;
+        }
+
+        const target = context.target;
+        if(!target){
+            return false;
+        }
+        // ถ้าเป้าหมายไม่มีการ์ดให้ทิ้ง
+        if(target.hand.cards.length === 0){
+            return false;
+        }
+        this.yinYangContext = context;
+        // ใช้ Controller ของผู้เล่นที่กำลังถึงเทิร์นเป็นตัวถือ State
+        this.inputState = "waitingYinYangDiscard";
+        this.game.ui.render();
+        return true;
+    }
+    // ประมวลผลเมื่อผู้เล่นคลิกเลือกทิ้งการ์ดของเป้าหมายจากกระบี่คู่หยินหยาง
+    selectYinYangDiscard(index){
+
+        if(this.inputState !== "waitingYinYangDiscard"){
+            return false;
+        }
+
+        const context = this.yinYangContext;
+        if(!context){
+            return false;
+        }
+
+        const target = context.target;
+        const card = target.hand.cards[index];
+        if(!card){
+            return false;
+        }
+        // นำการ์ดออกจากมือของเป้าหมาย
+        const removeCard = target.hand.removeCard(index);
+        if(!removeCard){
+            return false;
+        }
+        // นำการ์ดลงกองทิ้งและบันทึก Log
+        this.game.discardPile.addCard(removeCard);
+        this.game.log(target.name + " ทิ้งการ์ด 1 ใบด้วยกระบี่คู่หยินหยาง");
+        // เคลียร์ State
+        this.yinYangContext = null;
+        this.inputState = "idle";
+        // ดำเนินการทำ Damage ต่อไป
+        context.damage.resume();
         return true;
     }
 

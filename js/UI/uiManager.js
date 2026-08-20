@@ -301,6 +301,11 @@ class UIManager{
             this.renderSelectionZone();
             return;
         }
+        // ตรวจสอบว่าผู้เล่นอยู่ในสถานะรอเลือกการ์ด Yin Yang Discard หรือไม่
+        if(player.controller.inputState === "waitingYinYangDiscard"){
+            this.renderYinYangDiscardHand();
+            return;
+        }
         // หากอยู่ในสถานะเปิดดูไพ่บนมือเป้าหมาย ให้เรียก renderTargetHand()
         if(player.controller.inputState === "viewingHand"){
             this.renderTargetHand(player.controller.viewingHandTarget);
@@ -1862,6 +1867,31 @@ class UIManager{
             return '<span class="faction-qun">[群]</span>';
         }
         return "";
+    }
+    // วาดปุ่มไพ่คว่ำสำหรับให้เลือกทิ้งการ์ดเป้าหมาย (กระบี่คู่หยินหยาง)
+    renderYinYangDiscardHand(){
+
+        const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
+        const context = controller.yinYangContext;
+        if(!context){
+            return;
+        }
+
+        const target = context.target;
+        for(let i = 0; i < target.hand.cards.length; i++){
+
+            const button = document.createElement("button");
+            button.textContent = (i + 1) + "🂠 ";
+            button.onclick = () => {
+                controller.selectYinYangDiscard(i);
+            };
+            this.handArea.appendChild(button);
+        }
+
+        const status = document.createElement("div");
+        status.textContent = target.name + " ต้องทิ้งการ์ด 1 ใบ";
+        this.controlArea.appendChild(status);
     }
     
 }
