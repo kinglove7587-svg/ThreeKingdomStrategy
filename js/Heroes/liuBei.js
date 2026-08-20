@@ -8,6 +8,14 @@ class LiuBei extends Player{ // เล่าปี่
         this.hp = 4;
         this.faction = "Shu";
         this.gender = "male";
+        this.abilityDescription = {
+            rende:
+                "ช่วง Play Phase สามารถมอบการ์ดจากมือให้ตัวละครอื่นได้จำนวนเท่าใดก็ได้\n" +
+                "และเมื่อมอบการ์ดตั้งแต่ 2 ใบขึ้นไป จะฟื้น HP 1",
+
+            influencing:
+                "สามารถขอให้ตัวละครฝ่าย Shu ใช้หรือเล่น [โจมตี] แทนตนได้ หากตัวละครนั้นเต็มใจ"
+        };
         this.addSkill(new Rende());
         //this.setChained(true);
         //this.equipWeapon(new SerpentSpearCard("♣️", 7));
