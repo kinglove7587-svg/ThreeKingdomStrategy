@@ -814,4 +814,19 @@ class Game {
         );
         return distance;
     }
+    // ดึงการ์ด 1 ใบจากสำรับ (Deck) หากสำรับหมด จะนำกองทิ้ง (Discard Pile) กลับมาสับใหม่เป็นสำรับ
+    drawCardFromDeck(){
+
+        if(this.deck.cards.length === 0){
+            // หากกองทิ้งไม่มีการ์ดเหลืออยู่เลย ไม่สามารถจั่วได้
+            if(this.discardPile.cards.length === 0){
+                return null;
+            }
+            // นำการ์ดทั้งหมดจากกองทิ้งกลับมาใส่สำรับ ล้างกองทิ้ง แล้วทำการสับกอง
+            this.deck.cards = this.discardPile.cards;
+            this.discardPile.cards = [];
+            this.deck.shuffle();
+        }
+        return this.deck.draw();
+    }
 }
