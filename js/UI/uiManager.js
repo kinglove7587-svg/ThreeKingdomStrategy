@@ -329,6 +329,10 @@ class UIManager{
         if(player.controller.inputState === "waitingTriggerChoice"){
             return;
         }
+        // ระหว่างรอเลือกเป้าหมายของ Active Skill ไม่ต้องแสดงไพ่ในมือ
+        if(player.controller.inputState === "waitingSkillTarget"){
+            return;
+        }
         // ถ้าไม่ใช่ผู้เล่นมนุษย์ ไม่ต้องแสดงการ์ดในมือ
         if (!(player.controller instanceof HumanController)){
             return;
