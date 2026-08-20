@@ -1635,5 +1635,19 @@ class HumanController extends Controller{
         this.game.ui.render();
         return true;
     }
+    //
+    startWoodenCartSelection(){
+
+        if(this.player.woodenCartUsed){
+            this.game.log("รถไม้ ใช้ไปแล้วใน Play Phase นี้");
+            return false;
+        }
+
+        this.selectedWoodenCartCard = null;
+        this.selectedWoodenCartTarget = null;
+        this.inputState = "waitingWoodenCartCard";
+        this.game.ui.render();
+        return true;
+    }
 
 }
