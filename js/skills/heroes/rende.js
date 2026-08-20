@@ -59,12 +59,7 @@ class Rende extends ActiveSkill{
         this.rendeCardCount++;
         // แสดง Log การใช้สกิล รายชื่อการ์ดที่มอบ และผู้รับ
         game.log(
-            player.name + 
-            " ใช้สกิล Rende (จิตเมตตา) มอบ " + 
-            card.name + 
-            " ให้ " +
-            target.name
-        );
+            player.name + " ใช้สกิล Rende (จิตเมตตา) มอบการ์ดให้ " + target.name);
         // มอบการ์ดใบที่ 2 ในเทิร์นนี้ จะฟื้น HP 1
         if(this.rendeCardCount === 2 && player.hp < player.maxHp){
             player.recoverHp(1);
