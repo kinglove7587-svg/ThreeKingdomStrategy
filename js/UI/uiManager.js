@@ -14,6 +14,7 @@ class UIManager{
         this.cardActionIndex = -1;
         // Tooltip สำหรับแสดงรายละเอียดการ์ด
         this.cardTooltip = null;
+        this.characterTooltip = null;
         this.tooltipShiftDown = false;
         this.tooltipHoverCard = null;
         this.tooltipMouseX = 0;
@@ -178,21 +179,31 @@ class UIManager{
             //
             const genderIcon = this.getGenderIcon(player.gender);
             const factionIcon = this.getFactionIcon(player.faction);
+
+            const infoButton = document.createElement("button");
+            infoButton.textContent = "👤";
+            infoButton.className = "character-info-button";
+            infoButton.onclick = (event) => {
+                event.stopPropagation();
+                this.showCharacterTooltip(player);
+            };
             // กำหนดข้อความ HTML ภายใน div ให้แสดงชื่อ (ตัวหนา) และ พลังชีวิต HP
             div.innerHTML = 
                 "<b>" + 
                 player.name + 
-                " " + 
-                genderIcon + 
-                " " + 
-                factionIcon +
-                "</b><br>" + 
+                " </b> " + 
+                "<br>" + 
                 "HP : " +
                 player.hp + 
                 "/" + 
                 player.maxHp + 
                 status + 
                 this.renderEquipment(player);
+                //
+                const nameElement = div.querySelector("b");
+                if(nameElement){
+                    nameElement.appendChild(infoButton);
+                }
                 // ผูก Event Tooltip ให้กับเกราะที่สวมอยู่
                 const armorElement = div.querySelector(".equipped-armor");
                 if(armorElement && player.armor){
@@ -1400,6 +1411,123 @@ class UIManager{
             text += "\n\n🔄 Recast ได้";
         }
         return text;
+    }
+    // สร้าง DOM Element สำหรับ Character Tooltip
+    createCharacterTooltip(){
+        // ถ้าเคยสร้าง Tooltip ไว้แล้ว ให้ดึงอันเดิมมาใช้ซ้ำ (ไม่สร้าง DOM ซ้ำ)
+        if(this.characterTooltip){
+            return this.characterTooltip;
+        }
+        // สร้าง Element div ใหม่สำหรับเป็นกรอบ Tooltip ตัวละคร
+        const tooltip = document.createElement("div");
+        tooltip.className = "character-tooltip";
+        document.body.appendChild(tooltip);
+        this.characterTooltip = tooltip;
+        return tooltip;
+    }
+    // สร้างเนื้อหาภายใน Character Tooltip สำหรับผู้เล่นที่กำหนด
+    renderCharacterTooltipContent(player, tooltip){
+        // ล้างข้อมูล DOM เก่าภายใน Tooltip ออกทั้งหมดก่อนเริ่มวาดใหม่
+        tooltip.innerHTML = "";
+        
+        // Header ==================================================
+
+        const header = document.createElement("div");
+        header.className = "character-tooltip-header";
+        // ชื่อตัวละคร
+        const name = document.createElement("span");
+        name.className = "character-tooltip-name";
+        name.textContent = player.name;
+        header.appendChild(name);
+        // ไอคอนเพศ (เช่น ♂️ / ♀️)
+        const gender = document.createElement("span");
+        gender.textContent = " " + this.getGenderIcon(player.gender);
+        header.appendChild(gender);
+        // ไอคอน/ตัวหนังสือฝ่าย
+        const faction = document.createElement("span");
+        faction.innerHTML = " " + this.getFactionIcon(player.faction);
+        header.appendChild(faction);
+        // พลังชีวิตสูงสุด
+        const hp = document.createElement("span");
+        hp.className = "character-tooltip-hp";
+        hp.textContent = " ❤️".repeat(player.maxHp);
+        header.appendChild(hp);
+        // นำส่วนหัวไปต่อไว้ที่ Tooltip หลัก
+        tooltip.appendChild(header);
+
+        // Skill ======================================================
+
+        const skillSection = document.createElement("div");
+        skillSection.className = "character-tooltip-section";
+        // หัวข้อเซกชัน "สกิล"
+        const skillTitle = document.createElement("div");
+        skillTitle.className = "character-tooltip-section-title";
+        skillTitle.textContent = "สกิล";
+        skillSection.appendChild(skillTitle);
+        // ดึงอาร์เรย์สกิลจากเมธอด getSkills() หรืออ่านจากพร็อพเพอร์ตี้
+        const skills = typeof player.getSkills === "function" 
+            ? player.getSkills() 
+            : (player.skills || []);
+        // วนลูปสร้างรายการสกิลแต่ละรายการ
+        for(const skill of skills){
+
+            const item = document.createElement("div");
+            item.className = "character-tooltip-skill";
+            item.textContent = "• " + skill.name;
+            skillSection.appendChild(item);
+        }
+        // นำเซกชันสกิลไปต่อไว้ที่ Tooltip หลัก
+        tooltip.appendChild(skillSection);
+
+        // ความสามารถ ===================================================
+
+        const abilitySection = document.createElement("div");
+        abilitySection.className = "character-tooltip-ability";
+        // หัวข้อเซกชัน "ความสามารถ"
+        const abilityTitle = document.createElement("div");
+        abilityTitle.className = "character-tooltip-section-title";
+        abilityTitle.textContent = "ความสามารถ";
+        abilitySection.appendChild(abilityTitle);
+        // ข้อความอธิบายความสามารถตัวละคร
+        const abilityText = document.createElement("div");
+        abilityText.className = "character-tooltip-description";
+        abilityText.textContent = player.abilityDescription || "";
+        abilitySection.appendChild(abilityText);
+        // นำเซกชันความสามารถไปต่อไว้ที่ Tooltip หลัก
+        tooltip.appendChild(abilitySection);
+
+        // ปุ่มปิด =========================================================
+
+        const closeButton = document.createElement("button");
+        closeButton.textContent = "ปิด";
+        closeButton.className = "character-tooltip-close";
+        closeButton.onclick = () => {
+            this.hideCharacterTooltip();
+        };
+        // นำปุ่มปิดไปต่อไว้ที่ Tooltip หลัก
+        tooltip.appendChild(closeButton);
+    }
+    // เปิดแสดงผล Character Tooltip ให้อยู่กึ่งกลางหน้าจอ
+    showCharacterTooltip(player){
+        // ดึงหรือสร้าง Element Tooltip ตัวละคร
+        const tooltip = this.createCharacterTooltip();
+        // วาดเนื้อหาข้อมูลตัวละครลงใน Tooltip
+        this.renderCharacterTooltipContent(player, tooltip);
+        // กำหนดสไตล์การจัดวางให้อยู่ตรงกลางหน้าจอ (Center Screen Popup)
+        tooltip.style.display = "block";
+        tooltip.style.position = "fixed";
+        tooltip.style.left = "50%";
+        tooltip.style.top = "50%";
+        tooltip.style.transform = "translate(-50%, -50%)";
+    }
+    // ซ่อนหน้าต่าง Character Tooltip เมื่อผู้เล่นกดปุ่มปิด
+    hideCharacterTooltip(){
+        // ถ้ายังไม่ได้สร้างหรือไม่มี Character Tooltip ให้ข้ามการทำงาน
+        if(!this.characterTooltip){
+            return;
+        }
+        // ซ่อนหน้าต่าง Tooltip
+        this.characterTooltip.style.display = "none";
     }
     // คืนค่าชื่อ Class CSS ตามประเภทของการ์ด เพื่อใช้แยกสี Tooltip
     getCardTypeClass(card){
