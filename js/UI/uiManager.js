@@ -332,14 +332,6 @@ class UIManager{
             const card = player.hand.cards[i];
             // สร้าง Element ปุ่ม <button> ขึ้นมาใหม่ในหน่วยความจำ
             const button = document.createElement("button");
-            // ป้องกันการกดใช้รถไม้ซ้ำใน Play Phase เดิม
-            if(
-                card instanceof WoodenCartCard && 
-                player.WoodenCartUsed
-            ){
-                button.disabled = true;
-                button.classList.add("disabled-card");
-            }
             // ระบบ Shift + Hover Tooltip
             button.onmouseenter = (event) => {
 
