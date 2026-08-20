@@ -22,6 +22,7 @@ class HumanController extends Controller{
         // Wooden Cart State
         this.selectedWoodenCartCard = null;
         this.selectedWoodenCartTarget = null;
+        this.pendingWoodenCart = null;
         // เก็บ Trigger Skill ที่กำลังรอการตัดสินใจ
         this.selectedTriggerSkill = null;
         this.triggerContext = null;
@@ -105,7 +106,9 @@ class HumanController extends Controller{
             this.inputState === "waitingTriggerTarget" || 
             this.inputState === "waitingAdditionalTargets" || 
             this.inputState === "waitingBorrowedSwordTarget" || 
-            this.inputState === "waitingFrostSwordCard"
+            this.inputState === "waitingFrostSwordCard" || 
+            this.inputState === "waitingWoodenCartCard" || 
+            this.inputState === "waitingWoodenCartTarget"
         ){
             return;
         }
@@ -650,7 +653,9 @@ class HumanController extends Controller{
 
         const card = this.selectedWoodenCartCard;
         const target = this.selectedWoodenCartTarget;
-        if(!card || !target){
+        const cart = this.pendingWoodenCart;
+        // ตรวจสอบความพร้อมของข้อมูล
+        if(!card || !target || !cart){
             return false;
         }
         if(target === this.player){
@@ -661,28 +666,9 @@ class HumanController extends Controller{
         if(cardIndex === -1){
             return false;
         }
-
-        const cartIndex = this.player.hand.cards.findIndex(
-            handCard => handCard instanceof WoodenCartCard
-        );
-        if(cartIndex === -1){
-            return false;
-        }
         // ถอดการ์ดที่จะมอบออกจากมือ
         const removeCard = this.player.hand.removeCard(cardIndex);
         if(!removeCard){
-            return false;
-        }
-        // ค้นหาและถอดการ์ดรถไม้ออกจากมือ
-        const currentCartIndex = this.player.hand.cards.findIndex(
-            handCard => handCard instanceof WoodenCartCard
-        );
-        if(currentCartIndex === -1){
-            return false;
-        }
-
-        const cart = this.player.hand.removeCard(currentCartIndex);
-        if(!cart){
             return false;
         }
         // ย้ายการ์ดให้เป้าหมายและทิ้งรถไม้ลง discardPile
@@ -692,9 +678,13 @@ class HumanController extends Controller{
         this.game.log(this.player.name + " ใช้รถไม้ มอบ " + 
             removeCard.name + " ให้ " + target.name);
         this.player.woodenCartUsed = true;
+        this.pendingWoodenCart = null;
         this.selectedWoodenCartCard = null;
         this.selectedWoodenCartTarget = null;
+        this.selectedCardIndex = -1;
+        this.selectedTarget = null;
         this.inputState = "idle";
+        this.game.afterHumanAction(true);
         return true;
     }
     // รับ Event เลือกเป้าหมาย ตรวจสอบเงื่อนไข รีเซ็ต State กลับเป็น idle และสั่งประมวลผล
