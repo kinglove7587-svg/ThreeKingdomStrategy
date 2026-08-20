@@ -12,7 +12,7 @@ class LiuBei extends Player{ // เล่าปี่
         //this.equipWeapon(new SerpentSpearCard("♣️", 7));
         //this.equipArmor(new SilverLionHelmetCard("♣️", 7));
         this.hand.addCard(new WoodenCartCard("♠️", 1));
-        //this.hand.addCard(new StealCard("♠️", 1));
+        this.hand.addCard(new WoodenCartCard("♠️", 1));
         //this.hand.addCard(new SlashCard("♠️", 1));
     }
 }
