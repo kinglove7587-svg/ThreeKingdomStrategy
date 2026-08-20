@@ -21,12 +21,12 @@ class Player{
         this.chained = false; // สถานะติดโซ่ตรวน (Iron Chain)
         this.alive = true; // สถานะชีวิตของผู้เล่น (true = ยังมีชีวิตอยู่)
     }
-
-    drawCard(deck){ // player จั่วกองไพ่
-        const card = deck.draw(); // เอาไพ่ออกจากกอง 1 ใบ
-
-        if (card !== null){ // ถ้าไม่ใช่ null แปลว่ายังมีไพ่
-            this.hand.addCard(card); // เอาไพ่ใบนั้นเข้าไปไว้ในมือ
+    // player จั่วกองไพ่
+    drawCard(deck){ 
+        const card = this.game.drawCardFromDeck(); 
+        // ถ้าไม่ใช่ null แปลว่ายังมีไพ่
+        if (card !== null){ 
+            this.hand.addCard(card); 
         }
     }
 
