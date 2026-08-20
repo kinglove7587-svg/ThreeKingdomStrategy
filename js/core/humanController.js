@@ -1183,6 +1183,16 @@ class HumanController extends Controller{
 
         return success;
     }
+    // ยกเลิกการเลือกสกิล (Active Skill) และคืนค่า State
+    cancelSkillSelection(){
+
+        this.selectedSkill = null;
+        this.selectedSkillCardIndex = -1;
+        this.selectedSkillCardIndices = [];
+        this.selectedTarget = null;
+        this.inputState = "idle";
+        this.game.ui.render();
+    }
     // ตรวจสอบและบันทึกเป้าหมายที่สองสำหรับ Trigger แล้วส่งไปประมวลผลผลลัพธ์ของสกิล
     selectTriggerTarget(player){
         if(this.inputState !== "waitingTriggerTarget"){

@@ -967,6 +967,15 @@ class UIManager{
             button.textContent = "ใช้สกิล " + skill.name;
             // เมื่อคลิกปุ่ม ให้สั่ง HumanController เริ่มกระบวนการเลือกเป้าหมายสกิล
             button.onclick = () => {
+                // หากกำลังเลือกเป้าหมายของสกิลเดิมอยู่ แล้วกดปุ่มสกิลเดิมซ้ำ ให้ยกเลิกการเลือก (Toggle Off)
+                if(
+                    player.controller.inputState === "waitingSkillTarget" && 
+                    player.controller.selectedSkill === skill
+                ){
+                    player.controller.cancelSkillSelection();
+                    return;
+                }
+                // หากยังไม่ได้เลือกสกิล ให้เริ่มกระบวนการเลือกเป้าหมายของสกิล
                 player.controller.startSkillTargetSelection(skill);
             };
             // นำปุ่มไปใส่ไว้ในพื้นที่ควบคุม (controlArea) บน UI
