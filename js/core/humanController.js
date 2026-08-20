@@ -1664,7 +1664,6 @@ class HumanController extends Controller{
             this.game.discardPile.addCard(discardedCard);
             this.game.log(target.name + " ทิ้งการ์ด 1 ใบด้วยกระบี่คู่หยินหยาง");
             this.yinYangContext = null;
-            //context.damage.waitingTrigger = false;
             return context.damage.resume();
         }
         // ใช้ Controller ของผู้เล่นที่กำลังถึงเทิร์นเป็นตัวถือ State
@@ -1700,7 +1699,6 @@ class HumanController extends Controller{
         // เคลียร์ State
         this.yinYangContext = null;
         this.inputState = "idle";
-        context.damage.waitingTrigger = false;
         // ดำเนินการทำ Damage ต่อไป
         return context.damage.resume();
     }
