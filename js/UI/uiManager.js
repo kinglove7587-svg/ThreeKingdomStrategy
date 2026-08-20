@@ -1444,6 +1444,7 @@ class UIManager{
         hp.className = "character-tooltip-hp";
         hp.textContent = "HP : " + "❤️".repeat(player.maxHp);
         header.appendChild(hp);
+        tooltip.appendChild(header);
 
         const factionInfo = document.createElement("div");
         factionInfo.className = "character-tooltip-faction-info";
