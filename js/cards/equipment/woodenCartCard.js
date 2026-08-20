@@ -29,6 +29,7 @@ class WoodenCartCard extends EquipmentCard{
         controller.selectedWoodenCartCard = null;
         controller.selectedCardIndex = -1;
         controller.inputState = "waitingWoodenCartCard";
+        game.log("รถไม้: เลือกการ์ด 1 ใบเพื่อมอบให้ " + controller.selectedWoodenCartTarget.name);
         game.ui.render();
         return true;
     }
