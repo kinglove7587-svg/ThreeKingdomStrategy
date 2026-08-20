@@ -1687,7 +1687,7 @@ class UIManager{
         if(gender === "female"){
             return "♀️";
         }
-        return;
+        return "";
     }
     
 }
