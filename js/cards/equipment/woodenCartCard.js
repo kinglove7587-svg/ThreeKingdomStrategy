@@ -27,6 +27,7 @@ class WoodenCartCard extends EquipmentCard{
         // บันทึกอ้างอิงรถไม้ใบที่กำลังใช้ และเตรียม State สำหรับรอเลือกการ์ดที่จะมอบ
         controller.pendingWoodenCart = this;
         controller.selectedWoodenCartCard = null;
+        controller.selectedCardIndex = -1;
         controller.inputState = "waitingWoodenCartCard";
         game.ui.render();
         return true;
