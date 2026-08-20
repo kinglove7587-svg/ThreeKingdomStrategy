@@ -149,7 +149,7 @@ class UIManager{
                 controller.inputState === "waitingWoodenCartCard" && 
                 controller.selectedWoodenCartTarget
             ){
-                target.controller.selectedWoodenCartTarget;
+                target = controller.selectedWoodenCartTarget;
             }
             // ตรวจสอบว่าผู้เล่นในรอบลูปนี้ตรงกับเป้าหมายที่เลือกไว้หรือไม่
             if (player === target){
