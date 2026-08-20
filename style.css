@@ -185,8 +185,12 @@
 
 .character-tooltip-section{
     margin-top:12px;
+    padding-top:0;
+    border-top:none;
+}
+.character-tooltip-ability{
+    margin-top:12px;
     padding-top:10px;
-
     border-top:1px solid #d2bfa7;
 }
 
@@ -215,9 +219,6 @@
 }
 .character-tooltip-faction-info{
     padding-bottom:10px;
-    margin-bottom:10px;
-
-    border-bottom:1px solid #9b8068;
 }
 
 .character-tooltip-faction-info .faction-shu,
