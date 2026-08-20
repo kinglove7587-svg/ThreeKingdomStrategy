@@ -1677,5 +1677,17 @@ class UIManager{
         status.textContent = "เลือกการ์ด 2 ใบ | เลือกแล้ว " + selectedCards.length + " / 2";
         this.controlArea.appendChild(status);
     }
+    // icon gender
+    getGenderIcon(gender){
+
+        if(gender === "male"){
+            return "♂️";
+        }
+
+        if(gender === "female"){
+            return "♀️";
+        }
+        return;
+    }
     
 }
