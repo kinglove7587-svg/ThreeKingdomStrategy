@@ -116,7 +116,7 @@ class Deck {
         addCards(FeatheredFanCard, 1); // พัดขนนก
         addCards(GreenDragonBladeCard, 1); // ง้าวมังกรเขียว
         addCards(FrostSwordCard, 1); // กระบี่น้ำแข็ง
-        addCards(YinYangSwords, 1); // กระบี่คู่หยินหยาง
+        addCards(YinYangSwordsCard, 1); // กระบี่คู่หยินหยาง
         // Armor ==========================================================================    
         addCards(SilverLionHelmetCard, 1); // หมวกสิงโตเงิน
         addCards(TengJiaArmor, 1); // เกราะหวาย
