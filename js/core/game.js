@@ -109,7 +109,7 @@ class Game {
             this.log(card.name + " ไม่สามารถ Recast ได้");
             return false;
         }
-        // นำ Card ที่ต้องการ Recast ออกจากมือผู้เล่น
+        // จั่วการ์ดใหม่ก่อนนำการ์ดเดิมลงกองทิ้ง
         const newCard = this.drawCardFromDeck();
         if(newCard === null){
             this.log("ไพ่หมดทั้งกองจั่วและกองทิ้ง ไม่สามารถ Recast ได้");
