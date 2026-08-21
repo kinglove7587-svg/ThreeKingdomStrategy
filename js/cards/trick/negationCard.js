@@ -21,4 +21,7 @@ class NegationCard extends TrickCard{
         */
         
     }
+    getDescription(){
+        return "สามารถใช้ตอบโต้การ์ด Trick เพื่อทำให้ Effect ของการ์ดนั้นไม่เกิดผล";
+    }
 }
