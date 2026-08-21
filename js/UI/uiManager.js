@@ -1936,7 +1936,6 @@ class UIManager{
             }else{
                 button.textContent = card.name;
             }
-            button.textContent = card.name;
             button.onclick = () => {
                 controller.selectRestAndReorganizationCard(i);
             };
