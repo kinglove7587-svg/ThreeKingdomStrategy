@@ -1260,6 +1260,17 @@ class UIManager{
         // ดึงข้อมูลผู้เล่นปัจจุบันที่กำลังถึงตาเล่น
         const player = this.game.getCurrentPlayer();
         const controller = player.controller;
+        // Yin-Yang Swords: ให้เป้าหมายเป็นผู้เลือกการ์ดเอง
+        if(
+            controller.inputState === "waitingYinYangDiscard" && 
+            controller.yinYangContext && 
+            controller.yinYangContext.target && 
+            controller.yinYangContext.target.controller instanceof HumanController
+        ){
+            const targetController = controller.yinYangContext.target.controller;
+            targetController.selectYinYangDiscard(index);
+            return;
+        }
         // ตรวจสอบว่าถ้าอยู่ในสถานะรอเลือกการ์ดสำหรับสกิล
         if(controller.inputState === "waitingSkillCard"){
             controller.selectSkillCard(index);
