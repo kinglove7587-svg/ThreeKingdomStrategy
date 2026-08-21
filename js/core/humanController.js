@@ -1663,6 +1663,9 @@ class HumanController extends Controller{
                 return false;
             }
             this.game.discardPile.addCard(discardedCard);
+            if(context.judgeCard){
+                this.game.discardPile.addCard(context.judgeCard);
+            }
             this.game.log(target.name + " ทิ้งการ์ด 1 ใบด้วยกระบี่คู่หยินหยาง");
             this.yinYangContext = null;
             return context.damage.resume();
