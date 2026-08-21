@@ -1718,5 +1718,33 @@ class HumanController extends Controller{
         // ดำเนินการทำ Damage ต่อไป
         return true;
     }
+    // เลือกหรือยกเลิกการเลือกการ์ดสำหรับ พักพลจัดทัพ
+    selectRestAndReorganizationCard(index){
+        // ต้องอยู่ในสถานะกำลังเลือกการ์ดทิ้ง
+        if(this.inputState !== "waitingRestAndReorganizationDiscard"){
+            return false;
+        }
+        // ดึงการ์ดจากมือของผู้เล่น
+        const card = this.player.hand.cards[index];
+        if(!card){
+            return false;
+        }
+        // ตรวจว่าการ์ดใบนี้ถูกเลือกไว้แล้วหรือไม่
+        const selectedIndex = this.selectedRestAndReorganizationCards.indexOf(card);
+        // ถ้าเลือกไว้แล้ว ให้คลิกซ้ำเพื่อยกเลิก
+        if(selectedIndex !== -1){
+            this.selectedRestAndReorganizationCards.splice(selectedIndex, 1);
+            this.game.ui.render();
+            return true;
+        }
+        // จำกัดการเลือกได้สูงสุด 2 ใบ
+        if(this.selectedRestAndReorganizationCards.length >= 2){
+            return false;
+        }
+        // เพิ่มการ์ดตามลำดับที่ผู้เล่นเลือก
+        this.selectedRestAndReorganizationCards.push(card);
+        this.game.ui.render();
+        return true;
+    }
 
 }
