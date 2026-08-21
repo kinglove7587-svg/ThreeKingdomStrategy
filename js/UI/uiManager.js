@@ -1204,6 +1204,14 @@ class UIManager{
                 selectedIndices.length + " / " + 
                 player.hand.cards.length;
             this.controlArea.appendChild(status);
+            
+            const confirmButton = document.createElement("button");
+            confirmButton.textContent = "ยืนยัน";
+            confirmButton.disabled = selectedIndices.length === 0;
+            confirmButton.onclick = () => {
+                controller.confirmSkillCardSelection();
+            };
+            this.controlArea.appendChild(confirmButton);
             return;
         }
         status.textContent = 
