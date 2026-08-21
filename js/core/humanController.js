@@ -115,6 +115,7 @@ class HumanController extends Controller{
             this.inputState === "waitingYinYangDiscard" ||
             this.inputState === "waitingRestAndReorganizationDiscard"
         ){
+            this.selectedCardIndex = -1;
             return;
         }
         // การ์กจบการทำงานสมบูรณ์แล้ว
