@@ -341,6 +341,11 @@ class UIManager{
             this.renderFrostSwordHand();
             return;
         }
+        // Yin-Yang Swords รอเป้าหมายเลือกการ์ดทิ้ง
+        if(player.controller.inputState === "waitingYinYangDiscard"){
+            this.renderYinYangDiscardHand();
+            return;
+        }
         // ระหว่างรอ Trigger Choice ไม่ต้องแสดงปุ่มการ์ดปกติ
         if(player.controller.inputState === "waitingTriggerChoice"){
             return;
