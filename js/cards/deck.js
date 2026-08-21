@@ -104,6 +104,7 @@ class Deck {
         addCards(IronChainCard, 6); // โซ่ตรวน
         addCards(KnowEnemyCard, 4); // รู้เขารู้เรา
         addCards(FireAttackCard, 2); // เพลิงผลาญ
+        addCards(AllianceCard, 2); // พักพลจัดทัพ
         // Weapon =========================================================================
         addCards(TrainingSword, 1); // กระบี่ฝึกหัด
         addCards(CrossbowCard, 1); // หน้าไม้จูเก่อ
@@ -129,7 +130,6 @@ class Deck {
         addCards(WoodenCartCard, 1); // รถไม้
         // ========================== ยังไม่ได้ทำ ================================
         // addCards(NegationCard, 6);
-        // addCards(AllianceCard, 2);
         // addCards(RestAndReorganizationCard, 2);
         // addCards(SixSwordsOfWu, 1);
 
