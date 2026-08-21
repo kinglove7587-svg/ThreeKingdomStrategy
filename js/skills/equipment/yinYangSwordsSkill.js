@@ -57,7 +57,8 @@ class YinYangSwordsSkill extends TriggerSkill{
             const context = {
                 damage: damage, 
                 attacker: player, 
-                target: target
+                target: target, 
+                judgeCard: judgeCard
             };
             // เริ่มเข้าสู่ขั้นตอนให้เป้าหมายทิ้งการ์ด
             player.controller.startYinYangDiscardSelection(context);
