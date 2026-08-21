@@ -28,6 +28,8 @@ class HumanController extends Controller{
         this.triggerContext = null;
         this.selectedTriggerCardIndex = -1;
         this.selectedTriggerCardIndices = [];
+        // เก็บการ์ดที่เลือกทิ้งจาก พักพลจัดทัพ
+        this.selectedRestAndReorganizationCards = [];
         // Frost Sword State
         this.selectedFrostSwordCards = [];
         // Yin-Yang Swords State

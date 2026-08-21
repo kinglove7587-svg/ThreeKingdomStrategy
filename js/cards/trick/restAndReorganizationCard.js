@@ -9,6 +9,10 @@ class RestAndReorganizationCard extends TrickCard{
         player.drawCard(game.deck);
         player.drawCard(game.deck);
         game.log(player.name + " จั่วการ์ด 2 ใบ");
+        // ล้างรายการการ์ดที่เลือกไว้ก่อนเริ่มเลือกใหม่
+        player.controller.selectedRestAndReorganizationCards = [];
+        // เข้าสู่สถานะรอเลือกการ์ดทิ้ง
+        player.controller.inputState = "waitingRestAndReorganizationDiscard";
         game.ui.render();
         return true;
     }
