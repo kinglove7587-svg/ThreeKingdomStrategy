@@ -1696,9 +1696,11 @@ class HumanController extends Controller{
         // นำการ์ดลงกองทิ้งและบันทึก Log
         this.game.discardPile.addCard(removeCard);
         this.game.log(target.name + " ทิ้งการ์ด 1 ใบด้วยกระบี่คู่หยินหยาง");
+        // ดึง Controller ของผู้โจมตี
+        const attackerController = context.attacker.controller;
         // เคลียร์ State
-        this.yinYangContext = null;
-        this.inputState = "idle";
+        attackerController.yinYangContext = null;
+        attackerController.inputState = "idle";
         // ดำเนินการทำ Damage ต่อไป
         return context.damage.resume();
     }
