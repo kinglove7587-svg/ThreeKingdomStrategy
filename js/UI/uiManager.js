@@ -1955,5 +1955,36 @@ class UIManager{
         };
         this.controlArea.appendChild(confirmButton);
     }
+    // ยืนยันการทิ้งการ์ดจาก พักพลจัดทัพ
+    confirmRestAndReorganizationDiscard(){
+        // ต้องอยู่ในขั้นตอนเลือกการ์ดทิ้ง
+        if(this.inputState !== "waitingRestAndReorganizationDiscard"){
+            return false;
+        }
+        // ต้องเลือกการ์ด 2 ใบก่อน
+        if(this.selectedRestAndReorganizationCards.length !== 2){
+            return false;
+        }
+        // เก็บรายการการ์ดที่เลือกไว้
+        const selectedCards = [...this.selectedRestAndReorganizationCards];
+        // นำการ์ดที่เลือกออกจากมือและลงกองทิ้ง
+        for(const card of selectedCards){
+
+            const index = this.player.hand.cards.indexOf(card);
+            if(index === -1){
+                return false;
+            }
+
+            const removeCard = this.player.hand.removeCard(index);
+            if(removeCard){
+                this.game.discardPile.addCard(removeCard);
+            }
+        }
+        // ล้างรายการการ์ดที่เลือก
+        this.selectedRestAndReorganizationCards = [];
+        this.inputState = "idle";
+        this.game.ui.render();
+        return true;
+    }
     
 }
