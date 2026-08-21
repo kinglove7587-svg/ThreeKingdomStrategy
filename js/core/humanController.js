@@ -109,7 +109,8 @@ class HumanController extends Controller{
             this.inputState === "waitingAdditionalTargets" || 
             this.inputState === "waitingBorrowedSwordTarget" || 
             this.inputState === "waitingFrostSwordCard" || 
-            this.inputState === "waitingWoodenCartCard"
+            this.inputState === "waitingWoodenCartCard" || 
+            this.inputState === "waitingYinYangDiscard"
         ){
             return;
         }
@@ -1703,7 +1704,7 @@ class HumanController extends Controller{
         attackerController.inputState = "idle";
         // ดำเนินการทำ Damage ต่อไป
         const success = context.damage.resume();
-        this.game.ui.render();
+        this.game.afterHumanAction(success);
         // ดำเนินการทำ Damage ต่อไป
         return success;
     }
