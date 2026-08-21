@@ -1703,10 +1703,10 @@ class HumanController extends Controller{
         attackerController.yinYangContext = null;
         attackerController.inputState = "idle";
         // ดำเนินการทำ Damage ต่อไป
-        const success = context.damage.resume();
+        context.damage.resume();
         this.game.afterHumanAction(success);
         // ดำเนินการทำ Damage ต่อไป
-        return success;
+        return true;
     }
 
 }
