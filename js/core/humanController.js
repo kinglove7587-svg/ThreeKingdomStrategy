@@ -868,6 +868,11 @@ class HumanController extends Controller{
         this.selectedSkillCardIndex = index;
 
         console.log("Skill Card Selection =", this.selectedSkillCardIndices);
+        // Skill แบบ Batch Selection จะยังไม่ใช้สกิลทันที
+        if(skill.waitForCardSelectionConfirmation(this.player, this.game)){
+            this.game.ui.render();
+            return;
+        }
         // ดึงจำนวนการ์ดที่ สกิล นั้นต้องการ
         const requiredCount = skill.cardSelectionCount(this.player, this.game);
         // หากยังเลือกการ์ดไม่ครบตามจำนวนที่สกิลต้องการ ให้สั่งวาด UI ใหม่แล้วรอเลือกใบถัดไป
