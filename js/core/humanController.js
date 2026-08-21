@@ -1799,5 +1799,39 @@ class HumanController extends Controller{
         this.game.ui.render();
         return true;
     }
+    // ยืนยันการเลือกการ์ดสำหรับ Skill แบบรอการยืนยัน
+    confirmSkillCardSelection(){
+        // ต้องอยู่ในขั้นตอนรอเลือกการ์ด
+        if(this.inputState !== "waitingSkillCard"){
+            return false;
+        }
+        // ดึง Skill ที่กำลังเลือกอยู่
+        const skill = this.selectedSkill;
+        if(!skill){
+            return false;
+        }
+        // ใช้ได้เฉพาะ Skill แบบรอการยืนยัน
+        if(!skill.waitForCardSelectionConfirmation(this.player, this.game)){
+            return false;
+        }
+        // ต้องเลือกอย่างน้อย 1 ใบ
+        if(this.selectedSkillCardIndices.length === 0){
+            return false;
+        }
+        // เรียกใช้ Skill
+        const success = skill.use(this.player, this.game);
+        // ล้าง State หลัง Skill ทำงานเสร็จ
+        this.selectedSkill = null;
+        this.selectedSkillCardIndex = -1;
+        this.selectedSkillCardIndices = [];
+        this.inputState = "idle";
+        // ล้างเป้าหมายเมื่อใช้ Skill สำเร็จ
+        if(success){
+            this.selectedTarget = null;
+        }
+        // ส่งต่อให้ Game Engine
+        this.game.afterHumanAction(success);
+        return success;
+    }
 
 }
