@@ -1702,7 +1702,10 @@ class HumanController extends Controller{
         attackerController.yinYangContext = null;
         attackerController.inputState = "idle";
         // ดำเนินการทำ Damage ต่อไป
-        return context.damage.resume();
+        const success = context.damage.resume();
+        this.game.ui.render();
+        // ดำเนินการทำ Damage ต่อไป
+        return success;
     }
 
 }
