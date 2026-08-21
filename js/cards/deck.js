@@ -128,7 +128,7 @@ class Deck {
         // Treasure
         addCards(WoodenCartCard, 1); // รถไม้
         // ========================== ยังไม่ได้ทำ ================================
-        // addCards(NegationCard, 6);
+        addCards(NegationCard, 6);
         // addCards(AllianceCard, 2);
         // addCards(RestAndReorganizationCard, 2);
         // addCards(SixSwordsOfWu, 1);

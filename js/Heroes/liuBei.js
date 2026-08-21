@@ -16,10 +16,10 @@ class LiuBei extends Player{ // เล่าปี่
             "สามารถขอให้ตัวละครฝ่าย Shu ใช้หรือเล่น [โจมตี] แทนตนได้ หากตัวละครนั้นเต็มใจ";
         this.addSkill(new Rende());
         //this.setChained(true);
-        this.equipWeapon(new YinYangSwordsCard("♣️", 7));
+        //this.equipWeapon(new YinYangSwordsCard("♣️", 7));
         //this.equipArmor(new SilverLionHelmetCard("♣️", 7));
         //this.hand.addCard(new WoodenCartCard("♠️", 1));
-        //this.hand.addCard(new YinYangSwordsCard("♠️", 1));
+        this.hand.addCard(new DuelCard("♠️", 1));
         //this.hand.addCard(new SlashCard("♠️", 1));
     }
 }
