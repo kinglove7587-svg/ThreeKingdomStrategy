@@ -1200,7 +1200,7 @@ class UIManager{
         ){
             status.textContent = 
                 title + 
-                " | เลือกการ์ดหลายใบ | เลือกแล้ว " + 
+                " | เลือกการ์ด | เลือกแล้ว " + 
                 selectedIndices.length + " / " + 
                 player.hand.cards.length;
             this.controlArea.appendChild(status);
