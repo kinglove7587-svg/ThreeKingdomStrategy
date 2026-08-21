@@ -1927,6 +1927,15 @@ class UIManager{
 
             const card = player.hand.cards[i];
             const button = document.createElement("button");
+            const selectedIndex = controller.selectedRestAndReorganizationCards.indexOf(card);
+            // แสดงลำดับการเลือกบนการ์ด
+            if(selectedIndex !== -1){
+                button.textContent = "①②".charAt(selectedIndex) + " " + card.name;
+                button.classList.add("selected-card");
+
+            }else{
+                button.textContent = card.name;
+            }
             button.textContent = card.name;
             button.onclick = () => {
                 controller.selectRestAndReorganizationCard(i);
