@@ -1946,6 +1946,14 @@ class UIManager{
         status.textContent = "เลือกการ์ดที่จะทิ้ง 2 ใบ | เลือกแล้ว: " + 
             controller.selectedRestAndReorganizationCards.length + " / 2";
         this.controlArea.appendChild(status);
+        // ปุ่มยืนยันการทิ้งการ์ด
+        const confirmButton = document.createElement("button");
+        confirmButton.textContent = "ยืนยันการทิ้ง";
+        confirmButton.disabled = controller.selectedRestAndReorganizationCards.length !== 2;
+        confirmButton.onclick = () => {
+            controller.confirmRestAndReorganizationDiscard();
+        };
+        this.controlArea.appendChild(confirmButton);
     }
     
 }
