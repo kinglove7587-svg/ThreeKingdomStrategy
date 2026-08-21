@@ -71,4 +71,8 @@ class Rende extends ActiveSkill{
         return true;
         
     }
+    // Rende ต้องรอการยืนยันหลังเลือกการ์ด
+    waitForCardSelectionConfirmation(player, game){
+        return true;
+    }
 }
