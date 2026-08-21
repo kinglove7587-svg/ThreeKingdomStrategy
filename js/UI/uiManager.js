@@ -413,6 +413,14 @@ class UIManager{
                     selectedOrder = index + 1;
                 }
             }
+            // แสดงลำดับการ์ดที่เลือกสำหรับ พักพลจัดทัพ
+            if(player.controller.inputState === "waitingRestAndReorganizationDiscard"){
+                const index = 
+                    player.controller.selectedRestAndReorganizationCards.indexOf(card);
+                if(index !== -1){
+                    selectedOrder = index + 1;
+                }
+            }
             // ตรวจสอบเงื่อนไขการเลือก TriggerCard (เช่น เพลิงผลาญ)
             let triggerCardAllowed = true;
 
