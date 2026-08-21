@@ -1193,6 +1193,19 @@ class UIManager{
         }
 
         const status = document.createElement("div");
+        // Skill แบบ Batch Selection
+        if(
+            controller.selectedSkill && 
+            controller.selectedSkill.waitForCardSelectionConfirmation(player, this.game)
+        ){
+            status.textContent = 
+                title + 
+                " | เลือกการ์ดหลายใบ | เลือกแล้ว " + 
+                selectedIndices.length + " / " + 
+                player.hand.cards.length;
+            this.controlArea.appendChild(status);
+            return;
+        }
         status.textContent = 
             title + 
             " | เลือกการ์ด " + 
