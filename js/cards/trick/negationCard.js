@@ -16,10 +16,9 @@ class NegationCard extends TrickCard{
             return false;
         }
         // อนุญาตให้ตอบโต้ถ้าเป็นการ์ดประเภท Trick หรือการ์ดหักล้าง
-        return (
-            context.card instanceof TrickCard || 
-            context.card.name === "หักล้าง"
-        );
+        return context. card instanceof TrickCard && 
+            !(context.card instanceof NegationCard);
         */
+        
     }
 }
