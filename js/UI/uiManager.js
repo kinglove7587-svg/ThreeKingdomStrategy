@@ -306,6 +306,11 @@ class UIManager{
             this.renderYinYangDiscardHand();
             return;
         }
+        // รอเลือกการ์ดทิ้งจาก พักพลจัดทัพ
+        if(player.controller.inputState === "waitingRestAndReorganizationDiscard"){
+            this.renderRestAndReorganizationDiscardHand();
+            return;
+        }
         // หากอยู่ในสถานะเปิดดูไพ่บนมือเป้าหมาย ให้เรียก renderTargetHand()
         if(player.controller.inputState === "viewingHand"){
             this.renderTargetHand(player.controller.viewingHandTarget);
@@ -339,11 +344,6 @@ class UIManager{
         // หากอยู่ในสถานะรอเลือกการ์ด Frost Sword ให้เรียก renderFrostSwordHand()
         if(player.controller.inputState === "waitingFrostSwordCard"){
             this.renderFrostSwordHand();
-            return;
-        }
-        // Yin-Yang Swords รอเป้าหมายเลือกการ์ดทิ้ง
-        if(player.controller.inputState === "waitingYinYangDiscard"){
-            this.renderYinYangDiscardHand();
             return;
         }
         // ระหว่างรอ Trigger Choice ไม่ต้องแสดงปุ่มการ์ดปกติ
@@ -1915,6 +1915,28 @@ class UIManager{
 
         const status = document.createElement("div");
         status.textContent = target.name + " ต้องทิ้งการ์ด 1 ใบ";
+        this.controlArea.appendChild(status);
+    }
+    // แสดงมือสำหรับเลือกทิ้งจาก พักพลจัดทัพ
+    renderRestAndReorganizationDiscardHand(){
+
+        const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
+
+        for(let i = 0; i < player.hand.cards.length; i++){
+
+            const card = player.hand.cards[i];
+            const button = document.createElement("button");
+            button.textContent = card.name;
+            button.onclick = () => {
+                controller.selectRestAndReorganizationCard(i);
+            };
+            this.handArea.appendChild(button);
+        }
+        // แสดงสถานะการเลือก
+        const status = document.createElement("div");
+        status.textContent = "เลือกการ์ดที่จะทิ้ง 2 ใบ | เลือกแล้ว: " + 
+            controller.selectedRestAndReorganizationCards.length + " / 2";
         this.controlArea.appendChild(status);
     }
     
