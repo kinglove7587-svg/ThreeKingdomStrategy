@@ -859,9 +859,25 @@ class HumanController extends Controller{
         if(!card){
             return;
         }
-        //
-        if(this.selectedSkillCardIndices.includes(index)){
-            return;
+        // Skill แบบรอยืนยันสามารถคลิกการ์ดซ้ำเพื่อยกเลิกการเลือกได้
+        if(skill.waitForCardSelectionConfirmation(this.player, this.game)){
+
+            const selectedIndex = this.selectedSkillCardIndices.indexOf(index);
+            if(selectedIndex !== -1){
+                this.selectedSkillCardIndices.splice(selectedIndex, 1);
+                this.selectedSkillCardIndex = 
+                    this.selectedSkillCardIndices.length > 0 
+                    ? this.selectedSkillCardIndices[
+                        this.selectedSkillCardIndices.length -1
+                    ] : -1;
+                this.game.ui.render();
+                return;
+            }
+        }else{
+            // Skill ปกติ: เลือกซ้ำไม่ได้
+            if(this.selectedSkillCardIndices.includes(index)){
+                return;
+            }
         }
         // บันทึก Index เข้า Array และอัปเดต selectedSkillCardIndex ให้สกิลเดิม (เช่น Rende) ใช้องค์ประกอบเดิมได้
         this.selectedSkillCardIndices.push(index);
