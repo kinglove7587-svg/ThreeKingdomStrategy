@@ -3,10 +3,13 @@ class Rende extends ActiveSkill{
     constructor(){
         super("Rende"); // จิตเมตตา
         this.rendeCardCount = 0; // เปลี่ยนมาใช้นับจำนวนการ์ดที่มอบในเทิร์นนี้แทน
+        // ป้องกันการฟื้น HP จาก Rende มากกว่า 1 ครั้งต่อเทิร์น
+        this.rendeHpRecovered = false;
     }
     // เริ่มเทิร์นใหม่ รีเซ็ตจำนวนการ์ดที่มอบให้กลับเป็น 0
     onTurnStart(player, game){
         this.rendeCardCount = 0;
+        this.rendeHpRecovered = false;
     }
     // เช็กเงื่อนไขการใช้งาน: ใช้งานได้เรื่อยๆ ตราบใดที่ยังมีการ์ดในมือ
     canUse(player, game){
@@ -27,49 +30,76 @@ class Rende extends ActiveSkill{
     }
     // ประมวลผลการใช้สกิล Rende 
     use(player, game){
-        // เช็กก่อนว่าผ่านเงื่อนไขการใช้งานหรือไม่ หากไม่มีไพ่ในมือให้ยกเลิกการทำงาน
-        if (!this.canUse(player, game)){
+        // เช็กก่อนว่าผ่านเงื่อนไขการใช้งานหรือไม่
+        if(!this.canUse(player, game)){
             return false;
         }
+
         let target;
-        // ถ้าผู้ใช้เป็น Human ให้ดึงเป้าหมายจากการเลือก
+        let selectedCards = [];
+        // Human
         if(player.controller.isHuman()){
+            // ดึงเป้าหมายที่เลือกไว้
             target = player.controller.getSelectedTarget();
+            if(!target){
+                return false;
+            }
+            // ดึงการ์ดที่เลือกทั้งหมดจาก Array
+            selectedCards = 
+                player.controller.selectedSkillCardIndices
+                    .map(index => player.hand.cards[index])
+                    .filter(card => card);
+
         }else{
-            // ถ้าเป็น AI ให้เลือกเป้าหมายเป็นผู้เล่นถัดไป
+            // AI ยังคงใช้ Logic เดิม
             target = game.getNextPlayer();
+            if(player.hand.cards.length > 0){
+                selectedCards = [player.hand.cards[0]];
+            }
         }
-        let cardIndex;
-        // ตรวจสอบและเลือกเป้าหมาย (Target)
-        if(player.controller.isHuman()){
-            cardIndex = player.controller.selectedSkillCardIndex;
-        }else{
-            // AI ยังเลือกใบแรก
-            cardIndex = 0;
-        }
-        //
-        const card = player.hand.removeCard(cardIndex);
-        // เช็กความปลอดภัย หากดึงไพ่ไม่ได้ (ได้ค่า null) ให้ยกเลิกการทำงาน
-        if (card === null){
+        // ต้องมีการ์ดอย่างน้อย 1 ใบ
+        if(selectedCards.length === 0){
             return false;
         }
-        // นำการ์ดใบนั้นย้ายเข้าไปใส่ไว้ในมือของผู้เล่นเป้าหมาย
-        target.hand.addCard(card);
-        // เพิ่มจำนวนการ์ด Rende ที่มอบไปแล้วในเทิร์นนี้
-        this.rendeCardCount++;
-        // แสดง Log การใช้สกิล รายชื่อการ์ดที่มอบ และผู้รับ
-        game.log(
-            player.name + " ใช้สกิล Rende (จิตเมตตา) มอบการ์ดให้ " + target.name);
-        // มอบการ์ดใบที่ 2 ในเทิร์นนี้ จะฟื้น HP 1
-        if(this.rendeCardCount === 2 && player.hp < player.maxHp){
-            player.recoverHp(1);
+        // ป้องกัน Rende เลือกเกิน 5 ใบ
+        if(selectedCards.length > 5){
+            return false;
         }
-        // แสดงรายการไพ่ในมือล่าสุดของผู้ใช้สกิลและผู้รับ
+        // ส่งการ์ดทั้งหมดให้ Target
+        for(const card of selectedCards){
+
+            const index = player.hand.cards.indexOf(card);
+            if(index === -1){
+                return false;
+            }
+
+            const removeCard = player.hand.removeCard(index);
+            if(!removeCard){
+                return false;
+            }
+            target.hand.addCard(removeCard);
+        }
+        // เพิ่มจำนวนการ์ด Rende ที่มอบสำเร็จจริงในเทิร์นนี้
+        this.rendeCardCount += selectedCards.length;
+        game.log(
+            player.name + 
+            " ใช้สกิล Rende (จิตเมตตา) มอบการ์ด " + 
+            selectedCards.length + 
+            " ใบให้ " + target.name
+        );
+        // ครบ 2 ใบในเทิร์นนี้ → ฟื้น HP ได้สูงสุด 1 ครั้ง
+        if(
+            this.rendeCardCount >= 2 && 
+            !this.rendeHpRecovered && 
+            player.hp < player.maxHp
+        ){
+            player.recoverHp(1);
+            this.rendeHpRecovered = true;
+        }
+        // แสดงมือปัจจุบัน
         player.showHand();
         target.showHand();
-        // ส่งค่า true กลับไปเมื่อส่งมอบไพ่สำเร็จ
         return true;
-        
     }
     // Rende ต้องรอการยืนยันหลังเลือกการ์ด
     waitForCardSelectionConfirmation(player, game){
