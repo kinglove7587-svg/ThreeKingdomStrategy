@@ -35,6 +35,8 @@ class Game {
         this.peachHelper = null; // เก็บผู้เล่นที่กำลังถูกถามว่าจะใช้ยาช่วยหรือไม่
         this.chainDamageListener = new ChainDamageListener(); // สร้าง Listener สำหรับความเสียหายโซ่ตรวน
         this.chainDamageListener.register(this.eventManager); // ผูก chainDamageListener เข้ากับ EventManager
+        // ใช้ตรวจว่า Action ปัจจุบันยังดำเนินอยู่หรือไม่
+        this.actionLocked = false;
         this.isGameOver = false;
     }
 
@@ -443,10 +445,15 @@ class Game {
     }
     // เมธอดสำหรับจบเทิร์น และส่งต่อผู้เล่นปัจจุบันเข้าสู่เฟสทิ้งการ์ด
     finishTurn(){
+        // ห้ามจบเทิร์นถ้า Action ปัจจุบันยังไม่จบ
+        if(this.actionLocked){
+            return false;
+        }
         // ดึงผู้เล่นปัจจุบันที่กำลังเล่นเทิร์นอยู่ออกมา
         const player = this.getCurrentPlayer();
         // ส่งผู้เล่นเข้าสู่เฟสทิ้งการ์ด (Discard Phase)
         this.discardPhase(player);
+        return true;
     }
     // จัดการผลลัพธ์หลังผู้เล่นมนุษย์ทำ Action (ลงการ์ด)
     afterHumanAction(success){
@@ -832,5 +839,13 @@ class Game {
             this.deck.shuffle();
         }
         return this.deck.draw();
+    }
+    // เริ่ม Action ใหม่ และล็อก End Turn
+    startAction(){
+        this.actionLocked = true;
+    }
+    // จบ Action และปลดล็อก End Turn
+    finishAction(){
+        this.actionLocked = false;
     }
 }
