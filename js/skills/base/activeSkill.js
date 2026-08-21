@@ -27,4 +27,8 @@ class ActiveSkill extends Skill{
     cardSelectionCount(player, game){
         return 1;
     }
+    // ระบุว่าสกิลต้องรอการยืนยันหลังเลือกการ์ด
+    waitForCardSelectionConfirmation(player, game){
+        return false;
+    }
 }
