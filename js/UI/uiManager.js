@@ -441,7 +441,7 @@ class UIManager{
 
             if(selectedOrder !== null){
                 button.textContent = 
-                    "①②③".charAt(selectedOrder - 1) + 
+                    "①②③④⑤".charAt(selectedOrder - 1) + 
                     " " + card.name;
                 
                 button.classList.add("selected-card");
