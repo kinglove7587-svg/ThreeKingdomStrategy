@@ -65,6 +65,14 @@ class YinYangSwordsSkill extends TriggerSkill{
             
         }else if(judgeResult.isRed()){
             console.log("ผลตัดสิน = สีแดง");
+            // ผู้โจมตีจั่วการ์ด 1 ใบ
+            const drawCard = game.drawCardFromDeck();
+            // ตรวจสอบว่ากองจั่วมีการ์ดให้จั่วหรือไม่
+            if(drawCard){
+                // เพิ่มการ์ดเข้ามือของผู้โจมตี
+                player.hand.addCard(drawCard);
+                game.log(player.name + " จั่วการ์ด 1 ใบด้วยกระบี่คู่หยินหยาง");
+            }
             
         }
         game.discardPile.addCard(judgeCard);

@@ -7,7 +7,7 @@ class ZhangFei extends Player{ // เตียวหุย
         this.maxHp = 4;
         this.hp = 4;
         this.faction = "Shu";
-        this.gender = "female";
+        this.gender = "male";
         this.addSkill(new Paoxiao());
         //this.equipWeapon(new CrossbowCard("♣️", 7));
         //this.equipArmor(new SilverLionHelmetCard("♣️", 7));
