@@ -75,4 +75,8 @@ class Rende extends ActiveSkill{
     waitForCardSelectionConfirmation(player, game){
         return true;
     }
+    // Rende เลือกการ์ดได้สูงสุดตามจำนวนการ์ดในมือ
+    cardSelectionCount(player, game){
+        return player.hand.cards.length;
+    }
 }
