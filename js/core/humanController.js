@@ -1701,10 +1701,11 @@ class HumanController extends Controller{
         const attackerController = context.attacker.controller;
         // เคลียร์ State
         attackerController.yinYangContext = null;
+        attackerController.selectedCardIndex = -1;
         attackerController.inputState = "idle";
         // ดำเนินการทำ Damage ต่อไป
         context.damage.resume();
-        this.game.afterHumanAction(success);
+        this.game.afterHumanAction(true);
         // ดำเนินการทำ Damage ต่อไป
         return true;
     }
