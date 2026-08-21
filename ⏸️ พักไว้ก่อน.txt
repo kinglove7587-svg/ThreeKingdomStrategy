@@ -3,7 +3,7 @@
 การ์ด อุบาลที่ยังไม่ได้ทำ
 - NegationCard ยกเลิกอุบาย ยังไม่เสร็จ ต้องรอไพ่ อุบายครบก่อน
 - AllianceCard ต้องมีฝ่ายก่อน
-- RestAndReorganizationCard ต้องมีฝ่ายก่อน
+- RestAndReorganizationCard ต้องมีฝ่ายก่อน ①
 
 การ์ด weapon ที่ยังไม่ได้ทำ
 - Six Swords of Wu ต้องมีพวกเดียวกัน ต้องมี ระบบ ถือไพ่ ตาม ตาม hp ก่อน
