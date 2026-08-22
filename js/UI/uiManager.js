@@ -873,6 +873,7 @@ class UIManager{
         // ระหว่าง Reaction ห้ามกด End Turn (ซ่อนปุ่มทันที)
         if(this.game.reactionManager && this.game.reactionManager.active){
             this.endTurnButton.style.display = "none";
+            this.endTurnButton.disabled = true;
             return;
         }
         // ระหว่างเลือกเป้าหมายเพิ่ม ห้ามแสดง End Turn
@@ -880,15 +881,18 @@ class UIManager{
             controller.inputState === "waitingAdditionalTargets"
         ){
             this.endTurnButton.style.display = "none";
+            this.endTurnButton.disabled = true;
             return;
         }
         // ตรวจสอบว่าผู้เล่นปัจจุบันเป็นมนุษย์ (HumanController) หรือไม่
         if (controller instanceof HumanController){
             // แสดงปุ่ม End Turn บนหน้าเว็บ
             this.endTurnButton.style.display = "inline-block";
+            this.endTurnButton.disabled = this.game.actionLocked;
         }else{
             // ซ่อนปุ่ม End Turn ไม่ให้กดได้ระหว่างที่ AI เล่น
             this.endTurnButton.style.display = "none";
+            this.endTurnButton.disabled = true;
         }
     }
     // สร้างข้อความ HTML แสดงผลอุปกรณ์ที่ผู้เล่นกำลังสวมใส่อยู่ (อาวุธ/เกราะ)
