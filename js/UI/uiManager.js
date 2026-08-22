@@ -1859,6 +1859,45 @@ class UIManager{
         tooltip.style.left = left + "px";
         tooltip.style.top = top + "px";
     }
+    // แสดง Tooltip ของ Skill ณ ตำแหน่งเมาส์
+    showSkillTooltip(skill, x, y){
+
+        const tooltip = this.createCardTooltip();
+
+        this.renderSkillTooltipContent(skill, tooltip);
+
+        tooltip.style.display = "block";
+
+        const offset = 15;
+
+        let left = x + offset;
+        let top = y + offset;
+
+        const rect = tooltip.getBoundingClientRect();
+
+        // ชนขอบขวา → ย้าย Tooltip ไปทางซ้ายของเมาส์
+        if(left + rect.width > window.innerWidth){
+            left = x - rect.width - offset;
+        }
+
+        // ชนขอบล่าง → ย้าย Tooltip ขึ้นด้านบนของเมาส์
+        if(top + rect.height > window.innerHeight){
+            top = y - rect.height - offset;
+        }
+
+        // กัน Tooltip เลยขอบซ้าย
+        if(left < 0){
+            left = 5;
+        }
+
+        // กัน Tooltip เลยขอบบน
+        if(top < 0){
+            top = 5;
+        }
+
+        tooltip.style.left = left + "px";
+        tooltip.style.top = top + "px";
+    }
     // ซ่อน Tooltip เมื่อเลื่อนเมาส์ออกจากพื้นที่การ์ด
     hideCardTooltip(){
 
