@@ -782,6 +782,11 @@ class Game {
         // เลื่อนสิทธิ์การเลือกไปยังผู้เล่นคนถัดไป
         zone.advancePlayer();
 
+        const nextPlayer = zone.getCurrentPlayer();
+        if(nextPlayer && nextPlayer.controller){
+            nextPlayer.controller.startSelection();
+        }
+
         return true;
     }
     // จบกระบวนการเลือกการ์ดกลางโต๊ะ (SelectionZone)
