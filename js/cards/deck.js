@@ -130,7 +130,7 @@ class Deck {
         addCards(WoodenCartCard, 1); // รถไม้
         // ========================== ยังไม่ได้ทำ ================================
         // addCards(NegationCard, 6);
-        // addCards(AllianceCard, 2);
+        // addCards(AllianceCard, 2); // ไม่เกี่ยวใส่ไว้เฉยๆ
         // addCards(SixSwordsOfWu, 1);
 
     }
