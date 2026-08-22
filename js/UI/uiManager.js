@@ -1023,7 +1023,7 @@ class UIManager{
                     return;
                 }
                 // หากยังไม่ได้เลือกสกิล ให้เริ่มกระบวนการเลือกเป้าหมายของสกิล
-                player.controller.startSkillTargetSelection(skill);
+                player.controller.startSkillUsed(skill);
             };
             // นำปุ่มไปใส่ไว้ในพื้นที่ควบคุม (controlArea) บน UI
             this.controlArea.appendChild(button);
