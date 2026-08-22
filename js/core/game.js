@@ -801,6 +801,7 @@ class Game {
         }
         // เลื่อนสิทธิ์การเลือกไปยังผู้เล่นคนถัดไป
         zone.advancePlayer();
+        this.ui.render();
         return true;
     }
     // จบกระบวนการเลือกการ์ดกลางโต๊ะ (SelectionZone)
