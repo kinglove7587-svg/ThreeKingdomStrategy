@@ -310,6 +310,13 @@ class Game {
         this.ui.addLog("Discard Phase");
         // ส่ง Event "onDiscardPhase" ผ่าน eventManager ไปยังผู้เล่นเป้าหมาย เพื่อเปิดใช้งานสกิลช่วงทิ้งไพ่
         this.eventManager.emitToPlayer("onDiscardPhase", player);
+        // Hand Limit สำหรับ AI
+        if(
+            !player.controller.isHuman() && 
+            player.hand.cards.length > player.hp
+        ){
+            player.controller.discardHandLimit();
+        }
         this.endPhase(player);
     }
 
