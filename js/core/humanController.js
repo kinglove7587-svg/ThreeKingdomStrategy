@@ -785,6 +785,7 @@ class HumanController extends Controller{
         this.selectedSkill = skill;
         // ล้างค่าเป้าหมายเดิมออกก่อน
         this.selectedTarget = null;
+        this.game.startAction();
         // ปลี่ยนสถานะ Input ให้เป็น "waitingSkillTarget" เพื่อรอผู้เล่นคลิกเลือกตัวละครเป้าหมาย
         this.inputState = "waitingSkillTarget";
         this.game.ui.render();
