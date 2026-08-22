@@ -812,13 +812,12 @@ class UIManager{
     // แสดงปุ่มการ์ดกลางโต๊ะ (SelectionZone) ให้ผู้เล่นที่มีสิทธิ์เลือกในขณะนั้น
     renderSelectionZone(){
         // ดึงผู้เล่นที่มีสิทธิ์เลือกการ์ดคนปัจจุบันจาก SelectionZone
-        const player = this.game.selectionZone.getCurrentPlayer();
+        const player = this.game.bumperHarvestPlayer;
         //
         if(!player){
             return;
         }
         
-        const controller = player.controller;
         const zone = this.game.selectionZone;
         // หากไม่มีการ์ดใน Zone ให้ยกเลิกการทำงาน
         if(zone.cards.length === 0){
