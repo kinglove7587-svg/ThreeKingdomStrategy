@@ -9,7 +9,7 @@ class SunQuan extends Player{
         this.gender = "male";
 
         this.abilityDescription = 
-            "Equilibrium\n" +
+            "Equilibrium (กลศึกสลับขั้ว)\n" +
             "จำกัด 1 ครั้งต่อ Play Phase คุณสามารถทิ้งการ์ดจำนวนเท่าใดก็ได้ แล้วจั่วการ์ดจำนวนเท่ากัน\n\n" +
             "Deliverance (เมื่อคุณรับบทเป็นเจ้าเมือง)\n" +
             "เมื่อการ์ด [ยา] ถูกใช้กับคุณโดยตัวละครฝ่าย Wu คุณฟื้นฟู HP เพิ่มอีก 1";
