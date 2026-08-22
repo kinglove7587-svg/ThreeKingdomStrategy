@@ -77,4 +77,7 @@ class Equilibrium extends ActiveSkill{
         );
         return true;
     }
+    getDescription(){
+        return "จำกัด 1 ครั้งต่อ Play Phase คุณสามารถทิ้งการ์ดจำนวนเท่าใดก็ได้ แล้วจั่วการ์ดจำนวนเท่ากัน";
+    }
 }
