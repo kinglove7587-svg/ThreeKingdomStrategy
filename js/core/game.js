@@ -18,7 +18,6 @@ class Game {
             // สร้าง Instance จากคลาสฮีโร่เฉพาะของแต่ละตัวละคร แล้วเพิ่มลงในอาร์เรย์ผู้เล่น
             this.players.push(
                 new data.hero(
-                    data.name,
                     this,
                     data.controller
                 )
