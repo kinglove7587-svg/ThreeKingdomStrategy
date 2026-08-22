@@ -139,6 +139,7 @@ class HumanController extends Controller{
 
             this.selectedCardIndex = -1;
             this.selectedTarget = null;
+            this.game.finishAction();
             this.inputState = "idle";
             this.game.ui.render();
             return;
@@ -159,11 +160,13 @@ class HumanController extends Controller{
         }
         // ถ้าการ์ดต้องเลือกเป้าหมาย (เช่น การ์ดโจมตี, ดวล) ให้ Render UI ใหม่ แล้วหยุดรอให้ผู้เล่นคลิกเลือกเป้าหมาย
         if (card.needTarget()){
+            this.game.startAction();
             this.inputState = "waitingTarget";
             this.game.ui.render();
             return;
         }
         // ถ้าการ์ดไม่ต้องเลือกเป้าหมาย (เช่น การ์ดยา) ให้สั่งจบ/ประมวลผลการเล่นการ์ดทันที
+        this.game.startAction();
         this.finishTurn();
     }
     // รับเลือกการ์ดจากมือที่จะส่งมอบด้วย Wooden Cart
