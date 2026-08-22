@@ -117,7 +117,8 @@ class HumanController extends Controller{
             this.inputState === "waitingStealSource" || 
             this.inputState === "waitingStealCard" || 
             this.inputState === "waitingBurnSource" || 
-            this.inputState === "waitingBurnCard"
+            this.inputState === "waitingBurnCard" || 
+            this.inputState === "waitingSelection"
         ){
             return;
         }
