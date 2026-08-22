@@ -1859,5 +1859,34 @@ class HumanController extends Controller{
         this.game.afterHumanAction(success);
         return success;
     }
+    // เลือก / ยกเลิกการ์ดสำหรับทิ้งเมื่อการ์ดในมือเกิน HP
+    selectHandLimitDiscardCard(index){
+
+        if(this.inputState !== "waitingHandLimitDiscard"){
+            return;
+        }
+
+        const card = this.player.hand.cards[index];
+        if(!card){
+            return;
+        }
+
+        const selectedIndex = this.selectedHandLimitDiscardCards.indexOf(card);
+        // ถ้าเลือกการ์ดใบนี้ไว้แล้ว ให้ยกเลิกการเลือก
+        if(selectedIndex !== -1){
+            this.selectedHandLimitDiscardCards.splice(selectedIndex, 1);
+            this.game.ui.render();
+            return;
+        }
+        // จำนวนการ์ดที่ต้องทิ้ง
+        const requiredCount = this.player.hand.cards.length - this.player.hp;
+        // ป้องกันเลือกเกินจำนวนที่ต้องทิ้ง
+        if(this.selectedHandLimitDiscardCards.length >= requiredCount){
+            return;
+        }
+        // เพิ่มการ์ดเข้า Selection
+        this.selectedHandLimitDiscardCards.push(card);
+        this.game.ui.render();
+    }
 
 }
