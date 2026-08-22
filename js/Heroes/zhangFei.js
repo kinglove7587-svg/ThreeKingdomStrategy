@@ -13,7 +13,7 @@ class ZhangFei extends Player{ // เตียวหุย
         //this.equipArmor(new SilverLionHelmetCard("♣️", 7));
         //this.setChained(true);
         //this.hand.addCard(new NioShieldCard("♥️", 1));
-        //this.hand.addCard(new NegationCard("♠️", 1));
+        this.hand.addCard(new BumperHarvestCard("♠️", 1));
         //this.hand.addCard(new SlashCard("♠️", 1));
     }
 }

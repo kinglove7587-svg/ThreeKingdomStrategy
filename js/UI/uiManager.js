@@ -836,12 +836,6 @@ class UIManager{
             button.onclick = () => {
                 // เลือกการ์ดเข้ามือผู้เล่นปัจจุบัน
                 this.game.selectSelectionCard(i);
-                // ตรวจสอบว่าเลือกการ์ดจนจบหรือยัง
-                if(!this.game.selectionZone.isFinish()){
-                    // ดึงผู้เล่นคนถัดไปที่มีสิทธิ์เลือกเพื่อสั่งเริ่ม Selection
-                    const nextPlayer = this.game.selectionZone.getCurrentPlayer();
-                    nextPlayer.controller.startSelection();
-                }
             };
             this.handArea.appendChild(button);
         }
