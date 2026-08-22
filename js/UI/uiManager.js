@@ -1341,8 +1341,8 @@ class UIManager{
             return;
         }
         // Hand Limit Discard
-        if(controller.inputState === "waitingHandLinitDiscard"){
-            controller.selectHandLimitDiscardCards(index);
+        if(controller.inputState === "waitingHandLimitDiscard"){
+            controller.selectHandLimitDiscardCard(index);
             return;
         }
         // หากกดจบเทิร์น (index เป็น -1) ให้ส่งให้ Controller สั่งจบเทิร์น
