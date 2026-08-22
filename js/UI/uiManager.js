@@ -1927,19 +1927,19 @@ class UIManager{
     getFactionIcon(faction){
 
         if(faction === "Shu"){
-            return '<span class="faction-shu">[蜀]</span>';
+            return '<span class="faction-shu">[ "Shu" 蜀 ]</span>';
         }
 
         if(faction === "Wei"){
-            return '<span class="faction-wei">[魏]</span>';
+            return '<span class="faction-wei">[ "Wei" 魏 ]</span>';
         }
 
         if(faction === "Wu"){
-            return '<span class="faction-wu">[吴]</span>';
+            return '<span class="faction-wu">[ "Wu" 吴 ]</span>';
         }
 
         if(faction === "Qun"){
-            return '<span class="faction-qun">[群]</span>';
+            return '<span class="faction-qun">[ "Qun" 群 ]</span>';
         }
         return "";
     }
