@@ -30,6 +30,7 @@ class BurnBridgeCard extends TrickCard{
         const controller = player.controller;
         // บันทึกเป้าหมายที่เลือกไว้ลงใน selectedBurnTarget
         controller.selectedBurnTarget = controller.getSelectedTarget();
+        controller.selectedCardIndex = -1;
         // เริ่มเข้าสู่โหมดรอเลือกโซนที่จะทำลาย (มือ / อาวุธ / เกราะ)
         controller.startBurnSourceSelection();
         return true;
