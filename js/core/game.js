@@ -452,6 +452,15 @@ class Game {
         }
         // ดึงผู้เล่นปัจจุบันที่กำลังเล่นเทิร์นอยู่ออกมา
         const player = this.getCurrentPlayer();
+        const controller = player.controller;
+        // ตรวจจำนวนการ์ดในมือก่อนจบเทิร์น (Hand Limit Check)
+        if(player.hand.cards.length > player.hp){
+            controller.selectedHandLimitDiscardCards = [];
+            controller.inputState = "waitingHandLimitDiscard";
+            this.actionLocked = true;
+            this.ui.render();
+            return false;
+        }
         // ส่งผู้เล่นเข้าสู่เฟสทิ้งการ์ด (Discard Phase)
         this.discardPhase(player);
         return true;
