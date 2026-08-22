@@ -280,6 +280,7 @@ class HumanController extends Controller{
     }
     // เปลี่ยนสถานะเป็น waitingSelection เพื่อเตรียมแสดง UI หน้าเลือกการ์ดกลางโต๊ะ
     startSelection(){
+        this.selectedCardIndex = -1;
         this.inputState = "waitingSelection";
         this.game.ui.render();
     }
