@@ -847,19 +847,33 @@ class Game {
         // Modifier ฝั่งเป้าหมาย (เช่น ม้าเงาพยับ = +1)
         const targetModifier = 
             target.getMountDefenseDistanceModifier();
+        let passiveModifier = 0;
+        for(const player of this.players){
+            if(!player.isAlive()){
+                continue;
+            }
+            for(const skill of player.getPassiveSkills()){
+                if(typeof skill.getAttackDistanceModifier !== "function"){
+                    continue;
+                }
+                passiveModifier += skill.getAttackDistanceModifier(player, attacker, target, this);
+            }
+        }
         // คำนวณระยะสำหรับการโจมตี (ขั้นต่ำไม่ต่ำกว่า 1)
         const distance = Math.max(
             1, 
             baseDistance + 
             attackerModifier + 
-            targetModifier
+            targetModifier + 
+            passiveModifier
         );
 
         console.log(
             "Attack Distance:", 
             baseDistance, "+", 
             attackerModifier, "+", 
-            targetModifier, "=", 
+            targetModifier, "+", 
+            passiveModifier, "=", 
             distance
         );
         return distance;
