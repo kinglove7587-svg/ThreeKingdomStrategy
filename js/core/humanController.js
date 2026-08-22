@@ -263,6 +263,8 @@ class HumanController extends Controller{
     }
     // เริ่มต้นสถานะให้ผู้เล่นเลือกโซนเป้าหมายที่จะทำลายการ์ด (ถอนสะพาน)
     startBurnSourceSelection(){
+        this.selectedBurnCard = null;
+        this.selectedBurnCardIndex = -1;
         // เปลี่ยนสถานะการรับ Input เป็นรอเลือกโซนที่จะทำลาย
         this.inputState = "waitingBurnSource";
         this.game.ui.render();
