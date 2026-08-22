@@ -21,7 +21,7 @@ class Treachery extends TriggerSkill{
             }
 
             const card = damage.card;
-            card.TreacheryClaimd = true;
+            card.treacheryClaimed = true;
             player.hand.addCard(card);
             player.game.log(player.name + " ได้รับ " + card.name + " จากสกิล Treachery");
         };
