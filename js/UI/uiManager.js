@@ -18,6 +18,7 @@ class UIManager{
         this.characterTooltip = null;
         this.tooltipShiftDown = false;
         this.tooltipHoverCard = null;
+        this.tooltipHoverSkill = null;
         this.tooltipMouseX = 0;
         this.tooltipMouseY = 0;
         
@@ -39,6 +40,14 @@ class UIManager{
                 this.showCardTooltip(
                     this.tooltipHoverCard, 
                     this.tooltipMouseX, 
+                    this.tooltipMouseY
+                );
+            }
+            if(this.tooltipHoverSkill){
+
+                this.showSkillTooltip(
+                    this.tooltipHoverSkill,
+                    this.tooltipMouseX,
                     this.tooltipMouseY
                 );
             }
