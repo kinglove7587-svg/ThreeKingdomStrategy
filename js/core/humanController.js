@@ -115,7 +115,9 @@ class HumanController extends Controller{
             this.inputState === "waitingYinYangDiscard" ||
             this.inputState === "waitingRestAndReorganizationDiscard" || 
             this.inputState === "waitingStealSource" || 
-            this.inputState === "waitingStealCard"
+            this.inputState === "waitingStealCard" || 
+            this.inputState === "waitingBurnSource" || 
+            this.inputState === "waitingBurnCard"
         ){
             return;
         }
@@ -670,6 +672,8 @@ class HumanController extends Controller{
         this.selectedBurnSource = null;
         this.selectedBurnCard = null;
         this.selectedBurnCardIndex = -1;
+        this.selectedCardIndex = -1;
+        this.game.afterHumanAction(success);
         this.game.ui.render();
         return true;
     }
