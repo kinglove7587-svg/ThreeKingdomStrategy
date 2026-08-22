@@ -1007,6 +1007,9 @@ class UIManager{
             }
             // สร้างปุ่มกดสำหรับสกิล
             const button = document.createElement("button");
+            const isCurrentSkill = 
+                player.controller.inputState === "waitingSkillTarget" && 
+                player.controller.selectedSkill === skill;
             button.disabled = this.game.actionLocked;
             button.textContent = "ใช้สกิล " + skill.name;
             // เมื่อคลิกปุ่ม ให้สั่ง HumanController เริ่มกระบวนการเลือกเป้าหมายสกิล
