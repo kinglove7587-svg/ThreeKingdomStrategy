@@ -1340,6 +1340,11 @@ class UIManager{
             controller.selectWoodenCartCard(index);
             return;
         }
+        // Hand Limit Discard
+        if(controller.inputState === "waitingHandLinitDiscard"){
+            controller.selectHandLimitDiscardCards(index);
+            return;
+        }
         // หากกดจบเทิร์น (index เป็น -1) ให้ส่งให้ Controller สั่งจบเทิร์น
         if(index === -1){
             controller.selectCard(index);
@@ -1992,19 +1997,14 @@ class UIManager{
         const player = this.game.getCurrentPlayer();
         const controller = player.controller;
         const requiredCount = player.hand.cards.length - player.hp;
-
-        this.handArea.innerHTML = "";
-        const selectionIcons = [
-            "①", "②", "③", "④", "⑤",
-            "⑥", "⑦", "⑧", "⑨"
-        ]; 
+        // แสดงสถานะการเลือก
         const status = document.createElement("div");
         status.textContent = 
             "ต้องทิ้ง " + requiredCount + " ใบ | เลือกแล้ว " + 
             controller.selectedHandLimitDiscardCards.length + 
             " / " + requiredCount;
         this.handArea.appendChild(status);
-
+        // ปุ่มยืนยัน
         const confirmButton = document.createElement("button");
         confirmButton.textContent = "ยืนยัน";
         // เปิดใช้งานเมื่อเลือกครบจำนวนที่ต้องทิ้ง
