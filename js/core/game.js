@@ -87,7 +87,7 @@ class Game {
             return false;
         }
         // 
-        if(card.shouldDiscard() && !card.treacheryClaimd){
+        if(card.shouldDiscard() && !card.treacheryClaimed){
             this.discardPile.addCard(card);
         }
 
