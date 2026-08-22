@@ -2007,6 +2007,13 @@ class UIManager{
             };
             this.handArea.appendChild(button);
         });
+
+        const status = document.createElement("div");
+        status.textContent = 
+            "ต้องทิ้ง " + requiredCount + " ใบ | เลือกแล้ว " + 
+            controller.selectedHandLimitDiscardCards.length + 
+            " / " + requiredCount;
+        this.handArea.appendChild(status);
     }
     
 }
