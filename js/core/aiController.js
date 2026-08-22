@@ -50,6 +50,25 @@ class AIController extends Controller{
         // หากไม่มีการ์ดที่ตรงตามเงื่อนไขใช้งาน ให้คืนค่า -1 (จบการเลือกการ์ด)
         return -1;
     }
+    // ทิ้งการ์ดเมื่อจำนวนการ์ดในมือเกิน HP
+    discardHandLimit(){
+
+        const requiredCount = this.player.hand.cards.length - this.player.hp;
+        // ถ้าไม่เกิน HP ไม่ต้องทิ้ง
+        if(requiredCount <= 0){
+            return true;
+        }
+        // ทิ้งจากการ์ดใบแรกในมือจนกว่าจะเหลือเท่ากับ HP
+        for(let i = 0; i < requiredCount; i++){
+
+            const card = this.player.hand.removeCard(0);
+            if(!card){
+                return false;
+            }
+            this.game.discardPile.addCard(card);
+        }
+        return true;
+    }
     // คืนผู้เล่นเป้าหมายที่ AI เลือก
     getTarget(card){
         // ตอนนี้ AI เลือกผู้เล่นคนถัดไปเป็นเป้าหมายเสมอ
