@@ -2023,6 +2023,17 @@ class UIManager{
             controller.selectedHandLimitDiscardCards.length + 
             " / " + requiredCount;
         this.handArea.appendChild(status);
+
+        const confirmButton = document.createElement("button");
+        confirmButton.textContent = "ยืนยัน";
+        // เปิดใช้งานเมื่อเลือกครบจำนวนที่ต้องทิ้ง
+        confirmButton.disabled = 
+            controller.selectedHandLimitDiscardCards.length !== requiredCount;
+        // เมื่อกดยืนยัน ให้เรียก Controller
+        confirmButton.onclick = () => {
+            controller.confirmHandLimitDiscard();
+        };
+        this.handArea.appendChild(confirmButton);
     }
     
 }
