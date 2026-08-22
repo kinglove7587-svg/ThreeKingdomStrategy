@@ -726,6 +726,11 @@ class Game {
     }
     // เริ่มต้นระบบการ์ดส้มปอย/เก็บเกี่ยว (Bumper Harvest)
     startBumperHarvest(){
+
+        const player = this.getCurrentPlayer();
+        if(player && player.controller){
+            player.controller.selectedCardIndex = -1;
+        }
         // งรายชื่อเฉพาะผู้เล่นที่ยังมีชีวิตอยู่ (isAlive)
         const livingPlayers = this.players.filter(
             player => player.isAlive()
