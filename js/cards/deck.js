@@ -104,7 +104,7 @@ class Deck {
         addCards(IronChainCard, 6); // โซ่ตรวน
         addCards(KnowEnemyCard, 4); // รู้เขารู้เรา
         addCards(FireAttackCard, 2); // เพลิงผลาญ
-        addCards(RestAndReorganizationCard, 2);
+        addCards(RestAndReorganizationCard, 2); //
         // Weapon =========================================================================
         addCards(TrainingSword, 1); // กระบี่ฝึกหัด
         addCards(CrossbowCard, 1); // หน้าไม้จูเก่อ

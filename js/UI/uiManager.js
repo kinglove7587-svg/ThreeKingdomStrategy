@@ -1992,31 +1992,6 @@ class UIManager{
             "①", "②", "③", "④", "⑤",
             "⑥", "⑦", "⑧", "⑨"
         ]; 
-        player.hand.cards.forEach((card, index) => {
-
-            const button = document.createElement("button");
-            const selectedIndex = controller.selectedHandLimitDiscardCards.indexOf(card);
-            // แสดงลำดับที่เลือกไว้ด้านหน้าการ์ด
-            if(selectedIndex !== -1){
-                button.textContent = 
-                    selectionIcons[selectedIndex] + 
-                    " " +  
-                    card.name + " " + 
-                    card.suit + " " + 
-                    card.number;
-
-            }else{
-                button.textContent = 
-                    card.name + " " + 
-                    card.suit + " " + 
-                    card.number;
-            }
-            button.onclick = () => {
-                controller.selectHandLimitDiscardCard(index);
-            };
-            this.handArea.appendChild(button);
-        });
-
         const status = document.createElement("div");
         status.textContent = 
             "ต้องทิ้ง " + requiredCount + " ใบ | เลือกแล้ว " + 
