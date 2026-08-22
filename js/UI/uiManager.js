@@ -14,6 +14,7 @@ class UIManager{
         this.cardActionIndex = -1;
         // Tooltip สำหรับแสดงรายละเอียดการ์ด
         this.cardTooltip = null;
+        this.tooltipHoverSkill = null;
         this.characterTooltip = null;
         this.tooltipShiftDown = false;
         this.tooltipHoverCard = null;
