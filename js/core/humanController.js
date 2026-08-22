@@ -30,6 +30,8 @@ class HumanController extends Controller{
         this.selectedTriggerCardIndices = [];
         // เก็บการ์ดที่เลือกทิ้งจาก พักพลจัดทัพ
         this.selectedRestAndReorganizationCards = [];
+        // เก็บการ์ดที่เลือกทิ้งเมื่อจำนวนการ์ดในมือเกิน HP
+        this.selectedHandLimitDiscardCards = [];
         // Frost Sword State
         this.selectedFrostSwordCards = [];
         // Yin-Yang Swords State
