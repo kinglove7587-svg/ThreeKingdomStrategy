@@ -1980,5 +1980,33 @@ class UIManager{
         };
         this.controlArea.appendChild(confirmButton);
     }
+    // แสดงมือสำหรับเลือกทิ้งจาก Hand Limit Discard
+    renderHandLimitDiscard(){
+
+        const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
+        const requiredCount = player.hand.cards.length - player.hp;
+
+        this.handArea.innerHTML = "";
+        player.hand.cards.forEach((card, index) => {
+
+            const button = document.createElement("button");
+            const selectedIndex = controller.selectedHandLimitDiscardCards.indexOf(card);
+            // แสดงลำดับที่เลือกไว้ด้านหน้าการ์ด
+            if(selectedIndex !== -1){
+                button.textContent = 
+                    " " + (selectedIndex + 1) + " " + 
+                    card.name + " " + card.suit + " " + card.number;
+
+            }else{
+                button.textContent = 
+                    card.name + " " + card.suit + " " + card.number;
+            }
+            button.onclick = () => {
+                controller.selectHandLimitDiscardCard(index);
+            };
+            this.handArea.appendChild(button);
+        });
+    }
     
 }
