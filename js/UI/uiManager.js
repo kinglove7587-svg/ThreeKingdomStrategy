@@ -311,11 +311,6 @@ class UIManager{
             this.renderRestAndReorganizationDiscardHand();
             return;
         }
-        // รอเลือกการ์ดทิ้งจาก Hand Limit Discard
-        if(player.controller.inputState === "waitingHandLimitDiscard"){
-            this.renderHandLimitDiscard();
-            return;
-        }
         // หากอยู่ในสถานะเปิดดูไพ่บนมือเป้าหมาย ให้เรียก renderTargetHand()
         if(player.controller.inputState === "viewingHand"){
             this.renderTargetHand(player.controller.viewingHandTarget);
@@ -426,6 +421,14 @@ class UIManager{
                     selectedOrder = index + 1;
                 }
             }
+            // Hand Limit Discard
+            if(player.controller.inputState === "waitingHandLimitDiscard"){
+                const index = 
+                    player.controller.selectedHandLimitDiscardCards.indexOf(card);
+                if(index !== -1){
+                    selectedOrder = index + 1;
+                }
+            }
             // ตรวจสอบเงื่อนไขการเลือก TriggerCard (เช่น เพลิงผลาญ)
             let triggerCardAllowed = true;
 
@@ -462,6 +465,9 @@ class UIManager{
             };
             // นำปุ่มการ์ดที่สร้างเสร็จแล้วไปแสดงในโซน handArea บนหน้าเว็บ
             this.handArea.appendChild(button);
+        }
+        if(player.controller.inputState === "waitingHandLimitDiscard"){
+            this.renderHandLimitDiscard();
         }
     }
     // แสดงการ์ดบนมือทั้งหมดของผู้เล่นเป้าหมาย
