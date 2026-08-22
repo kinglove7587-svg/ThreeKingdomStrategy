@@ -292,11 +292,11 @@ class UIManager{
         this.handArea.innerHTML = "";
         // ดึงตัวละครผู้เล่นที่กำลังถึงตาเล่นในปัจจุบันจาก Game Engine
         const player = this.game.getCurrentPlayer();
-        // ตรวจสอบ SelectionZone ก่อนเสมอ
-        const selectionPlayer = this.game.selectionZone.getCurrentPlayer();
+        // 
+        const bumperHarvestPlayer = this.game.bumperHarvestPlayer;
         if(
-            selectionPlayer && 
-            selectionPlayer.controller.inputState === "waitingSelection"
+            bumperHarvestPlayer && 
+            bumperHarvestPlayer.controller.inputState === "waitingSelection"
         ){
             this.renderSelectionZone();
             return;
