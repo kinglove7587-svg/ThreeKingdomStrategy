@@ -1888,5 +1888,41 @@ class HumanController extends Controller{
         this.selectedHandLimitDiscardCards.push(card);
         this.game.ui.render();
     }
+    // ยืนยันการทิ้งการ์ดเมื่อจำนวนการ์ดในมือเกิน HP
+    confirmHandLimitDiscard(){
+
+        if(this.inputState !== "waitingHandLimitDiscard"){
+            return false;
+        }
+
+        const player = this.player;
+        // จำนวนที่ต้องทิ้ง
+        const requiredCount = player.hand.cards.length - player.hp;
+        // ตรวจว่าจำนวนที่เลือกครบหรือไม่
+        if(this.selectedHandLimitDiscardCards.length !== requiredCount){
+            return false;
+        }
+        // ทิ้งการ์ดที่เลือกไว้
+        for(const card of this.selectedHandLimitDiscardCards){
+
+            const index = player.hand.cards.indexOf(card);
+            if(index === -1){
+                return false;
+            }
+
+            const discardCard = player.hand.removeCard(index);
+            if(!discardCard){
+                return false;
+            }
+            this.game.discardPile.addCard(discardCard);
+        }
+        // คืน State
+        this.selectedHandLimitDiscardCards = [];
+        this.inputState = "idle";
+        this.game.actionLocked = false;
+        this.game.ui.render();
+        this.game.finishTurn();
+        return true;
+    }
 
 }
