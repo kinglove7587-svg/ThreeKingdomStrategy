@@ -273,6 +273,7 @@ class HumanController extends Controller{
     startBurnCardSelection(){
         this.selectedBurnCard = null;
         this.selectedBurnCardIndex = -1;
+        this.selectedCardIndex = -1;
         this.inputState = "waitingBurnCard";
         this.game.ui.render();
     }
