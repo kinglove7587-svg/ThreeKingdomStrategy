@@ -1,8 +1,8 @@
 class ZhangFei extends Player{ // เตียวหุย
     // ตัวสร้างออบเจกต์เตียวหุย (รับข้อมูลชื่อ, ตัวเกมหลัก, และคลาส Controller)
-    constructor(name, game, controllerClass){
+    constructor(game, controllerClass){
         // ส่งพารามิเตอร์ทั้งหมดไปยังคลาสแม่ (Player) เพื่อตั้งค่าพื้นฐาน
-        super(name, game, controllerClass);
+        super("เตียวหุย", game, controllerClass);
         // กำหนดพลังชีวิตสูงสุดและพลังชีวิตปัจจุบันเป็น 4 หน่วย
         this.maxHp = 4;
         this.hp = 4;

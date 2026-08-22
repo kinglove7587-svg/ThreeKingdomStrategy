@@ -1,7 +1,7 @@
 class CaoCao extends Player{
 
-    constructor(name, game, controllerClass){
-        super(name, game, controllerClass);
+    constructor(game, controllerClass){
+        super("โจโฉ", game, controllerClass);
 
         this.maxHp = 4;
         this.hp = 4;

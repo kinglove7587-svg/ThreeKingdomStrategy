@@ -1,8 +1,8 @@
 class LiuBei extends Player{ // เล่าปี่
     // ตัวสร้างออบเจกต์เล่าปี่ (รับข้อมูลชื่อ, ตัวเกมหลัก, และคลาส Controller)
-    constructor(name, game, controllerClass){
+    constructor(game, controllerClass){
         // ส่งพารามิเตอร์ทั้งหมดไปยังคลาสแม่ (Player) เพื่อตั้งค่าพื้นฐาน
-        super(name, game, controllerClass);
+        super("เล่าปี่", game, controllerClass);
         // กำหนดพลังชีวิตสูงสุดและพลังชีวิตปัจจุบันเป็น 4 หน่วย
         this.maxHp = 4;
         this.hp = 4;
@@ -19,7 +19,7 @@ class LiuBei extends Player{ // เล่าปี่
         //this.equipWeapon(new YinYangSwordsCard("♣️", 7));
         //this.equipArmor(new SilverLionHelmetCard("♣️", 7));
         //this.hand.addCard(new WoodenCartCard("♠️", 1));
-        //this.hand.addCard(new SixSwordsOfWuCard("♠️", 1));
+        //this.hand.addCard(new LightningCard("♠️", 1));
         //this.hand.addCard(new SlashCard("♠️", 1));
     }
 }

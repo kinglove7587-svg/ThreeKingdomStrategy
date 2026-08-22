@@ -2,12 +2,10 @@
 const game = new Game([
     {
         hero: LiuBei, 
-        name: "เล่าปี่", 
         controller: HumanController//AIController//
     },
     {
         hero: CaoCao, 
-        name: "โจโฉ", 
         controller: HumanController//AIController//
     },
     {
