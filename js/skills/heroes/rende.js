@@ -109,4 +109,9 @@ class Rende extends ActiveSkill{
     cardSelectionCount(player, game){
         return player.hand.cards.length;
     }
+    getDescription(){
+        return "Rende (จิตเมตตา)\n" +
+            "ช่วง Play Phase สามารถมอบการ์ดจากมือให้ตัวละครอื่นได้จำนวนเท่าใดก็ได้\n" +
+            "และเมื่อมอบการ์ดตั้งแต่ 2 ใบขึ้นไป จะฟื้น HP 1\n\n";
+    }
 }
