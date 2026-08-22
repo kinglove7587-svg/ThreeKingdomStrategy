@@ -9,6 +9,8 @@ class ZhangFei extends Player{ // เตียวหุย
         this.faction = "Shu";
         this.gender = "male";
         this.addSkill(new Paoxiao());
+        this.abilityDescription =  "Paoxiao (พิโรธคำราม)\n" + 
+        "คุณสามารถใช้การ์ด [โจมตี] ได้กี่ใบก็ได้ใน 1 เทิร์น"
         //this.equipWeapon(new CrossbowCard("♣️", 7));
         //this.equipArmor(new SilverLionHelmetCard("♣️", 7));
         //this.setChained(true);
