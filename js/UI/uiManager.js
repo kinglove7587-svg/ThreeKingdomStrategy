@@ -657,6 +657,7 @@ class UIManager{
             controller.selectedStealSource = null;
             controller.selectedStealCard = null;
             controller.selectedStealCardIndex = -1;
+            controller.selectedCardIndex = -1;
             controller.game.ui.render();
         };
         this.controlArea.appendChild(cancelButton);
