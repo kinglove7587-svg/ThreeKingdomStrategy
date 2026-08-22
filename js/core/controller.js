@@ -59,6 +59,7 @@ class Controller{
     }
     // คืนสถานะกลับเป็น idle
     finishSelection(){
+        this.selectedCardIndex = -1;
         this.inputState = "idle";
     }
 }
