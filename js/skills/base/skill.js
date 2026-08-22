@@ -29,4 +29,8 @@ class Skill{
     register(eventManager, player){}
     // สำหรับยกเลิก Event ของ Skill
     unregister(){}
+
+    getDescription(){
+        return "";
+    }
 }
