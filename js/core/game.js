@@ -86,9 +86,8 @@ class Game {
             player.hand.addCard(card); // คืนการ์ดกลับเข้ามือ
             return false;
         }
-        // เช็กว่าการ์ดใบนี้ควรถูกส่งลงกองทิ้งหรือไม่ (เช่น การ์ดทั่วไปส่งลงกองทิ้ง แต่การ์ดอุปกรณ์จะสวมใส่ไว้)
-        if (card.shouldDiscard()){
-            // นำการ์ดที่ใช้เสร็จแล้วไปใส่ในกองทิ้งไพ่ (discardPile)
+        // 
+        if(card.shouldDiscard() && !card.treacheryClaimd){
             this.discardPile.addCard(card);
         }
 
