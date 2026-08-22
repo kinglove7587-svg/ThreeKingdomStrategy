@@ -1020,6 +1020,26 @@ class UIManager{
                 player.controller.selectedSkill === skill;
             button.disabled = this.game.actionLocked && !isCurrentSkill;
             button.textContent = "ใช้สกิล " + skill.name;
+            // Tooltip สำหรับ Active Skill
+            button.onmouseenter = (event) => {
+                this.showSkillTooltip(
+                    skill,
+                    event.clientX,
+                    event.clientY
+                );
+            };
+
+            button.onmousemove = (event) => {
+                this.showSkillTooltip(
+                    skill,
+                    event.clientX,
+                    event.clientY
+                );
+            };
+
+            button.onmouseleave = () => {
+                this.hideCardTooltip();
+            };
             // เมื่อคลิกปุ่ม ให้สั่ง HumanController เริ่มกระบวนการเลือกเป้าหมายสกิล
             button.onclick = () => {
                 // หากกำลังเลือกเป้าหมายของสกิลเดิมอยู่ แล้วกดปุ่มสกิลเดิมซ้ำ ให้ยกเลิกการเลือก (Toggle Off)
