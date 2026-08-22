@@ -117,11 +117,6 @@ class AIController extends Controller{
         }
         // สั่งให้ระบบเกมเลือกการ์ด Index นั้นเข้ามือ AI
         this.game.selectSelectionCard(selectedIndex);
-        // ถ้าเลือกการ์ดจนจบ/หมดแล้ว ให้จบ Selection
-        if(zone.isFinish()){
-            this.finishSelection();
-            return;
-        }
     }
     // ตัดสินใจเลือกการ์ดจาก SelectionZone (เบื้องต้นให้เลือกใบแรก index 0 ไปก่อน)
     chooseSelectionCard(){
