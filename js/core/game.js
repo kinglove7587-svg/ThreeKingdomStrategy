@@ -729,6 +729,7 @@ class Game {
     startBumperHarvest(){
 
         const player = this.getCurrentPlayer();
+        this.bumperHarvestPlayer = player;
         if(player && player.controller){
             player.controller.selectedCardIndex = -1;
         }
