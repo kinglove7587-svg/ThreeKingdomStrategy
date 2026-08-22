@@ -32,6 +32,49 @@ class Equilibrium extends ActiveSkill{
     }
     // ประมวลผลการทิ้งการ์ดและจั่วการ์ดใหม่
     use(player, game){
-        //
+        
+        let selectedCards = [];
+        if(player.controller.isHuman()){
+            selectedCards = 
+                player.controller.selectedSkillCardIndices
+                    .map(index => player.hand.cards[index])
+                    .filter(card => card);
+
+        }else{
+            if(player.hand.cards.length > 0){
+                selectedCards = [player.hand.cards[0]];
+            }
+        }
+        if(selectedCards.length === 0){
+            return false;
+        }
+
+        const selectedCardsCount = selectedCards.length;
+        const selectedIndexes = selectedCards
+            .map(card => player.hand.cards.indexOf(card))
+            .sort((a, b) => b - a);
+        
+        for(const index of selectedIndexes){
+            const card = player.hand.removeCard(index);
+            if(!card){
+                return false;
+            }
+            game.discardPile.addCard(card);
+        }
+
+        for(let i = 0; i < selectedCardsCount; i++){
+            const newCard = game.drawCardFromDeck();
+            if(!newCard){
+                return false;
+            }
+            player.hand.addCard(newCard);
+        }
+        this.equilibriumUsed = true;
+        game.log(
+            player.name + " ใช้สกิล Equilibrium ทิ้งการ์ด " + 
+            selectedCardsCount + " ใบ และจั่ว " + 
+            selectedCardsCount + " ใบ"
+        );
+        return true;
     }
 }
