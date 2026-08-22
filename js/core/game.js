@@ -800,6 +800,7 @@ class Game {
                 player.controller.finishSelection();
             }
         }
+        this.finishAction();
         this.ui.render();
 
         return true;
