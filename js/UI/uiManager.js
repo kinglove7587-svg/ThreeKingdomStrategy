@@ -890,6 +890,14 @@ class UIManager{
             this.endTurnButton.disabled = true;
             return;
         }
+        // ระหว่างเลือกเป้าหมายสกิล หรือ เลือกการ์ดสกิล ห้ามแสดง End Turn
+        if(
+            controller.inputState === "waitingSkillTarget" || 
+            controller.inputState === "waitingSkillCard"
+        ){
+            this.endTurnButton.disabled = true;
+            return;
+        }
         // ตรวจสอบว่าผู้เล่นปัจจุบันเป็นมนุษย์ (HumanController) หรือไม่
         if (controller instanceof HumanController){
             // แสดงปุ่ม End Turn บนหน้าเว็บ
