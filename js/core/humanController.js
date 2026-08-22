@@ -1817,6 +1817,7 @@ class HumanController extends Controller{
         // ล้างรายการการ์ดที่เลือก
         this.selectedRestAndReorganizationCards = [];
         this.inputState = "idle";
+        this.game.afterHumanAction(true);
         this.game.ui.render();
         return true;
     }
