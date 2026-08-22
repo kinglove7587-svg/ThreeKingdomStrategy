@@ -1548,7 +1548,18 @@ class UIManager{
 
             const item = document.createElement("div");
             item.className = "character-tooltip-skill";
-            item.textContent = "• " + skill.name;
+            
+            let skillType = "";
+            if(skill instanceof PassiveSkill){
+                skillType = " (PassiveSkill)";
+
+            }else if(skill instanceof ActiveSkill){
+                skillType = " (ActiveSkill)";
+
+            }else if(skill instanceof TriggerSkill){
+                skillType = " (TriggerSkill)";
+            }
+            item.textContent = "• " + skill.name + skillType;
             skillSection.appendChild(item);
         }
         // นำเซกชันสกิลไปต่อไว้ที่ Tooltip หลัก
