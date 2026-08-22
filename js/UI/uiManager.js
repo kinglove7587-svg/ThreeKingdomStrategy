@@ -1988,6 +1988,10 @@ class UIManager{
         const requiredCount = player.hand.cards.length - player.hp;
 
         this.handArea.innerHTML = "";
+        const selectionIcons = [
+            "①", "②", "③", "④", "⑤",
+            "⑥", "⑦", "⑧", "⑨"
+        ]; 
         player.hand.cards.forEach((card, index) => {
 
             const button = document.createElement("button");
@@ -1995,12 +1999,17 @@ class UIManager{
             // แสดงลำดับที่เลือกไว้ด้านหน้าการ์ด
             if(selectedIndex !== -1){
                 button.textContent = 
-                    " " + (selectedIndex + 1) + " " + 
-                    card.name + " " + card.suit + " " + card.number;
+                    selectionIcons[selectedIndex] + 
+                    " " +  
+                    card.name + " " + 
+                    card.suit + " " + 
+                    card.number;
 
             }else{
                 button.textContent = 
-                    card.name + " " + card.suit + " " + card.number;
+                    card.name + " " + 
+                    card.suit + " " + 
+                    card.number;
             }
             button.onclick = () => {
                 controller.selectHandLimitDiscardCard(index);
