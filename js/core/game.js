@@ -730,6 +730,19 @@ class Game {
         const livingPlayers = this.players.filter(
             player => player.isAlive()
         );
+
+        const initiatingPlayer = this.getCurrentPlayer();
+        const startIndex = livingPlayers.indexOf(initiatingPlayer);
+        if(startIndex !== -1){
+
+            const orderedPlayers = [
+                ...livingPlayers.slice(startIndex), 
+                ...livingPlayers.slice(0, startIndex)
+            ];
+            livingPlayers.splice(
+                0, livingPlayers.length, ...orderedPlayers
+            );
+        }
         // ล้างข้อมูลเดิมใน SelectionZone
         this.selectionZone.clear();
         
