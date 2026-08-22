@@ -311,6 +311,11 @@ class UIManager{
             this.renderRestAndReorganizationDiscardHand();
             return;
         }
+        // รอเลือกการ์ดทิ้งจาก Hand Limit Discard
+        if(player.controller.inputState === "waitingHandLimitDiscard"){
+            this.renderHandLimitDiscard();
+            return;
+        }
         // หากอยู่ในสถานะเปิดดูไพ่บนมือเป้าหมาย ให้เรียก renderTargetHand()
         if(player.controller.inputState === "viewingHand"){
             this.renderTargetHand(player.controller.viewingHandTarget);
