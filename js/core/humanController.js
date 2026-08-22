@@ -1020,6 +1020,7 @@ class HumanController extends Controller{
     startTriggerChoice(skill, context){
         this.selectedTriggerSkill = skill;
         this.triggerContext = context;
+        this.selectedCardIndex -1;
         this.inputState = "waitingTriggerChoice";
 
         this.game.ui.render();
