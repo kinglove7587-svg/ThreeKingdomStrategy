@@ -1639,6 +1639,70 @@ class UIManager{
                 return "card-type-default";
         }
     }
+    // สร้างเนื้อหาภายใน Skill Tooltip
+    renderSkillTooltipContent(skill, tooltip){
+
+        // ล้างข้อมูลเดิม
+        tooltip.innerHTML = "";
+
+        // ========================
+        // ชื่อ Skill
+        // ========================
+
+        const title = document.createElement("div");
+
+        title.className = "card-tooltip-title";
+        title.textContent = skill.name;
+
+        tooltip.appendChild(title);
+
+        // ========================
+        // ประเภท Skill
+        // ========================
+
+        const info = document.createElement("div");
+        info.className = "card-tooltip-info";
+
+        const typeLine = document.createElement("div");
+
+        if(skill instanceof ActiveSkill){
+            typeLine.textContent = "ประเภท: ActiveSkill";
+        }else{
+            typeLine.textContent = "ประเภท: Skill";
+        }
+
+        info.appendChild(typeLine);
+        tooltip.appendChild(info);
+
+        // ========================
+        // ความสามารถ
+        // ========================
+
+        if(typeof skill.getDescription === "function"){
+
+            const description = document.createElement("div");
+            description.className = "card-tooltip-section";
+
+            const descriptionTitle = document.createElement("div");
+            descriptionTitle.className =
+                "card-tooltip-section-title";
+
+            descriptionTitle.textContent = "ความสามารถ";
+
+            description.appendChild(descriptionTitle);
+
+            const descriptionText = document.createElement("div");
+            descriptionText.className =
+                "card-tooltip-description";
+
+            descriptionText.textContent =
+                skill.getDescription();
+
+            description.appendChild(descriptionText);
+
+            tooltip.appendChild(description);
+        }
+    }
     // แยกส่วนสร้าง HTML Structure ของ Tooltip
     renderCardTooltipContent(card, tooltip){
         // ล้างข้อมูลเดิม 
