@@ -271,6 +271,8 @@ class HumanController extends Controller{
     }
     // เปลี่ยนสถานะรับ Input เป็นรอเลือกการ์ดที่จะทำลาย
     startBurnCardSelection(){
+        this.selectedBurnCard = null;
+        this.selectedBurnCardIndex = -1;
         this.inputState = "waitingBurnCard";
         this.game.ui.render();
     }
