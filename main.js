@@ -10,7 +10,6 @@ const game = new Game([
     },
     {
         hero: TestHero, 
-        name: "AI 01", 
         controller: AIController
     }
 ]);
