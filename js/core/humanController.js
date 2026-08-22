@@ -645,6 +645,7 @@ class HumanController extends Controller{
         this.selectedStealCard = null;
         this.selectedStealSource = null;
         this.selectedStealCardIndex = -1;
+        this.game.afterHumanAction(success);
         // สั่ง UI ให้แสดงผลใหม่ (กลับมาแสดงมือผู้เล่น)
         this.game.ui.render();
         return true;
