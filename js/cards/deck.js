@@ -118,6 +118,7 @@ class Deck {
         addCards(GreenDragonBladeCard, 1); // ง้าวมังกรเขียว
         addCards(FrostSwordCard, 1); // กระบี่น้ำแข็ง
         addCards(YinYangSwordsCard, 1); // กระบี่คู่หยินหยาง
+        addCards(SixSwordsOfWuCard, 1); // กระบี่หกเล่มแห่งง่อก๊ก
         // Armor ==========================================================================    
         addCards(SilverLionHelmetCard, 1); // หมวกสิงโตเงิน
         addCards(TengJiaArmor, 1); // เกราะหวาย
@@ -131,7 +132,7 @@ class Deck {
         // ========================== ยังไม่ได้ทำ ================================
         // addCards(NegationCard, 6);
         // addCards(AllianceCard, 2); // ไม่เกี่ยวใส่ไว้เฉยๆ
-        // addCards(SixSwordsOfWu, 1);
+        
 
     }
     // สับไพ่
