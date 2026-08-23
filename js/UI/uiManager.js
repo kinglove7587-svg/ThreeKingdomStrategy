@@ -1222,7 +1222,6 @@ class UIManager{
             }
 
             requiredCount = skill.cardSelectionCount(player, this.game);
-
             title = skill.name;
         }
         // Trigger Skill เช่น ขวานผ่าศิลา
@@ -1254,14 +1253,14 @@ class UIManager{
             // First Aid แสดงสถานะการเลือกไพ่สีแดง 1 ใบ
             if(title === "First Aid"){
                 status.textContent = 
+                title + 
                 " | เลือกการ์ดสีแดง | เลือกแล้ว " + 
-                selectedIndices.length + " / 1";
+                selectedIndices.length + " / " + requiredCount;
             }else{
                 status.textContent = 
                     title + 
                     " | เลือกการ์ด | เลือกแล้ว " + 
-                    selectedIndices.length + " / " + 
-                    player.hand.cards.length;
+                    selectedIndices.length + " / " + requiredCount; 
             }
             this.controlArea.appendChild(status);
             
