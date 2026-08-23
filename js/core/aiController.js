@@ -11,8 +11,14 @@ class AIController extends Controller{
         if (cardIndex === -1){
             return false;
         }
+
+        const card = this.player.hand.cards[cardIndex];
+        let target = null;
+        if(card && card.needTarget()){
+            target = this.getTarget(card);
+        }
         // เล่นการ์ดใบที่เลือกผ่านเมธอด playCard และส่งผลลัพธ์การเล่นการ์ดกลับออกไป
-        return this.playCard(cardIndex);
+        return this.playCard(cardIndex, target);
     }
     // เมธอดสำหรับให้ AI เลือกตัดสินใจใช้การ์ดบนมือ
     chooseCard(){
@@ -71,6 +77,9 @@ class AIController extends Controller{
     }
     // คืนผู้เล่นเป้าหมายที่ AI เลือก
     getTarget(card){
+        if(card.name === "ยา"){
+            return this.player;
+        }
         // ตอนนี้ AI เลือกผู้เล่นคนถัดไปเป็นเป้าหมายเสมอ
         return this.game.getNextPlayer();
     }
