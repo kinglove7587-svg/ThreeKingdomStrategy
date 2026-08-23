@@ -885,6 +885,15 @@ class HumanController extends Controller{
                 return;
             }
         }
+        // ตรวจจำนวนการ์ดสูงสุดที่ Skill อนุญาตให้เลือก
+        const requiredCount = skill.cardSelectionCount(this.player, this.game);
+        // ถ้าเลือกครบจำนวนแล้ว และกำลังกดการ์ดใบใหม่ ให้หยุด
+        if(
+            skill.waitForCardSelectionConfirmation(this.player, this.game) && 
+            this.selectedSkillCardIndices.length >= requiredCount
+        ){
+            return;
+        }
         // บันทึก Index เข้า Array และอัปเดต selectedSkillCardIndex ให้สกิลเดิม (เช่น Rende) ใช้องค์ประกอบเดิมได้
         this.selectedSkillCardIndices.push(index);
         this.selectedSkillCardIndex = index;
@@ -895,8 +904,6 @@ class HumanController extends Controller{
             this.game.ui.render();
             return;
         }
-        // ดึงจำนวนการ์ดที่ สกิล นั้นต้องการ
-        const requiredCount = skill.cardSelectionCount(this.player, this.game);
         // หากยังเลือกการ์ดไม่ครบตามจำนวนที่สกิลต้องการ ให้สั่งวาด UI ใหม่แล้วรอเลือกใบถัดไป
         if(this.selectedSkillCardIndices.length < requiredCount){
             this.game.ui.render();
