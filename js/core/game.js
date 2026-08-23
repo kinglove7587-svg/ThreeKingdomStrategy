@@ -785,6 +785,14 @@ class Game {
             this.currentPlayerIndex = 0;
             return;
         }
+        // ลด Index ลง 1 เพื่อให้ nextTurn() เพิ่มกลับไปหาคนถัดไป
+        if(index === this.currentPlayerIndex){
+            this.currentPlayerIndex--;
+            if(this.currentPlayerIndex < 0){
+                this.currentPlayerIndex = this.players.length - 1;
+            }
+            return;
+        }
         // ถ้าผู้เล่นที่ถูกลบอยู่ก่อน currentPlayerIndex
         if(index < this.currentPlayerIndex){
             this.currentPlayerIndex--;
