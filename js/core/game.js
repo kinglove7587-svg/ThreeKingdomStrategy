@@ -376,7 +376,7 @@ class Game {
         );
         if(livingPlayers.length <= 1){
             this.gameOver();
-            return false;
+            return true;
         }
         return false;
     }
