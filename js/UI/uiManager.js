@@ -438,6 +438,22 @@ class UIManager{
                     selectedOrder = index + 1;
                 }
             }
+            // ตรวจสอบว่า Skill ปัจจุบันอนุญาตให้เลือกการ์ดใบนี้หรือไม่
+            let skillCardAllowed = true;
+            if(
+                player.controller.inputState === "waitingSkillCard" && 
+                player.controller.selectedSkill && 
+                typeof player.controller.selectedSkill.canSelectSkillCard === "function"
+            ){
+                skillCardAllowed = player.controller.selectedSkill.canSelectSkillCard(
+                    player, card, this.game
+                );
+                // ล็อกการ์ดที่ Skill ไม่อนุญาต
+                if(!skillCardAllowed){
+                    button.disabled = true;
+                    button.classList.add("disabled-card");
+                }
+            }
             // ตรวจสอบเงื่อนไขการเลือก TriggerCard (เช่น เพลิงผลาญ)
             let triggerCardAllowed = true;
 
@@ -465,6 +481,10 @@ class UIManager{
             }
             //  กำหนด Event Handler เมื่อมีการคลิกที่ปุ่มการ์ดบนหน้า HTML
             button.onclick = () => {
+                // ป้องกันการกดการ์ดที่ Skill ล็อกไว้
+                if(!skillCardAllowed){
+                    return;
+                }
                 if(!triggerCardAllowed){
                     return;
                 }
