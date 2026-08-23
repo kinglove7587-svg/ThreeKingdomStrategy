@@ -769,6 +769,30 @@ class Game {
         }
         return this.deck.draw();
     }
+    // ลบผู้เล่นที่ตายจริงออกจากเกม
+    removeDeadPlayer(player){
+
+        const index = this.players.indexOf(player);
+        // ไม่พบผู้เล่น หรือถูกลบไปแล้ว
+        if(index === -1){
+            return;
+        }
+        // ลบผู้เล่นออกจาก game.players
+        this.players.splice(index, 1);
+        // ถ้าไม่มีผู้เล่นเหลือ
+        if(this.players.length === 0){
+            this.currentPlayerIndex = 0;
+            return;
+        }
+        // ถ้าผู้เล่นที่ถูกลบอยู่ก่อน currentPlayerIndex
+        if(index < this.currentPlayerIndex){
+            this.currentPlayerIndex--;
+        }
+        // ป้องกัน currentPlayerIndex เกินขอบเขต
+        if(this.currentPlayerIndex >= this.players.length){
+            this.currentPlayerIndex = 0;
+        }
+    }
     // เริ่ม Action ใหม่ และล็อก End Turn
     startAction(){
         this.actionLocked = true;
