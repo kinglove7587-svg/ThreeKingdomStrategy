@@ -41,14 +41,6 @@ class Controller{
     isHuman(){
         return false;
     }
-    //
-    askPeach(player, game){
-        return -1;
-    }
-    //
-    isWaitingPeach(){
-        return false;
-    }
     // เริ่มต้น Reaction สำหรับ Controller
     startReaction(context){
         return false;

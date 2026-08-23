@@ -769,19 +769,6 @@ class HumanController extends Controller{
         // คืนค่าตำแหน่งดรรชนี (Index) ของการ์ด "หลบ" ที่พบในมือ (หากไม่พบจะคืนค่า -1)
         return player.hand.findCardIndexByName("หลบ");
     }
-    // สอบถามการใช้งานการ์ด "ยา" จากผู้เล่นที่เป็นมนุษย์ (Human)
-    askPeach(player){
-        // ค้นหาดัชนีของการ์ด "ยา" ในมือของผู้เล่น
-        const index = player.hand.findCardIndexByName("ยา");
-        // ถ้าไม่มีการ์ด "ยา" ในมือ ให้คืนค่า -1 (ไม่สามารถใช้ยาได้)
-        if(index === -1){
-            return -1;
-        }
-        // เปลี่ยนสถานะ Input State เป็น "waitingPeach" เพื่อเตรียมรองรับการกดปุ่มยืนยันจาก UI
-        this.inputState = "waitingPeach";
-        // คืนค่าตำแหน่ง index ของการ์ดยาที่พบ
-        return index;
-    }
     // ผู้เล่นกดปุ่ม "ใช้ยา" ช่วยชีวิต
     confirmPeach(){
         // รีเซ็ตสถานะ Input กลับเป็น idle
@@ -793,10 +780,6 @@ class HumanController extends Controller{
         // รีเซ็ตสถานะ Input กลับเป็น idle
         this.inputState = "idle";
         this.game.resumeDying(false);
-    }
-    // เช็กว่าผู้เล่น Human กำลังอยู่ในสถานะรอตัดสินใจกดใช้ยาหรือไม่
-    isWaitingPeach(){
-        return this.inputState === "waitingPeach";
     }
     // เริ่มต้นสถานะการเลือกเป้าหมาย (Target) ให้กับ สกิล (Skill) สำหรับ Human
     startSkillTargetSelection(skill){
