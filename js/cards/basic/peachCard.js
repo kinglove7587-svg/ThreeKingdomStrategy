@@ -3,9 +3,9 @@ class PeachCard extends BasicCard{
         super("Basic", "ยา", suit, number); // เรียก constructor ของ Card
     }
 
-    use(player, game){ // ความสามารถของการ์ดยา
-        if (player.hp >= player.maxHp){
-            console.log("HP เต็ม ใช้ยาไม่ได้");
+    use(player, game, target){ // ความสามารถของการ์ดยา
+        if(!target || target.hp >= target.maxHp){
+            console.log("เป้าหมาย HP เต็ม ใช้ยาไม่ได้");
             return false;
         }
 
@@ -16,7 +16,7 @@ class PeachCard extends BasicCard{
     // ตรวจสอบว่าเป้าหมายคือตัวเองหรือไม่ (สำหรับ PeachCard)
     canTarget(player, target){
         // คืนค่า true เฉพาะเมื่อเป้าหมายคือคนเดียวกับผู้ใช้การ์ด
-        return player === target;
+        return target && target.hp < target.maxHp;
     }
     // คำอธิบายความสามารถสำหรับ Tooltip
     getDescription(){
