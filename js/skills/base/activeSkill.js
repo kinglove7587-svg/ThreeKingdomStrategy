@@ -19,6 +19,10 @@ class ActiveSkill extends Skill{
     canTarget(player, target){
         return true;
     }
+    // ตรวจสอบว่าสามารถเลือกการ์ดใบนี้ให้กับสกิลได้หรือไม่
+    canSelectSkillCard(player, card, name){
+        return true;
+    }
     // เมธอดสำหรับสั่งงานสกิลเมื่อถูกเรียกใช้ ให้คลาสลูกนำไป Override เพื่อใส่ความสามารถจริงเอง
     use(player, game){
         return false;
