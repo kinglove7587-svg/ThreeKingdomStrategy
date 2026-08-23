@@ -71,7 +71,6 @@ class UIManager{
         // อัปเดตการแสดงผลปุ่ม End Turn ตามประเภทของ Controller
         this.renderEndTurnButton();
         this.renderSkillButtons();
-        this.renderPeachButtons();
         this.renderTriggerChoice();
         this.renderReactionChoice();
         this.renderTriggerCardCancelButton();
