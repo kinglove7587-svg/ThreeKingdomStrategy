@@ -5,7 +5,7 @@ const game = new Game([
         controller: HumanController//AIController//
     },
     {
-        hero: SunQuan, 
+        hero: HuaTuo, 
         controller: HumanController//AIController//
     },
     {
