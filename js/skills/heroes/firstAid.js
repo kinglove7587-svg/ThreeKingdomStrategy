@@ -68,4 +68,8 @@ class FirstAid extends ActiveSkill{
             card => new JudgeResult(card).isRed()
         );
     }
+    getDescription(){
+        return "First Aid (หัตถ์โอสถช่วยชีวิต)\n" +
+            "ในช่วง Play Phase สามารถใช้การ์ดสีแดง 1 ใบเสมือน [ยา] ได้";
+    }
 }
