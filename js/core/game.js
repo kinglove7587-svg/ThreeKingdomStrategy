@@ -197,18 +197,6 @@ class Game {
     }
     // ประมวลผลช่วงเริ่มเทิร์น (Start Phase)
     startPhase(player){ 
-        // และ HP ยังไม่มากกว่า 0 = ตายจริง
-        if(player.isDying()){
-            player.dead();
-            this.log(player.name + " ตายเนื่องจากไม่ได้รับการช่วยเหลือ");
-            // ตรวจว่าจำนวนผู้เล่นที่ยังมีชีวิตเหลือพอเล่นต่อหรือไม่
-            if(this.checkGameOver()){
-                return;
-            }
-            // ข้ามเทิร์นของผู้เล่นที่ตายแล้ว
-            this.nextTurn();
-            return;
-        }
         // รีเซ็ตสถานะการใช้การ์ด "โจมตี/ฟัน" (Slash) ให้ผู้เล่นกลับมาใช้ได้ใหม่ในเทิร์นนี้
         player.slashUsed = false;
         player.woodenCartUsed = false;
@@ -331,6 +319,13 @@ class Game {
         this.ui.addLog("End Phase");
         // ส่ง Event "onTurnEnd" ผ่าน eventManager ไปยังผู้เล่นเป้าหมาย เพื่อเปิดใช้งานสกิลช่วงสิ้นสุดเทิร์น
         this.eventManager.emitToPlayer("onTurnEnd", player);
+        if(player.isDying()){
+            player.dead();
+            this.log(player.name + " ตายจริง");
+            if(this.checkGameOver()){
+                return;
+            }
+        }
         this.nextTurn(); 
     }
 
