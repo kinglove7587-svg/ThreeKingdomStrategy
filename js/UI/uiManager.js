@@ -1251,11 +1251,18 @@ class UIManager{
             controller.selectedSkill && 
             controller.selectedSkill.waitForCardSelectionConfirmation(player, this.game)
         ){
-            status.textContent = 
-                title + 
-                " | เลือกการ์ด | เลือกแล้ว " + 
-                selectedIndices.length + " / " + 
-                player.hand.cards.length;
+            // First Aid แสดงสถานะการเลือกไพ่สีแดง 1 ใบ
+            if(title === "First Aid"){
+                status.textContent = 
+                " | เลือกการ์ดสีแดง | เลือกแล้ว " + 
+                selectedIndices.length + " / 1";
+            }else{
+                status.textContent = 
+                    title + 
+                    " | เลือกการ์ด | เลือกแล้ว " + 
+                    selectedIndices.length + " / " + 
+                    player.hand.cards.length;
+            }
             this.controlArea.appendChild(status);
             
             const confirmButton = document.createElement("button");
