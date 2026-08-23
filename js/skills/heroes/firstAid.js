@@ -3,6 +3,10 @@ class FirstAid extends ActiveSkill{
     constructor(){
         super("First Aid");
     }
+    // First Aid ใช้กฎ Target เดียวกับ [ยา]
+    canTarget(player, target){
+        return (target && target.isAlive() && target.hp < target.maxHp);
+    }
     // First Aid เลือกได้เฉพาะการ์ดสีแดง
     canSelectSkillCard(player, card, game){
 
