@@ -13,6 +13,9 @@ class PeachCard extends BasicCard{
 
         return true;
     }
+    needTarget(){
+        return true;
+    }
     // ตรวจสอบว่าเป้าหมายคือตัวเองหรือไม่ (สำหรับ PeachCard)
     canTarget(player, target){
         // คืนค่า true เฉพาะเมื่อเป้าหมายคือคนเดียวกับผู้ใช้การ์ด
