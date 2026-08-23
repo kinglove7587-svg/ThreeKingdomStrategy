@@ -2141,7 +2141,8 @@ class UIManager{
             controller.selectedHandLimitDiscardCards.length + 
             " / " + requiredCount;
         this.handArea.appendChild(status);
-        // ปุ่มยืนยัน
+        // ปุ่มยืนยัน และ ยกเลิก
+        const buttonArea = document.createElement("div");
         const confirmButton = document.createElement("button");
         confirmButton.textContent = "ยืนยัน";
         // เปิดใช้งานเมื่อเลือกครบจำนวนที่ต้องทิ้ง
@@ -2151,7 +2152,6 @@ class UIManager{
         confirmButton.onclick = () => {
             controller.confirmHandLimitDiscard();
         };
-        this.handArea.appendChild(confirmButton);
 
         const cancelButton = document.createElement("button");
         cancelButton.textContent = "ยกเลิก";
