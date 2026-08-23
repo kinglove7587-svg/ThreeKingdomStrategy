@@ -13,4 +13,12 @@ class FirstAid extends ActiveSkill{
         const judgeResult = new JudgeResult(card);
         return judgeResult.isRed();
     }
+    // First Aid เลือกการ์ดได้เพียง 1 ใบ
+    cardSelectionCount(player, game){
+        return 1;
+    }
+    // First Aid รอการยืนยัน และกดการ์ดเดิมซ้ำเพื่อยกเลิกได้
+    waitForCardSelectionConfirmation(player, game){
+        return true;
+    }
 }
