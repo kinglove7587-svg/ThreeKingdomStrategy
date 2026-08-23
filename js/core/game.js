@@ -337,13 +337,13 @@ class Game {
         
         if(this.players.length <= 1){
             this.checkGameOver();
-            true;
+            return;
         }
         this.currentPlayerIndex++;
         if(this.currentPlayerIndex >= this.players.length){
             this.currentPlayerIndex = 0;
         }
-        
+
         this.startTurn();
     }
 
