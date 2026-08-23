@@ -203,7 +203,7 @@ class Game {
         // และ HP ยังไม่มากกว่า 0 = ตายจริง
         if(player.isDying()){
             player.dead();
-            this.log(player.name + " ตายเนื่องจากไม่สามารถได้รับการช่วยเหลือ");
+            this.log(player.name + " ตายเนื่องจากไม่ได้รับการช่วยเหลือ");
             // ตรวจว่าจำนวนผู้เล่นที่ยังมีชีวิตเหลือพอเล่นต่อหรือไม่
             if(this.checkGameOver()){
                 return;
