@@ -21,9 +21,9 @@ class Controller{
         //
     }
     // เมธอดสำหรับให้ Controller สั่งเล่นการ์ดตามตำแหน่งที่ระบุ
-    playCard(cardIndex){
+    playCard(cardIndex, target = null){
         // เรียกใช้ฟังก์ชันของ Game เพื่อประมวลผลการเล่นการ์ดใบนั้น
-        return this.game.playCardFromCurrentPlayer(cardIndex);
+        return this.game.playCardFromCurrentPlayer(cardIndex, target);
     }
     // คืนค่าผู้เล่นเป้าหมายที่ Controller เลือก (ค่าเริ่มต้นคืนค่า null)
     getTarget(card){
