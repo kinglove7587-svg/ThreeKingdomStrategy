@@ -318,6 +318,11 @@ class Player{
         }
         // เปลี่ยนสถานะชีวิตเป็น false
         this.alive = false;
+        //
+        if(this.controller){
+            this.controller.inputState = "dead";
+        }
+        this.game.log(this.name + " ตายจริง");
     }
     // กำหนดสถานะติดโซ่ตรวนของผู้เล่นโดยตรง (true = ติดโซ่, false = หลุดจากโซ่)
     setChained(value){
