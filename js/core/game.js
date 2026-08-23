@@ -30,9 +30,6 @@ class Game {
         // กำหนดค่าเริ่มต้นของผู้เล่นเป้าหมาย ให้เป็น null (ยังไม่ได้เลือกเป้าหมาย)
         this.bumperHarvestPlayer = null;
         this.selectedTarget = null; // กำหนดค่าเริ่มต้นของผู้เล่นเป้าหมาย ให้เป็น null
-        this.dyingPlayer = null; // เก็บผู้เล่นที่กำลังอยู่ในสถานะใกล้ตาย
-        this.peachHelperIndex = 0; // ก็บตำแหน่งผู้เล่นที่กำลังถูกถามว่าจะใช้ยาช่วยไหม
-        this.peachHelper = null; // เก็บผู้เล่นที่กำลังถูกถามว่าจะใช้ยาช่วยหรือไม่
         this.chainDamageListener = new ChainDamageListener(); // สร้าง Listener สำหรับความเสียหายโซ่ตรวน
         this.chainDamageListener.register(this.eventManager); // ผูก chainDamageListener เข้ากับ EventManager
         // ใช้ตรวจว่า Action ปัจจุบันยังดำเนินอยู่หรือไม่
@@ -617,47 +614,6 @@ class Game {
         // คืนค่า true แสดงว่าตอบโต้ด้วยการ์ดหลบสำเร็จ
         return true;
     }
-    // สอบถามการใช้การ์ดยาเพื่อช่วยชีวิตผู้เล่นใกล้ตาย (ถามทุกคนบนโต๊ะ)
-    askPeach(player){
-        // วนลูปถามทีละคนโดยใช้ peachHelperIndex
-        while(this.peachHelperIndex < this.players.length){
-            const helper = this.players[this.peachHelperIndex];
-            // เพิ่ม index ทันที เพื่อให้การ Resume ครั้งถัดไปชี้ไปที่ผู้เล่นคนถัดไป
-            this.peachHelperIndex++;
-            // ป้องกันไม่ให้ส่งคำถามหาคนใกล้ตายซ้ำโดยไม่จำเป็น
-            if(helper === player){
-                continue;
-            }
-            // ข้ามผู้เล่นที่เสียชีวิตไปแล้ว
-            if(!helper.isAlive()){
-                continue;
-            }
-            // เรียกผ่าน Controller ของผู้เล่นแต่ละคนเพื่อหาดัชนีการ์ดยา
-            const index = helper.controller.askPeach(helper);
-            // ตรวจสอบว่าผู้เล่นมนุษย์กำลังอยู่ในสถานะรอตัดสินใจกดใช้ยาหรือไม่
-            if(helper.controller.isWaitingPeach()){
-                // บันทึกผู้เล่น Human ที่กำลังถูกถาม
-                this.peachHelper = helper;
-                // คืนค่า "waiting" เพื่อหยุด Game Flow ชั่วคราว รอ Input จาก UI
-                return "waiting";
-            }
-            // ถ้าไม่มีการ์ดยาในมือ ให้ข้ามไปถามคนถัดไป
-            if(index === -1){
-                continue;
-            }
-            // ถ้ารบกวนพบการ์ดยา ให้ดึงออกจากมือ แล้วนำลงกองทิ้ง
-            const peach = helper.hand.removeCard(index);
-            this.discardPile.addCard(peach);
-            this.log(helper.name + " ใช้ ยา ช่วย " + player.name);
-            // ฟื้นฟู HP ให้คนที่ใกล้ตาย 1 หน่วย
-            player.recoverHp(1);
-            this.ui.render();
-            // ส่งกลับ true เพื่อระบุว่ารอดชีวิต
-            return true;
-        }
-        // ถ้าวนถามจนครบทุกคนแล้วไม่มีใครมี/ใช้การ์ดยา
-        return false;
-    }
     // จัดการเข้าสู่สถานะ Dying ของผู้เล่น
     enterDying(player){
         // ถ้าไม่อยู่ใน Dying หรือ ตายจริงไปแล้ว ไม่ต้องทำอะไร
@@ -666,63 +622,6 @@ class Game {
         }
         this.log(player.name + " เข้าสู่สถานะ ใกล้ตาย");
         this.ui.render();
-    }
-    // ตัดสินใจว่าจะใช้การ์ดยาหรือไม่ ในสถานะใกล้ตาย
-    resumeDying(usePeach){
-        // ดึงออบเจกต์ผู้เล่นที่กำลังอยู่ในสถานะใกล้ตาย
-        const player = this.dyingPlayer;
-        // ตรวจสอบว่ามีผู้เล่นใกล้ตายอยู่จริงหรือไม่ ถ้าไม่มีให้ยกเลิกการทำงาน
-        if(!player){
-            return;
-        }
-        // กรณีผู้เล่นตกลงใช้การ์ดยาช่วยชีวิต
-        if(usePeach){
-            // ดึงออบเจกต์ผู้เล่นที่กำลังตัดสินใจใช้ยา (ที่บันทึกไว้ใน peachHelper)
-            const helper = this.peachHelper;
-            // ถ้าไม่มีข้อมูลผู้เล่นที่ช่วย ให้ยกเลิกการทำงาน
-            if(!helper){
-                return;
-            }
-            // ค้นหาตำแหน่งดัชนี (index) ของการ์ด "ยา" ในมือของผู้เล่น
-            const index = helper.hand.findCardIndexByName("ยา");
-            // ถ้าไม่พบการ์ดยาในมือ ให้ยกเลิกการทำงาน
-            if(index === -1){
-                return;
-            }
-            // ดึงการ์ดยาออกจากมือของผู้เล่นตามตำแหน่งดัชนีที่หาได้
-            const peach = helper.hand.removeCard(index);
-            // นำการ์ดยาที่ถูกใช้ลงกองทิ้งการ์ด
-            this.discardPile.addCard(peach);
-            this.log(helper.name + " ใช้ ยา ช่วย " + player.name);
-            // ฟื้นฟู HP ให้กับผู้เล่นที่กำลังใกล้ตายเพิ่มขึ้น 1 หน่วย
-            player.recoverHp(1);
-            this.ui.render();
-            // ล้างค่า State ต่างๆ เกี่ยวกับการใกล้ตายกลับเป็นค่าเริ่มต้น
-            this.dyingPlayer = null;
-            this.peachHelper = null;
-            this.peachHelperIndex = 0;
-            // จบกระบวนการช่วยเหลือ
-            return;
-        }
-        // กรณีผู้เล่นกดไม่ใช้ยา ให้เรียก askPeach เพื่อวนถามผู้เล่นคนถัดไปตามลำดับ
-        const result = this.askPeach(player);
-        // ถ้าผู้เล่นคนถัดไปใช้ยาช่วยสำเร็จ ให้จบการทำงาน
-        if(result === true){
-            return;
-        }
-        // ถ้าผู้เล่นคนถัดไปเป็น Human และกำลังรอการกดตัดสินใจ ให้หยุดรอ Input
-        if(result === "waiting"){
-            return;
-        }
-        // ถ้าวนถามผู้เล่นทุกคนแล้วไม่มีใครใช้ยาช่วย ให้เปลี่ยนสถานะเป็นเสียชีวิต
-        player.dead();
-        this.log(player.name + " แพ้แล้ว");
-        // ล้าง State Dying
-        this.dyingPlayer = null;
-        this.peachHelper = null;
-        this.peachHelperIndex = 0;
-
-        this.checkGameOver();
     }
     // เริ่มต้นระบบการ์ดส้มปอย/เก็บเกี่ยว (Bumper Harvest)
     startBumperHarvest(){

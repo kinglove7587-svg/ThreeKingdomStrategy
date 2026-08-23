@@ -1084,42 +1084,6 @@ class UIManager{
             this.controlArea.appendChild(button);
         }
     }
-    // สร้างและแสดงปุ่ม "ใช้ยา"
-    renderPeachButtons(){
-        // ดึงผู้เล่นมนุษย์ที่กำลังถูกถามเรื่องยา
-        const player = this.game.peachHelper;
-        if(!player){
-            return;
-        }
-        // ดึง Controller และตรวจสอบว่าเป็น HumanController หรือไม่
-        const controller = player.controller;
-        if(!(controller instanceof HumanController)){
-            return;
-        }
-        // ไม่ต้องแสดงปุ่ม "ใช้ยา / ไม่ใช้ยา"
-        if(player === this.game.dyingPlayer){
-            return;
-        }
-        // แสดงปุ่มเฉพาะตอนที่สถานะกำลังรอการตัดสินใจใช้ยา (waitingPeach) เท่านั้น
-        if(controller.inputState !== "waitingPeach"){
-            return;
-        }
-        // สร้างปุ่ม "ใช้ยา"
-        const yesButton = document.createElement("button");
-        yesButton.textContent = "ใช้ยา";
-        yesButton.onclick = () => {
-            this.onPeachDecision(true);
-        };
-        // สร้างปุ่ม "ไม่ใช้ยา"
-        const noButton = document.createElement("button");
-        noButton.textContent = "ไม่ใช้ยา";
-        noButton.onclick = () => {
-            this.onPeachDecision(false);
-        };
-        // นำปุ่มทั้งสองไปใส่ในพื้นที่ controlArea
-        this.controlArea.appendChild(yesButton);
-        this.controlArea.appendChild(noButton);
-    }
     // แสดงปุ่ม "ใช้ [ชื่อสกิล]" และ "ไม่ใช้" เมื่อเข้าสู่สถานะ waitingTriggerChoice
     renderTriggerChoice(){
         const player = this.game.getCurrentPlayer();
