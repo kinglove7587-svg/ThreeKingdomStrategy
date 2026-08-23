@@ -371,14 +371,13 @@ class Game {
     }
     // ตรวจสอบว่ามีผู้เล่นเสียชีวิตเพื่อจบเกมหรือไม่
     checkGameOver(){ 
-        for (const player of this.players){ // วนดูผู้เล่นทุกคน
-            // ถ้ามีผู้เล่นที่ไม่อยู่ในสถานะมีชีวิต ให้สั่งจบเกม
-            if (!player.isAlive()){ 
-                this.gameOver();
-                return true;
-            }
+        const livingPlayers = this.players.filter(
+            player => player.isAlive()
+        );
+        if(livingPlayers.length <= 1){
+            this.gameOver();
+            return false;
         }
-        // ถ้ายังไม่มีใครตาย เกมดำเนินต่อ
         return false;
     }
     // แสดงข้อความประกาศจบเกม
