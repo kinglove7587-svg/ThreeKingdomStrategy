@@ -25,6 +25,10 @@ class FirstAid extends ActiveSkill{
     waitForCardSelectionConfirmation(player, game){
         return true;
     }
+    // First Aid ต้องเลือกการ์ดจากมือ
+    needsCardSelection(player, game){
+        return true;
+    }
     // ประมวลผลการใช้ First Aid
     use(player, game){
         // ดึง Target ที่เลือกไว้

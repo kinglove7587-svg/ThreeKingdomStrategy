@@ -4,7 +4,7 @@ class HuaTuo extends Player{
         super("ฮัวโต๋", game, controllerClass);
 
         this.maxHp = 3;
-        this.hp = 3;
+        this.hp = 2;
         this.faction = "Qun";
         this.gender = "male";
         this.abilityDescription = 
