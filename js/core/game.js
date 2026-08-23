@@ -321,6 +321,7 @@ class Game {
         this.eventManager.emitToPlayer("onTurnEnd", player);
         if(player.isDying()){
             player.dead();
+            this.removeDeadPlayer(player);
             if(this.checkGameOver()){
                 return;
             }
