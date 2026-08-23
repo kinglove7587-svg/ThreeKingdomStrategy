@@ -61,7 +61,7 @@ class Player{
         this.showStatus(); // แสดง HP ล่าสุด
         // ถ้าผู้เล่น hp เหลือ 0 แสดง ชื่อ ผู้เล่น ว่า ตาย
         if (this.hp === 0){
-            console.log(this.name + " ตาย ");
+            console.log(this.name + " HP เหลือ 0 ");
         }
     }
 

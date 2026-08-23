@@ -4,7 +4,7 @@ class SunQuan extends Player{
         super("ซุนกวน", game, controllerClass);
 
         this.maxHp = 4;
-        this.hp = 4;
+        this.hp = 1;
         this.faction = "Wu";
         this.gender = "male";
 
