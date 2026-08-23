@@ -16,4 +16,16 @@ class ProdigalHealer extends ActiveSkill{
             player.hand.cards.length > 0
         );
     }
+    // Prodigal Healer ต้องเลือกเป้าหมาย
+    needsTarget(player, game){
+        return true;
+    }
+    // เลือกได้เฉพาะตัวละครที่ยังมีชีวิตและ HP ไม่เต็ม
+    canTarget(player, target){
+        return (
+            target && 
+            target.isAlive() && 
+            target.hp < target.maxHp
+        );
+    }
 }
