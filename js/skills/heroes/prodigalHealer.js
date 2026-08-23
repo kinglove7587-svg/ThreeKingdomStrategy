@@ -40,4 +40,41 @@ class ProdigalHealer extends ActiveSkill{
     waitForCardSelectionConfirmation(player, game){
         return true;
     }
+    // ประมวลผลการใช้ Prodigal Healer
+    use(player, game){
+        // ตรวจสอบว่ายังสามารถใช้สกิลได้หรือไม่
+        if(!this.canUse(player, game)){
+            return false;
+        }
+        // ดึง Target ที่เลือกไว้
+        const target = player.controller.getSelectedTarget();
+        // ดึง Index ของการ์ดที่เลือก
+        const selectedIndex = player.controller.selectedSkillCardIndices[0];
+        // ตรวจสอบ Target และ Index
+        if(!target || selectedIndex === undefined){
+            return false;
+        }
+        // ตรวจสอบ Target อีกครั้ง
+        if(!this.canTarget(player, target)){
+            return false;
+        }
+        // ดึงการ์ดจากมือ
+        const card = player.hand.cards[selectedIndex];
+        if(!card){
+            return false;
+        }
+        // เอาการ์ดออกจากมือ
+        const removeCard = player.hand.removeCard(selectedIndex);
+        if(!removeCard){
+            return false;
+        }
+        // ฟื้น HP ให้ Target 1
+        target.recoverHp(1);
+        // นำการ์ดที่ทิ้งลง Discard Pile
+        game.discardPile.addCard(removeCard);
+        // บันทึกว่าใช้ Prodigal Healer ไปแล้วใน Play Phase นี้
+        this.usedThisPlayPhase = true;
+        game.log(player.name + " ใช้ Prodigal Healer กับ " + target.name);
+        return true;
+    }
 }
