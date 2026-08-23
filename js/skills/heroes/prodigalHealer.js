@@ -77,4 +77,8 @@ class ProdigalHealer extends ActiveSkill{
         game.log(player.name + " ใช้ Prodigal Healer กับ " + target.name);
         return true;
     }
+    getDescription(){
+        return "Prodigal Healer (หมอเทพเมตตา)\n" +
+            "จำกัด 1 ครั้งต่อ Play Phase ทิ้งการ์ด 1 ใบ เพื่อให้ตัวละครที่บาดเจ็บฟื้น HP 1";
+    }
 }
