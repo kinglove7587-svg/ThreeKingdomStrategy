@@ -70,6 +70,6 @@ class FirstAid extends ActiveSkill{
     }
     getDescription(){
         return "First Aid (หัตถ์โอสถช่วยชีวิต)\n" +
-            "ในช่วง Play Phase สามารถใช้การ์ดสีแดง 1 ใบเสมือน [ยา] ได้";
+            "ในช่วง Play Phase สามารถใช้การ์ดสีแดง 1 ใบ แทน [ยา] ได้";
     }
 }
