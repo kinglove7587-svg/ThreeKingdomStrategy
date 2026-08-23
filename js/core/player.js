@@ -322,7 +322,7 @@ class Player{
         if(this.controller){
             this.controller.inputState = "dead";
         }
-        this.game.log(this.name + " ตายจริง");
+        this.game.log(this.name + " แพ้");
     }
     // กำหนดสถานะติดโซ่ตรวนของผู้เล่นโดยตรง (true = ติดโซ่, false = หลุดจากโซ่)
     setChained(value){
