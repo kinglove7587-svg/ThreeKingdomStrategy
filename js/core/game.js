@@ -356,7 +356,7 @@ class Game {
             }
 
         }while(!this.players[this.currentPlayerIndex].isAlive());
-        
+
         this.startTurn();
     }
 
@@ -658,46 +658,14 @@ class Game {
         // ถ้าวนถามจนครบทุกคนแล้วไม่มีใครมี/ใช้การ์ดยา
         return false;
     }
-    // จัดการเข้าสู่สถานะใกล้ตายของผู้เล่น (HP <= 0)
+    // จัดการเข้าสู่สถานะ Dying ของผู้เล่น
     enterDying(player){
-        // ตรวจสอบว่าผู้เล่นอยู่ในสถานะใกล้ตายจริงหรือไม่ ถ้าไม่ใช่ให้ยกเลิก
-        if(!player.isDying()){
+        // ถ้าไม่อยู่ใน Dying หรือ ตายจริงไปแล้ว ไม่ต้องทำอะไร
+        if(!player.isDying() || !player.isAlive()){
             return;
         }
-        // บันทึกผู้เล่นที่กำลังใกล้ตาย และรีเซ็ตดัชนีผู้ช่วยเป็น 0
-        this.dyingPlayer = player;
-        this.peachHelperIndex = 0;
-        this.log(player.name + " เข้าสู่สถานะใกล้ตาย");
-        this.log(player.name + " ต้องการ ยา");
-        // ถ้าตัวละครที่กำลังใกล้ตายเป็น Human ให้ตรวจสอบว่ามียาในมือหรือไม่
-        const index = player.hand.findCardIndexByName("ยา");
-        // ถ้ามียา ให้ตั้งตัวเองเป็น peachHelper แล้วหยุดรอการตัดสินใจกดปุ่มจาก Human ก่อน
-        if(index !== -1){
-            // ถ้าเป็น Human → รอผู้เล่นกดใช้ยา
-            if(player.controller.isHuman()){
-                this.peachHelper = player;
-                player.controller.askPeach(player);
-                return;
-            }
-            // ถ้าเป็น AI → ใช้ยาทันที
-            const peach = player.hand.removeCard(index);
-            this.discardPile.addCard(peach);
-            this.log(player.name + " ใช้ ยา ช่วยตัวเอง");
-            player.recoverHp(1);
-            this.ui.render();
-            return;
-        }
-        // ถ้าไม่ใช่ Human หรือ Human ตัวเองไม่มีการ์ดยา ให้เข้าสููลูปถามผู้เล่นคนอื่นตามลำดับ
-        const saved = this.askPeach(player);
-        // ถ้ารอดชีวิตจากการช่วยเหลือของผู้เล่นคนอื่น ให้จบกระบวนการ
-        if(saved){
-            return;
-        }
-        // ถ้าไม่มีใครช่วย/ถามจนครบแล้ว ให้ปรับสถานะเป็นเสียชีวิต
-        player.dead();
-        this.log(player.name + " แพ้แล้ว");
-        // ตรวจสอบเงื่อนไขจบเกม
-        this.checkGameOver();
+        this.log(player.name + " เข้าสู่สถานะ ใกล้ตาย");
+        this.ui.render();
     }
     // ตัดสินใจว่าจะใช้การ์ดยาหรือไม่ ในสถานะใกล้ตาย
     resumeDying(usePeach){
