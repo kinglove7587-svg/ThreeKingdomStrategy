@@ -25,4 +25,41 @@ class FirstAid extends ActiveSkill{
     waitForCardSelectionConfirmation(player, game){
         return true;
     }
+    // ประมวลผลการใช้ First Aid
+    use(player, game){
+        // ดึง Target ที่เลือกไว้
+        const target = player.controller.getSelectedTarget();
+        // ดึง Index ของการ์ดที่เลือก
+        const selectedIndex = player.controller.selectedSkillCardIndices[0];
+        // ตรวจว่ามี Target และ Index การ์ดครบ
+        if(!target || selectedIndex === undefined){
+            return false;
+        }
+        // ดึงการ์ดจากมือ
+        const card = player.hand.cards[selectedIndex];
+        // ตรวจการ์ดซ้ำว่าเป็นสีแดงจริง
+        if(!card){
+            return false;
+        }
+
+        const judgeResult = new JudgeResult(card);
+        if(!judgeResult.isRed()){
+            return false;
+        }
+        // ตรวจ Target ซ้ำอีกครั้ง
+        if(!this.canTarget(player, target)){
+            return false;
+        }
+        // เอาการ์ดออกจากมือ
+        const removeCard = player.hand.removeCard(selectedIndex);
+        if(!removeCard){
+            return false;
+        }
+        // ฟื้น HP 1
+        target.recoverHp(1);
+        // นำการ์ดลงกองทิ้ง
+        game.discardPile.addCard(removeCard);
+        game.log(player.name + " ใช้ First Aid กับ " + target.name);
+        return true;
+    }
 }
