@@ -3,7 +3,7 @@ class TestHero extends Player{
         super("Ai01", game, controllerClass);
         // กำหนด HP สำหรับตัวละครทดสอบ
         this.maxHp = 4;
-        this.hp = 4;
+        this.hp = 1;
         this.faction = "Wei";
         this.gender = "female"
 

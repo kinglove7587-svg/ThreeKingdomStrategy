@@ -312,13 +312,13 @@ class Player{
     }
     // กำหนดสถานะให้ผู้เล่นเสียชีวิต (ป้องกันการเรียกซ้ำหากตายแล้ว)
     dead(){
-        // ถ้าผู้เล่นตายแล้ว ให้ยกเลิกการทำงาน
+        // ป้องกันการเรียกซ้ำ
         if(!this.alive){
             return;
         }
         // เปลี่ยนสถานะชีวิตเป็น false
         this.alive = false;
-        //
+        // ล็อก Controller ของผู้เล่นที่ตาย
         if(this.controller){
             this.controller.inputState = "dead";
         }
