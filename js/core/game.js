@@ -334,21 +334,16 @@ class Game {
         if(this.isGameOver){
             return;
         }
-        //
-        let attempts = 0;
-        do{
-            this.currentPlayerIndex++;
-            if(this.currentPlayerIndex >= this.players.length){
-                this.currentPlayerIndex = 0;
-            }
-            attempts++;
-            //
-            if(attempts > this.players.length){
-                return;
-            }
-
-        }while(!this.players[this.currentPlayerIndex].isAlive());
-
+        
+        if(this.players.length <= 1){
+            this.checkGameOver();
+            true;
+        }
+        this.currentPlayerIndex++;
+        if(this.currentPlayerIndex >= this.players.length){
+            this.currentPlayerIndex = 0;
+        }
+        
         this.startTurn();
     }
 
@@ -369,9 +364,7 @@ class Game {
     }
     // ตรวจสอบว่ามีผู้เล่นเสียชีวิตเพื่อจบเกมหรือไม่
     checkGameOver(){ 
-        const livingPlayers = this.players.filter(
-            player => player.isAlive()
-        );
+
         if(livingPlayers.length <= 1){
             this.gameOver();
             return true;
