@@ -16,6 +16,6 @@ class CaoCao extends Player{
         
         this.addSkill(new Treachery());
 
-        this.hand.addCard(new PeachCard("♠️", 1));
+        //this.hand.addCard(new PeachCard("♠️", 1));
     }
 }
