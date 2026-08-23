@@ -62,4 +62,10 @@ class FirstAid extends ActiveSkill{
         game.log(player.name + " ใช้ First Aid กับ " + target.name);
         return true;
     }
+    // First Aid ใช้ได้เมื่อมีการ์ดสีแดงในมืออย่างน้อย 1 ใบ
+    canUse(player, game){
+        return player.hand.cards.some(
+            card => new JudgeResult(card).isRed()
+        );
+    }
 }
