@@ -19,7 +19,7 @@ class PeachCard extends BasicCard{
     // ตรวจสอบว่าเป้าหมายคือตัวเองหรือไม่ (สำหรับ PeachCard)
     canTarget(player, target){
         // คืนค่า true เฉพาะเมื่อเป้าหมายคือคนเดียวกับผู้ใช้การ์ด
-        return target && target.hp < target.maxHp;
+        return (target && target.isAlive() && target.hp < target.maxHp);
     }
     // คำอธิบายความสามารถสำหรับ Tooltip
     getDescription(){
