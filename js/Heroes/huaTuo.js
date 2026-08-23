@@ -1,13 +1,13 @@
 class HuaTuo extends Player{
 
     constructor(game, controllerClass){
-        super("ฮิวโต๋", game, controllerClass);
+        super("ฮัวโต๋", game, controllerClass);
 
         this.maxHp = 3;
         this.hp = 3;
         this.faction = "Qun";
         this.gender = "male";
-        this.abiliryDescription = 
+        this.abilityDescription = 
             "First Aid (หัตถ์โอสถช่วยชีวิต)\n" +
             "ในช่วง Play Phase สามารถใช้การ์ดสีแดง 1 ใบเสมือน [ยา] ได้\n\n" +
             "Prodigal Healer (หมอเทพเมตตา)\n" +
