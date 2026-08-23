@@ -365,7 +365,7 @@ class Game {
     // ตรวจสอบว่ามีผู้เล่นเสียชีวิตเพื่อจบเกมหรือไม่
     checkGameOver(){ 
 
-        if(livingPlayers.length <= 1){
+        if(this.players.length <= 1){
             this.gameOver();
             return true;
         }
