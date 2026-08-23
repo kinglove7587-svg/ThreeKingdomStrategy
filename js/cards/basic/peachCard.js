@@ -9,7 +9,7 @@ class PeachCard extends BasicCard{
             return false;
         }
 
-        player.recoverHp(1);
+        target.recoverHp(1);
 
         return true;
     }
