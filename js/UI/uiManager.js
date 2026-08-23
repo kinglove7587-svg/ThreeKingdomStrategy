@@ -1026,7 +1026,10 @@ class UIManager{
             // สร้างปุ่มกดสำหรับสกิล
             const button = document.createElement("button");
             const isCurrentSkill = 
-                player.controller.inputState === "waitingSkillTarget" && 
+                (
+                    player.controller.inputState === "waitingSkillTarget" || 
+                    player.controller.inputState === "waitingSkillCard"
+                ) && 
                 player.controller.selectedSkill === skill;
             button.disabled = this.game.actionLocked && !isCurrentSkill;
             button.textContent = "ใช้สกิล " + skill.name;
@@ -1066,7 +1069,10 @@ class UIManager{
             button.onclick = () => {
                 // หากกำลังเลือกเป้าหมายของสกิลเดิมอยู่ แล้วกดปุ่มสกิลเดิมซ้ำ ให้ยกเลิกการเลือก (Toggle Off)
                 if(
-                    player.controller.inputState === "waitingSkillTarget" && 
+                    (
+                        player.controller.inputState === "waitingSkillTarget" || 
+                        player.controller.inputState === "waitingSkillCard"
+                    ) && 
                     player.controller.selectedSkill === skill
                 ){
                     player.controller.cancelSkillSelection();
