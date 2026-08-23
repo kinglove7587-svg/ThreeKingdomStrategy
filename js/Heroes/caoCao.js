@@ -15,5 +15,7 @@ class CaoCao extends Player{
             "สามารถขอให้ตัวละครฝ่าย Wei ใช้ [หลบ] แทนตนได้ หากตัวละครนั้นเต็มใจ";
         
         this.addSkill(new Treachery());
+
+        this.hand.addCard(new PeachCard("♠️", 1));
     }
 }
