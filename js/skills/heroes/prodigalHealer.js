@@ -28,4 +28,16 @@ class ProdigalHealer extends ActiveSkill{
             target.hp < target.maxHp
         );
     }
+    // Prodigal Healer ต้องเลือกการ์ดจากมือ
+    needsCardSelection(player, game){
+        return true;
+    }
+    // Prodigal Healer เลือกการ์ดเพียง 1 ใบ
+    cardSelectionCount(player, game){
+        return 1;
+    }
+    // รอยืนยันหลังเลือกการ์ด
+    waitForCardSelectionConfirmation(player, game){
+        return true;
+    }
 }
