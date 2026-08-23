@@ -321,7 +321,6 @@ class Game {
         this.eventManager.emitToPlayer("onTurnEnd", player);
         if(player.isDying()){
             player.dead();
-            this.log(player.name + " ตายจริง");
             if(this.checkGameOver()){
                 return;
             }
