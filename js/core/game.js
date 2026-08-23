@@ -342,15 +342,21 @@ class Game {
         if(this.isGameOver){
             return;
         }
-        if(this.deck.cards.length === 0){
-            this.ui.addLog("ไพ่หมด");
-            return;
-        }
-        this.currentPlayerIndex++; // ถ้าถึงคนสุดท้ายแล้ว ให้เวียนกลับไปหาผู้เล่นคนแรก
+        //
+        let attempts = 0;
+        do{
+            this.currentPlayerIndex++;
+            if(this.currentPlayerIndex >= this.players.length){
+                this.currentPlayerIndex = 0;
+            }
+            attempts++;
+            //
+            if(attempts > this.players.length){
+                return;
+            }
 
-        if (this.currentPlayerIndex >= this.players.length){
-            this.currentPlayerIndex = 0;
-        }
+        }while(!this.players[this.currentPlayerIndex].isAlive());
+        
         this.startTurn();
     }
 
