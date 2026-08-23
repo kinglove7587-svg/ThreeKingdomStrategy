@@ -65,7 +65,7 @@ class Game {
         console.table(this.discardPile.cards); // พิมพ์ตารางไพ่ในกองทิ้งออกมาดู
     }
     // ให้ผู้เล่นปัจจุบันเล่น/ทิ้งการ์ดตามตำแหน่ง ลำดับ ที่เลือก
-    playCardFromCurrentPlayer(cardIndex = 0){ 
+    playCardFromCurrentPlayer(cardIndex = 0, target = null){ 
         const player = this.getCurrentPlayer(); // ดึงผู้เล่นที่ถึงตาเล่นตอนนี้ออกมา
         const card = player.hand.removeCard(cardIndex); // ดึงการ์ดออกจากมือผู้เล่นตามตำแหน่ง cardIndex
         // ตรวจสอบว่าผู้เล่นไม่มีการ์ดใบที่เลือก (หาการ์ดไม่พบ)
@@ -79,7 +79,7 @@ class Game {
         //
         this.log(player.name + " ใช้ " + card.name);
 
-        const success = card.use(player, this); // ใช้การ์ดว่าสำเร็จหรือไม่
+        const success = card.use(player, this, target); // ใช้การ์ดว่าสำเร็จหรือไม่
         //
         if (!success){
             player.hand.addCard(card); // คืนการ์ดกลับเข้ามือ
