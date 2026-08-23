@@ -1907,5 +1907,20 @@ class HumanController extends Controller{
         this.game.finishTurn();
         return true;
     }
+    // ยกเลิกการเลือกการ์ดทิ้ง และกลับไป Play Phase
+    cancelHandLimitDiscard(){
+
+        if(this.inputState !== "waitingHandLimitDiscard"){
+            return false;
+        }
+        // ล้าง state
+        this.selectedHandLimitDiscardCards = [];
+        this.selectedCardIndex = -1;
+        this.selectedTarget = null;
+        this.game.actionLocked = false;
+        this.inputState = "idle";
+        this.game.ui.render();
+        return true;
+    }
 
 }

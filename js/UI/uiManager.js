@@ -2152,6 +2152,15 @@ class UIManager{
             controller.confirmHandLimitDiscard();
         };
         this.handArea.appendChild(confirmButton);
+
+        const cancelButton = document.createElement("button");
+        cancelButton.textContent = "ยกเลิก";
+        cancelButton.onclick = () => {
+            controller.cancelHandLimitDiscard();
+        };
+        buttonArea.appendChild(confirmButton);
+        buttonArea.appendChild(cancelButton);
+        this.controlArea.appendChild(buttonArea);
     }
     
 }
