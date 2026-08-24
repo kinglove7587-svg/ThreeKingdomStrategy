@@ -350,6 +350,11 @@ class UIManager{
             this.renderStealHand();
             return;
         }
+        // Retaliation เลือกการ์ดจากมือของผู้ทำ Damage
+        if(player.controller.inputState === "waitingRetaliationCard"){
+            this.renderRetaliationHand();
+            return;
+        }
         // หากอยู่ในสถานะรอเลือกการ์ด Frost Sword ให้เรียก renderFrostSwordHand()
         if(player.controller.inputState === "waitingFrostSwordCard"){
             this.renderFrostSwordHand();
