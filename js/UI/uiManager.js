@@ -2189,7 +2189,7 @@ class UIManager{
         this.controlArea.appendChild(buttonArea);
     }
     // แสดง Generic Modal กลางหน้าจอ
-    showModal(title, message = "", content = null, button = []){
+    showModal(title, message = "", content = null, buttons = []){
 
         const overlay = document.getElementById("game-modal-overlay");
         const titleElement = document.getElementById("game-modal-title");
@@ -2216,7 +2216,7 @@ class UIManager{
             contentElement.appendChild(content);
         }
         for(const buttonData of buttons){
-            
+
             const button = document.createElement("button");
             button.textContent = buttonData.text;
             button.onclick = () => {
