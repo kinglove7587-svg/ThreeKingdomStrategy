@@ -37,6 +37,7 @@ class Retaliation extends TriggerSkill{
                         source.name
                     );
                     console.log("selectedCards =", selectedIndices);
+                    console.log("selectedIndices =", selectedIndices);
                 },
                 {
                     requiredCount: 1
