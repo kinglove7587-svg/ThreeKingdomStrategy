@@ -145,7 +145,7 @@ class SlashCard extends BasicCard{
             return true;
         }
         // ถ้าไม่มี Pause ให้ทำ Flow ต่อทันที
-        return dodgeContext.resume;
+        return dodgeContext.resume();
     }
     // ใช้สำหรับ Multi-target แต่ยังไม่ผูกเข้ากับ Flow จริง
     resolveSlashTargets(player, targets, game){
