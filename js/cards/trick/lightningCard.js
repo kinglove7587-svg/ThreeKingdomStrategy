@@ -28,43 +28,41 @@ class LightningCard extends DelayedTrickCard{
     // ประมวลผลช่วงเสี่ยงทาย (Judge Phase) ของการ์ดสายฟ้า
     onJudge(player){
         player.game.log(player.name + " เริ่ม Judge สายฟ้า");
-        // เรียกใช้ระบบเสี่ยงทายกลางของเกม รับค่าเป็น JudgeResult
-        const result = player.game.judge(player);
-        // หากเปิดไม่เจอกระดาษไพ่/กองไพ่หมด ให้ยกเลิกการทำงาน
-        if (!result){
-            return;
-        }
-        // ตัวแปรเช็กสถานะว่าโดนสายฟ้าหรือไม่ (Default เป็น false)
-        let hit = false;
-        // ตรวจสอบว่าไพ่ที่เปิดได้เป็นดอกโพดำ (♠️) หรือไม่
-        if (result.isSpade()){
-            // ตรวจสอบว่าตัวเลขหน้าไพ่อยู่ในช่วง 2 ถึง 9 หรือไม่
-            if (result.number >= 2 && result.number <= 9){
-                // เปลี่ยนสถานะเป็นโดนสายฟ้าฟาด
-                hit = true;
-                player.game.log(player.name + " ถูกสายฟ้าฟาด");
-                // สร้างออบเจกต์ความเสียหาย 3 หน่วย ประเภทความเสียหายสายฟ้า (source เป็น null เพราะเป็น Nature Damage)
-                const damage = new Damage(null, player, 3, DamageType.THUNDER);
-                // ระบุว่าการ์ดใบนี้คือต้นเหตุความเสียหาย
-                damage.card = this;
-                // ส่งให้ Game ประมวลผลความเสียหาย
-                player.game.damage(damage);
+        // ให้ Judge Engine เรียกส่วนประมวลผลเมื่อ Judge พร้อมแล้ว
+        player.game.judge(
+            player, 
+            (result) => {
+                // ตัวแปรเช็กสถานะว่าโดนสายฟ้าหรือไม่
+                let hit = false;
+                // ตรวจสอบว่าไพ่ที่เปิดได้เป็นดอกโพดำ
+                if(result.isSpade()){
+                    // ตรวจสอบเลข 2 ถึง 9
+                    if(result.number >= 2 && result.number <= 9){
+                        hit = true;
+                        player.game.log(player.name + " ถูกสายฟ้าฟาด");
+                        // สร้าง Damage ตามระบบเดิม
+                        const damage = new Damage(null, player, 3, DamageType.THUNDER);
+                        // ระบุการ์ดต้นเหตุ
+                        damage.card = this;
+                        // ยังคงผ่าน Damage Pipeline เดิม
+                        player.game.damage(damage);
+                    }
+                }
+                // ถอดสายฟ้าออกจากผู้เล่น
+                player.removeDelayedTrick(this);
+                if(hit){
+                    // โดนสายฟ้า → ลงกองทิ้ง
+                    player.game.discardPile.addCard(this);
+
+                }else{
+                    // ไม่โดน → ส่งต่อผู้เล่นถัดไป
+                    const nextPlayer = player.game.getNextPlayerOf(player);
+                    nextPlayer.addDelayedTrick(this);
+                    player.game.log("สายฟ้าถูกส่งต่อไปยัง " + nextPlayer.name);
+                }
+                player.showDelayedTrick();
             }
-        }
-        // ถอดการ์ดสายฟ้าออกจากโซนการ์ดหน่วงเวลาของตัวละคร
-        player.removeDelayedTrick(this);
-        if (hit){
-            // นำการ์ดสายฟ้าลงกองทิ้ง (Discard Pile)
-            player.game.discardPile.addCard(this);
-        }else{
-            // ดึงผู้เล่นคนถัดไปตามลำดับที่นั่ง
-            const nextPlayer = player.game.getNextPlayerOf(player);
-            // ส่งการ์ดสายฟ้าไปติดที่ผู้เล่นคนถัดไป
-            nextPlayer.addDelayedTrick(this);
-            player.game.log("สายฟ้าถูกส่งต่อไปยัง " + nextPlayer.name);
-        }
-        // อัปเดต UI การ์ดหน่วงเวลาบนหน้าจอ
-        player.showDelayedTrick();
+        );
     }
     // คำอธิบายความสามารถสำหรับ Tooltip
     getDescription(){
