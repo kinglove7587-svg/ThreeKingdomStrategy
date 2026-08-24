@@ -699,6 +699,37 @@ class HumanController extends Controller{
         this.game.ui.render();
         return true;
     }
+    // ยืนยันการเลือกการ์ดสำหรับ Retaliation
+    confirmRetaliationSelection(){
+
+        const target = this.retaliationTarget;
+        if(!target){
+            return false;
+        }
+
+        const index = this.selectedRetaliationCardIndex;
+        if(index < 0 || index >= target.hand.cards.length){
+            return false;
+        }
+        // ดึงการ์ดออกจากมือของผู้ทำ Damage
+        const card = target.hand.removeCard(index);
+        if(!card){
+            return false;
+        }
+        // นำการ์ดเข้ามือของผู้ใช้ Retaliation
+        this.player.hand.addCard(card);
+        this.game.log(
+            this.player.name + " ได้รับ " + 
+            card.name + " จาก Retaliation"
+        );
+        // ล้าง Retaliation State
+        this.retaliationTarget = null;
+        this.selectedRetaliationCard = null;
+        this.selectedRetaliationCardIndex = -1;
+        this.inputState = "idle";
+        this.game.ui.render();
+        return true;
+    }
     // ยืนยันการทำลายการ์ด นำการ์ดลงกองทิ้ง ล้างค่า State ทั้งหมด
     confirmBurnSelection(){
         // เรียกใช้ discardSelectedBurnCard เพื่อทิ้งการ์ดลง discardPile
