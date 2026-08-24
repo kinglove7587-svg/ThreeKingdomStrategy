@@ -32,6 +32,14 @@ class Necromancy extends TriggerSkill{
                     requiredCount: 1
                 }
             );
+            console.log(
+                "typeof content.getSelectedCards =", typeof content.getSelectedCards
+            );
+            console.log(
+                "typeof content.getSelectedIndices =", typeof content.getSelectedIndices
+            );
+            
+            
             // เปิด Generic Modal สำหรับเลือกการ์ดของเจ้าของ Necromancy
             player.game.showModal({
                 type: "cardSelection", 
