@@ -509,6 +509,8 @@ class Game {
         );
         // ถ้ามี Modal หรือ Trigger ขอ Pause ให้หยุด Judge ไว้ก่อน
         if(this.pendingJudge){
+            // เก็บ Callback ของผู้เรียก game.judge() เดิมไว้สำหรับ Resume
+            this.pendingJudge.onComplete = onComplete;
             return null;
         }
         // ถ้ามี Callback ให้ประมวลผลผล Judge ต่อทันที
@@ -893,7 +895,11 @@ class Game {
         if(typeof pendingJudge.onResume === "function"){
             pendingJudge.onResume(result);
         }
-        // Resume Judge Phase ต่อจากการ์ดที่ Pause ไว้
+        // ส่ง JudgeResult ใหม่กลับไปยังผู้เรียก game.judge() เดิม
+        if(typeof pendingJudge.onComplete === "function"){
+            pendingJudge.onComplete(result);
+        }
+        // ถ้ามาจาก Judge Phase ให้ทำการ์ดถัดไปต่อ
         if(typeof pendingJudge.judgePhaseResume === "function"){
             pendingJudge.judgePhaseResume();
         }
