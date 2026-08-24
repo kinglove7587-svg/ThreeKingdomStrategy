@@ -2188,5 +2188,65 @@ class UIManager{
         buttonArea.appendChild(cancelButton);
         this.controlArea.appendChild(buttonArea);
     }
+    // แสดง Generic Modal กลางหน้าจอ
+    showModal(title, message = "", content = null, button = []){
+
+        const overlay = document.getElementById("game-modal-overlay");
+        const titleElement = document.getElementById("game-modal-title");
+        const messageElement = document.getElementById("game-modal-message");
+        const contentElement = document.getElementById("game-modal-content");
+        const buttonsElement = document.getElementById("game-modal-buttons");
+
+        if(
+            !overlay || 
+            !titleElement || 
+            !messageElement || 
+            !contentElement || 
+            !buttonsElement
+        ){
+            return false;
+        }
+
+        titleElement.textContent = title;
+        messageElement.textContent = message;
+        contentElement.innerHTML = "";
+        buttonsElement.innerHTML = "";
+
+        if(content instanceof HTMLElement){
+            contentElement.appendChild(content);
+        }
+        for(const buttonData of buttons){
+            
+            const button = document.createElement("button");
+            button.textContent = buttonData.text;
+            button.onclick = () => {
+                if(typeof buttonData.onClick === "function"){
+                    buttonData.onClick();
+                }
+            };
+            buttonsElement.appendChild(button);
+        }
+        overlay.style.display = "flex";
+        return true;
+    }
+    // ปิด Generic Modal กลางหน้าจอ
+    hideModal(){
+
+        const overlay = document.getElementById("game-modal-overlay");
+        const contentElement = document.getElementById("game-modal-content");
+        const buttonsElement = document.getElementById("game-modal-buttons");
+
+        if(!overlay){
+            return false;
+        }
+        overlay.style.display = "none";
+        if(contentElement){
+            contentElement.innerHTML = "";
+        }
+        if(buttonsElement){
+            buttonsElement.innerHTML = "";
+        }
+        return true;
+    }
     
 }
