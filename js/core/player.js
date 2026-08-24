@@ -267,10 +267,27 @@ class Player{
         console.table(this.delayedTricks);
     }
     // เริ่มช่วงเสี่ยงทาย (Judge Phase) ประมวลผลการ์ดหน่วงเวลา
-    startJudgePhase(){
-        // วนลูปสั่งรันการ์ด Delayed Trick ทุกใบที่ติดอยู่หน้าตัวละคร
-        for (const card of [...this.delayedTricks]){
+    startJudgePhase(startIndex = 0, onComplete = null){
+        // สำเนารายการการ์ดที่ต้อง Judge ในรอบนี้
+        const cards = [...this.delayedTricks];
+        // เริ่มประมวลผลจาก index ที่กำหนด
+        for(let i = startIndex; i < cards.length; i++){
+            const card = cards[i];
+            // เรียก Judge ของการ์ดใบปัจจุบัน
             card.onJudge(this);
+            // ถ้ามี Judge ถูก Pause ให้จำตำแหน่งเอาไว้
+            if(this.game.pendingJudge){
+                // เก็บข้อมูลเพื่อ Resume Judge Phase
+                this.game.pendingJudge.judgePhaseResume = () => {
+                    // เมื่อ Resume แล้ว ให้ทำต่อจากใบถัดไป
+                    this.startJudgePhase(i + 1, onComplete);
+                };
+                return;
+            }
+        }
+        // Judge Phase ทำงานครบทุกใบแล้ว
+        if(typeof onComplete === "function"){
+            onComplete();
         }
     }
     // สั่งให้ผู้เล่นข้าม Play Phase ในเทิร์นนี้
