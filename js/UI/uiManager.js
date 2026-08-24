@@ -2445,7 +2445,7 @@ class UIManager{
                 }
                 selectedIndices.push(i);
                 button.classList.add("selected-card");
-                button.textContent = "✓ " (i + 1) + " 🂠";
+                button.textContent = "✓ " + (i + 1) + " 🂠";
             };
             container.appendChild(button);
         }
