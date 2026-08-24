@@ -268,6 +268,14 @@ class HumanController extends Controller{
         this.inputState = "waitingStealSource";
         this.game.ui.render();
     }
+    // เริ่มต้นการเลือกการ์ดสำหรับ Retaliation
+    startRetaliationSelection(){
+        // ล้าง state
+        this.selectedRetaliationCard = null;
+        this.selectedRetaliationCardIndex = -1;
+        this.inputState = "waitingRetaliationCard";
+        this.game.ui.render();
+    }
     // เริ่มต้นสถานะให้ผู้เล่นเลือกโซนเป้าหมายที่จะทำลายการ์ด (ถอนสะพาน)
     startBurnSourceSelection(){
         this.selectedBurnCard = null;
