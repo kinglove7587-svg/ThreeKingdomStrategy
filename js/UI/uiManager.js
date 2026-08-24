@@ -2418,6 +2418,54 @@ class UIManager{
         };
         return container;
     }
+    // สร้าง Content สำหรับเลือกการ์ดแบบคว่ำ
+    createCardBackSelectionContent(cards, onSelect, options = {}){
+
+        const container = document.createElement("div");
+        const selectedCount = 
+            options.requiredCount !== undefined 
+                ? options.requiredCount : 1;
+        const selectedIndices = [];
+
+        for(let i = 0; i < cards.length; i++){
+
+            const button = document.createElement("button");
+            button.textContent = (i + 1) + " 🂠";
+            button.onclick = () => {
+                const selectedIndex = selectedIndices.indexOf(i);
+                if(selectedIndex !== -1){
+                    selectedIndices.splice(selectedIndex, 1);
+                    button.classList.remove("selected-card");
+                    return;
+                }
+                // ป้องกันเลือกเกินจำนวน
+                if(selectedIndices.length >= selectedCount){
+                    return;
+                }
+                selectedIndices.push(i);
+                button.classList.add("selected-card");
+            };
+            container.appendChild(button);
+        }
+        // คืน Index ของการ์ดที่เลือก
+        container.getSelectedIndices = () => {
+            return [...selectedIndices];
+        };
+        // ยืนยันการเลือก
+        container.confirmSelection = () => {
+            if(selectedIndices.length !== selectedCount){
+                return false;
+            }
+
+            const selectedCards = 
+                selectedIndices.map(index => cards[index]);
+            if(typeof onSelect === "function"){
+                onSelect(selectedCards, [...selectedIndices]);
+            }
+            return true;
+        };
+        return container;
+    }
     // อัปเดตลำดับการเลือกการ์ดใน Modal
     updateCardSelectionOrder(container, selectedCards){
 
