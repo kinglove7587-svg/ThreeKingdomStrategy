@@ -21,6 +21,10 @@ class EightTrigramsSkill extends ArmorSkill{
                         context.fromArmor = true;
                         context.dodge = true;
                     }
+                    // Resume Flow ของ Dodge หลัง Judge เสร็จ
+                    if(typeof context.resume === "function"){
+                        context.resume();
+                    }
                 }
             );
             // บอก Flow ภายนอกว่า Trigger นี้อาจกำลังรอ Judge
