@@ -899,6 +899,10 @@ class Game {
         if(typeof pendingJudge.onComplete === "function"){
             pendingJudge.onComplete(result);
         }
+        // Resume Flow ของ Event ที่กำลังรอ Judge
+        if(typeof pendingJudge.resumeFlow === "function"){
+            pendingJudge.resumeFlow();
+        }
         // ถ้ามาจาก Judge Phase ให้ทำการ์ดถัดไปต่อ
         if(typeof pendingJudge.judgePhaseResume === "function"){
             pendingJudge.judgePhaseResume();
