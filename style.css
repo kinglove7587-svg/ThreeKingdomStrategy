@@ -227,3 +227,82 @@
 .character-tooltip-faction-info .faction-qun{
     font-weight:bold;
 }
+/* =========================
+   Game Modal
+========================= */
+
+/* NEW: พื้นหลัง Overlay ของ Modal */
+#game-modal-overlay{
+    display:none;
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,0.45);
+
+    z-index:20000;
+
+    align-items:center;
+    justify-content:center;
+}
+
+/* NEW: กล่อง Modal กลางหน้าจอ */
+#game-modal{
+    width:420px;
+    max-width:calc(100vw - 30px);
+
+    padding:20px;
+
+    background:#fff8dc;
+
+    border:2px solid #5b4636;
+    border-radius:10px;
+
+    box-shadow:0 8px 24px rgba(0,0,0,0.35);
+
+    color:#222;
+
+    text-align:center;
+}
+
+/* NEW: หัวข้อ Modal */
+#game-modal-title{
+    font-size:22px;
+    font-weight:bold;
+
+    margin-bottom:12px;
+}
+
+/* NEW: ข้อความ Modal */
+#game-modal-message{
+    margin-bottom:16px;
+
+    line-height:1.6;
+}
+
+/* NEW: พื้นที่ Content ของ Modal */
+#game-modal-content{
+    margin-bottom:16px;
+}
+
+/* NEW: พื้นที่ปุ่ม Modal */
+#game-modal-buttons{
+    display:flex;
+
+    justify-content:center;
+    gap:10px;
+
+    flex-wrap:wrap;
+}
+
+/* NEW: ปุ่มใน Modal */
+#game-modal-buttons button{
+    padding:8px 18px;
+
+    cursor:pointer;
+}
