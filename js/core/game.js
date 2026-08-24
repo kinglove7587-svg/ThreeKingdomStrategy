@@ -480,7 +480,7 @@ class Game {
         return damage.resume();
     }
     // ระบบกลางสำหรับการเสี่ยงทาย (Judge Phase)
-    judge(player){
+    judge(player, onComplete = null){
         // จั่วการ์ดใบบนสุดจากกองเพื่อใช้เสี่ยงทาย
         const judgeCard = this.deck.draw();
         // ถ้ากองไพ่หมด ให้คืนค่า false
@@ -506,6 +506,14 @@ class Game {
                 card: judgeResult
             }
         );
+        // ถ้ามี Modal หรือ Trigger ขอ Pause ให้หยุด Judge ไว้ก่อน
+        if(this.pendingJudge){
+            return null;
+        }
+        // ถ้ามี Callback ให้ประมวลผลผล Judge ต่อทันที
+        if(typeof onComplete === "function"){
+            return onComplete(judgeResult);
+        }
         return judgeResult;
     }
     // เมธอดสำหรับจบเทิร์น และส่งต่อผู้เล่นปัจจุบันเข้าสู่เฟสทิ้งการ์ด
@@ -866,6 +874,7 @@ class Game {
         if(!data){
             return false;
         }
+        // เก็บข้อมูล Judge ที่ต้องรอ Modal
         this.pendingJudge = data;
         return true;
     }
@@ -875,13 +884,14 @@ class Game {
         if(!this.pendingJudge){
             return false;
         }
-        // เก็บผลลัพธ์ Judge ที่จะใช้ต่อ
-        this.pendingJudge.result = result;
-        // ดึงข้อมูล Judge ที่กำลังรอ
+        // เก็บข้อมูล Judge ที่กำลังรอ
         const pendingJudge = this.pendingJudge;
-        // ล้าง Pending ก่อน Resume เพื่อป้องกันการ Resume ซ้ำ
+        // ล้าง Pending ก่อนดำเนินต่อ ป้องกัน Resume ซ้ำ
         this.pendingJudge = null;
-        // แจ้งว่าการ Resume สำเร็จ
-        return pendingJudge.result;
+        // ถ้ามี Callback ให้ส่งผล Judge กลับไปทำงานต่อ
+        if(typeof pendingJudge.onResume === "function"){
+            pendingJudge.onResume(result);
+        }
+        return result;
     }
 }
