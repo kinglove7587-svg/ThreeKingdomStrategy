@@ -46,9 +46,9 @@ class Game {
         this.pendingModal = config;
 
         const originalButtons = config.buttons || [];
-        const button = originalButtons.map(buttonData => ({
+        const buttons = originalButtons.map(buttonData => ({
             ...buttonData, 
-            onclick: () => {
+            onClick: () => {
                 if(typeof buttonData.onClick === "function"){
                     buttonData.onClick();
                 }
@@ -70,7 +70,7 @@ class Game {
                 }
             }
         }));
-        
+
         this.ui.showModal(
             config.title || "", 
             config.message || "", 
