@@ -142,10 +142,6 @@ class SlashCard extends BasicCard{
             dodgeContext.waitingJudge && 
             game.pendingJudge
         ){
-            // เมื่อ Judge Resume ให้กลับมาทำ Dodge ต่อ
-            game.pendingJudge.dodgeResume = () => {
-                return dodgeContext.resume();
-            };
             return true;
         }
         // ถ้าไม่มี Pause ให้ทำ Flow ต่อทันที
