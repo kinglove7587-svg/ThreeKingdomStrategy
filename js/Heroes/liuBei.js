@@ -5,7 +5,7 @@ class LiuBei extends Player{ // เล่าปี่
         super("เล่าปี่", game, controllerClass);
         // กำหนดพลังชีวิตสูงสุดและพลังชีวิตปัจจุบันเป็น 4 หน่วย
         this.maxHp = 4;
-        this.hp = 3;
+        this.hp = 4;
         this.faction = "Shu";
         this.gender = "male";
         this.abilityDescription =
