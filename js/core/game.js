@@ -37,6 +37,26 @@ class Game {
         this.pendingModal = null;
         this.isGameOver = false;
     }
+    // เปิด Generic Modal และเก็บข้อมูล Prompt กลางไว้ใน Game
+    showModal(config){
+
+        if(!config){
+            return false;
+        }
+        this.pendingModal = config;
+        this.ui.showModal(
+            config.title || "", 
+            config.message || "", 
+            config.content || null, 
+            config.buttons || []
+        );
+        return true;
+    }
+    // ปิด Generic Modal และล้างข้อมูล Prompt กลาง
+    hideModal(){
+        this.pendingModal = null;
+        return this.ui.hideModal();
+    }
 
     dealInitialCards(cardCount = 2){ // แจกไพ่ให้ผู้เล่น
         for (let i = 0; i < cardCount; i++){ // วนทำซ้ำตามจำนวนใบ
