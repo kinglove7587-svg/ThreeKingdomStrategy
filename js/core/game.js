@@ -34,6 +34,7 @@ class Game {
         this.chainDamageListener.register(this.eventManager); // ผูก chainDamageListener เข้ากับ EventManager
         // ใช้ตรวจว่า Action ปัจจุบันยังดำเนินอยู่หรือไม่
         this.actionLocked = false;
+        this.pendingModal = null;
         this.isGameOver = false;
     }
 
