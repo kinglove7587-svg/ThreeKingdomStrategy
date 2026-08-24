@@ -37,18 +37,45 @@ class Game {
         this.pendingModal = null;
         this.isGameOver = false;
     }
-    // เปิด Generic Modal และเก็บข้อมูล Prompt กลางไว้ใน Game
+    // รองรับ onComplete / onCancel สำหรับ Generic Modal
     showModal(config){
 
         if(!config){
             return false;
         }
         this.pendingModal = config;
+
+        const originalButtons = config.buttons || [];
+        const button = originalButtons.map(buttonData => ({
+            ...buttonData, 
+            onclick: () => {
+                if(typeof buttonData.onClick === "function"){
+                    buttonData.onClick();
+                }
+                if(buttonData.role === "confirm"){
+                    if(
+                        this.pendingModal && 
+                        typeof this.pendingModal.onComplete === "function"
+                    ){
+                        this.pendingModal.onComplete();
+                    }
+                }
+                if(buttonData.role === "cancel"){
+                    if(
+                        this.pendingModal && 
+                        typeof this.pendingModal.onCancel === "function"
+                    ){
+                        this.pendingModal.onCancel();
+                    }
+                }
+            }
+        }));
+        
         this.ui.showModal(
             config.title || "", 
             config.message || "", 
             config.content || null, 
-            config.buttons || []
+            buttons
         );
         return true;
     }
