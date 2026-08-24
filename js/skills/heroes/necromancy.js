@@ -48,12 +48,19 @@ class Necromancy extends TriggerSkill{
                                 console.log("ยังเลือกการ์ดไม่ครบ");
                                 return;
                             }
-                            // เปลี่ยนการ์ด Judge เป็นการ์ดที่เลือก
+                            // ดึงการ์ดที่เลือก
                             const selectedCards = content.getSelectedCards();
                             // ตรวจว่ามีการ์ดที่เลือกจริง
                             if(selectedCards.length === 0){
                                 return;
                             }
+                            // ดึง Pending Judge ที่กำลังรอ
+                            const pendingJudge = player.game.pendingJudge;
+                            // ตรวจสอบว่ามี Pending Judge จริง
+                            if(!pendingJudge){
+                                return;
+                            }
+                            // เปลี่ยนการ์ด Judge เป็นการ์ดที่เลือก
                             pendingJudge.result.card = selectedCards[0];
                             // Resume Judge 
                             player.game.resumeJudge(pendingJudge.result);
