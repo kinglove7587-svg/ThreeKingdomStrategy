@@ -36,23 +36,23 @@ class LeBuSiShuCard extends DelayedTrickCard{
     // ประมวลผลการเสี่ยงทาย (Judge) ของการ์ดสุราลืมกลับ
     onJudge(player){
         console.log(player.name + " เริ่ม Judge สุราลืมกลับ");
-        // สั่งเสี่ยงทายกลาง และรับค่าผลลัพธ์เป็น JudgeResult
-        const result = player.game.judge(player);
-        // ถ้ากองไพ่หมด ให้ยกเลิกการทำงาน
-        if (!result){
-            return;
-        }
-        // ถ้าผลเสี่ยงทายไม่ใช่ดอกหัวใจ (♥) ให้ติดสถานะข้าม Play Phase
-        if (!result.isHeart()){
-            console.log(player.name + " ถูกสุราลืมกลับ");
-            player.skipPlay();
-        }
-        // ถอดการ์ดสุราลืมกลับออกจากตัวละคร
-        player.removeDelayedTrick(this);
-        // ส่งการ์ดสุราลืมกลับลงกองทิ้ง
-        player.game.discardPile.addCard(this);
-        // แสดงรายการ Delayed Trick ที่เหลืออยู่
-        player.showDelayedTrick();
+        
+        player.game.judge(
+            player, 
+            (result) => {
+                // ตรวจผล Judge หลัง Judge ปกติหรือ Resume
+                if(!result.isHeart()){
+                    console.log(player.name + " ถูกสุราลืมกลับ");
+                    player.skipPlay();
+                }
+                // ถอดการ์ดสุราลืมกลับออกจากตัวละคร
+                player.removeDelayedTrick(this);
+                // ส่งการ์ดสุราลืมกลับลงกองทิ้ง
+                player.game.discardPile.addCard(this);
+                // แสดงรายการ Delayed Trick ที่เหลืออยู่
+                player.showDelayedTrick();
+            }
+        );
     }
     // คำอธิบายความสามารถสำหรับ Tooltip
     getDescription(){
