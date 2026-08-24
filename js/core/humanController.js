@@ -423,6 +423,27 @@ class HumanController extends Controller{
         }
         return false;
     }
+    // เลือกการ์ดจากมือของผู้ทำ Damage สำหรับ Retaliation
+    selectRetaliationCard(index){
+
+        const target = this.retaliationTarget;
+        // ต้องมีผู้ทำ Damage ที่เป็นเป้าหมายของ Retaliation
+        if(!target){
+            return false;
+        }
+        // ต้องอยู่ใน State ที่กำลังรอเลือกการ์ด
+        if(this.inputState !== "waitingRetaliationCard"){
+            return false;
+        }
+        // ตรวจสอบ Index
+        if(index < 0 || index >= target.hand.cards.length){
+            return false;
+        }
+        // บันทึกการ์ดและ Index ที่เลือก
+        this.selectedRetaliationCard = target.hand.cards[index];
+        this.selectedRetaliationCardIndex = index;
+        return true;
+    }
     // เลือกตำแหน่ง (Zone) ที่จะทำลายการ์ดของเป้าหมาย (รองรับ 5 Zone)
     selectBurnSource(source){
         const target = this.selectedBurnTarget;
