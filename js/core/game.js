@@ -860,4 +860,13 @@ class Game {
     finishAction(){
         this.actionLocked = false;
     }
+    // หยุด Judge ชั่วคราวเพื่อรอการตัดสินใจจาก Modal
+    pauseJudge(data){
+
+        if(!data){
+            return false;
+        }
+        this.pendingJudge = data;
+        return true;
+    }
 }
