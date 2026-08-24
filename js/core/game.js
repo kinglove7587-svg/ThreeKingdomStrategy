@@ -263,12 +263,13 @@ class Game {
     // ช่วงเสี่ยงทาย (Judge Phase) ของผู้เล่น
     judgePhase(player){ 
         this.ui.addLog("Judge Phase");
-        // ประมวลผลการ์ดหน่วงเวลา (Delayed Trick) ทั้งหมดของผู้เล่น
-        player.startJudgePhase();
-        // ส่ง Event "onJudgePhase" ผ่าน eventManager ไปยังผู้เล่นเป้าหมาย player เพื่อเรียกใช้สกิลช่วง Judge Phase
-        this.eventManager.emitToPlayer("onJudgePhase", player);
-        // 
-        this.drawPhase(player); // ส่งต่อเฟส
+        
+        player.startJudgePhase(0, () => {
+            // Judge Phase ทำงานครบแล้วจึงส่ง Event
+            this.eventManager.emitToPlayer("onJudgePhase", player);
+            // Judge Phase เสร็จจริงแล้วจึงเข้าสู่ Draw Phase
+            this.drawPhase(player);
+        });
         player.showHand();
     }
     // เฟสจั่วไพ่ (Draw Phase)
