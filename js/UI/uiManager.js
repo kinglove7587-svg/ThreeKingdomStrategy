@@ -2430,12 +2430,13 @@ class UIManager{
         for(let i = 0; i < cards.length; i++){
 
             const button = document.createElement("button");
-            button.textContent = (i + 1) + " 🂠";
+            button.textContent = (i + 1) + " 🂠 ";
             button.onclick = () => {
                 const selectedIndex = selectedIndices.indexOf(i);
                 if(selectedIndex !== -1){
                     selectedIndices.splice(selectedIndex, 1);
                     button.classList.remove("selected-card");
+                    button.textContent = (i + 1) + " 🂠";
                     return;
                 }
                 // ป้องกันเลือกเกินจำนวน
@@ -2444,6 +2445,7 @@ class UIManager{
                 }
                 selectedIndices.push(i);
                 button.classList.add("selected-card");
+                button.textContent = "✓ " (i + 1) + " 🂠";
             };
             container.appendChild(button);
         }
