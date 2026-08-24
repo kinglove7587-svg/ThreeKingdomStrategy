@@ -29,7 +29,7 @@ class Necromancy extends TriggerSkill{
                 type: "cardSelection", 
                 owner: player, 
                 title: "Necromancy", 
-                message: "เลือกการ์ด 1 ใบจากมือของคุณ", 
+                message: "เลือกการ์ด 1 ใบจากมือของคุณ เพื่อจั่วตัดสินแทน", 
                 content: content, 
                 buttons: [
                     {

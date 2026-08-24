@@ -35,6 +35,7 @@ class Game {
         // ใช้ตรวจว่า Action ปัจจุบันยังดำเนินอยู่หรือไม่
         this.actionLocked = false;
         this.pendingModal = null;
+        this.pendingJudge = null;
         this.isGameOver = false;
     }
     // รองรับ onComplete / onCancel สำหรับ Generic Modal
