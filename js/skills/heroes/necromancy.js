@@ -68,18 +68,33 @@ class Necromancy extends TriggerSkill{
                             if(!pendingJudge){
                                 return;
                             }
-                            // เปลี่ยนการ์ด Judge เป็นการ์ดที่เลือก
-                            pendingJudge.result.card = selectedCards[0];
-                            // Resume Judge 
-                            player.game.resumeJudge(pendingJudge.result);
+                            // หา Index ของการ์ดที่เลือกในมือสุมาอี้
+                            const selectedIndex = player.hand.cards.indexOf(selectedCards[0]);
+                            // ตรวจสอบว่าการ์ดที่เลือกยังอยู่ในมือจริง
+                            if(selectedIndex === -1){
+                                return;
+                            }
+                            // นำการ์ดที่ใช้แทน Judge ออกจากมือ
+                            const selectedCard = player.hand.removeCard(selectedIndex);
+                            // นำการ์ดที่เลือกลงกองทิ้ง
+                            player.game.discardPile.addCard(selectedCard);
+                            // ใช้การ์ดที่ถูกทิ้งเป็นผล Judge แทน
+                            pendingJudge.result.card = selectedCard;
                             // ปิด Modal
                             player.game.hideModal();
+                            // Resume Judge
+                            player.game.resumeJudge(pendingJudge.result);
                         }
                     }, 
                     {
                         text: "ยกเลิก", 
                         onClick: () => {
+                            const pendingJudge = player.game.pendingJudge;
                             player.game.hideModal();
+                            //
+                            if(pendingJudge){
+                                player.game.resumeJudge(pendingJudge.result);
+                            }
                         }
                     }
                 ]
