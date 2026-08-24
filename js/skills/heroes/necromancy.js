@@ -14,6 +14,16 @@ class Necromancy extends TriggerSkill{
             console.log("Necromancy Owner =", player.name);
             console.log("Judge Player =", context.player?.name);
             console.log("Judge Card =", context.card);
+            // สร้าง Content ภายใน callback
+            const content = player.game.ui.createCardSelectionContent(
+                player.hand.cards, 
+                (selectedCards) => {
+                    console.log("Necromancy selectedCards =", selectedCards);
+                }, 
+                {
+                    requiredCount: 1
+                }
+            );
         };
         this.registerListener(
             eventManager, 
