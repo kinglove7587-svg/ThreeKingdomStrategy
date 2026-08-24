@@ -2330,6 +2330,7 @@ class UIManager{
                     showNumber: true
                 }
             );
+            // ผูก Card object ไว้กับปุ่มสำหรับอัปเดตลำดับ
             button._card = card;
             // เมื่อกดปุ่มการ์ด
             button.onclick = () => {
