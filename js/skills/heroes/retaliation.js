@@ -88,4 +88,7 @@ class Retaliation extends TriggerSkill{
             callback
         );
     }
+    getDescription(){
+        return ;
+    }
 }
