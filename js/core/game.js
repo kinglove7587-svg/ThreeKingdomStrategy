@@ -892,6 +892,10 @@ class Game {
         if(typeof pendingJudge.onResume === "function"){
             pendingJudge.onResume(result);
         }
+        // Resume Judge Phase ต่อจากการ์ดที่ Pause ไว้
+        if(typeof pendingJudge.judgePhaseResume === "function"){
+            pendingJudge.judgePhaseResume();
+        }
         return result;
     }
 }
