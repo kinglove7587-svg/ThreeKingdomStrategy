@@ -31,13 +31,21 @@ class Retaliation extends TriggerSkill{
             const content = player.game.ui.createCardBackSelectionContent(
                 source.hand.cards, 
                 (selectedCards, selectedIndices) => {
+                    // บันทึก Source ของ Retaliation
+                    controller.retaliationTarget = source;
+                    // บันทึกการ์ดที่เลือก
+                    controller.selectedRetaliationCard = selectedCards[0];
+                    // บันทึก Index ที่เลือก
+                    controller.selectedRetaliationCardIndex = selectedIndices[0];
                     console.log(
-                        player.name + 
-                        " Retaliation เลือกการ์ดจาก " + 
-                        source.name
+                        player.name + " Retaliation เลือกการ์ดจาก " + source.name
                     );
-                    console.log("selectedCards =", selectedCards);
-                    console.log("selectedIndices =", selectedIndices);
+                    console.log(
+                        "selectedRetaliationCard =", controller.selectedRetaliationCard
+                    );
+                    console.log(
+                        "selectedRetaliationCardIndex =", controller.selectedRetaliationCardIndex
+                    );
                 },
                 {
                     requiredCount: 1
@@ -55,6 +63,10 @@ class Retaliation extends TriggerSkill{
                         onClick: () => {
                             // ต้องเลือกครบก่อนยืนยัน
                             if(!content.confirmSelection()){
+                                return;
+                            }
+                            // ย้ายการ์ดจากมือ Source เข้ามือผู้ใช้ Retaliation
+                            if(!controller.confirmRetaliationSelection()){
                                 return;
                             }
                             player.game.hideModal();
