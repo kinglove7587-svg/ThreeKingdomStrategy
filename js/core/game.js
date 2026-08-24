@@ -496,8 +496,16 @@ class Game {
         this.discardPile.addCard(judgeCard);
         // แสดงรายการไพ่ในกองทิ้ง
         this.showDiscardPile();
-        // คืนค่าออบเจกต์ JudgeResult เพื่อนำไปเช็กผลลัพธ์ต่อ
-        return new JudgeResult(judgeCard);
+        
+        const judgeResult = new JudgeResult(judgeCard);
+        this.eventManager.emit(
+            "judgeCardRevealed", 
+            {
+                player: player, 
+                card: judgeResult
+            }
+        );
+        return judgeResult;
     }
     // เมธอดสำหรับจบเทิร์น และส่งต่อผู้เล่นปัจจุบันเข้าสู่เฟสทิ้งการ์ด
     finishTurn(){
