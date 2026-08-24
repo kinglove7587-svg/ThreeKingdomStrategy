@@ -73,7 +73,11 @@ class SlashCard extends BasicCard{
             target: target, 
             card: this, 
             dodge: false, 
-            ignoreArmor: targetContext ? targetContext.ignoreArmor : false
+            ignoreArmor: targetContext ? targetContext.ignoreArmor : false, 
+            // สถานะรอ Judge จาก Trigger
+            waitingJudge: false, 
+            // Flow สำหรับทำงานต่อหลัง Judge / Trigger เสร็จ
+            resume: null
         };
         game.eventManager.emit("beforeDodge", dodgeContext);
         // สร้าง Context ของ Slash ก่อนโดนเป้าหมาย
@@ -85,50 +89,68 @@ class SlashCard extends BasicCard{
             ignoreArmor: targetContext ? targetContext.ignoreArmor : false, 
             damageType: targetContext ? targetContext.damageType : this.damageType
         };
-        // ตรวจสอบการหลบจาก Skill หรือการ์ดหลบ
-        if(dodgeContext.dodge){
-            if(!dodgeContext.fromArmor){
-                game.log(target.name + " หลบการโจมตี");
+        // กำหนด Flow ที่ต้องทำหลัง beforeDodge เสร็จ
+        dodgeContext.resume = () => {
+            // ตรวจสอบการหลบจาก Skill หรือการ์ดหลบ
+            if(dodgeContext.dodge){
+                if(!dodgeContext.fromArmor){
+                    game.log(target.name + " หลบการโจมตี");
+                }
+                slashContext.canceled = true;
+
+            }else if(game.askDodge(target)){
+                slashContext.canceled = true;
+            }else{
+
+                console.log(target.name + " ไม่มีการ์ดหลบ ");
             }
-            slashContext.canceled = true;
-
-        }else if(game.askDodge(target)){
-            slashContext.canceled = true;
-        }else{
-
-            console.log(target.name + " ไม่มีการ์ดหลบ ");
-        }
-        // Event ก่อนการโจมตีโดน
-        game.eventManager.emit("beforeSlashHit", slashContext);
-        // กำหนดวิธี Resume หลัง Trigger
-        slashContext.resume = () => {
-            if(slashContext.canceled){
-                game.log(target.name + " ป้องกันการโจมตี");
+            // Event ก่อนการโจมตีโดน
+            game.eventManager.emit("beforeSlashHit", slashContext);
+            // กำหนดวิธี Resume หลัง Trigger
+            slashContext.resume = () => {
+                if(slashContext.canceled){
+                    game.log(target.name + " ป้องกันการโจมตี");
+                    return true;
+                }
+                console.log("Slash DamageType =", slashContext.damageType);
+                // Damage เริ่มต้น
+                let damageAmount = 1;
+                // ผลของสุรา
+                if(player.isDrunk()){
+                    damageAmount++;
+                    player.setDrunk(false);
+                    game.log(player.name + " ได้รับผลของสุรา ความเสียหาย +1");
+                }
+                // สร้าง Damage และบันทึกการ์ดต้นทาง
+                const damage = new Damage(player, target, damageAmount, slashContext.damageType);
+                damage.card = this;
+                damage.ignoreArmor = slashContext.ignoreArmor;
+                // ส่ง Damage เข้าระบบ
+                game.damage(damage);
+                console.log(player.isDrunk());
+                return true;
+            };
+            // ถ้ามี Trigger รอ Resume
+            if(slashContext.waitingTrigger){
                 return true;
             }
-            console.log("Slash DamageType =", slashContext.damageType);
-            // Damage เริ่มต้น
-            let damageAmount = 1;
-            // ผลของสุรา
-            if(player.isDrunk()){
-                damageAmount++;
-                player.setDrunk(false);
-                game.log(player.name + " ได้รับผลของสุรา ความเสียหาย +1");
-            }
-            // สร้าง Damage และบันทึกการ์ดต้นทาง
-            const damage = new Damage(player, target, damageAmount, slashContext.damageType);
-            damage.card = this;
-            damage.ignoreArmor = slashContext.ignoreArmor;
-            // ส่ง Damage เข้าระบบ
-            game.damage(damage);
-            console.log(player.isDrunk());
-            return true;
+            return slashContext.resume();
         };
-        // ถ้ามี Trigger รอ Resume
-        if(slashContext.waitingTrigger){
+        // ส่ง Event ก่อน Dodge
+        game.eventManager.emit("beforeDodge", dodgeContext);
+        // ถ้า Judge ถูก Pause ให้หยุด Slash ไว้ก่อน
+        if(
+            dodgeContext.waitingJudge && 
+            game.pendingJudge
+        ){
+            // เมื่อ Judge Resume ให้กลับมาทำ Dodge ต่อ
+            game.pendingJudge.dodgeResume = () => {
+                return dodgeContext.resume();
+            };
             return true;
         }
-        return slashContext.resume();
+        // ถ้าไม่มี Pause ให้ทำ Flow ต่อทันที
+        return dodgeContext.resume;
     }
     // ใช้สำหรับ Multi-target แต่ยังไม่ผูกเข้ากับ Flow จริง
     resolveSlashTargets(player, targets, game){
