@@ -2311,5 +2311,97 @@ class UIManager{
         }
         return button;
     }
+    // สร้าง Content สำหรับเลือกการ์ดภายใน Generic Modal
+    createCardSelectionContent(cards, onSelect, options = {}){
+
+        const container = document.createElement("div");
+        // จำนวนการ์ดที่ต้องเลือก
+        const requiredCount = 
+            options.requiredCount !== undefined 
+                ? options.requiredCount : 1;
+        // เก็บการ์ดที่ถูกเลือก
+        const selectedCards = [];
+        // สร้างปุ่มการ์ดแต่ละใบ
+        for(const card of cards){
+
+            const button = this.createCardButton(card, 
+                {
+                    showSuit: true, 
+                    showNumber: true
+                }
+            );
+            button._card = card;
+            // เมื่อกดปุ่มการ์ด
+            button.onclick = () => {
+                const selectedIndex = selectedCards.indexOf(card);
+                // ถ้าเลือกใบนี้อยู่แล้ว ให้ยกเลิกการเลือก
+                if(selectedIndex !== -1){
+                    selectedCards.splice(selectedIndex, 1);
+                    button.classList.remove("selected-card");
+                    button.textContent = 
+                        card.name + " " + 
+                        card.suit + " " + 
+                        card.number;
+                    this.updateCardSelectionOrder(container, selectedCards);
+                    return;
+                }
+                // ป้องกันเลือกเกินจำนวนที่กำหนด
+                if(selectedCards.length >= requiredCount){
+                    return;
+                }
+                selectedCards.push(card);
+                button.classList.add("selected-card");
+                this.updateCardSelectionOrder(container, selectedCards);
+            };
+            container.appendChild(button);
+        }
+        // คืนรายการการ์ดที่เลือก
+        container.getSelectedCards = () => {
+            return [...selectedCards];
+        };
+        // ตรวจสอบและยืนยันการเลือก
+        container.confirmSelection = () => {
+            if(selectedCards.length !== requiredCount){
+                return false;
+            }
+            if(typeof onSelect === "function"){
+                onSelect([...selectedCards]);
+            }
+            return true;
+        };
+        // คืนค่าจำนวนการ์ดที่ต้องเลือก
+        container.getRequiredCount = () => {
+            return requiredCount;
+        };
+        return container;
+    }
+    // อัปเดตลำดับการเลือกการ์ดใน Modal
+    updateCardSelectionOrder(container, selectedCards){
+
+        const buttons = [...container.querySelectorAll("button")];
+        for(const button of buttons){
+
+            const card = button._card;
+            if(!card){
+                continue;
+            }
+
+            const selectedIndex = selectedCards.indexOf(card);
+            if(selectedIndex === -1){
+                button.classList.remove("selected-card");
+                button.textContent = 
+                    card.name + " " + 
+                    card.suit + " " + 
+                    card.number;
+                continue;
+            }
+            button.classList.add("selected-card");
+            button.textContent = 
+                "①②③④⑤".charAt(selectedIndex) + " " + 
+                card.name + " " + 
+                card.suit + " " + 
+                card.number;
+        }
+    }
     
 }
