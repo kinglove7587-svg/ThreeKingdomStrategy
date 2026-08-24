@@ -350,11 +350,6 @@ class UIManager{
             this.renderStealHand();
             return;
         }
-        // Retaliation เลือกการ์ดจากมือของผู้ทำ Damage
-        if(player.controller.inputState === "waitingRetaliationCard"){
-            this.renderRetaliationHand();
-            return;
-        }
         // หากอยู่ในสถานะรอเลือกการ์ด Frost Sword ให้เรียก renderFrostSwordHand()
         if(player.controller.inputState === "waitingFrostSwordCard"){
             this.renderFrostSwordHand();
@@ -631,43 +626,6 @@ class UIManager{
             controller.startStealSourceSelection();
         };
         this.controlArea.appendChild(backButton);
-    }
-    // แสดงไพ่คว่ำจากมือของผู้ทำ Damage สำหรับ Retaliation
-    renderRetaliationHand(){
-
-        const player = this.game.getCurrentPlayer();
-        const controller = player.controller;
-        const target = controller.retaliationTarget;
-        // หากไม่มีเป้าหมาย ให้หยุด
-        if(!target){
-            return;
-        }
-        // วนสร้างไพ่คว่ำจากมือของผู้ทำ Damage
-        for(let i = 0; i < target.hand.cards.length; i++){
-
-            const button = document.createElement("button");
-            button.textContent = (i + 1) + " 🂠";
-            button.onclick = () => {
-                const success = controller.selectRetaliationCard(i);
-                if(!success){
-                    return;
-                }
-                this.render();
-            };
-            this.handArea.appendChild(button);
-        }
-        // ข้อความสถานะใต้ชุดไพ่
-        const status = document.createElement("div");
-        status.textContent = "เลือกการ์ด 1 ใบ";
-        this.handArea.appendChild(status);
-        // ปุ่มยืนยัน
-        const confirmButton = document.createElement("button");
-        confirmButton.textContent = "ยืนยัน";
-        confirmButton.disabled = controller.selectedRetaliationCardIndex === -1;
-        confirmButton.onclick = () => {
-            controller.confirmRetaliationSelection();
-        };
-        this.handArea.appendChild(confirmButton);
     }
     // แสดงปุ่มเลือกตำแหน่ง (Zone) ที่จะขโมยการ์ดจากเป้าหมาย
     renderStealSource(){
