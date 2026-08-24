@@ -33,7 +33,7 @@ class EightTrigramsSkill extends ArmorSkill{
                 context.waitingJudge = true;
 
                 // ให้ Resume ของ Judge กลับมาเรียก Dodge ต่อเพียงครั้งเดียว
-                player.game.pendingJudge.dodgeResume = () => {
+                player.game.pendingJudge.resumeFlow = () => {
                     return context.resume();
                 };
 
