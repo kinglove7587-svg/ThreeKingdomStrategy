@@ -12,24 +12,32 @@ class EightTrigramsSkill extends ArmorSkill{
                 return;
             }
             player.game.log(player.name + " ใช้เกราะเกราะแปดทิศ");
-            // Judge แบบ Callback เพื่อรองรับ Pause / Resume
-            player.game.judge(
-                player, 
-                (result) => {
-                    // ตรวจผล Judge หลัง Resume
-                    if(result.isRed()){
+            // เรียก Judge และรอผลลัพธ์
+            const result = player.game.judge(
+                player,
+                (judgeResult) => {
+
+                    // ตรวจผล Judge หลัง Judge เสร็จหรือ Resume
+                    if(judgeResult.isRed()){
                         context.fromArmor = true;
                         context.dodge = true;
                     }
-                    // Resume Flow ของ Dodge หลัง Judge เสร็จ
-                    if(typeof context.resume === "function"){
-                        context.resume();
-                    }
                 }
             );
-            // บอก Flow ภายนอกว่า Trigger นี้อาจกำลังรอ Judge
-            if(player.game.pendingJudge){
+
+            // Judge ถูก Pause ต้องฝาก Flow Dodge ไว้สำหรับ Resume
+            if(
+                result === null &&
+                player.game.pendingJudge
+            ){
                 context.waitingJudge = true;
+
+                // ให้ Resume ของ Judge กลับมาเรียก Dodge ต่อเพียงครั้งเดียว
+                player.game.pendingJudge.dodgeResume = () => {
+                    return context.resume();
+                };
+
+                return;
             }
         };
         // ใช้ registerListener ของ TriggerSkill เพื่อลงทะเบียน Event "beforeDodge"
