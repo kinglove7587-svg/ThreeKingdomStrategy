@@ -2248,25 +2248,68 @@ class UIManager{
         }
         return true;
     }
-    // สร้าง Content สำหรับเลือกการ์ดภายใน Generic Modal
-    createCardSelectionContent(cards, onSelect){
+    // สร้างปุ่มการ์ดกลางสำหรับ UI ต่าง ๆ
+    createCardButton(card, options = {}){
 
-        const container = document.createElement("div");
-        for(const card of cards){
-
-            const button = document.createElement("button");
-            button.textContent = 
-                card.name + " " + 
-                card.suit + " " + 
-                card.number;
-            button.onclick = () => {
-                if(typeof onSelect === "function"){
-                    onSelect(card);
-                }
-            };
-            container.appendChild(button);
+        const button = document.createElement("button");
+        // กำหนดข้อความบนปุ่ม
+        let text = card.name;
+        if(options.showSuit){
+            text += " " + card.suit;
         }
-        return container;
+        if(options.showNumber){
+            text += " " + card.number;
+        }
+        button.textContent = text;
+        // กำหนดสถานะ Disabled
+        if(options.disabled){
+            button.disabled = true;
+        }
+        // แสดงลำดับการเลือก
+        if(options.selectedOrder !== undefined){
+            button.textContent = 
+                "①②③④⑤".charAt(options.selectedOrder - 1) + 
+                " " + text;
+            button.classList.add("selected-card");
+        }
+        //  รองรับ Tooltip ของการ์ด
+        button.onmouseenter = (event) => {
+            this.tooltipHoverCard = card;
+            this.tooltipMouseX = event.clientX;
+            this.tooltipMouseY = event.clientY;
+            if(this.tooltipShiftDown){
+                this.showCardTooltip(
+                    card, 
+                    event.clientX, 
+                    event.clientY
+                );
+            }
+        };
+
+        button.onmousemove = (event) => {
+            this.tooltipMouseX = event.clientX;
+            this.tooltipMouseY = event.clientY;
+            if(this.tooltipShiftDown){
+                this.showCardTooltip(
+                    card, 
+                    event.clientX, 
+                    event.clientY
+                );
+            }
+        };
+
+        button.onmouseleave = () => {
+            this.tooltipHoverCard = null;
+            this.hideCardTooltip();
+        };
+        // กำหนด Event เมื่อเลือกการ์ด
+        if(typeof options.onClick === "function"){
+            button.onclick = () => {
+                this.hideCardTooltip();
+                options.onClick(card);
+            };
+        }
+        return button;
     }
     
 }
