@@ -24,6 +24,33 @@ class Necromancy extends TriggerSkill{
                     requiredCount: 1
                 }
             );
+            // เปิด Generic Modal สำหรับเลือกการ์ดของเจ้าของ Necromancy
+            player.game.showModal({
+                type: "cardSelection", 
+                owner: player, 
+                title: "Necromancy", 
+                message: "เลือกการ์ด 1 ใบจากมือของคุณ", 
+                content: content, 
+                buttons: [
+                    {
+                        text: "ยืนยัน", 
+                        onClick: () => {
+                            // ต้องเลือกการ์ดให้ครบก่อนยืนยัน
+                            if(!content.confirmSelection()){
+                                console.log("ยังเลือกการ์ดไม่ครบ");
+                                return;
+                            }
+                            player.game.hideModal();
+                        }
+                    }, 
+                    {
+                        text: "ยกเลิก", 
+                        onClick: () => {
+                            player.game.hideModal();
+                        }
+                    }
+                ]
+            });
         };
         this.registerListener(
             eventManager, 
