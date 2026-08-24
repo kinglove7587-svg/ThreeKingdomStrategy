@@ -869,4 +869,19 @@ class Game {
         this.pendingJudge = data;
         return true;
     }
+    // ดำเนิน Judge ที่หยุดไว้ต่อ พร้อมรับผลลัพธ์ที่ถูกแก้ไข
+    resumeJudge(result){
+
+        if(!this.pendingJudge){
+            return false;
+        }
+        // เก็บผลลัพธ์ Judge ที่จะใช้ต่อ
+        this.pendingJudge.result = result;
+        // ดึงข้อมูล Judge ที่กำลังรอ
+        const pendingJudge = this.pendingJudge;
+        // ล้าง Pending ก่อน Resume เพื่อป้องกันการ Resume ซ้ำ
+        this.pendingJudge = null;
+        // แจ้งว่าการ Resume สำเร็จ
+        return pendingJudge.result;
+    }
 }
