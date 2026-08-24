@@ -79,7 +79,6 @@ class SlashCard extends BasicCard{
             // Flow สำหรับทำงานต่อหลัง Judge / Trigger เสร็จ
             resume: null
         };
-        game.eventManager.emit("beforeDodge", dodgeContext);
         // สร้าง Context ของ Slash ก่อนโดนเป้าหมาย
         const slashContext = {
             source: player, 
