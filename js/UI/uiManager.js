@@ -2248,5 +2248,25 @@ class UIManager{
         }
         return true;
     }
+    // สร้าง Content สำหรับเลือกการ์ดภายใน Generic Modal
+    createCardSelectionContent(cards, onSelect){
+
+        const container = document.createElement("div");
+        for(const card of cards){
+
+            const button = document.createElement("button");
+            button.textContent = 
+                card.name + " " + 
+                card.suit + " " + 
+                card.number;
+            button.onclick = () => {
+                if(typeof onSelect === "function"){
+                    onSelect(card);
+                }
+            };
+            container.appendChild(button);
+        }
+        return container;
+    }
     
 }
