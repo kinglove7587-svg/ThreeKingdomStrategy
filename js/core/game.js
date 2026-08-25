@@ -636,6 +636,37 @@ class Game {
     }
     // ตรวจสอบและบังคับใช้การ์ด "โจมตี" ในมือของผู้เล่น
     askSlash(player, requiredCount = 1){
+
+        if(requiredCount > 1){
+
+            const slashCount = player.hand.cards.filter(
+                card => card.name === "โจมตี"
+            ).length;
+            if(slashCount < requiredCount){
+                this.log(
+                    player.name + " มี โจมตี ไม่ครบ " + 
+                    requiredCount + " ใบ"
+                );
+                return false;
+            }
+
+            const slashCards = player.hand.cards.filter(
+                card => card.name === "โจมตี"
+            );
+            for(let i = 0; i < requiredCount; i++){
+
+                const slash = player.hand.removeCard(
+                    player.hand.cards.indexOf(slashCards[i])
+                );
+                this.discardPile.addCard(slash);
+            }
+            this.log(
+                player.name + " ใช้ โจมตี " + 
+                requiredCount + " ใบ"
+            );
+            this.ui.render();
+            return true;
+        }
         // ส่งคำร้องขอเลือกการ์ด "โจมตี" ไปยัง Controller ของผู้เล่น
         const index = player.controller.askSlash(player, this);
         // หากผู้เล่นไม่มีการ์ด "โจมตี" บนมือ
