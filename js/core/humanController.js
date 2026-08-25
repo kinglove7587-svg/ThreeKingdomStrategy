@@ -712,6 +712,10 @@ class HumanController extends Controller{
         if(!success){
             return false;
         }
+        // ถ้า Burn นี้เกิดจาก Ambushment ให้ทิ้งการ์ดสีดำที่ใช้เป็นถอนสะพานด้วย
+        if(this.selectedAmbushmentCard){
+            this.game.discardPile.addCard(this.selectedAmbushmentCard);
+        }
         // คืนค่าสถานะหลักกลับเป็น idle
         this.inputState = "idle";
         // ล้างค่าข้อมูลการเลือก Burn ทั้งหมด
@@ -720,6 +724,8 @@ class HumanController extends Controller{
         this.selectedBurnCard = null;
         this.selectedBurnCardIndex = -1;
         this.selectedCardIndex = -1;
+        // ล้างการ์ดที่ใช้เป็น Ambushment หลังจบ Action
+        this.selectedAmbushmentCard = null;
         this.game.afterHumanAction(success);
         this.game.ui.render();
         return true;
