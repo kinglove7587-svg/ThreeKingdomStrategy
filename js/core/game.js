@@ -664,6 +664,26 @@ class Game {
             );
             return false;
         }
+        if(requiredCount > 1){
+
+            const dodgeCards = player.hand.cards.filter(
+                card => card.name === "หลบ"
+            );
+
+            for(let i = 0; i < requiredCount; i++){
+
+                const dodge = player.hand.removeCard(
+                    player.hand.cards.indexOf(dodgeCards[i])
+                );
+                this.discardPile.addCard(dodge);
+            }
+            this.log(
+                player.name + " ใช้ หลบ " + 
+                requiredCount + " ใบ"
+            );
+            this.ui.render();
+            return true;
+        }
         // ส่งคำร้องขอเลือกการ์ด "หลบ" ไปยัง Controller ของผู้เล่น
         const index = player.controller.askDodge(player, this);
         // หากผู้เล่นไม่มีการ์ด "หลบ" บนมือ (หรือเลือกไม่ใช้)
