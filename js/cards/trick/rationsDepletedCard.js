@@ -25,20 +25,24 @@ class RationsDepletedCard extends DelayedTrickCard{
     }
     // ทำการเช็กดวง (Judge) เมื่อถึง Judgment Phase ของเป้าหมาย
     onJudge(player){
-        // ทำการเปิดการ์ดเช็กดวงจากระบบ Game Engine
-        const result = player.game.judge(player);
-        // หากไม่มีผลลัพธ์การเช็กดวง ให้ยกเลิกกระบวนการ
-        if(!result){
-            return;
-        }
-        // หากไพ่เช็กดวง "ไม่ใช่ดอกดอกจิก (♣)" ให้สั่งข้าม Draw Phase
-        if(!result.isClub()){
-            player.skipDraw();
-        }
-        // นำการ์ดเสบียงหมด! ออกจากโซน Delayed Trick ของผู้เล่น
-        player.removeDelayedTrick(this);
-        // นำการ์ดเสบียงหมด! ลงกองทิ้ง (Discard Pile)
-        player.game.discardPile.addCard(this);
+        // เรียก Judge และรอผลลัพธ์
+        player.game.judge(
+            player, 
+            (result) => {
+                // ตรวจผล Judge หลัง Judge ปกติหรือ Resume
+                if(!result.isClub()){
+                    player.skipDraw();
+                }
+                // นำการ์ดเสบียงหมด! ออกจากโซน Delayed Trick
+                player.removeDelayedTrick(this);
+                // นำการ์ดเสบียงหมด! ลงกองทิ้ง
+                player.game.discardPile.addCard(this);
+                // อัปเดตการแสดงผล UI Delayed Trick บนตัวละคร
+                if(typeof player.showDelayedTrick === "function"){
+                    player.showDelayedTrick();
+                }
+            }
+        );
     }
     // คำอธิบายความสามารถสำหรับ Tooltip
     getDescription(){
