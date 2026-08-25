@@ -946,6 +946,11 @@ class HumanController extends Controller{
         }
         // เมื่อเลือกครบตามจำนวนแล้ว ให้สั่งเรียกใช้งาน สกิล
         const success = skill.use(this.player, this.game);
+        // หาก Skill เปลี่ยนไปสู่ขั้นตอนเลือกเป้าหมายต่อ ให้คง State ของ Skill ไว้
+        if(this.inputState === "waitingSkillTarget"){
+            this.game.ui.render();
+            return success;
+        }
         // หลัง Skill ทำงานเสร็จแล้วค่อยล้าง State
         this.selectedSkill = null;
         this.selectedSkillCardIndex = -1;
