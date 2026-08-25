@@ -11,6 +11,9 @@ class Ambushment extends ActiveSkill{
                 card.suit === "♣️"
         );
     }
+    canTarget(player, target){
+        return player !== target;
+    }
     // ต้องเลือกเป้าหมายก่อนเลือกการ์ด
     needsTarget(player, game){
         return true;
