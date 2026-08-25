@@ -12,6 +12,6 @@ class GanNing extends Player{
             "Ambushment (ซุ่มโจมตี)\n" +
             "คุณสามารถใช้ การ์ด ♠️ ♣️ เป็น [ถอนสะพาน]";
 
-        //this.addSkill(new Ambushment());
+        this.addSkill(new Ambushment());
     }
 }

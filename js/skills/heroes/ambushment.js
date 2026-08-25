@@ -2,6 +2,8 @@ class Ambushment extends ActiveSkill{
 
     constructor(){
         super("Ambushment");
+        // ใช้ติดตามว่าเลือกการ์ดสำหรับ Ambushment แล้วหรือยัง
+        this.cardSelected = false;
     }
     // ใช้สกิลได้เมื่อมีการ์ดสีดำอย่างน้อย 1 ใบในมือ
     canUse(player, game){
@@ -15,9 +17,9 @@ class Ambushment extends ActiveSkill{
     needsTarget(player, game){
         return false;
     }
-    // สกิลนี้ต้องเลือกการ์ดจากมือ
+    // หลังเลือกการ์ดแล้วไม่ต้องกลับมาเลือกการ์ดซ้ำ
     needsCardSelection(player, game){
-        return true;
+        return !this.cardSelected;
     }
     // เลือกการ์ดเพียง 1 ใบ
     cardSelectionCount(player, game){
@@ -47,6 +49,8 @@ class Ambushment extends ActiveSkill{
         if(!selectedCard){
             return false;
         }
+        // บันทึกว่าเลือกการ์ดสำหรับ Ambushment แล้ว
+        this.cardSelected = true;
         // เก็บการ์ดที่เลือกไว้สำหรับ Ambushment
         player.controller.selectedAmbushmentCard = selectedCard;
         // เปลี่ยนไปขั้นเลือกเป้าหมาย
