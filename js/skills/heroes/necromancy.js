@@ -39,13 +39,18 @@ class Necromancy extends TriggerSkill{
                 "typeof content.getSelectedIndices =", typeof content.getSelectedIndices
             );
             
-            
+            const originalJudgeCard = context.card.card;
             // เปิด Generic Modal สำหรับเลือกการ์ดของเจ้าของ Necromancy
             player.game.showModal({
                 type: "cardSelection", 
                 owner: player, 
                 title: "สกิล Necromancy ของ สุมาอิ้ ทำงาน", 
-                message: "เลือกการ์ด 1 ใบจากมือของคุณ เพื่อจั่วตัดสินแทน", 
+                message: 
+                    "ผลจั่วเดิม: " + 
+                originalJudgeCard.suit + " " + 
+                originalJudgeCard.number + 
+                "\n\n" + 
+                "เลือกการ์ด 1 ใบจากมือของคุณ เพื่อจั่วตัดสินแทน", 
                 content: content, 
                 buttons: [
                     {
