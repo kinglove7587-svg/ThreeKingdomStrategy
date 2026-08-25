@@ -744,6 +744,9 @@ class HumanController extends Controller{
         // ล้างการ์ดที่ใช้เป็น Ambushment
         this.selectedAmbushmentCard = null;
         this.ambushmentTarget = null;
+        this.selectedSkill = null;
+        this.selectedSkillCardIndex = -1;
+        this.selectedSkillCardIndices = [];
 
         this.game.afterHumanAction(success);
         this.game.ui.render();
