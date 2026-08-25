@@ -609,8 +609,12 @@ class Game {
         // วนลูปสลับกันทิ้งการ์ด "โจมตี" ไปเรื่อยๆ จนกว่าจะมีฝ่ายใดฝ่ายหนึ่งไม่มีการ์ด
         while(true){
             this.log(current.name + " ต้องใช้ โจมตี");
+            // ตรวจสอบว่าฝ่าย current เป็น LuBu และฝ่าย current ไม่ใช่ฝ่าย opponent เพื่อกำหนดจำนวนการ์ด "โจมตี" ที่ต้องใช้
+            const requiredSlashCount = 
+                opponent instanceof LuBu && 
+                current !== opponent ? 2 : 1;
             // ถามหาและบังคับใช้การ์ด "โจมตี" จากฝ่าย current
-            const success = this.askSlash(current);
+            const success = this.askSlash(current, requiredSlashCount);
             // หากฝ่าย current ไม่มีการ์ด "โจมตี" ให้รับความเสียหายและจบการดวลทันที
             if(!success){
                 // สร้างความเสียหาย 1 หน่วย โดยมี opponent เป็นผู้สร้างความเสียหายให้ current
