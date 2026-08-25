@@ -23,6 +23,9 @@ class HumanController extends Controller{
         this.selectedBurnSource = null;
         this.selectedBurnCard = null;
         this.selectedBurnCardIndex = -1;
+        // Ambushment State
+        this.selectedAmbushmentCard = null;
+        this.ambushmentTarget = null;
         // Wooden Cart State
         this.selectedWoodenCartCard = null;
         this.selectedWoodenCartTarget = null;
@@ -946,8 +949,11 @@ class HumanController extends Controller{
         }
         // เมื่อเลือกครบตามจำนวนแล้ว ให้สั่งเรียกใช้งาน สกิล
         const success = skill.use(this.player, this.game);
-        // หาก Skill เปลี่ยนไปสู่ขั้นตอนเลือกเป้าหมายต่อ ให้คง State ของ Skill ไว้
-        if(this.inputState === "waitingSkillTarget"){
+        // Skill สามารถต่อเข้า Target หรือ Burn Source ได้
+        if(
+            this.inputState === "waitingSkillTarget" || 
+            this.inputState === "waitingBurnSource"
+        ){
             this.game.ui.render();
             return success;
         }
