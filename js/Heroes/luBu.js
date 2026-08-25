@@ -15,6 +15,6 @@ class LuBu extends Player{
 
         this.addSkill(new Unrivaled());
 
-        this.hand.addCard(new DuelCard("♠️", 1));
+        //this.hand.addCard(new DuelCard("♠️", 1));
     }
 }
