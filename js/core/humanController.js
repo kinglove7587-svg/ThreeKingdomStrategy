@@ -706,16 +706,32 @@ class HumanController extends Controller{
     }
     // ยืนยันการทำลายการ์ด นำการ์ดลงกองทิ้ง ล้างค่า State ทั้งหมด
     confirmBurnSelection(){
+        // ตรวจว่ามีการ์ดที่ใช้เป็น Ambushment และยังอยู่ในมือ
+        let ambushmentCardIndex = -1;
+        if(this.selectedAmbushmentCard){
+            ambushmentCardIndex = 
+                this.player.hand.cards.indexOf(this.selectedAmbushmentCard);
+            if(ambushmentCardIndex === -1){
+                    return false;
+            }
+        }
         // เรียกใช้ discardSelectedBurnCard เพื่อทิ้งการ์ดลง discardPile
         const success = this.discardSelectedBurnCard();
         // หากทำรายการไม่สำเร็จ ให้ยกเลิก
         if(!success){
             return false;
         }
-        // ถ้า Burn นี้เกิดจาก Ambushment ให้ทิ้งการ์ดสีดำที่ใช้เป็นถอนสะพานด้วย
+        // ถ้าเป็น Ambushment ให้นำการ์ดที่ใช้เสมือนถอนสะพานออกจากมือ
         if(this.selectedAmbushmentCard){
-            this.player.hand.removeCard(this.selectedAmbushmentCard);
-            this.game.discardPile.addCard(this.selectedAmbushmentCard);
+
+            const ambushmentCard = 
+                this.player.hand.removeCard(ambushmentCardIndex);
+            // ถอดออกจากมือแล้วจึงนำลงกองทิ้ง
+            if(!ambushmentCard){
+                return false;
+            }
+            // ทิ้งการ์ดที่ใช้เป็น Ambushment ลงกองทิ้ง
+            this.game.discardPile.addCard(ambushmentCard);
         }
         // คืนค่าสถานะหลักกลับเป็น idle
         this.inputState = "idle";
@@ -725,8 +741,10 @@ class HumanController extends Controller{
         this.selectedBurnCard = null;
         this.selectedBurnCardIndex = -1;
         this.selectedCardIndex = -1;
-        // ล้างการ์ดที่ใช้เป็น Ambushment หลังจบ Action
+        // ล้างการ์ดที่ใช้เป็น Ambushment
         this.selectedAmbushmentCard = null;
+        this.ambushmentTarget = null;
+
         this.game.afterHumanAction(success);
         this.game.ui.render();
         return true;
