@@ -2209,6 +2209,7 @@ class UIManager{
 
         titleElement.textContent = title;
         messageElement.textContent = message;
+        messageElement.style.whiteSpace = "pre-line";
         contentElement.innerHTML = "";
         buttonsElement.innerHTML = "";
 

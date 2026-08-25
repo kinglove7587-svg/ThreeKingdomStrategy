@@ -49,7 +49,7 @@ class Necromancy extends TriggerSkill{
                     "ผลจั่วเดิม: " + 
                 originalJudgeCard.suit + " " + 
                 originalJudgeCard.number + 
-                "\n\n" + 
+                "\n" + 
                 "เลือกการ์ด 1 ใบจากมือของคุณ เพื่อจั่วตัดสินแทน", 
                 content: content, 
                 buttons: [
@@ -85,6 +85,12 @@ class Necromancy extends TriggerSkill{
                             player.game.discardPile.addCard(selectedCard);
                             // ใช้การ์ดที่ถูกทิ้งเป็นผล Judge แทน
                             pendingJudge.result.card = selectedCard;
+                            player.game.log(player.name + 
+                                " จั่วใหม่ เป็น : " + 
+                                selectedCard.name + " " + 
+                                selectedCard.suit + " " + 
+                                selectedCard.number
+                            );
                              // ปิด Modal
                             player.game.hideModal();
                             // Resume Judge
