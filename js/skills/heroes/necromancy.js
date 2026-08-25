@@ -80,10 +80,10 @@ class Necromancy extends TriggerSkill{
                             player.game.discardPile.addCard(selectedCard);
                             // ใช้การ์ดที่ถูกทิ้งเป็นผล Judge แทน
                             pendingJudge.result.card = selectedCard;
-                            // Resume Judge
-                            player.game.resumeJudge(pendingJudge.result);
                              // ปิด Modal
                             player.game.hideModal();
+                            // Resume Judge
+                            player.game.resumeJudge(pendingJudge.result);
                         }
                     }, 
                     {
@@ -91,7 +91,7 @@ class Necromancy extends TriggerSkill{
                         onClick: () => {
                             const pendingJudge = player.game.pendingJudge;
                             player.game.hideModal();
-                            //
+                            // Resume Judge เดิมหลัง Modal ถูกล้างแล้ว
                             if(pendingJudge){
                                 player.game.resumeJudge(pendingJudge.result);
                             }
