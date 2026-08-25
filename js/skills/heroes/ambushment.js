@@ -2,8 +2,6 @@ class Ambushment extends ActiveSkill{
 
     constructor(){
         super("Ambushment");
-        // ใช้ติดตามว่าเลือกการ์ดสำหรับ Ambushment แล้วหรือยัง
-        this.cardSelected = false;
     }
     // ใช้สกิลได้เมื่อมีการ์ดสีดำอย่างน้อย 1 ใบในมือ
     canUse(player, game){
@@ -13,13 +11,13 @@ class Ambushment extends ActiveSkill{
                 card.suit === "♣️"
         );
     }
-    // ต้องเลือกการ์ดก่อน จึงยังไม่เลือกเป้าหมายในขั้นแรก
+    // ต้องเลือกเป้าหมายก่อนเลือกการ์ด
     needsTarget(player, game){
-        return false;
+        return true;
     }
-    // หลังเลือกการ์ดแล้วไม่ต้องกลับมาเลือกการ์ดซ้ำ
+    // หลังเลือกเป้าหมาย ต้องเลือกการ์ดสีดำ 1 ใบ
     needsCardSelection(player, game){
-        return !this.cardSelected;
+        return true;
     }
     // เลือกการ์ดเพียง 1 ใบ
     cardSelectionCount(player, game){
@@ -36,7 +34,7 @@ class Ambushment extends ActiveSkill{
             card.suit === "♣️"
         );
     }
-    // หลังเลือกการ์ด ให้เปลี่ยนไปเลือกเป้าหมาย
+    // ประมวลผล Ambushment หลังเลือกเป้าหมายและการ์ดแล้ว
     use(player, game){
 
         if(!player.controller.isHuman()){
@@ -46,15 +44,20 @@ class Ambushment extends ActiveSkill{
         const selectedIndex = player.controller.selectedSkillCardIndices[0];
         // ดึงการ์ดจริงจากมือ
         const selectedCard = player.hand.cards[selectedIndex];
-        if(!selectedCard){
+        //
+        const target = player.controller.getSelectedTarget();
+        if(!selectedCard || !target){
             return false;
         }
-        // บันทึกว่าเลือกการ์ดสำหรับ Ambushment แล้ว
-        this.cardSelected = true;
         // เก็บการ์ดที่เลือกไว้สำหรับ Ambushment
         player.controller.selectedAmbushmentCard = selectedCard;
-        // เปลี่ยนไปขั้นเลือกเป้าหมาย
-        player.controller.startSkillTargetSelection(this);
+        console.log(
+            "Ambushment Card =", 
+            selectedCard.name, 
+            selectedCard.suit, 
+            selectedCard.number
+        );
+        console.log("Ambushment Target =", target.name);
         return true;
     }
     getDescription(){
