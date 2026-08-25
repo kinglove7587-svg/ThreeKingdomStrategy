@@ -5,9 +5,7 @@ class NegationCard extends TrickCard{
     }
     // ตรวจสอบว่าการ์ดหักล้างใบนี้สามารถใช้ตอบโต้การ์ดใน Context ได้หรือไม่
     canReact(context){
-        // ปิดความสามารถจริงของหักล้างไว้ชั่วคราว
-        return false;
-        /*
+        
         if(!context){
             return false;
         }
@@ -18,7 +16,7 @@ class NegationCard extends TrickCard{
         // อนุญาตให้ตอบโต้ถ้าเป็นการ์ดประเภท Trick หรือการ์ดหักล้าง
         return context. card instanceof TrickCard && 
             !(context.card instanceof NegationCard);
-        */
+        
         
     }
     getDescription(){
