@@ -653,7 +653,7 @@ class Game {
         return true;
     }
     // ตรวจสอบและบังคับใช้การ์ด "หลบ" ในมือของผู้เล่น
-    askDodge(player){
+    askDodge(player, requiredCount = 1){
         // ส่งคำร้องขอเลือกการ์ด "หลบ" ไปยัง Controller ของผู้เล่น
         const index = player.controller.askDodge(player, this);
         // หากผู้เล่นไม่มีการ์ด "หลบ" บนมือ (หรือเลือกไม่ใช้)
