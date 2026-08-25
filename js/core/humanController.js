@@ -714,6 +714,7 @@ class HumanController extends Controller{
         }
         // ถ้า Burn นี้เกิดจาก Ambushment ให้ทิ้งการ์ดสีดำที่ใช้เป็นถอนสะพานด้วย
         if(this.selectedAmbushmentCard){
+            this.player.hand.removeCard(this.selectedAmbushmentCard);
             this.game.discardPile.addCard(this.selectedAmbushmentCard);
         }
         // คืนค่าสถานะหลักกลับเป็น idle
