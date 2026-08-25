@@ -98,7 +98,7 @@ class SlashCard extends BasicCard{
                 }
                 slashContext.canceled = true;
 
-            }else if(game.askDodge(target)){
+            }else if(game.askDodge(target, dodgeContext.requiredDodgeCount)){
                 slashContext.canceled = true;
             }else{
 
