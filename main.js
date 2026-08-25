@@ -9,8 +9,8 @@ const game = new Game([
         controller: HumanController//AIController//
     },
     {
-        hero: TestHero, 
-        controller: AIController
+        hero: GanNing, 
+        controller: HumanController//AIController
     }
 ]);
 
