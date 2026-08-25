@@ -13,6 +13,8 @@ class LuBu extends Player{
             "ตัวละครอื่นจะต้องลงการ์ด หลบ จำนวน 2 ใบ เพื่อป้องกันการ์ด โจมตี ของคุณ\n" + 
             "และตัวละครใดก็ตามที่ใช้ ดวลเดี่ยว กับคุณ จะต้องลงการ์ด โจมตี ครั้งละ 2 ใบในแต่ละรอบที่ถูกร้องขอ"
 
-        //this.addSkill();
+        this.addSkill(new Unrivaled());
+
+        this.hand.addCard(new RainingArrowsCard("♠️", 1));
     }
 }

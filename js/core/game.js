@@ -654,17 +654,19 @@ class Game {
     }
     // ตรวจสอบและบังคับใช้การ์ด "หลบ" ในมือของผู้เล่น
     askDodge(player, requiredCount = 1){
-        const dodgeCount = player.hand.cards.filter(
-            card => card.name === "หลบ"
-        ).length;
-        if(dodgeCount < requiredCount){
-            this.log(
-                player.name + " มี หลบ ไม่ครบ " + 
-                requiredCount + " ใบ"
-            );
-            return false;
-        }
+
         if(requiredCount > 1){
+
+            const dodgeCount = player.hand.cards.filter(
+                card => card.name === "หลบ"
+                ).length;
+                if(dodgeCount < requiredCount){
+                    this.log(
+                        player.name + " มี หลบ ไม่ครบ " + 
+                        requiredCount + " ใบ"
+                    );
+                    return false;
+                }
 
             const dodgeCards = player.hand.cards.filter(
                 card => card.name === "หลบ"
