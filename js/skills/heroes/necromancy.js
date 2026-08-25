@@ -44,7 +44,7 @@ class Necromancy extends TriggerSkill{
             player.game.showModal({
                 type: "cardSelection", 
                 owner: player, 
-                title: "Necromancy", 
+                title: "สกิล Necromancy ของ สุมาอิ้ ทำงาน", 
                 message: "เลือกการ์ด 1 ใบจากมือของคุณ เพื่อจั่วตัดสินแทน", 
                 content: content, 
                 buttons: [

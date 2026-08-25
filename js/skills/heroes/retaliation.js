@@ -55,6 +55,7 @@ class Retaliation extends TriggerSkill{
             player.game.showModal({
                 type: "cardSelection", 
                 owner: player, 
+                title: "สกิล Retaliation ของ สุมาอี้ ทำงาน",
                 message: "สุมาอี้ ได้รับความเสียหาย เลือกการ์ด 1 ใบจากมือ " + source.name, 
                 content: content, 
                 buttons: [
