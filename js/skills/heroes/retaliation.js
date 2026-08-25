@@ -55,7 +55,7 @@ class Retaliation extends TriggerSkill{
             player.game.showModal({
                 type: "cardSelection", 
                 owner: player, 
-                message: "เลือกการ์ด 1 ใบจากมือ " + source.name, 
+                message: "สุมาอี้ ได้รับความเสียหาย เลือกการ์ด 1 ใบจากมือ " + source.name, 
                 content: content, 
                 buttons: [
                     {
