@@ -635,7 +635,7 @@ class Game {
         };
     }
     // ตรวจสอบและบังคับใช้การ์ด "โจมตี" ในมือของผู้เล่น
-    askSlash(player){
+    askSlash(player, requiredCount = 1){
         // ส่งคำร้องขอเลือกการ์ด "โจมตี" ไปยัง Controller ของผู้เล่น
         const index = player.controller.askSlash(player, this);
         // หากผู้เล่นไม่มีการ์ด "โจมตี" บนมือ
