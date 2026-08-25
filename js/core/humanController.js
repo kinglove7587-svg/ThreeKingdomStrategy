@@ -747,6 +747,7 @@ class HumanController extends Controller{
         this.selectedSkill = null;
         this.selectedSkillCardIndex = -1;
         this.selectedSkillCardIndices = [];
+        this.selectedTarget = null;
 
         this.game.afterHumanAction(success);
         this.game.ui.render();

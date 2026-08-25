@@ -922,7 +922,9 @@ class UIManager{
         // ระหว่างเลือกเป้าหมายสกิล หรือ เลือกการ์ดสกิล ห้ามแสดง End Turn
         if(
             controller.inputState === "waitingSkillTarget" || 
-            controller.inputState === "waitingSkillCard"
+            controller.inputState === "waitingSkillCard" || 
+            controller.inputState === "waitingBurnSource" || 
+            controller.inputState === "waitingBurnCard"
         ){
             this.endTurnButton.disabled = true;
             return;

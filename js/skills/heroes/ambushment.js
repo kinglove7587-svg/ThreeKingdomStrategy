@@ -58,6 +58,12 @@ class Ambushment extends ActiveSkill{
         player.controller.ambushmentTarget = target;
         // ส่งเป้าหมายเข้า Flow ถอนสะพานเดิม
         player.controller.selectedBurnTarget = target;
+        game.log(player.name + " ใช้สกิล Ambushment");
+        game.log(
+            player.name + " ใช้ " + 
+            selectedCard.name + " แทน ถอนสะพาน ใส่ " + 
+            target.name
+        );
         // เริ่มเลือกโซนแบบถอนสะพาน
         player.controller.startBurnSourceSelection();
         console.log(
