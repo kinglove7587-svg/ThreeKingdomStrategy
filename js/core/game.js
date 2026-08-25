@@ -654,6 +654,16 @@ class Game {
     }
     // ตรวจสอบและบังคับใช้การ์ด "หลบ" ในมือของผู้เล่น
     askDodge(player, requiredCount = 1){
+        const dodgeCount = player.hand.cards.filter(
+            card => card.name === "หลบ"
+        ).length;
+        if(dodgeCount < requiredCount){
+            this.log(
+                player.name + " มี หลบ ไม่ครบ " + 
+                requiredCount + " ใบ"
+            );
+            return false;
+        }
         // ส่งคำร้องขอเลือกการ์ด "หลบ" ไปยัง Controller ของผู้เล่น
         const index = player.controller.askDodge(player, this);
         // หากผู้เล่นไม่มีการ์ด "หลบ" บนมือ (หรือเลือกไม่ใช้)
