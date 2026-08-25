@@ -1604,7 +1604,7 @@ class UIManager{
                 skillType = " (ActiveSkill)";
 
             }else if(skill instanceof TriggerSkill){
-                skillType = " (TriggerSkill)";
+                skillType = " (PassiveSkill)";
             }
             item.textContent = "• " + skill.name + skillType;
             skillSection.appendChild(item);

@@ -73,6 +73,7 @@ class SlashCard extends BasicCard{
             target: target, 
             card: this, 
             dodge: false, 
+            requiredDodgeCount: 1, 
             ignoreArmor: targetContext ? targetContext.ignoreArmor : false, 
             // สถานะรอ Judge จาก Trigger
             waitingJudge: false, 
