@@ -77,6 +77,7 @@ class UIManager{
         this.renderCardSelectionStatus();
         this.renderTargetSelectionStatus();
         this.renderAdditionalTargetSelection();
+        this.renderBurnSourceSelection();
     }
     // วาดการ์ดแสดงตัวละครฝั่งเราและฝั่งศัตรู
     renderPlayers(){
@@ -1347,6 +1348,65 @@ class UIManager{
         const status = document.createElement("div");
         status.textContent = message;
         this.controlArea.appendChild(status);
+    }
+    // แสดงตัวเลือก Zone สำหรับถอนสะพาน
+    renderBurnSourceSelection(){
+
+        const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
+        // แสดงเฉพาะตอนรอเลือกแหล่งที่จะทำลาย
+        if(controller.inputState !== "waitingBurnSource"){
+            return;
+        }
+
+        const target = controller.selectedBurnTarget;
+        // ต้องมีเป้าหมายก่อน
+        if(!target){
+            return;
+        }
+
+        const status = document.createElement("div");
+        status.textContent = "เลือกสิ่งที่จะทำลายจาก " + target.name;
+        this.controlArea.appendChild(status);
+        // สร้างปุ่มเลือก Zone
+        const sources = [
+            ["hand", "มือ"], 
+            ["weapon", "อาวุธ"], 
+            ["armor", "เกราะ"], 
+            ["mount", "ม้า"], 
+            ["judgement", "Judgement Zone"]
+        ];
+
+        for(const [source, label] of sources){
+            // ตรวจสอบว่า Zone นี้มีของให้ทำลายหรือไม่
+            let available = false;
+            if(source === "hand"){
+                available = target.hand.cards.length > 0;
+            }
+            if(source === "weapon"){
+                available = !!target.weapon;
+            }
+            if(source === "armor"){
+                available = !!target.armor;
+            }
+            if(source === "mount"){
+                available = !!target.mount;
+            }
+            if(source === "judgement"){
+                available = target.delayedTricks.length > 0;
+            }
+            // ไม่แสดงปุ่มสำหรับ Zone ที่ไม่มีการ์ด
+            if(!available){
+                continue;
+            }
+
+            const button = document.createElement("button");
+            button.textContent = label;
+            button.onclick = () => {
+                controller.selectBurnSource(source);
+            };
+            this.controlArea.appendChild(button);
+        }
     }
     // เมธอดสำหรับจัดการ Event เมื่อมีการคลิกการ์ด
     onCardClick(index){
