@@ -15,12 +15,15 @@ class Stauchness extends TriggerSkill{
             if(damage.amount <= 0){
                 return;
             }
-            player.game.log(" สกิล Stauchness ทำงาน ");
+            player.game.log(" สกิล Stauchness " + " ของ " +  player.name + " ทำงาน ");
 
+            const content = document.createElement("div");
+            content.textContent = "แฮหัวตุ้นได้รับความเสียหาย " + damage.amount + " หน่วย\nต้องการใช้สกิลหรือไม่?";
+            content.style.whiteSpace = "pre-line";
             player.game.showModal({
                 title: " สกิล Stauchness ทำงาน", 
                 message: "ผู้ตัดสินใจ : " + player.name, 
-                content: "แฮหัวตุ้นได้รับความเสียหาย " + damage.amount + " หน่วย\nต้องการใช้สกิลหรือไม่?", 
+                content: content,  
                 buttons: [
                     {
                         text: "ใช้", 
