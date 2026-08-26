@@ -985,6 +985,11 @@ class Game {
         }
 
         const queue = this.triggerResolutionQueue;
+        // ถ้ามี Trigger กำลังรออยู่ ห้ามสร้าง Queue ใหม่
+        if(queue.current || queue.isWaiting()){
+            return queue.current;
+        }
+        // เริ่ม Queue ใหม่เมื่อไม่มี Trigger เดิมค้างอยู่
         queue.queue = [];
         queue.current = null;
         queue.addEventListeners(
