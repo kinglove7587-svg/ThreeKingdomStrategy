@@ -1026,12 +1026,17 @@ class Game {
             return false;
         }
 
+        let resumed = false;
         const queue = this.triggerResolutionQueue;
         const resolution = {
             wait: () => {
                 return queue.wait();
             }, 
             resume: () => {
+                if(resumed){
+                    return null;
+                }
+                resumed = true;
                 return this.resumeTriggerAndAction(damage);
             }
         };
@@ -1040,6 +1045,9 @@ class Game {
             return true;
         }
 
+        if(resumed){
+            return true;
+        }
         const nextTrigger = this.resumeTriggerResolution(damage);
         if(nextTrigger){
             return nextTrigger;
