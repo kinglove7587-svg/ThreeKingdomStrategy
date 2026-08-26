@@ -75,14 +75,18 @@ class Retaliation extends TriggerSkill{
                                 return;
                             }
                             player.game.hideModal();
-                            resolution.resume();
+                            if(resolution){
+                                resolution.resume();
+                            }
                         }
                     },
                     {
                         text: "ยกเลิก", 
                         onClick: () => {
                             player.game.hideModal();
-                            resolution.resume();
+                            if(resolution){
+                                resolution.resume();
+                            }
                         }
                     }
                 ]
