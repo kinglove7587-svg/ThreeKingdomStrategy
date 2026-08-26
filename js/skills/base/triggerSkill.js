@@ -6,8 +6,6 @@ class TriggerSkill extends Skill{
     }
     // ลงทะเบียน Listener สำหรับ Event ที่สกิลนี้ต้องการฟัง
     registerListener(eventManager, eventName, callback){
-        // ลงทะเบียน Event กับ EventManager
-        eventManager.on(eventName, callback);
         // เก็บข้อมูล listener ไว้สำหรับการยกเลิกการลงทะเบียนในอนาคต
         this.listeners.push({
             eventManager, 
@@ -19,11 +17,6 @@ class TriggerSkill extends Skill{
     }
     // ยกเลิกการลงทะเบียน Event ทั้งหมดของสกิลนี้
     unregister(){
-        // วนลูปผ่าน listener ทั้งหมดและยกเลิกการลงทะเบียนแต่ละตัว
-        for (const listener of this.listeners){
-            // ยกเลิกการลงทะเบียน Event กับ EventManager
-            listener.eventManager.off(listener.eventName, listener.callback);
-        }
         // ล้างรายการ listener
         this.listeners = [];
     }
