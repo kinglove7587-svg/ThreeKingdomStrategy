@@ -10,7 +10,11 @@ class TriggerSkill extends Skill{
         eventManager.on(eventName, callback);
         // เก็บข้อมูล listener ไว้สำหรับการยกเลิกการลงทะเบียนในอนาคต
         this.listeners.push({
-            eventManager, eventName, callback
+            eventManager, 
+            eventName, 
+            callback, 
+            skill: this, 
+            owner: this.owner
         });
     }
     // ยกเลิกการลงทะเบียน Event ทั้งหมดของสกิลนี้
