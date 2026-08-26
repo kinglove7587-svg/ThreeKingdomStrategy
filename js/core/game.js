@@ -977,4 +977,21 @@ class Game {
         }
         return result;
     }
+    //
+    processTriggerResolution(damage){
+
+        if(!damage){
+            return null;
+        }
+
+        const queue = this.triggerResolutionQueue;
+        queue.queue = [];
+        queue.current = null;
+        queue.addEventListeners(
+            this.players, 
+            "afterDamage", 
+            damage
+        );
+        return queue.next();
+    }
 }
