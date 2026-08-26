@@ -65,4 +65,52 @@ class TriggerResolutionQueue{
         }
         return count;
     }
+    // จัดเรียง Trigger ในคิวตามลำดับความสำคัญของความเสียหาย (Damage) ที่เกิดขึ้น
+    sortByDamage(damage){
+
+        if(!damage || !damage.target || !damage.source){
+            return this.queue;
+        }
+        // ดึงข้อมูลเกมและดัชนีของผู้เล่น
+        const game = damage.target.game;
+        const targetIndex = game.players.indexOf(damage.target);
+        const sourceIndex = game.players.indexOf(damage.source);
+        const playerCount = game.players.length;
+        // ฟังก์ชันช่วยในการจัดหมวดหมู่ Trigger ตามความสัมพันธ์กับความเสียหาย
+        const getCategory = (trigger) => {
+            if(trigger.owner === damage.target){
+                return 1;
+            }
+            if(trigger.owner === damage.source){
+                return 2;
+            }
+            return 3;
+        };
+        // ฟังก์ชันช่วยในการจัดลำดับผู้เล่นอื่น ๆ ตามความสัมพันธ์กับความเสียหาย
+        const getOtherPlayerOrder = (trigger) => {
+
+            const ownerIndex = game.players.indexOf(trigger.owner);
+            if(ownerIndex === -1){
+                return Number.MAX_SAFE_INTEGER;
+            }
+            return (
+                ownerIndex - sourceIndex + playerCount
+            ) % playerCount;
+        };
+        this.queue.sort((a, b) => {
+
+            const categoryA = getCategory(a);
+            const categoryB = getCategory(b);
+            if(categoryA !== categoryB){
+                return categoryA - categoryB;
+            }
+            if(categoryA !== 3){
+                return 0;
+            }
+            return (
+                getOtherPlayerOrder(a) - getOtherPlayerOrder(b)
+            );
+        });
+        return this.queue;
+    }
 }
