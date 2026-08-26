@@ -28,7 +28,7 @@ class RainingArrowsCard extends TrickCard{
 
             const success = game.askDodge(target);
             if(success){
-                return resolveNextTarget();
+                return resolveTarget();
             }
 
             const damage = new Damage(player, target, 1);
@@ -40,7 +40,7 @@ class RainingArrowsCard extends TrickCard{
             }
             return game.resumeAction();
         };
-        return resolveNextTarget();
+        return resolveTarget();
     }
     // NEW: คำอธิบายความสามารถสำหรับ Tooltip
     getDescription(){
