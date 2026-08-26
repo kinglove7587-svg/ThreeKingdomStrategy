@@ -48,9 +48,6 @@ class KirinBowSkill extends TriggerSkill{
         const resolution = context.resolution;
         // หากผู้เล่นเลือก "ไม่ใช้"
         if(!useSkill){
-            if(resolution){
-                resolution.resume();
-            }
             game.log(player.name + " ไม่ใช้ กิเลนคันธนู");
             if(resolution){
                 resolution.resume();
