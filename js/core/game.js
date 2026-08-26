@@ -1063,7 +1063,7 @@ class Game {
         this.pendingAction = null;
         return action.resume();
     }
-    //
+    // ดำเนิน Trigger และ Action ที่หยุดไว้ต่อ
     resumeTriggerAndAction(damage){
 
         const nextTrigger = this.resumeTriggerResolution(damage);
