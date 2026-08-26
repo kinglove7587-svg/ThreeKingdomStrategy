@@ -18,7 +18,7 @@ class Stauchness extends TriggerSkill{
             player.controller.startTriggerChoice(
                 this, 
                 {
-                    damage: damage;
+                    damage: damage
                 }
             );
         };
