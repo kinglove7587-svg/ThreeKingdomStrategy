@@ -5,7 +5,7 @@ class Stauchness extends TriggerSkill{
     }
     register(eventManager, player){
 
-        const callback = (damage) => {
+        const callback = (damage, resolution) => {
             if(!damage){
                 return;
             }
@@ -21,6 +21,9 @@ class Stauchness extends TriggerSkill{
             content.textContent = 
                 "แฮหัวตุ้นได้รับความเสียหาย " + damage.amount + " หน่วย\nต้องการใช้สกิลหรือไม่ ?";
             content.style.whiteSpace = "pre-line";
+            if(resolution){
+                resolution.wait();
+            }
             player.game.showModal({
                 title: " สกิล Stauchness ทำงาน", 
                 message: "ผู้ตัดสินใจ : " + player.name, 
@@ -40,6 +43,9 @@ class Stauchness extends TriggerSkill{
                                         result.card.suit + " " + 
                                         result.card.number
                                     );
+                                    if(resolution){
+                                        resolution.resume();
+                                    }
                                 }
                             );
                         }
@@ -50,6 +56,9 @@ class Stauchness extends TriggerSkill{
                         onClick: () => {
                             player.game.hideModal();
                             player.game.log(player.name + " ไม่ใช้ Stauchness");
+                            if(resolution){
+                                resolution.resume();
+                            }
                         }
                     }
                 ]
