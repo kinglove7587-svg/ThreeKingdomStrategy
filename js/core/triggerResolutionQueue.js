@@ -38,4 +38,31 @@ class TriggerResolutionQueue{
         return this.current === null && 
             this.queue.length === 0;
     }
+    // รวบรวม Listener ตาม eventName ที่เกิดขึ้น
+    addEventListeners(players, eventName){
+
+        if(!Array.isArray(players) || !eventName){
+            return 0;
+        }
+
+        let count = 0;
+        for(const player of players){
+            if(!player || typeof player.getTriggerSkills !== "function"){
+                continue;
+            }
+            for(const skill of player.getTriggerSkills()){
+                if(!skill.listeners){
+                    continue;
+                }
+                for(const listener of skill.listeners){
+                    if(listener.eventName !== eventName){
+                        continue;
+                    }
+                    this.add(listener);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
 }
