@@ -89,6 +89,7 @@ class Player{
     addSkill(skill){
         // เพิ่มอินสแตนซ์ของสกิลเข้าไปเก็บไว้ในอาร์เรย์ this.skills ของผู้เล่น
         this.skills.push(skill);
+        skill.owner = this;
         // สั่งให้สกิลนั้นๆ ลงทะเบียน register รับฟัง Event กับ eventManager ของเกม โดยแนบออบเจกต์ผู้เล่น this ไปด้วย
         skill.register(this.game.eventManager, this);
     }
