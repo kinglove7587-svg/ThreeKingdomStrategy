@@ -51,6 +51,7 @@ class Retaliation extends TriggerSkill{
                     requiredCount: 1
                 }
             );
+            player.game.log("สกิล Retaliation ของ สุมาอิ้ ทำงาน");
             // เปิด Generic Modal กลางหน้าจอ
             player.game.showModal({
                 type: "cardSelection", 

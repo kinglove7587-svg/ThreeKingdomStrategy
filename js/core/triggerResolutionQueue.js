@@ -4,6 +4,20 @@ class TriggerResolutionQueue{
         // เก็บ Trigger ที่รอการประมวลผล
         this.queue = [];
         this.current = null;
+        this.waiting = false;
+    }
+    // สั่งเข้าสู่สถานะรอการตอบสนองจาก UI/Modal
+    wait(){
+
+        if(!this.current){
+            return false;
+        }
+        this.waiting = true;
+        return true;
+    }
+    // เช็กว่ากำลังรอ UI/Modal อยู่หรือไม่
+    isWaiting(){
+        return this.waiting;
     }
     // เพิ่ม Trigger ลงในคิว
     add(trigger){
@@ -30,6 +44,7 @@ class TriggerResolutionQueue{
     resume(){
 
         this.current = null;
+        this.waiting = false;
         return this.next();
     }
     // ตรวจสอบว่าคิวว่างหรือไม่ (ไม่มี Trigger ปัจจุบันและไม่มี Trigger รออยู่ในคิว)
