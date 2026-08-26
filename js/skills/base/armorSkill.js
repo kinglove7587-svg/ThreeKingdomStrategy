@@ -11,12 +11,11 @@ class ArmorSkill extends TriggerSkill{
             }
             callback(context);
         };
-        // ลงทะเบียน Event และเก็บ Reference ไว้สำหรับ Unregister ในอนาคต
-        eventManager.on(eventName, wrappedCallback);
-        this.listeners.push({
-            eventManager: eventManager, 
-            eventName: eventName, 
-            callback: wrappedCallback
-        });
+        // ใช้ระบบลงทะเบียนของ TriggerSkill เพื่อให้ ArmorSkill เข้า Trigger Queue ด้วย
+        super.registerListener(
+            eventManager, 
+            eventName, 
+            wrappedCallback
+        );
     }
 }
