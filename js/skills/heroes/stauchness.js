@@ -15,12 +15,7 @@ class Stauchness extends TriggerSkill{
             if(damage.amount <= 0){
                 return;
             }
-            player.controller.startTriggerChoice(
-                this, 
-                {
-                    damage: damage
-                }
-            );
+            player.game.log(player.name + " ใช้สกิล Stauchness ");
         };
         this.registerListener(
             eventManager, 
