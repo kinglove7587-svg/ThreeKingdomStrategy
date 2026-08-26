@@ -4,22 +4,43 @@ class RainingArrowsCard extends TrickCard{
     }
     // บังคับให้ผู้เล่นคนอื่นทุกคนทิ้งการ์ดหลบ (Dodge) หากไม่มีจะได้รับ Damage 1 หน่วย
     use(player, game){
-        // วนลูปผู้เล่นทุกคนในเกม
-        for(const target of game.players){
-            // ข้ามผู้เล่นที่เป็นคนใช้การ์ดใบนี้
-            if(target === player){
-                continue;
+
+        const targets = game.players.filter(
+            target => target !== player
+        );
+        let targetIndex = 0;
+        const resolveTarget = () => {
+            while(
+                targetIndex < targets.length && 
+                (
+                    !targets[targetIndex] || 
+                    targets[targetIndex].hp <= 0
+                )
+            ){
+                targetIndex++;
             }
-            // บังคับให้เป้าหมายส่งการ์ด Dodge/หลบ
+            if(targetIndex >= targets.length){
+                return true;
+            }
+
+            const target = targets[targetIndex];
+            targetIndex++;
+
             const success = game.askDodge(target);
-            // หากเป้าหมายไม่มีการ์ด Dodge ตอบรับ ให้ทำ Damage 1 หน่วย
-            if(!success){
-                const damage = new Damage(player, target, 1);
-                damage.card = this;
-                game.damage(damage);
+            if(success){
+                return resolveNextTarget();
             }
-        }
-        return true;
+
+            const damage = new Damage(player, target, 1);
+            damage.card = this;
+            game.pauseAction(resolveTarget);
+            game.damage(damage);
+            if(game.triggerResolutionQueue.isWaiting()){
+                return true;
+            }
+            return game.resumeAction();
+        };
+        return resolveNextTarget();
     }
     // NEW: คำอธิบายความสามารถสำหรับ Tooltip
     getDescription(){
