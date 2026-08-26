@@ -1039,7 +1039,12 @@ class Game {
         if(queue.isWaiting()){
             return true;
         }
-        return this.resumeTriggerResolution(damage);
+
+        const nextTrigger = this.resumeTriggerResolution(damage);
+        if(nextTrigger){
+            return nextTrigger;
+        }
+        return this.resumeAction();
     }
     // หยุด Action ปัจจุบันเพื่อรอการตัดสินใจจาก Modal
     pauseAction(resumeCallback){
