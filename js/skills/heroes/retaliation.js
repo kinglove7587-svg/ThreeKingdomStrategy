@@ -6,7 +6,7 @@ class Retaliation extends TriggerSkill{
     // ลงทะเบียนที่จะทำงานเมื่อผู้เล่นได้รับความเสียหาย
     register(eventManager, player){
 
-        const callback = (damage) => {
+        const callback = (damage, resolution) => {
             // ต้องเป็น Damage ที่สุมาอี้เป็นเป้าหมาย
             if(damage.target !== player){
                 return;
@@ -51,6 +51,9 @@ class Retaliation extends TriggerSkill{
                     requiredCount: 1
                 }
             );
+            if(resolution){
+                resolution.wait();
+            }
             player.game.log("สกิล Retaliation ของ สุมาอิ้ ทำงาน");
             // เปิด Generic Modal กลางหน้าจอ
             player.game.showModal({
@@ -72,12 +75,14 @@ class Retaliation extends TriggerSkill{
                                 return;
                             }
                             player.game.hideModal();
+                            resolution.resume();
                         }
                     },
                     {
                         text: "ยกเลิก", 
                         onClick: () => {
                             player.game.hideModal();
+                            resolution.resume();
                         }
                     }
                 ]
