@@ -15,5 +15,7 @@ class XiahouDun extends Player{
             "ทิ้งการ์ดในมือ 2 ใบ หรือรับความเสียหาย 1 หน่วยจากคุณ";
 
         this.addSkill(new Stauchness());
+
+        this.equipMount(new ShadowrunnerCard("♣️", 7));
     }
 }
