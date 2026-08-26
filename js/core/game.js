@@ -1003,7 +1003,10 @@ class Game {
 
         const queue = this.triggerResolutionQueue;
         const nextTrigger = queue.resume();
-        return nextTrigger;
+        if(!nextTrigger){
+            return null;
+        }
+        return this.runTriggerResolution(nextTrigger, damage);
     }
     // รัน Callback ของ Trigger และส่ง Handlers (resolution) เข้าไปควบคุม State
     runTriggerResolution(trigger, damage){
@@ -1022,6 +1025,9 @@ class Game {
             }
         };
         trigger.callback(damage, resolution);
-        return true;
+        if(queue.isWaiting()){
+            return true;
+        }
+        return this.resumeTriggerResolution(damage);
     }
 }
