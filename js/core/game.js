@@ -507,13 +507,15 @@ class Game {
         this.showDiscardPile();
         
         const judgeResult = new JudgeResult(judgeCard);
+        const judgeContext = {
+            player: player, 
+            card: judgeResult
+        };
         this.eventManager.emit(
             "judgeCardRevealed", 
-            {
-                player: player, 
-                card: judgeResult
-            }
+            judgeContext
         );
+        this.processTriggerResolution(judgeContext);
         // ถ้ามี Modal หรือ Trigger ขอ Pause ให้หยุด Judge ไว้ก่อน
         if(this.pendingJudge){
             // เก็บ Callback ของผู้เรียก game.judge() เดิมไว้สำหรับ Resume
