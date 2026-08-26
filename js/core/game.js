@@ -1085,4 +1085,47 @@ class Game {
         }
         return this.resumeAction();
     }
+    // ประมวลผล Trigger ของสกิลที่ทำงานเมื่อเปิดไพ่เสี่ยงทาย (Judge Card Revealed)
+    processJudgeTriggerResolution(context){
+
+        if(!context){
+            return false;
+        }
+
+        for(const currentPlayer of this.players){
+
+            if(
+                !currentPlayer ||
+                typeof currentPlayer.getTriggerSkills !== "function"
+            ){
+                continue;
+            }
+
+            for(const skill of currentPlayer.getTriggerSkills()){
+
+                if(!skill.listeners){
+                    continue;
+                }
+
+                for(const listener of skill.listeners){
+
+                    if(listener.eventName !== "judgeCardRevealed"){
+                        continue;
+                    }
+
+                    if(typeof listener.callback !== "function"){
+                        continue;
+                    }
+
+                    listener.callback(context);
+
+                    if(this.pendingJudge){
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
 }
