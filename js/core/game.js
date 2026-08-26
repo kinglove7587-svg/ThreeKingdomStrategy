@@ -994,4 +994,15 @@ class Game {
         );
         return queue.next();
     }
+    // ข้าม/ดึง Trigger ถัดไปในคิวออกมาประมวลผลต่อ
+    resumeTriggerResolution(damage){
+
+        if(!damage){
+            return null;
+        }
+
+        const queue = this.triggerResolutionQueue;
+        const nextTrigger = queue.resume();
+        return nextTrigger;
+    }
 }
