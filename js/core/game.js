@@ -37,6 +37,7 @@ class Game {
         this.actionLocked = false;
         this.pendingModal = null;
         this.pendingJudge = null;
+        this.pendingAction = null;
         this.isGameOver = false;
     }
     // รองรับ onComplete / onCancel สำหรับ Generic Modal
@@ -1039,5 +1040,27 @@ class Game {
             return true;
         }
         return this.resumeTriggerResolution(damage);
+    }
+    // หยุด Action ปัจจุบันเพื่อรอการตัดสินใจจาก Modal
+    pauseAction(resumeCallback){
+
+        if(typeof resumeCallback !== "function"){
+            return false;
+        }
+        this.pendingAction = {
+            resume: resumeCallback
+        };
+        return true;
+    }
+    // ดำเนิน Action ที่หยุดไว้ต่อ
+    resumeAction(){
+
+        if(!this.pendingAction){
+            return false;
+        }
+
+        const action = this.pendingAction;
+        this.pendingAction = null;
+        return action.resume();
     }
 }
