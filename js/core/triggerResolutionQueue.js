@@ -39,7 +39,7 @@ class TriggerResolutionQueue{
             this.queue.length === 0;
     }
     // รวบรวม Listener ตาม eventName ที่เกิดขึ้น
-    addEventListeners(players, eventName){
+    addEventListeners(players, eventName, damage = null){
 
         if(!Array.isArray(players) || !eventName){
             return 0;
@@ -62,6 +62,9 @@ class TriggerResolutionQueue{
                     count++;
                 }
             }
+        }
+        if(damage){
+            this.sortByDamage(damage);
         }
         return count;
     }
