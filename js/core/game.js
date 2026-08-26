@@ -977,7 +977,7 @@ class Game {
         }
         return result;
     }
-    //
+    // เริ่มประมวลผล Trigger Queue ตามความเสียหายที่เกิดขึ้น
     processTriggerResolution(damage){
 
         if(!damage){
