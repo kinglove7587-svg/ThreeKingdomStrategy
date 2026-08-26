@@ -1032,7 +1032,7 @@ class Game {
                 return queue.wait();
             }, 
             resume: () => {
-                return this.resumeTriggerResolution(damage);
+                return this.resumeTriggerAndAction(damage);
             }
         };
         trigger.callback(damage, resolution);
@@ -1062,5 +1062,14 @@ class Game {
         const action = this.pendingAction;
         this.pendingAction = null;
         return action.resume();
+    }
+    //
+    resumeTriggerAndAction(damage){
+
+        const nextTrigger = this.resumeTriggerResolution(damage);
+        if(nextTrigger){
+            return nextTrigger;
+        }
+        return this.resumeAction();
     }
 }
