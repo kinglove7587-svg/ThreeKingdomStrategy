@@ -1098,7 +1098,35 @@ class Game {
         if(nextTrigger){
             return nextTrigger;
         }
-        return this.resumeAction();
+
+        const pendingPlayer = this.pendingAction?.player;
+        const hasPendingAction = !!this.pendingAction;
+        const actionResult = hasPendingAction
+            ? this.resumeAction()
+            : true;
+
+        if(this.triggerResolutionQueue.isWaiting()){
+            return true;
+        }
+
+        if(
+            hasPendingAction &&
+            pendingPlayer &&
+            pendingPlayer.controller instanceof HumanController
+        ){
+            this.afterHumanAction(actionResult);
+            return actionResult;
+        }
+
+        if(
+            !hasPendingAction &&
+            damage?.source === this.getCurrentPlayer() &&
+            damage.source.controller instanceof HumanController
+        ){
+            this.afterHumanAction(true);
+        }
+
+        return actionResult;
     }
     // ประมวลผล Trigger ของสกิลที่ทำงานเมื่อเปิดไพ่เสี่ยงทาย (Judge Card Revealed)
     processJudgeTriggerResolution(context){
