@@ -11,7 +11,7 @@ class TwoBladedTridentSkill extends TriggerSkill{
         );
     }
     // ตรวจสอบเงื่อนไขหลังสร้างความเสียหายด้วย SlashCard
-    onAfterDamage(player, damage){
+    onAfterDamage(player, damage, resolution){
         if(!(damage.card instanceof SlashCard)){
             return;
         }
@@ -25,10 +25,14 @@ class TwoBladedTridentSkill extends TriggerSkill{
         }
         
         if(player.controller instanceof HumanController){
+            if(resolution){
+                resolution.wait();
+            }
             player.controller.startTriggerChoice(this, 
                 {
                     damage: damage, 
-                    target: damage.target
+                    target: damage.target, 
+                    resolution: resolution
                 }
             );
         }
