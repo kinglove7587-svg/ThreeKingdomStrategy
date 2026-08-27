@@ -43,9 +43,41 @@ class Stauchness extends TriggerSkill{
                                         result.card.suit + " " + 
                                         result.card.number
                                     );
-                                    if(resolution){
-                                        resolution.resume();
+                                    // ตรวจผล Judge ว่าเป็น ♥️ หรือไม่
+                                    if(result.isHeart()){
+                                        if(resolution){
+                                            resolution.resume();
+                                        }
+                                        return;
                                     }
+                                    // ถ้าไม่ใช่ ♥️ ให้ผู้สร้างความเสียหายเป็นผู้ตัดสินใจ
+                                    const damageSource = damage.source;
+                                    player.game.showModal({
+                                        title: "สกิล Stauchness ทำงาน", 
+                                        message: 
+                                            "ผล จั่ว ไม่ใช่ ♥️\n" + 
+                                            "ผู้ตัดสินใจ : " + damageSource.name, 
+                                        buttons: [
+                                            {
+                                                text: "ทิ้งการ์ด 2 ใบ", 
+                                                onClick: () => {
+                                                    console.log(
+                                                        damageSource.name + 
+                                                        " เลือกการ์ด 2 ใบด้วย Stauchness"
+                                                    );
+                                                }
+                                            },
+                                            {
+                                                text: "รับความเสียหาย 1", 
+                                                onClick: () => {
+                                                    console.log(
+                                                        damageSource.name + 
+                                                        "เลือกรับความเสียหาย 1 จาก Stauchness"
+                                                    );
+                                                }
+                                            }
+                                        ]
+                                    });
                                 }
                             );
                         }
