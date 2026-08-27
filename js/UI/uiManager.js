@@ -188,6 +188,9 @@ class UIManager{
             if(player.delayedTricks.some(card => card instanceof RationsDepletedCard)){
                 status += "<br>❌";
             }
+            if (player.delayedTricks.some(card => card instanceof LeBuSiShuCard)){
+                status += "<br>🍷";
+            }
             //
             const genderIcon = this.getGenderIcon(player.gender);
             const factionIcon = this.getFactionIcon(player.faction);
