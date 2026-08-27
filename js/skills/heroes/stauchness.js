@@ -39,7 +39,7 @@ class Stauchness extends TriggerSkill{
                                 player, 
                                 (result) => {
                                     player.game.log(
-                                        player.name + " Judge Stauchness ได้ " + 
+                                        player.name + " จั่วการ์ดจาก Stauchness ได้ " + 
                                         result.card.suit + " " + 
                                         result.card.number
                                     );
@@ -65,7 +65,7 @@ class Stauchness extends TriggerSkill{
                                                     const content = player.game.ui.createCardSelectionContent(
                                                         damageSource.hand.cards, 
                                                         (selectedCards) => {
-                                                            player.game.log(
+                                                            console.log(
                                                                 damageSource.name + 
                                                                 " เลือกการ์ด Stauchness :", selectedCards
                                                             );
@@ -118,7 +118,23 @@ class Stauchness extends TriggerSkill{
                                                         ]
                                                     });
                                                 }
-                                            },
+                                            }, 
+                                            {
+                                                text: "รับความเสียหาย 1", 
+                                                onClick: () => {
+                                                    player.game.log(damageSource.name + " เลือกรับความเสียหาย 1 จาก Stauchness");
+                                                    player.game.hideModal();
+                                                    // สร้าง Damage ใหม่ โดย Stauchness owner เป็นผู้สร้างความเสียหาย
+                                                    const stauchnessDamage = new Damage(
+                                                        player, 
+                                                        damageSource, 
+                                                        1, 
+                                                        DamageType.NORMAL
+                                                    );
+                                                    // ประมวลผล Damage ใหม่ผ่านระบบ Damage ปกติ
+                                                    player.game.damage(stauchnessDamage);
+                                                }
+                                            }
                                         ]
                                     });
                                 }
