@@ -64,6 +64,7 @@ class TwoBladedTridentSkill extends TriggerSkill{
     }
     // ตรวจสอบว่าเป้าหมายที่สองตรงตามเงื่อนไขหรือไม่ (ระยะห่างทางกายภาพ <= 1 จากเป้าหมายแรก)
     canTriggerTarget(player, target, game, context){
+
         if(!target){
             return false;
         }
@@ -103,6 +104,7 @@ class TwoBladedTridentSkill extends TriggerSkill{
         
         const damage = new Damage(player, context.secondaryTarget, 1);
         damage.card = this;
+        damage.isEffectDamage = true;
 
         game.log(player.name + 
             " ใช้ง้าวสามคม โจมตี " + 
