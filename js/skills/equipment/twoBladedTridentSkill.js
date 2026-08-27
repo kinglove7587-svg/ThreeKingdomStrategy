@@ -39,14 +39,23 @@ class TwoBladedTridentSkill extends TriggerSkill{
     }
     // ประมวลผลคำตอบเมื่อผู้เล่นเลือก "ใช้ / ไม่ใช้" สกิล
     resolveChoice(player, game, context, useSkill){
+        // ดึง resolution ออกจาก context
+        const resolution = context.resolution;
+        // กรณีผู้เล่นเลือก "ไม่ใช้"
         if(!useSkill){
             game.log(player.name + " ไม่ใช้ ง้าวสามคม");
-            return false;
+            if(resolution){
+                resolution.resume();
+            }
+            return true;
         }
         // ถ้ามือไม่มีการ์ด จะไม่สามารถใช้สกิลได้
         if(player.hand.cards.length === 0){
             game.log(player.name + " ไม่มีการ์ดในมือ ไม่สามารถใช้ง้าวสามคม");
-            return false;
+            if(resolution){
+                resolution.resume();
+            }
+            return true;
         }
         
         player.controller.startTriggerCardSelection(this, context);
