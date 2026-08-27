@@ -1087,6 +1087,10 @@ class Game {
         if(nextTrigger){
             return nextTrigger;
         }
+        const actionResult = this.resumeAction();
+        if(this.triggerResolutionQueue.isWaiting()){
+            return true;
+        }
         if(
             damage.source && 
             damage.source === this.getCurrentPlayer() && 
@@ -1094,7 +1098,7 @@ class Game {
         ){
             this.afterHumanAction(true);
         }
-        return this.resumeAction();
+        return actionResult;
     }
     // ประมวลผล Trigger ของสกิลที่ทำงานเมื่อเปิดไพ่เสี่ยงทาย (Judge Card Revealed)
     processJudgeTriggerResolution(context){
