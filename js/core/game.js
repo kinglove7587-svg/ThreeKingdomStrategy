@@ -1065,7 +1065,8 @@ class Game {
             return false;
         }
         this.pendingAction = {
-            resume: resumeCallback
+            resume: resumeCallback, 
+            player: this.getCurrentPlayer()
         };
         return true;
     }
@@ -1087,14 +1088,14 @@ class Game {
         if(nextTrigger){
             return nextTrigger;
         }
+        const pendingPlayer = this.pendingAction?.player;
         const actionResult = this.resumeAction();
         if(this.triggerResolutionQueue.isWaiting()){
             return true;
         }
         if(
-            damage.source && 
-            damage.source === this.getCurrentPlayer() && 
-            damage.source.controller instanceof HumanController
+            pendingPlayer && 
+            pendingPlayer.controller instanceof HumanController
         ){
             this.afterHumanAction(true);
         }
