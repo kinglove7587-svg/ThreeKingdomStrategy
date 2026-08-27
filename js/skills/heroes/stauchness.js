@@ -62,6 +62,7 @@ class Stauchness extends TriggerSkill{
                                             buttons: [
                                                 {
                                                     text: "ทิ้งการ์ด 2 ใบ", 
+                                                    disabled: damageSource.hand.cards.length < 2, 
                                                     onClick: () => {
                                                         // สร้าง Content สำหรับเลือกการ์ด 2 ใบจากมือของ damage.source
                                                         const content = player.game.ui.createCardSelectionContent(

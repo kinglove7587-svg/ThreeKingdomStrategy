@@ -2229,6 +2229,9 @@ class UIManager{
 
             const button = document.createElement("button");
             button.textContent = buttonData.text;
+            if(buttonData.disabled){
+                button.disabled = true;
+            }
             button.onclick = () => {
                 if(typeof buttonData.onClick === "function"){
                     buttonData.onClick();
