@@ -1079,7 +1079,17 @@ class Game {
 
         const action = this.pendingAction;
         this.pendingAction = null;
-        return action.resume();
+        
+        const result = action.resume();
+        if(
+            this.pendingAction === null && 
+            !this.triggerResolutionQueue.isWaiting() && 
+            action.player && 
+            action.player.controller instanceof HumanController
+        ){
+            this.afterHumanAction(result);
+        }
+        return result;
     }
     // ดำเนิน Trigger และ Action ที่หยุดไว้ต่อ
     resumeTriggerAndAction(damage){
@@ -1088,18 +1098,7 @@ class Game {
         if(nextTrigger){
             return nextTrigger;
         }
-        const pendingPlayer = this.pendingAction?.player;
-        const actionResult = this.resumeAction();
-        if(this.triggerResolutionQueue.isWaiting()){
-            return true;
-        }
-        if(
-            pendingPlayer && 
-            pendingPlayer.controller instanceof HumanController
-        ){
-            this.afterHumanAction(true);
-        }
-        return actionResult;
+        return this.resumeAction();
     }
     // ประมวลผล Trigger ของสกิลที่ทำงานเมื่อเปิดไพ่เสี่ยงทาย (Judge Card Revealed)
     processJudgeTriggerResolution(context){
