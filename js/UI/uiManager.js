@@ -409,6 +409,10 @@ class UIManager{
             };
             // กำหนดข้อความบนปุ่มให้แสดงชื่อการ์ด (เช่น "โจมตี", "ยา", "หลบ")
             button.textContent = card.name;
+            if(player.controller.inputState === "waitingTriggerTarget"){
+                button.disabled = this;
+                button.classList.add("disabled-card");
+            }
             // แสดงลำดับการ์ดที่เลือก
             let selectedOrder = null;
             
@@ -924,7 +928,10 @@ class UIManager{
             controller.inputState === "waitingSkillTarget" || 
             controller.inputState === "waitingSkillCard" || 
             controller.inputState === "waitingBurnSource" || 
-            controller.inputState === "waitingBurnCard"
+            controller.inputState === "waitingBurnCard" || 
+            controller.inputState === "waitingTriggerChoice" || 
+            controller.inputState === "waitingTriggerCard" || 
+            controller.inputState === "waitingTriggerTarget"
         ){
             this.endTurnButton.disabled = true;
             return;
