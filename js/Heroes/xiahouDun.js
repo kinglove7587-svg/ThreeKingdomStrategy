@@ -16,6 +16,6 @@ class XiahouDun extends Player{
 
         this.addSkill(new Stauchness());
 
-        this.equipMount(new ShadowrunnerCard("♣️", 7));
+        //this.equipMount(new ShadowrunnerCard("♣️", 7));
     }
 }

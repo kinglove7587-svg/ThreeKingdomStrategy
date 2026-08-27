@@ -112,6 +112,10 @@ class HumanController extends Controller{
         const success = this.playCard(cardIndex, this.selectedTarget);
         // ล้างค่าเป้าหมายที่เลือกไว้ เพื่อป้องกันไม่ให้ข้อมูลเป้าหมายเดิมค้างอยู่ในเทิร์นถัดไป
         this.selectedTarget = null;
+        // เช็กว่ามี Trigger Queue กำลังรอ Modal หรือไม่ก่อน
+        if(this.game.triggerResolutionQueue.isWaiting()){
+            return;
+        }
         // รอ Trigger ที่ต่อจากการ์ดให้จบก่อน
         if(
             this.inputState === "waitingTriggerChoice" || 
