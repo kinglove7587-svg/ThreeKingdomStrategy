@@ -21,7 +21,7 @@ class GodOfWar extends ActiveSkill{
     cardSelectionCount(player, game){
         return 1;
     }
-    // กดยืนยัน
+    // ยืนยัน และ ยกเลิก การ์ด
     waitForCardSelectionConfirmation(player, game){
         return true;
     }
