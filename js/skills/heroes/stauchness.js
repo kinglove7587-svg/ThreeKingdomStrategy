@@ -69,6 +69,25 @@ class Stauchness extends TriggerSkill{
                                                                 damageSource.name + 
                                                                 " เลือกการ์ด Stauchness :", selectedCards
                                                             );
+                                                            // ทิ้งการ์ดที่เลือกทั้ง 2 ใบจากมือของ damage.source
+                                                            for(const card of selectedCards){
+                                                                const index = damageSource.hand.cards.indexOf(card);
+                                                                // ตรวจสอบว่าการ์ดยังอยู่ในมือก่อนทิ้ง
+                                                                if(index === -1){
+                                                                    return;
+                                                                }
+
+                                                                const discardCard = damageSource.hand.removeCard(index);
+                                                                // นำการ์ดที่เลือกลงกองทิ้ง
+                                                                if(discardCard){
+                                                                    player.game.discardPile.addCard(discardCard);
+                                                                }
+                                                            }
+                                                            player.game.log(damageSource.name + " ทิ้งการ์ด 2 ใบด้วย Stauchness");
+                                                            player.game.hideModal();
+                                                            if(resolution){
+                                                                resolution.resume();
+                                                            }
                                                         }, 
                                                         {
                                                             requiredCount: 2
