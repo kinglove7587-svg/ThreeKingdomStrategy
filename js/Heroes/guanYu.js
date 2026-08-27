@@ -10,8 +10,8 @@ class GuanYu extends Player{
 
         this.abilityDescription = 
             "God Of War (เทพสงคราม)\n" + 
-            "คุณสามารถใช้การ์ด ♥️ ใบใดก็ได้ แทนการ์ด [โจมตี]"
+            "คุณสามารถใช้การ์ดที่มี ♥️ ♦️ ใบใดก็ได้ แทนการ์ด [โจมตี]"
 
-        //this.addSkill(new );
+        this.addSkill(new GodOfWar());
     }
 }
