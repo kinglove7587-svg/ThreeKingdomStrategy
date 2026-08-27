@@ -473,7 +473,9 @@ class Game {
             }
             // ส่ง Event หลังเกิด Damage
             this.eventManager.emit("afterDamage", damage);
-
+            if(damage.isEffectDamage){
+                return true;
+            }
             const trigger = this.processTriggerResolution(damage);
             if(trigger){
                 return this.runTriggerResolution(trigger, damage);

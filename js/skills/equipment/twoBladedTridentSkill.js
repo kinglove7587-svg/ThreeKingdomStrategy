@@ -88,6 +88,7 @@ class TwoBladedTridentSkill extends TriggerSkill{
     }
     // ประมวลผลลัพธ์ ทิ้งการ์ดจากมือ และสร้าง Damage 1 แก่เป้าหมายที่สอง
     resolveTriggerTarget(player, game, context){
+        const resolution = context.resolution;
         const cardIndex = player.hand.cards.indexOf(context.card);
         
         if(cardIndex === -1){
@@ -111,8 +112,10 @@ class TwoBladedTridentSkill extends TriggerSkill{
             context.secondaryTarget.name + 
             " เพิ่ม 1 Damage"
         );
-        
         game.damage(damage);
+        if(resolution){
+            resolution.resume();
+        }
         return true;
     }
 }
