@@ -21,9 +21,9 @@ class GodOfWar extends ActiveSkill{
     cardSelectionCount(player, game){
         return 1;
     }
-    // เลือกแล้วใช้ทันที ไม่ต้องกดยืนยัน
+    // กดยืนยัน
     waitForCardSelectionConfirmation(player, game){
-        return false;
+        return true;
     }
     // อนุญาตให้เลือกเฉพาะการ์ดสีแดง
     canSelectSkillCard(player, card, game){
