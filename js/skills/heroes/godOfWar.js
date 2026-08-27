@@ -2,6 +2,8 @@ class GodOfWar extends ActiveSkill{
 
     constructor(){
         super("God Of War");
+        // เก็บการ์ดสีแดงต้นฉบับระหว่างรอเลือกเป้าหมาย
+        this.selectedCard = null;
     }
     // ตรวจสอบว่าสามารถใช้สกิลได้หรือไม่
     canUse(player, game){
@@ -11,11 +13,11 @@ class GodOfWar extends ActiveSkill{
     }
     // ไม่ต้องเลือกเป้าหมายก่อนเลือกการ์ด
     needsTarget(player, game){
-        return false;
+        return this.selectedCard !== null;
     }
     // ต้องเลือกการ์ดจากมือ
     needsCardSelection(player, game){
-        return true;
+        return this.selectedCard === null;
     }
     // เลือกการ์ดเพียง 1 ใบ
     cardSelectionCount(player, game){
@@ -31,6 +33,22 @@ class GodOfWar extends ActiveSkill{
     }
     // ประมวลผล God Of War
     use(player, game){
+        
+        const controller = player.controller;
+        // รอบแรกหลังเลือกการ์ด ให้เก็บการ์ดต้นฉบับไว้
+        if(this.selectedCard === null){
+            // ดึง Index ของการ์ดที่เลือกจาก Active Skill
+            const selectedIndex = controller.selectedSkillCardIndices[0];
+            // ดึงการ์ดจริงจากมือ
+            const selectedCard = player.hand.cards[selectedIndex];
+            if(!selectedCard){
+                return false;
+            }
+            this.selectedCard = selectedCard;
+            controller.inputState = "waitingSkillTarget";
+            game.ui.render();
+            return true;
+        }
         return false;
     }
     getDescription(){
