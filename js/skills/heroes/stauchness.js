@@ -52,94 +52,99 @@ class Stauchness extends TriggerSkill{
                                     }
                                     // ถ้าไม่ใช่ ♥️ ให้ผู้สร้างความเสียหายเป็นผู้ตัดสินใจ
                                     const damageSource = damage.source;
-                                    player.game.showModal({
-                                        title: "สกิล Stauchness ทำงาน", 
-                                        message:  
-                                            "ผู้ตัดสินใจ : " + damageSource.name + 
-                                            "\nผล จั่ว ไม่ใช่ ♥️",
-                                        buttons: [
-                                            {
-                                                text: "ทิ้งการ์ด 2 ใบ", 
-                                                onClick: () => {
-                                                    // สร้าง Content สำหรับเลือกการ์ด 2 ใบจากมือของ damage.source
-                                                    const content = player.game.ui.createCardSelectionContent(
-                                                        damageSource.hand.cards, 
-                                                        (selectedCards) => {
-                                                            console.log(
-                                                                damageSource.name + 
-                                                                " เลือกการ์ด Stauchness :", selectedCards
-                                                            );
-                                                            // ทิ้งการ์ดที่เลือกทั้ง 2 ใบจากมือของ damage.source
-                                                            for(const card of selectedCards){
-                                                                const index = damageSource.hand.cards.indexOf(card);
-                                                                // ตรวจสอบว่าการ์ดยังอยู่ในมือก่อนทิ้ง
-                                                                if(index === -1){
-                                                                    return;
-                                                                }
+                                    // สร้างฟังก์ชันสำหรับเปิด Choice ของ Stauchness
+                                    const showStauchnessChoice = () => {
+                                        player.game.showModal({
+                                            title: "สกิล Stauchness ทำงาน", 
+                                            message:  
+                                                "ผู้ตัดสินใจ : " + damageSource.name + 
+                                                "\nผล จั่ว ไม่ใช่ ♥️",
+                                            buttons: [
+                                                {
+                                                    text: "ทิ้งการ์ด 2 ใบ", 
+                                                    onClick: () => {
+                                                        // สร้าง Content สำหรับเลือกการ์ด 2 ใบจากมือของ damage.source
+                                                        const content = player.game.ui.createCardSelectionContent(
+                                                            damageSource.hand.cards, 
+                                                            (selectedCards) => {
+                                                                console.log(
+                                                                    damageSource.name + 
+                                                                    " เลือกการ์ด Stauchness :", selectedCards
+                                                                );
+                                                                // ทิ้งการ์ดที่เลือกทั้ง 2 ใบจากมือของ damage.source
+                                                                for(const card of selectedCards){
+                                                                    const index = damageSource.hand.cards.indexOf(card);
+                                                                    // ตรวจสอบว่าการ์ดยังอยู่ในมือก่อนทิ้ง
+                                                                    if(index === -1){
+                                                                        return;
+                                                                    }
 
-                                                                const discardCard = damageSource.hand.removeCard(index);
-                                                                // นำการ์ดที่เลือกลงกองทิ้ง
-                                                                if(discardCard){
-                                                                    player.game.discardPile.addCard(discardCard);
+                                                                    const discardCard = damageSource.hand.removeCard(index);
+                                                                    // นำการ์ดที่เลือกลงกองทิ้ง
+                                                                    if(discardCard){
+                                                                        player.game.discardPile.addCard(discardCard);
+                                                                    }
                                                                 }
-                                                            }
-                                                            player.game.log(damageSource.name + " ทิ้งการ์ด 2 ใบด้วย Stauchness");
-                                                            player.game.hideModal();
-                                                            if(resolution){
-                                                                resolution.resume();
-                                                            }
-                                                        }, 
-                                                        {
-                                                            requiredCount: 2
-                                                        }
-                                                    );
-                                                    // เปิด Modal เดิมใหม่ พร้อม Card Selection Content
-                                                    player.game.showModal({
-                                                        title: "สกิล Stauchness ทำงาน", 
-                                                        message: 
-                                                            "ผู้ตัดสินใจ : " + damageSource.name + 
-                                                            "\nเลือกการ์ด 2 ใบเพื่อทิ้ง", 
-                                                        content: content, 
-                                                        buttons: [
-                                                            {
-                                                                text: "ยืนยัน", 
-                                                                onClick: () => {
-                                                                    // ตรวจสอบว่าผู้เล่นเลือกครบ 2 ใบหรือยัง
-                                                                    content.confirmSelection();
+                                                                player.game.log(damageSource.name + " ทิ้งการ์ด 2 ใบด้วย Stauchness");
+                                                                player.game.hideModal();
+                                                                if(resolution){
+                                                                    resolution.resume();
                                                                 }
                                                             }, 
                                                             {
-                                                                text: "ยกเลิก", 
-                                                                onClick: () => {
-                                                                    // ยกเลิกการเลือกและกลับไป Choice เดิม
-                                                                    player.game.hideModal();
-                                                                }
+                                                                requiredCount: 2
                                                             }
-                                                        ]
-                                                    });
-                                                }
-                                            }, 
-                                            {
-                                                text: "รับความเสียหาย 1", 
-                                                onClick: () => {
-                                                    player.game.log(damageSource.name + " เลือกรับความเสียหาย 1 จาก Stauchness");
-                                                    player.game.hideModal();
-                                                    // สร้าง Damage ใหม่ โดย Stauchness owner เป็นผู้สร้างความเสียหาย
-                                                    const stauchnessDamage = new Damage(
-                                                        player, 
-                                                        damageSource, 
-                                                        1, 
-                                                        DamageType.NORMAL
-                                                    );
-                                                    // ประมวลผล Damage ใหม่ผ่านระบบ Damage ปกติ
-                                                    player.game.damage(stauchnessDamage);
-                                                    if(resolution){
-                                                        resolution.resume();
+                                                        );
+                                                        // เปิด Modal เดิมใหม่ พร้อม Card Selection Content
+                                                        player.game.showModal({
+                                                            title: "สกิล Stauchness ทำงาน", 
+                                                            message: 
+                                                                "ผู้ตัดสินใจ : " + damageSource.name + 
+                                                                "\nเลือกการ์ด 2 ใบเพื่อทิ้ง", 
+                                                            content: content, 
+                                                            buttons: [
+                                                                {
+                                                                    text: "ยืนยัน", 
+                                                                    onClick: () => {
+                                                                        // ตรวจสอบว่าผู้เล่นเลือกครบ 2 ใบหรือยัง
+                                                                        content.confirmSelection();
+                                                                    }
+                                                                }, 
+                                                                {
+                                                                    text: "ยกเลิก", 
+                                                                    onClick: () => {
+                                                                        // ยกเลิกการเลือกและกลับไป Choice เดิม
+                                                                        showStauchnessChoice();
+                                                                    }
+                                                                }
+                                                            ]
+                                                        });
+                                                    }
+                                                }, 
+                                                {
+                                                    text: "รับความเสียหาย 1", 
+                                                    onClick: () => {
+                                                        player.game.log(damageSource.name + " เลือกรับความเสียหาย 1 จาก Stauchness");
+                                                        player.game.hideModal();
+                                                        // สร้าง Damage ใหม่ โดย Stauchness owner เป็นผู้สร้างความเสียหาย
+                                                        const stauchnessDamage = new Damage(
+                                                            player, 
+                                                            damageSource, 
+                                                            1, 
+                                                            DamageType.NORMAL
+                                                        );
+                                                        // ประมวลผล Damage ใหม่ผ่านระบบ Damage ปกติ
+                                                        player.game.damage(stauchnessDamage);
+                                                        if(resolution){
+                                                            resolution.resume();
+                                                        }
                                                     }
                                                 }
-                                            }
-                                        ]
-                                    });
+                                            ]
+                                        });
+                                    };
+                                    // เปิด Choice ครั้งแรก
+                                    showStauchnessChoice();
                                 }
                             );
                         }
