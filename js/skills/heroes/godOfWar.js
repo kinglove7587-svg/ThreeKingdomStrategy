@@ -49,7 +49,24 @@ class GodOfWar extends ActiveSkill{
             game.ui.render();
             return true;
         }
-        return false;
+        // รอบที่สองหลังเลือก Target ให้ส่งการ์ดเข้า Slash Flow
+        const target = controller.getSelectedTarget();
+        if(!target){
+            return false;
+        }
+        // สร้าง SlashCard ชั่วคราวจาก Suit และ Number ของการ์ดต้นฉบับ
+        const slashCard = new SlashCard(
+            this.selectedCard.suit,
+            this.selectedCard.number
+        );
+        // เรียก Slash Flow เดิม โดยใช้ Target ที่เลือกไว้
+        const success = slashCard.use(player, game);
+        this.selectedCard = null;
+        // ล้าง Active Skill Selection หลังใช้งาน
+        controller.selectedSkill = null;
+        controller.selectedSkillCardIndex = -1;
+        controller.selectedSkillCardIndices = [];
+        return success;
     }
     getDescription(){
         return "God Of War (เทพสงคราม)\n" +
