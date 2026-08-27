@@ -1087,6 +1087,13 @@ class Game {
         if(nextTrigger){
             return nextTrigger;
         }
+        if(
+            damage.source && 
+            damage.source === this.getCurrentPlayer() && 
+            damage.source.controller instanceof HumanController
+        ){
+            this.afterHumanAction(true);
+        }
         return this.resumeAction();
     }
     // ประมวลผล Trigger ของสกิลที่ทำงานเมื่อเปิดไพ่เสี่ยงทาย (Judge Card Revealed)
