@@ -52,7 +52,7 @@ class KirinBowSkill extends TriggerSkill{
             if(resolution){
                 resolution.resume();
             }
-            return false;
+            return true;
         }
         
         if(!context || !context.target){
