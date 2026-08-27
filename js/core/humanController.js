@@ -1130,6 +1130,8 @@ class HumanController extends Controller{
         
         const skill = this.selectedTriggerSkill;
         const context = this.triggerContext;
+        const originalSkill = skill;
+        const originalContext = context;
         
         if(!skill){
             return;
@@ -1141,6 +1143,23 @@ class HumanController extends Controller{
             context, 
             useSkill
         );
+
+        const sameTrigger = 
+            this.selectedTriggerSkill === originalSkill && 
+            this.triggerContext === originalContext;
+        const queueWaiting = this.game.triggerResolutionQueue.isWaiting();
+        // ล้าง Controller State ทันที หากเป็น Trigger เดิมและ Queue ไม่ได้รอ Trigger อื่นต่อ
+        if(
+            sameTrigger && 
+            this.inputState === "waitingTriggerChoice" && 
+            !queueWaiting
+        ){
+            this.selectedTriggerSkill = null;
+            this.triggerContext = null;
+            this.inputState = "idle";
+            this.selectedCardIndex = -1;
+            this.selectedTarget = null;
+        }
         // Trigger ที่มีขั้นตอนต่อไม่ต้องล้าง State
         if(
             this.inputState === "waitingTriggerChoice" || 
