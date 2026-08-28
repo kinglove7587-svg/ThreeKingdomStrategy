@@ -27,6 +27,10 @@ class GodOfWar extends ActiveSkill{
     waitForCardSelectionConfirmation(player, game){
         return true;
     }
+    // ระบุว่า God Of War ต้องรอยืนยันเป้าหมาย
+    waitForTargetConfirmation(player, game){
+        return true;
+    }
     // อนุญาตให้เลือกเฉพาะการ์ดสีแดง
     canSelectSkillCard(player, card, game){
         return (card.suit === "♥️" || card.suit === "♦️");
