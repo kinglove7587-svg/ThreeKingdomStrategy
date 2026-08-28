@@ -2064,6 +2064,12 @@ class HumanController extends Controller{
         if(skill.name === "God Of War"){
             this.selectedTarget = null;
         }
+        if(skill.name === "God Of War"){
+            if(success){
+                this.discardSelectedGodOfWarCard();
+            }
+            skill.selectedCard = null;
+        }
         // ถ้า Skill ยังมี Flow ต่อ ให้คง State ไว้ก่อน
         if(
             this.game.triggerResolutionQueue.isWaiting() ||
@@ -2083,12 +2089,6 @@ class HumanController extends Controller{
         ){
             this.game.ui.render(); // NEW: รอ Flow ที่ต่ออยู่ก่อน
             return success;
-        }
-        if(success && skill.name === "God Of War"){
-            this.discardSelectedGodOfWarCard();
-        }
-        if(skill.name === "God Of War"){
-            skill.selectedCard = null;
         }
         // หาก Skill ทำงานเสร็จแล้ว ให้ล้าง State ของ Active Skill
         this.selectedSkill = null;
