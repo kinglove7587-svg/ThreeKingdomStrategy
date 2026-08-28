@@ -20,6 +20,9 @@ class BarbarianCard extends TrickCard{
                 targetIndex++;
             }
             if(targetIndex >= targets.length){
+                if(player.controller instanceof HumanController){
+                    game.afterHumanAction(true);
+                }
                 return true;
             }
             const target = targets[targetIndex];
@@ -30,7 +33,7 @@ class BarbarianCard extends TrickCard{
             }
             const damage = new Damage(player, target, 1);
             damage.card = this;
-            game.pauseAction(resolveTarget);
+            game.pauseAction(resolveTarget, false);
             game.damage(damage);
             if(game.triggerResolutionQueue.isWaiting()){
                 return true;
