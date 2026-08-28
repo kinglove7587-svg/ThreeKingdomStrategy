@@ -1065,7 +1065,13 @@ class UIManager{
                     player.controller.inputState === "waitingSkillCard"
                 ) && 
                 player.controller.selectedSkill === skill;
-            button.disabled = this.game.actionLocked && !isCurrentSkill;
+            // ระหว่างเลือก Target ห้ามกดสกิลเดิมซ้ำ
+            const isWaitingSkillTarget = 
+                player.controller.inputState === "waitingSkillTarget" && 
+                player.controller.selectedSkill === skill;
+            button.disabled = isWaitingSkillTarget ||(
+                this.game.actionLocked && !isCurrentSkill
+            );
             button.textContent = "ใช้สกิล " + skill.name;
             // Tooltip สำหรับ Active Skill
             button.onmouseenter = (event) => {
