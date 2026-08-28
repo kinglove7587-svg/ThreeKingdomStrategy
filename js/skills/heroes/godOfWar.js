@@ -26,10 +26,6 @@ class GodOfWar extends ActiveSkill{
     canTarget(player, target){
         return player !== target;
     }
-    // ยืนยัน และ ยกเลิก การ์ด
-    waitForCardSelectionConfirmation(player, game){
-        return true;
-    }
     // ระบุว่า God Of War ต้องรอยืนยันเป้าหมาย
     waitForTargetConfirmation(player, game){
         return true;
@@ -61,6 +57,7 @@ class GodOfWar extends ActiveSkill{
         if(!target){
             return false;
         }
+        game.log(player.name + " ใช้ God Of War");
         // สร้าง SlashCard ชั่วคราวจาก Suit และ Number ของการ์ดต้นฉบับ
         const slashCard = new SlashCard(
             this.selectedCard.suit,

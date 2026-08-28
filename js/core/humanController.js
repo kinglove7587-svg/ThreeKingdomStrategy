@@ -2060,6 +2060,9 @@ class HumanController extends Controller{
         this.inputState = "idle";
         // เรียกใช้ Skill หลังยืนยัน
         const success = skill.use(this.player, this.game);
+        if(skill.name === "God Of War"){
+            this.selectedTarget = null;
+        }
         // ถ้า Skill ยังมี Flow ต่อ ให้คง State ไว้ก่อน
         if(
             this.game.triggerResolutionQueue.isWaiting() ||
