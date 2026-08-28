@@ -908,6 +908,14 @@ class HumanController extends Controller{
         }
         // บันทึกตัวละครเป้าหมายที่เลือกไว้ใน selectedTarget
         this.setSelectedTarget(player);
+        // ถ้าสกิลต้องรอยืนยันเป้าหมาย ให้หยุดรอการยืนยันก่อน Execute
+        if(
+            typeof skill.waitForTargetConfirmation === "function" && 
+            skill.waitForTargetConfirmation(this.player, this.game)
+        ){
+            this.game.ui.render();
+            return;
+        }
         // เช็กด้วย Framework ใหม่: ถ้าสกิลต้องการให้เลือกการ์ดต่อ ให้เปลี่ยนสถานะรอเลือกการ์ด
         if(skill.needsCardSelection(this.player, this.game)){
             this.selectedSkillCardIndices = [];
