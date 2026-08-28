@@ -1943,6 +1943,11 @@ class HumanController extends Controller{
         }
         // เรียกใช้ Skill
         const success = skill.use(this.player, this.game);
+        // ถ้า Skill เปลี่ยนไปสู่ขั้นเลือกเป้าหมาย ให้คง State ของ Skill ไว้
+        if(this.inputState === "waitingSkillTarget"){
+            this.game.ui.render();
+            return success;
+        }
         // ล้าง State หลัง Skill ทำงานเสร็จ
         this.selectedSkill = null;
         this.selectedSkillCardIndex = -1;
