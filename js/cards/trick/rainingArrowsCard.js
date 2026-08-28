@@ -20,9 +20,7 @@ class RainingArrowsCard extends TrickCard{
                 targetIndex++;
             }
             if(targetIndex >= targets.length){
-                if(player.controller instanceof HumanController){
-                    game.afterHumanAction(true);
-                }
+                
                 return true;
             }
 
