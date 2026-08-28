@@ -2060,6 +2060,26 @@ class HumanController extends Controller{
         this.inputState = "idle";
         // เรียกใช้ Skill หลังยืนยัน
         const success = skill.use(this.player, this.game);
+        // ถ้า Skill ยังมี Flow ต่อ ให้คง State ไว้ก่อน
+        if(
+            this.game.triggerResolutionQueue.isWaiting() ||
+            this.inputState === "waitingTriggerChoice" ||
+            this.inputState === "waitingTriggerCard" ||
+            this.inputState === "waitingTriggerTarget" ||
+            this.inputState === "waitingAdditionalTargets" ||
+            this.inputState === "waitingBorrowedSwordTarget" ||
+            this.inputState === "waitingFrostSwordCard" ||
+            this.inputState === "waitingWoodenCartCard" ||
+            this.inputState === "waitingYinYangDiscard" ||
+            this.inputState === "waitingRestAndReorganizationDiscard" ||
+            this.inputState === "waitingStealSource" ||
+            this.inputState === "waitingStealCard" ||
+            this.inputState === "waitingBurnSource" ||
+            this.inputState === "waitingBurnCard"
+        ){
+            this.game.ui.render(); // NEW: รอ Flow ที่ต่ออยู่ก่อน
+            return success;
+        }
         // หาก Skill ทำงานเสร็จแล้ว ให้ล้าง State ของ Active Skill
         this.selectedSkill = null;
         this.selectedSkillCardIndex = -1;

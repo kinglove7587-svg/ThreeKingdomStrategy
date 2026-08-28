@@ -68,11 +68,6 @@ class GodOfWar extends ActiveSkill{
         );
         // เรียก Slash Flow เดิม โดยใช้ Target ที่เลือกไว้
         const success = slashCard.use(player, game);
-        this.selectedCard = null;
-        // ล้าง Active Skill Selection หลังใช้งาน
-        controller.selectedSkill = null;
-        controller.selectedSkillCardIndex = -1;
-        controller.selectedSkillCardIndices = [];
         return success;
     }
     getDescription(){
