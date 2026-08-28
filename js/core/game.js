@@ -1096,7 +1096,6 @@ class Game {
             actionLocked: this.actionLocked
         });
         if(
-            action.autoAfterHumanAction && 
             this.pendingAction === null && 
             !this.triggerResolutionQueue.isWaiting() && 
             action.player && 
