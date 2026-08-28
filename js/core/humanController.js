@@ -142,6 +142,10 @@ class HumanController extends Controller{
         if(this.reactionContext){
             return;
         }
+        // ถ้า Card Flow ภายในจบ Action และปลดล็อกไปแล้ว ไม่ต้องเรียกซ้ำ
+        if(!this.game.actionLocked){
+            return;
+        }
         // ส่งผลลัพธ์ให้ Game จัดการอัปเดตสถานะและหน้าจอถัดไป
         this.game.afterHumanAction(success);
     }
