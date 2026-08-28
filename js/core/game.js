@@ -1112,6 +1112,24 @@ class Game {
             return true;
         }
 
+        if(
+            hasPendingAction &&
+            pendingPlayer &&
+            pendingPlayer.controller instanceof HumanController && 
+            autoAfterHumanAction
+        ){
+            this.afterHumanAction(actionResult);
+            return actionResult;
+        }
+
+        if(
+            !hasPendingAction &&
+            damage?.source === this.getCurrentPlayer() &&
+            damage.source.controller instanceof HumanController
+        ){
+            this.afterHumanAction(true);
+        }
+
         return actionResult;
     }
     // ประมวลผล Trigger ของสกิลที่ทำงานเมื่อเปิดไพ่เสี่ยงทาย (Judge Card Revealed)
