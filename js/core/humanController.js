@@ -2041,5 +2041,32 @@ class HumanController extends Controller{
         this.game.ui.render();
         return true;
     }
+    // ยืนยันเป้าหมายของ Active Skill ก่อนประมวลผล
+    confirmSkillTargetSelection(){
+        // ต้องอยู่ในขั้นตอนรอเลือกเป้าหมายของ Skill เท่านั้น
+        if(this.inputState !== "waitingSkillTarget"){
+            return false;
+        }
+        // ดึง Skill ที่กำลังใช้งานอยู่
+        const skill = this.selectedSkill;
+        if(!skill){
+            return false;
+        }
+        // ต้องเลือกเป้าหมายก่อนจึงจะยืนยันได้
+        if(!this.selectedTarget){
+            return false;
+        }
+        // เปลี่ยนสถานะก่อน Execute
+        this.inputState = "idle";
+        // เรียกใช้ Skill หลังยืนยัน
+        const success = skill.use(this.player, this.game);
+        // หาก Skill ทำงานเสร็จแล้ว ให้ล้าง State ของ Active Skill
+        this.selectedSkill = null;
+        this.selectedSkillCardIndex = -1;
+        this.selectedSkillCardIndices = [];
+        this.selectedTarget = null;
+        this.game.afterHumanAction(success);
+        return success;
+    }
 
 }
