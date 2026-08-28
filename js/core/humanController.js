@@ -2080,6 +2080,10 @@ class HumanController extends Controller{
             this.game.ui.render(); // NEW: รอ Flow ที่ต่ออยู่ก่อน
             return success;
         }
+        // ทิ้งการ์ดต้นฉบับของ God Of War หลัง Execute สำเร็จ
+        if(success && skill.name === "God Of War"){
+            this.discardSelectedGodOfWarCard();
+        }
         // หาก Skill ทำงานเสร็จแล้ว ให้ล้าง State ของ Active Skill
         this.selectedSkill = null;
         this.selectedSkillCardIndex = -1;
