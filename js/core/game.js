@@ -553,11 +553,6 @@ class Game {
     }
     // จัดการผลลัพธ์หลังผู้เล่นมนุษย์ทำ Action (ลงการ์ด)
     afterHumanAction(success){
-        //------------------------
-        console.log("[AHA] CALLED", {
-            success: success,
-            actionLockedBefore: this.actionLocked
-        });
         // Action จบแล้ว ปลดล็อก End Turn
         this.finishAction();
         // ถ้าเกมจบแล้ว ให้หยุดการทำงานทันที
@@ -1087,14 +1082,6 @@ class Game {
         this.pendingAction = null;
         
         const result = action.resume();
-        //-----------------------------
-        console.log("[resumeAction] FINISHED", {
-            result: result,
-            autoAfterHumanAction: action.autoAfterHumanAction,
-            pendingAction: this.pendingAction,
-            triggerWaiting: this.triggerResolutionQueue.isWaiting(),
-            actionLocked: this.actionLocked
-        });
         if(
             action.autoAfterHumanAction && 
             this.pendingAction === null && 
@@ -1108,12 +1095,6 @@ class Game {
     }
     // ดำเนิน Trigger และ Action ที่หยุดไว้ต่อ
     resumeTriggerAndAction(damage){
-        //-------------------
-        console.log("[RTA] ENTER", {
-            pendingAction: !!this.pendingAction,
-            actionLocked: this.actionLocked,
-            triggerWaiting: this.triggerResolutionQueue.isWaiting()
-        });
 
         const nextTrigger = this.resumeTriggerResolution(damage);
         if(nextTrigger){
@@ -1123,28 +1104,9 @@ class Game {
         const pendingPlayer = this.pendingAction?.player;
         const autoAfterHumanAction = this.pendingAction?.autoAfterHumanAction;
         const hasPendingAction = !!this.pendingAction;
-        // debug
-        console.log("[resumeTriggerAndAction] BEFORE resume", {
-            hasPendingAction: hasPendingAction,
-            pendingPlayer: pendingPlayer?.name,
-            autoAfterHumanAction: autoAfterHumanAction,
-            actionLocked: this.actionLocked
-        });
-        //------------------------
-        console.log("[RTA] BEFORE resumeAction", {
-            pendingPlayer: this.pendingAction?.player?.name,
-            autoAfterHumanAction: this.pendingAction?.autoAfterHumanAction
-        });
         const actionResult = hasPendingAction
             ? this.resumeAction()
             : true;
-        //debug
-        console.log("[resumeTriggerAndAction] AFTER resume", {
-            actionResult: actionResult,
-            pendingAction: this.pendingAction,
-            triggerWaiting: this.triggerResolutionQueue.isWaiting(),
-            actionLocked: this.actionLocked
-        });
 
         if(this.triggerResolutionQueue.isWaiting()){
             return true;
