@@ -2501,25 +2501,4 @@ class UIManager{
                 card.number;
         }
     }
-    cancelSkillTargetSelection(){
-        // ต้องอยู่ในขั้นตอนรอเลือกเป้าหมายของ Skill เท่านั้น
-        if(this.inputState !== "waitingSkillTarget"){
-            return false;
-        }
-
-        const skill = this.selectedSkill;
-        // ใช้สำหรับ God Of War เท่านั้น
-        if(!skill || skill.name !== "God Of War"){
-            return false;
-        }
-        
-        this.selectedTarget = null;
-        skill.selectedCard = null;
-        this.selectedSkillCardIndex = -1;
-        this.selectedSkillCardIndices = [];
-        this.inputState = "waitingSkillCard";
-        this.game.ui.render();
-        return true;
-    }
-    
 }
