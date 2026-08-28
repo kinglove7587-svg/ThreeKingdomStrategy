@@ -1102,6 +1102,7 @@ class Game {
         }
 
         const pendingPlayer = this.pendingAction?.player;
+        const autoAfterHumanAction = this.pendingAction?.autoAfterHumanAction;
         const hasPendingAction = !!this.pendingAction;
         const actionResult = hasPendingAction
             ? this.resumeAction()
@@ -1114,7 +1115,8 @@ class Game {
         if(
             hasPendingAction &&
             pendingPlayer &&
-            pendingPlayer.controller instanceof HumanController
+            pendingPlayer.controller instanceof HumanController && 
+            autoAfterHumanAction
         ){
             this.afterHumanAction(actionResult);
             return actionResult;
