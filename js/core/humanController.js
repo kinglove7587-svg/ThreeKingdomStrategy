@@ -2088,7 +2088,7 @@ class HumanController extends Controller{
             this.discardSelectedGodOfWarCard();
         }
         if(skill.name === "God Of War"){
-            this.selectedCard = null;
+            skill.selectedCard = null;
         }
         // หาก Skill ทำงานเสร็จแล้ว ให้ล้าง State ของ Active Skill
         this.selectedSkill = null;
