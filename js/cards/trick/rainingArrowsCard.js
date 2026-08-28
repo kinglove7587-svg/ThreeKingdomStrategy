@@ -20,7 +20,6 @@ class RainingArrowsCard extends TrickCard{
                 targetIndex++;
             }
             if(targetIndex >= targets.length){
-                
                 return true;
             }
 

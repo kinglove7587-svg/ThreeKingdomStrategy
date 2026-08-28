@@ -1115,8 +1115,7 @@ class Game {
         if(
             hasPendingAction &&
             pendingPlayer &&
-            pendingPlayer.controller instanceof HumanController && 
-            autoAfterHumanAction
+            pendingPlayer.controller instanceof HumanController
         ){
             this.afterHumanAction(actionResult);
             return actionResult;
