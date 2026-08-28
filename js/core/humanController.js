@@ -2137,7 +2137,8 @@ class HumanController extends Controller{
         skill.selectedCard = null;
         this.selectedSkillCardIndex = -1;
         this.selectedSkillCardIndices = [];
-        this.inputState = "waitingSkillCard";
+        this.selectedTarget = null;
+        this.inputState = "idle";
         this.game.ui.render();
         return true;
     }
