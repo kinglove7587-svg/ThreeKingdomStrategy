@@ -33,7 +33,7 @@ class RainingArrowsCard extends TrickCard{
 
             const damage = new Damage(player, target, 1);
             damage.card = this;
-            game.pauseAction(resolveTarget);
+            game.pauseAction(resolveTarget, false);
             game.damage(damage);
             if(game.triggerResolutionQueue.isWaiting()){
                 return true;

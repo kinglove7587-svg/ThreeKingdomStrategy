@@ -1059,14 +1059,15 @@ class Game {
         return this.resumeAction();
     }
     // หยุด Action ปัจจุบันเพื่อรอการตัดสินใจจาก Modal
-    pauseAction(resumeCallback){
+    pauseAction(resumeCallback, autoAfterHumanAction = true){
 
         if(typeof resumeCallback !== "function"){
             return false;
         }
         this.pendingAction = {
             resume: resumeCallback, 
-            player: this.getCurrentPlayer()
+            player: this.getCurrentPlayer(), 
+            autoAfterHumanAction: autoAfterHumanAction
         };
         return true;
     }
@@ -1082,6 +1083,7 @@ class Game {
         
         const result = action.resume();
         if(
+            action.autoAfterHumanAction && 
             this.pendingAction === null && 
             !this.triggerResolutionQueue.isWaiting() && 
             action.player && 
