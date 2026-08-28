@@ -1125,7 +1125,8 @@ class Game {
         if(
             !hasPendingAction &&
             damage?.source === this.getCurrentPlayer() &&
-            damage.source.controller instanceof HumanController
+            damage.source.controller instanceof HumanController && 
+            this.actionLocked
         ){
             this.afterHumanAction(true);
         }
