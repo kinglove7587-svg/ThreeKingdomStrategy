@@ -1362,6 +1362,21 @@ class UIManager{
         const status = document.createElement("div");
         status.textContent = message;
         this.controlArea.appendChild(status);
+        // แสดงปุ่มยืนยันสำหรับ Active Skill ที่ต้องยืนยัน Target
+        if(
+            controller.inputState === "waitingSkillTarget" && 
+            controller.selectedSkill && 
+            typeof controller.selectedSkill.waitForTargetConfirmation === "function" && 
+            controller.selectedSkill.waitForTargetConfirmation(player, this.game)
+        ){
+            const confirmButton = document.createElement("button");
+            confirmButton.textContent = "ยืนยัน";
+            confirmButton.disabled = controller.selectedTarget === null;
+            confirmButton.onclick = () => {
+                controller.confirmSkillTargetSelection();
+            };
+            this.controlArea.appendChild(confirmButton);
+        }
     }
     // เมธอดสำหรับจัดการ Event เมื่อมีการคลิกการ์ด
     onCardClick(index){
