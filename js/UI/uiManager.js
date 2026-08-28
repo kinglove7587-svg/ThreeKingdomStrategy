@@ -1382,6 +1382,13 @@ class UIManager{
                 controller.confirmSkillTargetSelection();
             };
             this.controlArea.appendChild(confirmButton);
+            
+            const cancelButton = document.createElement("button");
+            cancelButton.textContent = "ยกเลิก";
+            cancelButton.onclick = () => {
+                controller.cancelSkillSelection();
+            };
+            this.controlArea.appendChild(cancelButton);
         }
     }
     // เมธอดสำหรับจัดการ Event เมื่อมีการคลิกการ์ด
