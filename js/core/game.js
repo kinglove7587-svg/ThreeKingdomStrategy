@@ -1151,28 +1151,6 @@ class Game {
         }
 
         if(
-            hasPendingAction &&
-            pendingPlayer &&
-            pendingPlayer.controller instanceof HumanController
-        ){
-            //--------------
-            console.log("[resumeTriggerAndAction] CALL afterHumanAction", {
-                pendingPlayer: pendingPlayer?.name,
-                isHuman: pendingPlayer?.controller?.isHuman?.(),
-                instanceofHumanController:
-                    pendingPlayer?.controller instanceof HumanController,
-                actionResult: actionResult
-            });
-            console.log("[RTA] CALL afterHumanAction", {
-                hasPendingAction: hasPendingAction,
-                pendingPlayer: pendingPlayer?.name,
-                actionResult: actionResult
-            });
-            this.afterHumanAction(actionResult);
-            return actionResult;
-        }
-
-        if(
             !hasPendingAction &&
             damage?.source === this.getCurrentPlayer() &&
             damage.source.controller instanceof HumanController
