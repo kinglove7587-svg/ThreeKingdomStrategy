@@ -2088,5 +2088,28 @@ class HumanController extends Controller{
         this.game.afterHumanAction(success);
         return success;
     }
+    // ยกเลิกการเลือกเป้าหมายของ Active Skill และกลับไป Play Phase
+    discardSelectedGodOfWarCard(){
+        // Skill ที่กำลังทำงานอยู่
+        const skill = this.selectedSkill;
+        // ตรวจว่าเป็น God Of War และมี Original Card ที่เก็บไว้
+        if(!skill || skill.name !== "God Of War" || !skill.selectedCard){
+            return false;
+        }
+
+        const card = skill.selectedCard;
+        const cardIndex = this.player.hand.cards.indexOf(card);
+        // ถ้าไม่พบการ์ดในมือ ให้ยกเลิก
+        if(cardIndex === -1){
+            return false;
+        }
+
+        const discardCard = this.player.hand.removeCard(cardIndex);
+        if(!discardCard){
+            return false;
+        }
+        this.game.discardPile.addCard(discardCard);
+        return true;
+    }
 
 }
