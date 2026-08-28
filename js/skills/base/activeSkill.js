@@ -35,4 +35,9 @@ class ActiveSkill extends Skill{
     waitForCardSelectionConfirmation(player, game){
         return false;
     }
+    // ระบุว่าสกิลต้องรอการยืนยันหลังเลือกเป้าหมาย
+    waitForTargetConfirmation(player, game){
+        return false;
+    }
+    
 }
