@@ -446,6 +446,8 @@ class UIManager{
             const card = player.hand.cards[i];
             // สร้าง Element ปุ่ม <button> ขึ้นมาใหม่ในหน่วยความจำ
             const button = document.createElement("button");
+            // เปลี่ยนปุ่มการ์ดให้เป็น Hand Card รูปแบบใหม่
+            button.classList.add("hand-card");
             // ระบบ Shift + Hover Tooltip
             button.onmouseenter = (event) => {
 
@@ -480,8 +482,11 @@ class UIManager{
                 this.tooltipHoverCard = null;
                 this.hideCardTooltip();
             };
-            // กำหนดข้อความบนปุ่มให้แสดงชื่อการ์ด (เช่น "โจมตี", "ยา", "หลบ")
-            button.textContent = card.name;
+            // สร้างหน้าตาการ์ดจากข้อมูล Card เดิม
+            button.innerHTML = 
+                "<div class=\"hand-card-suit\">" + card.suit + "</div>" + 
+                "<div class=\"hand-card-name\">" + card.name +  "</div>" + 
+                "<div class=\"hand-card-number\">" + card.number +  "</div>";
             if(player.controller.inputState === "waitingTriggerTarget"){
                 button.disabled = this;
                 button.classList.add("disabled-card");
