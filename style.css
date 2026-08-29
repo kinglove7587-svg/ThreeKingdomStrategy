@@ -616,7 +616,7 @@
     opacity:1;
 }
 
-/* NEW: จัด Icon Status หลายตัว */
+/* NEW: จัด Status แต่ละไอคอนเป็นคนละช่องย่อย */
 #player-area .status-icons{
     width:100%;
 
@@ -626,12 +626,20 @@
 
     flex-wrap:wrap;
 
-    gap:2px;
+    gap:1px;
 
     font-size:14px;
     line-height:1;
+}
 
-    overflow:visible;
+/* NEW: Status แต่ละไอคอน */
+#player-area .status-icon{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    width:auto;
+    flex:none;
 }
 
 /* NEW: ช่องที่มีอุปกรณ์ */

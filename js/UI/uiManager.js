@@ -184,18 +184,18 @@ class UIManager{
                 this.onPlayerClick(player);
             };
             // เก็บ Icon สถานะสำหรับช่อง Status
-            let statusIcon = [];
+            let statusIcons = [];
             if(player.isChained()){
-                statusIcon.push("⛓");
+                statusIcons.push("⛓");
             }
             if(player.delayedTricks.some(card => card instanceof LightningCard)){
-                statusIcon.push("⚡");
+                statusIcons.push("⚡");
             }
             if(player.delayedTricks.some(card => card instanceof RationsDepletedCard)){
-                statusIcon.push("❌");
+                statusIcons.push("❌");
             }
             if (player.delayedTricks.some(card => card instanceof LeBuSiShuCard)){
-                statusIcon.push("🍷");
+                statusIcons.push("🍷");
             }
             //
             const genderIcon = this.getGenderIcon(player.gender);
@@ -233,7 +233,7 @@ class UIManager{
                 "HP : " + 
                 hpHearts + 
                 "</div>" + 
-                this.renderEquipment(player, statusIcon);
+                this.renderEquipment(player, statusIcons);
                 //
                 const nameElement = div.querySelector(".character-name");
                 if(nameElement){
@@ -974,7 +974,7 @@ class UIManager{
         }
     }
     // สร้างข้อความ HTML แสดงผลอุปกรณ์ที่ผู้เล่นกำลังสวมใส่อยู่ (อาวุธ/เกราะ)
-    renderEquipment(player, statusIcon = []){
+    renderEquipment(player, statusIcons = []){
         let text = "";
         // ตรวจสอบว่าผู้เล่นมีการสวมใส่อาวุธอยู่หรือไม่
         text += "<div class=\"equipment-list\">";
@@ -1019,13 +1019,15 @@ class UIManager{
         // status
         text += 
             "<div class=\"equipment-slot status-slot " + 
-            (statusIcon.length > 0 ? "status-active" : "status-empty") + 
+            (statusIcons.length > 0 ? "status-active" : "status-empty") + 
             "\">";
         // แสดงหลาย Status ในช่องเดียว
-        if(statusIcon.length > 0){
+        if(statusIcons.length > 0){
             text += 
                 "<div class=\"status-icon\">" + 
-                statusIcon.join("") + 
+                statusIcons
+                    .map(icon => "<span class=\"status-icon\">" + icon + "</span>") 
+                    .join("") + 
                 "</div>";
         }else{
             text += "✦";
