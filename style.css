@@ -365,7 +365,7 @@
    CHARACTER TABLE AREA
 ========================================================= */
 
-/* NEW: พื้นที่จัดตำแหน่งผู้เล่นรอบโต๊ะ */
+/* NEW: พื้นที่จัดตำแหน่ง Character */
 #player-area{
     position:relative;
 
@@ -428,32 +428,24 @@
 #player-area .table-seat-1{
     grid-column:1;
     grid-row:1;
-
-    box-shadow:0 3px 8px rgba(0,0,0,0.18);
 }
 
 /* NEW: Seat 2 */
 #player-area .table-seat-2{
     grid-column:2;
     grid-row:1;
-
-    box-shadow:0 3px 8px rgba(0,0,0,0.18);
 }
 
 /* NEW: Seat 3 */
 #player-area .table-seat-3{
     grid-column:3;
     grid-row:1;
-
-    box-shadow:0 3px 8px rgba(0,0,0,0.18);
 }
 
 /* NEW: Seat 4 */
 #player-area .table-seat-4{
     grid-column:4;
     grid-row:1;
-
-    box-shadow:0 3px 8px rgba(0,0,0,0.18);
 }
 
 /* NEW: Current Player = Seat 0 */
@@ -581,7 +573,6 @@
     text-align:left;
 }
 
-
 /* NEW: ช่องอุปกรณ์ */
 #player-area .equipment-slot{
     width:100%;
@@ -597,7 +588,6 @@
     text-overflow:ellipsis;
 }
 
-
 /* NEW: อุปกรณ์ที่มีอยู่ */
 #player-area .equipment-slot.equipped-card{
     border:1px solid #b79b78;
@@ -607,7 +597,6 @@
 
     cursor:help;
 }
-
 
 /* NEW: ไม่มีอุปกรณ์ */
 #player-area .equipment-slot:not(.equipped-card){
@@ -619,13 +608,12 @@
    TARGET STATE
 ========================================================= */
 
-/* NEW: เป้าหมายที่ถูกเลือก */
+/* NEW: Character ที่ถูกเลือก */
 #player-area .player-card.selected-target{
     outline:3px solid red;
 }
 
-
-/* NEW: เป้าหมายที่เลือกไม่ได้ */
+/* NEW: Character ที่เลือกไม่ได้ */
 #player-area .player-card.disabled-target{
     opacity:0.45;
 }
@@ -722,7 +710,6 @@
 
     cursor:pointer;
 }
-
 
 /* NEW: Hover End Turn */
 #end-turn:hover{
