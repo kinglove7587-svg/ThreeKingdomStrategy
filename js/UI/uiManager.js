@@ -183,19 +183,37 @@ class UIManager{
             div.onclick = () => {
                 this.onPlayerClick(player);
             };
-            // เก็บ Icon สถานะสำหรับช่อง Status
-            let statusIcons = [];
-            if(player.isChained()){
-                statusIcons.push("⛓");
+            // เก็บข้อมูล Status ที่เป็น Card พร้อมตัว Card จริง
+            let statusItems = [];
+            // Lightning
+            const lightningCard = player.delayedTricks.find(
+                card => card instanceof LightningCard
+            );
+            if(lightningCard){
+                statusItems.push({
+                    icon: "⚡", 
+                    card: lightningCard
+                });
             }
-            if(player.delayedTricks.some(card => card instanceof LightningCard)){
-                statusIcons.push("⚡");
+            // Rations Depleted
+            const rationsCard = player.delayedTricks.find(
+                card => card instanceof RationsDepletedCard
+            );
+            if(rationsCard){
+                statusItems.push({
+                    icon: "❌", 
+                    card: rationsCard
+                });
             }
-            if(player.delayedTricks.some(card => card instanceof RationsDepletedCard)){
-                statusIcons.push("❌");
-            }
-            if (player.delayedTricks.some(card => card instanceof LeBuSiShuCard)){
-                statusIcons.push("🍷");
+            // LeBuSiShu
+            const leBuSiShuCard = player.delayedTricks.find(
+                card => card instanceof LeBuSiShuCard
+            );
+            if(leBuSiShuCard){
+                statusItems.push({
+                    icon: "🍷", 
+                    card: leBuSiShuCard
+                });
             }
             //
             const genderIcon = this.getGenderIcon(player.gender);
@@ -233,7 +251,7 @@ class UIManager{
                 "HP : " + 
                 hpHearts + 
                 "</div>" + 
-                this.renderEquipment(player, statusIcons);
+                this.renderEquipment(player, statusItems);
                 //
                 const nameElement = div.querySelector(".character-name");
                 if(nameElement){
@@ -310,6 +328,34 @@ class UIManager{
                         this.hideCardTooltip();
                     };
                 }
+                // ผูก Card Tooltip ให้ Status ที่เป็น Card
+                const statusElement = div.querySelectorAll(".status-card");
+                statusElement.forEach((statusElement) => {
+                    
+                    const statusIndex = 
+                        Number(statusElement.dataset.statusIndex);
+                    const statusItem = statusItems[statusIndex];
+                    if(!statusItem || !statusItem.card){
+                        return;
+                    }
+                    statusElement.onmouseenter = (event) => {
+                        this.showCardTooltip(
+                            statusItem.card, 
+                            event.clientX, 
+                            event.clientY
+                        );
+                    };
+                    statusElement.onmousemove = (event) => {
+                        this.showCardTooltip(
+                            statusItem.card, 
+                            event.clientX, 
+                            event.clientY
+                        );
+                    };
+                    statusElement.onmouseleave = () => {
+                        this.hideCardTooltip();
+                    };
+                });
             // เช็กว่าถ้าเป็นผู้เล่นคนแรก (index 0) ให้ถือว่าเป็นฝั่งเรา
             /*if (i === 0){
                 // นำ element ไปแสดงในโซน playerArea
@@ -974,7 +1020,7 @@ class UIManager{
         }
     }
     // สร้างข้อความ HTML แสดงผลอุปกรณ์ที่ผู้เล่นกำลังสวมใส่อยู่ (อาวุธ/เกราะ)
-    renderEquipment(player, statusIcons = []){
+    renderEquipment(player, statusItems = []){
         let text = "";
         // ตรวจสอบว่าผู้เล่นมีการสวมใส่อาวุธอยู่หรือไม่
         text += "<div class=\"equipment-list\">";
@@ -1019,14 +1065,19 @@ class UIManager{
         // status
         text += 
             "<div class=\"equipment-slot status-slot " + 
-            (statusIcons.length > 0 ? "status-active" : "status-empty") + 
+            (statusItems.length > 0 ? "status-active" : "status-empty") + 
             "\">";
         // แสดงหลาย Status ในช่องเดียว
-        if(statusIcons.length > 0){
+        if(statusItems.length > 0){
             text += 
                 "<div class=\"status-icons\">" + 
-                statusIcons
-                    .map(icon => "<span class=\"status-icon\">" + icon + "</span>") 
+                statusItems
+                    .map((item, index) => 
+                        "<span class=\"status-icon status-card\" " + 
+                        "data-status-index=\"" + index + "\">" + 
+                        item.icon + 
+                        "</span>"
+                    )
                     .join("") + 
                 "</div>";
         }else{
