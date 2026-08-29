@@ -215,20 +215,26 @@ class UIManager{
                 event.stopPropagation();
                 this.showCharacterTooltip(player);
             };
+            // สร้างหัวใจตาม HP ปัจจุบัน
+            let hpHearts = "";
+            for(let hpIndex = 0; hpIndex < player.maxHp; hpIndex++){
+                hpHearts += hpIndex < player.hp ? "❤️" : "🖤";
+            }
             // กำหนดข้อความ HTML ภายใน div ให้แสดงชื่อ (ตัวหนา) และ พลังชีวิต HP
             div.innerHTML = 
-                "<b>" + 
+                "<div class=\"character-portrait-placeholder\">" + 
+                "portrait" + 
+                "</div>" + 
+                "<div class=\"character-name\">" + 
                 player.name + 
-                " </b> " + 
-                "<br>" + 
-                "HP : " +
-                player.hp + 
-                "/" + 
-                player.maxHp + 
+                "</div>" + 
+                "<div class=\"character-hp\">" + 
+                hpHearts + 
+                "</div>" + 
                 status + 
                 this.renderEquipment(player);
                 //
-                const nameElement = div.querySelector("b");
+                const nameElement = div.querySelector(".character-name");
                 if(nameElement){
                     nameElement.appendChild(infoButton);
                 }

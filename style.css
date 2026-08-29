@@ -578,3 +578,50 @@
 #player-area .equipment-slot:not(.equipped-card){
     opacity:0.75;
 }
+/* =========================
+   Step 4: Character Header
+========================= */
+
+/* NEW: พื้นที่ Portrait ชั่วคราว */
+#player-area .character-portrait-placeholder{
+    width:100%;
+    height:90px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    box-sizing:border-box;
+
+    margin-bottom:8px;
+
+    border:1px dashed #9b8068;
+    border-radius:8px;
+
+    background:rgba(255,255,255,0.35);
+
+    color:#9b8068;
+    font-size:13px;
+}
+
+/* NEW: ชื่อตัวละคร */
+#player-area .character-name{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:4px;
+
+    font-size:18px;
+    font-weight:bold;
+}
+
+/* NEW: HP แบบหัวใจ */
+#player-area .character-hp{
+    margin-top:5px;
+
+    min-height:24px;
+
+    font-size:17px;
+    line-height:1.2;
+}
