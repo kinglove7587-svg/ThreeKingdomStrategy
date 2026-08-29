@@ -622,6 +622,76 @@
 
     min-height:24px;
 
+    display:flex; /* NEW: จัด HP ให้อยู่เป็นกลุ่มเดียว */
+    justify-content:center; /* NEW: จัดให้อยู่ตรงกลาง */
+
     font-size:17px;
     line-height:1.2;
+}
+/* =========================
+   Step 4.1: New Table Seats
+========================= */
+
+/* NEW: พื้นที่จัดที่นั่งผู้เล่น */
+#player-area{
+    position:relative;
+
+    width:100%;
+    height:600px;
+
+    display:grid;
+
+    grid-template-columns:repeat(4, 1fr);
+    grid-template-rows:1fr 1fr;
+
+    align-items:center;
+    justify-items:center;
+
+    box-sizing:border-box;
+}
+
+/* NEW: Character Card ของที่นั่งแต่ละตำแหน่ง */
+#player-area .player-card{
+    position:relative;
+
+    width:180px;
+    min-width:180px;
+
+    min-height:150px;
+
+    margin:0;
+
+    box-sizing:border-box;
+}
+
+/* NEW: Seat 1 */
+#player-area .table-seat-1{
+    grid-column:1;
+    grid-row:1;
+}
+
+/* NEW: Seat 2 */
+#player-area .table-seat-2{
+    grid-column:2;
+    grid-row:1;
+}
+
+/* NEW: Seat 3 */
+#player-area .table-seat-3{
+    grid-column:3;
+    grid-row:1;
+}
+
+/* NEW: Seat 4 */
+#player-area .table-seat-4{
+    grid-column:4;
+    grid-row:1;
+}
+
+/* NEW: Current Player = Seat 0 */
+#player-area .table-seat-0{
+    grid-column:2 / 4;
+    grid-row:2;
+
+    justify-self:center;
 }

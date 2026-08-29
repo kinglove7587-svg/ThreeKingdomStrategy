@@ -222,6 +222,7 @@ class UIManager{
                 player.name + 
                 "</div>" + 
                 "<div class=\"character-hp\">" + 
+                "HP : " + 
                 hpHearts + 
                 "</div>" + 
                 status + 
