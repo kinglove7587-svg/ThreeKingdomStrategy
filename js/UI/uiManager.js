@@ -217,7 +217,7 @@ class UIManager{
             let portraitHtml = "";
             if(player.name === "เล่าปี่"){
                 portraitHtml = 
-                    "<img src=\"assets/portraits/liuBei.png\" alt=\"เล่าปี่\">";
+                    "<img src=\"assets/cards/heroes/liuBei.png\" alt=\"เล่าปี่\">";
             }else{
                 portraitHtml = "portrait";
             }
