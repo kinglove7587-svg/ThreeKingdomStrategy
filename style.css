@@ -626,10 +626,12 @@
 
     flex-wrap:wrap;
 
-    gap:1px;
+    gap:2px;
 
-    font-size:16px;
+    font-size:14px;
     line-height:1;
+
+    overflow:visible;
 }
 
 /* NEW: ช่องที่มีอุปกรณ์ */
