@@ -1024,7 +1024,7 @@ class UIManager{
         // แสดงหลาย Status ในช่องเดียว
         if(statusIcons.length > 0){
             text += 
-                "<div class=\"status-icon\">" + 
+                "<div class=\"status-icons\">" + 
                 statusIcons
                     .map(icon => "<span class=\"status-icon\">" + icon + "</span>") 
                     .join("") + 
