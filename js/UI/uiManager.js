@@ -970,37 +970,41 @@ class UIManager{
     renderEquipment(player){
         let text = "";
         // ตรวจสอบว่าผู้เล่นมีการสวมใส่อาวุธอยู่หรือไม่
+        text += "<div class=\"equipment-list\">";
         if(player.weapon){
-            text += "<br>⚔️ : " + 
-                "<span class=\"equipped-card equipped-weapon\">" + 
-                player.weapon.name + " " +
-                player.weapon.suit + " " +
-                player.weapon.number + 
-                "</span>";
+            text += 
+                "<div class=\"equipment-slot equipped-card equipped-weapon\">" + 
+                "⚔️ " + player.weapon.name + 
+                "</div>";
         }else{
-            text += "<br>⚔️ : ไม่มี";
+            text += 
+                "<div class=\"equipment-slot\">" + 
+                "⚔️ : ไม่มี" + 
+                "</div>";
         }
         // ตรวจสอบว่าผู้เล่นมีการสวมใส่เกราะอยู่หรือไม่
         if(player.armor){
-            text += "<br>🛡️ : " + 
-                "<span class=\"equipped-card equipped-armor\">" + 
-                player.armor.name + " " + 
-                player.armor.suit + " " + 
-                player.armor.number + 
-                "</span>";
+            text += 
+                "<div class=\"equipment-slot equipped-card equipped-armor\">" + 
+                "🛡️ " + player.armor.name + 
+                "</div>";
         }else{
-            text += "<br>🛡️ : ไม่มี";
+            text += 
+                "<div class=\"equipment-slot\">" + 
+                "🛡️ : ไม่มี" + 
+                "</div>";
         }
         //
         if(player.mount){
-            text += "<br>🐎 : " + 
-            "<span class=\"equipped-card equipped-mount\">" + 
-            player.mount.name + " " + 
-            player.mount.suit + " " + 
-            player.mount.number + 
-            "</span>";
+            text += 
+                "<div class=\"equipment-slot equipped-card equipped-mount\">" + 
+                "🐎 " + player.mount.name + 
+                "</div>";
         }else{
-            text += "<br>🐎 : ไม่มี";
+            text += 
+                "<div class=\"equipment-slot\">" + 
+                "🐎 : ไม่มี" + 
+                "</div>";
         }
         return text;
     }

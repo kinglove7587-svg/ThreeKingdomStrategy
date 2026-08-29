@@ -531,3 +531,50 @@
 
     transform:translateY(-50%);
 }
+/* =========================
+   Step 3: Equipment Slots
+========================= */
+
+/* NEW: กลุ่มอุปกรณ์ */
+#player-area .equipment-list{
+    width:100%;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:4px;
+
+    margin-top:8px;
+
+    text-align:left;
+}
+
+/* NEW: ช่องอุปกรณ์แต่ละช่อง */
+#player-area .equipment-slot{
+    width:100%;
+
+    box-sizing:border-box;
+
+    padding:3px 4px;
+
+    text-align:left;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+/* NEW: ทำให้อุปกรณ์ที่มีอยู่ดูเป็นช่อง */
+#player-area .equipment-slot.equipped-card{
+    border:1px solid #b79b78;
+    border-radius:5px;
+
+    background:rgba(255,255,255,0.45);
+
+    cursor:help;
+}
+
+/* NEW: สถานะไม่มีอุปกรณ์ */
+#player-area .equipment-slot:not(.equipped-card){
+    opacity:0.75;
+}
