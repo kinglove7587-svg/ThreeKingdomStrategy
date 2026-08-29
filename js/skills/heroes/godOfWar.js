@@ -24,7 +24,9 @@ class GodOfWar extends ActiveSkill{
         return 1;
     }
     canTarget(player, target){
-        return player !== target;
+        return SlashCard.prototype.canTarget.call(
+            new SlashCard("♠️", 1), player, target
+        );
     }
     // ระบุว่า God Of War ต้องรอยืนยันเป้าหมาย
     waitForTargetConfirmation(player, game){
