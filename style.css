@@ -306,3 +306,167 @@
 
     cursor:pointer;
 }
+/* =========================
+   New Game Table UI
+========================= */
+
+/* NEW: พื้นที่หลักของโต๊ะเกม */
+#game{
+    position:relative;
+
+    width:100%;
+    min-height:100vh;
+
+    box-sizing:border-box;
+
+    padding:20px;
+
+    display:flex;
+    flex-direction:column;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #f7e7c6 0%,
+            #d8b98a 55%,
+            #9b6b3d 100%
+        );
+
+    overflow:hidden;
+}
+
+/* NEW: พื้นที่ตัวละครด้านบน */
+#enemy-area{
+    width:100%;
+
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+
+    gap:40px;
+
+    min-height:150px;
+}
+
+/* NEW: พื้นที่กลางสำหรับตัวละครฝั่งเรา */
+#player-area{
+    width:100%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    gap:40px;
+
+    flex:1;
+}
+
+/* NEW: พื้นที่ Log */
+#log-area{
+    width:100%;
+    max-height:150px;
+
+    box-sizing:border-box;
+
+    margin-top:10px;
+    padding:10px;
+
+    border:2px solid #5b4636;
+    border-radius:10px;
+
+    background:rgba(255,248,220,0.88);
+
+    overflow-y:auto;
+}
+
+/* NEW: พื้นที่การ์ดในมือ */
+#hand-area{
+    width:100%;
+
+    min-height:180px;
+
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+
+    gap:10px;
+
+    padding:15px 10px;
+
+    box-sizing:border-box;
+}
+
+/* NEW: พื้นที่ปุ่ม Action / Skill */
+#control-area{
+    width:100%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    min-height:55px;
+}
+
+/* NEW: ปุ่ม End Turn */
+#end-turn{
+    align-self:center;
+
+    margin-top:10px;
+    margin-bottom:10px;
+
+    padding:10px 24px;
+
+    border:2px solid #5b4636;
+    border-radius:8px;
+
+    background:#fff8dc;
+
+    font-size:16px;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+/* NEW: Hover ปุ่ม End Turn */
+#end-turn:hover{
+    transform:translateY(-2px);
+}
+
+/* NEW: ปรับขนาดพื้นที่ Character Card เดิมให้เข้ากับ Layout ใหม่ */
+.player-card{
+    box-sizing:border-box;
+
+    min-width:130px;
+    min-height:90px;
+
+    padding:10px;
+
+    text-align:center;
+
+    background:rgba(255,248,220,0.92);
+
+    border:2px solid #5b4636;
+
+    border-radius:10px;
+
+    outline:none;
+}
+
+/* NEW: Character ที่ถูกเลือกเป็น Target */
+.player-card.selected-target{
+    outline:3px solid red;
+}
+
+/* NEW: Character ที่เลือกไม่ได้ */
+.player-card.disabled-target{
+    opacity:0.45;
+}
+
+/* NEW: พื้นที่ Modal ต้องไม่ถูกบีบจาก Layout */
+#game-modal-overlay{
+    flex-shrink:0;
+}
