@@ -499,38 +499,6 @@
 
     margin:0;
 }
-
-/* NEW: ผู้เล่นปัจจุบันอยู่ด้านล่าง */
-#player-area .position-bottom{
-    left:50%;
-    bottom:10px;
-
-    transform:translateX(-50%);
-}
-
-/* NEW: ผู้เล่นด้านซ้าย */
-#player-area .position-left{
-    left:20px;
-    top:50%;
-
-    transform:translateY(-50%);
-}
-
-/* NEW: ผู้เล่นด้านบน */
-#player-area .position-top{
-    left:50%;
-    top:10px;
-
-    transform:translateX(-50%);
-}
-
-/* NEW: ผู้เล่นด้านขวา */
-#player-area .position-right{
-    right:20px;
-    top:50%;
-
-    transform:translateY(-50%);
-}
 /* =========================
    Step 3: Equipment Slots
 ========================= */
