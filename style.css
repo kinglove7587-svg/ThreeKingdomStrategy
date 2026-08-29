@@ -695,3 +695,122 @@
 
     justify-self:center;
 }
+/* =========================
+   Step 5: Character Card Polish
+========================= */
+
+/* NEW: ปรับ Character Card ให้เป็นรูปแบบการ์ดเกม */
+#player-area .player-card{
+    width:180px;
+    min-width:180px;
+    min-height:260px;
+
+    padding:10px;
+
+    box-sizing:border-box;
+
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+
+    background:rgba(255,248,220,0.96);
+
+    border:2px solid #5b4636;
+    border-radius:12px;
+
+    box-shadow:0 4px 10px rgba(0,0,0,0.22);
+
+    overflow:hidden;
+}
+
+/* NEW: ช่อง Portrait */
+#player-area .character-portrait-placeholder{
+    width:100%;
+    height:100px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin-bottom:8px;
+
+    box-sizing:border-box;
+
+    border:1px dashed #9b8068;
+    border-radius:8px;
+
+    background:rgba(255,255,255,0.35);
+
+    color:#9b8068;
+    font-size:13px;
+}
+
+/* NEW: ชื่อตัวละคร */
+#player-area .character-name{
+    min-height:26px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:4px;
+
+    font-size:18px;
+    font-weight:bold;
+}
+
+/* NEW: ปุ่ม Character Tooltip */
+#player-area .character-name .character-info-button{
+    width:24px;
+    height:24px;
+
+    padding:0;
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    border:1px solid #9b8068;
+    border-radius:50%;
+
+    background:#fff8dc;
+
+    font-size:13px;
+
+    cursor:pointer;
+}
+
+/* NEW: HP */
+#player-area .character-hp{
+    min-height:26px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin-top:4px;
+
+    font-size:16px;
+    line-height:1.2;
+}
+
+/* NEW: Current Player เด่นกว่า Player อื่น */
+#player-area .table-seat-0{
+    border:3px solid #8b5a2b;
+
+    box-shadow:
+        0 0 0 3px rgba(139,90,43,0.18),
+        0 6px 14px rgba(0,0,0,0.28);
+}
+
+/* NEW: การ์ดผู้เล่นอื่นลดความเด่นเล็กน้อย */
+#player-area .table-seat-1,
+#player-area .table-seat-2,
+#player-area .table-seat-3,
+#player-area .table-seat-4{
+    box-shadow:0 3px 8px rgba(0,0,0,0.18);
+}
+/* NEW: ขยับ Log ขึ้นเล็กน้อยเพื่อเพิ่มระยะจาก Character Card */
+#log-area{
+    transform:translateY(-15px);
+}
