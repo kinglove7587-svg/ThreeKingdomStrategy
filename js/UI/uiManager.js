@@ -245,6 +245,7 @@ class UIManager{
                 portraitHtml + 
                 "</div>" + 
                 "<div class=\"character-name\">" + 
+                (player.isChained() ? "[⛓] " : "") + 
                 player.name + 
                 "</div>" + 
                 "<div class=\"character-hp\">" + 
