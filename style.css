@@ -455,6 +455,8 @@
 
     justify-self:center;
 
+    transform:translateY(60px);
+
     border:3px solid #8b5a2b;
 
     box-shadow:
