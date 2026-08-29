@@ -390,11 +390,10 @@
 
 /* NEW: Character Card */
 #player-area .player-card{
-    position:relative;
+    width:240px; /* NEW: ความกว้าง Character Card */
+    min-width:240px; /* NEW */
 
-    width:220px;
-    min-width:220px;
-    min-height:460px;
+    min-height:0; /* NEW: ไม่บังคับความสูงเกินเนื้อหา */
 
     margin:0;
     padding:10px;
