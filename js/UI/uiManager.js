@@ -183,19 +183,19 @@ class UIManager{
             div.onclick = () => {
                 this.onPlayerClick(player);
             };
-            // กำหนดสถานะ
-            let status = "";
+            // เก็บ Icon สถานะสำหรับช่อง Status
+            let statusIcon = [];
             if(player.isChained()){
-                status += "<br>⛓";
+                statusIcon.push("⛓");
             }
             if(player.delayedTricks.some(card => card instanceof LightningCard)){
-                status += "<br>⚡";
+                statusIcon.push("⚡");
             }
             if(player.delayedTricks.some(card => card instanceof RationsDepletedCard)){
-                status += "<br>❌";
+                statusIcon.push("❌");
             }
             if (player.delayedTricks.some(card => card instanceof LeBuSiShuCard)){
-                status += "<br>🍷";
+                statusIcon.push("🍷");
             }
             //
             const genderIcon = this.getGenderIcon(player.gender);
@@ -233,8 +233,7 @@ class UIManager{
                 "HP : " + 
                 hpHearts + 
                 "</div>" + 
-                status + 
-                this.renderEquipment(player);
+                this.renderEquipment(player, statusIcon);
                 //
                 const nameElement = div.querySelector(".character-name");
                 if(nameElement){
@@ -975,7 +974,7 @@ class UIManager{
         }
     }
     // สร้างข้อความ HTML แสดงผลอุปกรณ์ที่ผู้เล่นกำลังสวมใส่อยู่ (อาวุธ/เกราะ)
-    renderEquipment(player){
+    renderEquipment(player, statusIcon = []){
         let text = "";
         // ตรวจสอบว่าผู้เล่นมีการสวมใส่อาวุธอยู่หรือไม่
         text += "<div class=\"equipment-list\">";
@@ -1017,6 +1016,21 @@ class UIManager{
                 "🐎" + 
                 "</div>";
         }
+        // status
+        text += 
+            "<div class=\"equipment-slot status-slot " + 
+            (statusIcon.length > 0 ? "status-active" : "status-empty") + 
+            "\">";
+        // แสดงหลาย Status ในช่องเดียว
+        if(statusIcon.length > 0){
+            text += 
+                "<div class=\"status-icon\">" + 
+                statusIcon.join("") + 
+                "</div>";
+        }else{
+            text += "✦";
+        }
+        text += "</div>";
         text += "</div>";
         return text;
     }

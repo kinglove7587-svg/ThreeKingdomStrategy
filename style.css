@@ -561,16 +561,18 @@
    EQUIPMENT
 ========================================================= */
 
-/* NEW: อุปกรณ์ 3 ช่องเรียงแนวนอน */
+/* NEW: Equipment 3 ช่อง + Status 1 ช่อง */
 #player-area .equipment-list{
     width:100%;
 
     display:grid;
-    grid-template-columns:repeat(3, 1fr);
+    grid-template-columns:repeat(4, 1fr); /* NEW */
 
     gap:5px;
 
     margin-top:8px;
+
+    text-align:left;
 }
 
 /* NEW: ช่องอุปกรณ์แบบสี่เหลี่ยม */
@@ -594,6 +596,40 @@
     cursor:default;
 
     text-align:center;
+}
+/* NEW: ช่อง Status */
+#player-area .status-slot{
+    cursor:default;
+
+    text-align:center;
+}
+
+/* NEW: Status ที่ยังไม่มี */
+#player-area .status-slot.status-empty{
+    opacity:0.3;
+}
+
+/* NEW: Status ที่มีอยู่ */
+#player-area .status-slot.status-active{
+    background:rgba(255,255,255,0.55);
+
+    opacity:1;
+}
+
+/* NEW: จัด Icon Status หลายตัว */
+#player-area .status-icons{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:1px;
+
+    font-size:16px;
+    line-height:1;
 }
 
 /* NEW: ช่องที่มีอุปกรณ์ */
