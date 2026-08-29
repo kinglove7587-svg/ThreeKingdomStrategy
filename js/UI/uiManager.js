@@ -213,10 +213,18 @@ class UIManager{
             for(let hpIndex = 0; hpIndex < player.maxHp; hpIndex++){
                 hpHearts += hpIndex < player.hp ? "❤️" : "🖤";
             }
+            // เลือก Portrait ตามตัวละคร
+            let portraitHtml = "";
+            if(player.name === "เล่าปี่"){
+                portraitHtml = 
+                    "<img src=\"assets/portraits/liuBei.png\" alt=\"เล่าปี่\">";
+            }else{
+                portraitHtml = "portrait";
+            }
             // กำหนดข้อความ HTML ภายใน div ให้แสดงชื่อ (ตัวหนา) และ พลังชีวิต HP
             div.innerHTML = 
                 "<div class=\"character-portrait-placeholder\">" + 
-                "portrait" + 
+                portraitHtml + 
                 "</div>" + 
                 "<div class=\"character-name\">" + 
                 player.name + 
