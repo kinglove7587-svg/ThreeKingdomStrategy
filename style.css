@@ -562,48 +562,53 @@
    EQUIPMENT
 ========================================================= */
 
-/* NEW: กลุ่มอุปกรณ์ */
+/* NEW: อุปกรณ์ 3 ช่องเรียงแนวนอน */
 #player-area .equipment-list{
     width:100%;
 
-    display:flex;
-    flex-direction:column;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
 
-    gap:4px;
+    gap:5px;
 
     margin-top:8px;
-
-    text-align:left;
 }
 
-/* NEW: ช่องอุปกรณ์ */
+/* NEW: ช่องอุปกรณ์แบบสี่เหลี่ยม */
 #player-area .equipment-slot{
     width:100%;
+    aspect-ratio:1 / 1;
 
     box-sizing:border-box;
 
-    padding:3px 4px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-    text-align:left;
+    padding:0;
 
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+    border:1px solid #b79b78;
+    border-radius:6px;
+
+    font-size:22px;
+
+    cursor:default;
+
+    text-align:center;
 }
 
-/* NEW: อุปกรณ์ที่มีอยู่ */
+/* NEW: ช่องที่มีอุปกรณ์ */
 #player-area .equipment-slot.equipped-card{
-    border:1px solid #b79b78;
-    border-radius:5px;
-
-    background:rgba(255,255,255,0.45);
+    background:rgba(255,255,255,0.55);
 
     cursor:help;
 }
 
-/* NEW: ไม่มีอุปกรณ์ */
-#player-area .equipment-slot:not(.equipped-card){
-    opacity:0.75;
+/* NEW: ช่องที่ยังไม่มีอุปกรณ์ */
+#player-area .equipment-slot.equipment-empty{
+    background:rgba(255,255,255,0.18);
+
+    opacity:0.3;
 }
 
 

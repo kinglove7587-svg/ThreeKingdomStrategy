@@ -981,39 +981,43 @@ class UIManager{
         text += "<div class=\"equipment-list\">";
         if(player.weapon){
             text += 
-                "<div class=\"equipment-slot equipped-card equipped-weapon\">" + 
-                "⚔️ " + player.weapon.name + 
+                "<div class=\"equipment-slot equipped-card equipped-weapon\"" + 
+                " title=\"" + player.weapon.name + "\">" + 
+                "⚔️" + 
                 "</div>";
         }else{
             text += 
-                "<div class=\"equipment-slot\">" + 
-                "⚔️ : ไม่มี" + 
+                "<div class=\"equipment-slot equipment-empty\">" + 
+                "⚔️" + 
                 "</div>";
         }
         // ตรวจสอบว่าผู้เล่นมีการสวมใส่เกราะอยู่หรือไม่
         if(player.armor){
             text += 
-                "<div class=\"equipment-slot equipped-card equipped-armor\">" + 
-                "🛡️ " + player.armor.name + 
+                "<div class=\"equipment-slot equipped-card equipped-armor\"" + 
+                " title=\"" + player.armor.name + "\">" + 
+                "🛡️" + 
                 "</div>";
         }else{
             text += 
-                "<div class=\"equipment-slot\">" + 
-                "🛡️ : ไม่มี" + 
+                "<div class=\"equipment-slot equipment-empty\">" + 
+                "🛡️" + 
                 "</div>";
         }
         //
         if(player.mount){
             text += 
-                "<div class=\"equipment-slot equipped-card equipped-mount\">" + 
-                "🐎 " + player.mount.name + 
+                "<div class=\"equipment-slot equipped-card equipped-mount\"" + 
+                " title=\"" + player.mount.name + "\">" + 
+                "🐎" + 
                 "</div>";
         }else{
             text += 
-                "<div class=\"equipment-slot\">" + 
-                "🐎 : ไม่มี" + 
+                "<div class=\"equipment-slot equipment-empty\">" + 
+                "🐎" + 
                 "</div>";
         }
+        text += "</div>";
         return text;
     }
     // เมธอดสำหรับวาดปุ่มทางเลือกระหว่าง "เล่น" หรือ "Recast" สำหรับการ์ดที่รองรับ
