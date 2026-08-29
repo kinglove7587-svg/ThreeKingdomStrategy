@@ -98,7 +98,7 @@ class UIManager{
             const relativeIndex = 
                 (i - this.game.currentPlayerIndex + playerCount) % playerCount;
             if(relativeIndex === 0){
-                div.classList.add("position-buttom");
+                div.classList.add("position-bottom");
             }else if(relativeIndex === 1){
                 div.classList.add("position-left");
             }else if(relativeIndex === 2){
