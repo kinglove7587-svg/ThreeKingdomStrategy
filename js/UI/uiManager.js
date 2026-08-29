@@ -97,15 +97,8 @@ class UIManager{
             const playerCount = this.game.players.length;
             const relativeIndex = 
                 (i - this.game.currentPlayerIndex + playerCount) % playerCount;
-            if(relativeIndex === 0){
-                div.classList.add("position-bottom");
-            }else if(relativeIndex === 1){
-                div.classList.add("position-left");
-            }else if(relativeIndex === 2){
-                div.classList.add("position-top");
-            }else if(relativeIndex === 3){
-                div.classList.add("position-right");
-            }
+            // กำหนดหมายเลขที่นั่ง โดยผู้เล่นปัจจุบันจะเป็น 0 เสมอ
+            div.classList.add("table-seat-" + relativeIndex);
             // ดึงผู้เล่นปัจจุบัน Controller และตำแหน่งการ์ดที่เลือกอยู่จาก Controller
             const currentPlayer = this.game.getCurrentPlayer();
             const controller = currentPlayer.controller;
