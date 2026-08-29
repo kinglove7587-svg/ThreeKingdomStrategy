@@ -306,9 +306,16 @@
 
     cursor:pointer;
 }
-/* =========================
-   New Game Table UI
-========================= */
+/* =========================================================
+   THREE KINGDOM STRATEGY
+   UI REWORK
+   Character Table + Character Card
+========================================================= */
+
+
+/* =========================================================
+   GAME TABLE
+========================================================= */
 
 /* NEW: พื้นที่หลักของโต๊ะเกม */
 #game{
@@ -335,7 +342,12 @@
     overflow:hidden;
 }
 
-/* NEW: พื้นที่ตัวละครด้านบน */
+
+/* =========================================================
+   ENEMY AREA
+========================================================= */
+
+/* NEW: พื้นที่ด้านบน */
 #enemy-area{
     width:100%;
 
@@ -348,22 +360,285 @@
     min-height:150px;
 }
 
-/* NEW: พื้นที่กลางสำหรับตัวละครฝั่งเรา */
+
+/* =========================================================
+   CHARACTER TABLE AREA
+========================================================= */
+
+/* NEW: พื้นที่จัดตำแหน่งผู้เล่นรอบโต๊ะ */
 #player-area{
+    position:relative;
+
+    width:100%;
+    height:600px;
+
+    display:grid;
+
+    grid-template-columns:repeat(4, 1fr);
+    grid-template-rows:1fr 1fr;
+
+    align-items:center;
+    justify-items:center;
+
+    box-sizing:border-box;
+}
+
+
+/* =========================================================
+   CHARACTER CARD
+========================================================= */
+
+/* NEW: Character Card */
+#player-area .player-card{
+    position:relative;
+
+    width:180px;
+    min-width:180px;
+    min-height:260px;
+
+    margin:0;
+    padding:10px;
+
+    box-sizing:border-box;
+
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+
+    background:rgba(255,248,220,0.96);
+
+    border:2px solid #5b4636;
+    border-radius:12px;
+
+    box-shadow:0 4px 10px rgba(0,0,0,0.22);
+
+    overflow:hidden;
+
+    cursor:pointer;
+
+    text-align:center;
+}
+
+
+/* =========================================================
+   TABLE SEATS
+========================================================= */
+
+/* NEW: Seat 1 */
+#player-area .table-seat-1{
+    grid-column:1;
+    grid-row:1;
+
+    box-shadow:0 3px 8px rgba(0,0,0,0.18);
+}
+
+/* NEW: Seat 2 */
+#player-area .table-seat-2{
+    grid-column:2;
+    grid-row:1;
+
+    box-shadow:0 3px 8px rgba(0,0,0,0.18);
+}
+
+/* NEW: Seat 3 */
+#player-area .table-seat-3{
+    grid-column:3;
+    grid-row:1;
+
+    box-shadow:0 3px 8px rgba(0,0,0,0.18);
+}
+
+/* NEW: Seat 4 */
+#player-area .table-seat-4{
+    grid-column:4;
+    grid-row:1;
+
+    box-shadow:0 3px 8px rgba(0,0,0,0.18);
+}
+
+/* NEW: Current Player = Seat 0 */
+#player-area .table-seat-0{
+    grid-column:2 / 4;
+    grid-row:2;
+
+    justify-self:center;
+
+    border:3px solid #8b5a2b;
+
+    box-shadow:
+        0 0 0 3px rgba(139,90,43,0.18),
+        0 6px 14px rgba(0,0,0,0.28);
+}
+
+
+/* =========================================================
+   PORTRAIT
+========================================================= */
+
+/* NEW: พื้นที่ Portrait ชั่วคราว */
+#player-area .character-portrait-placeholder{
+    width:100%;
+    height:100px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    box-sizing:border-box;
+
+    margin-bottom:8px;
+
+    border:1px dashed #9b8068;
+    border-radius:8px;
+
+    background:rgba(255,255,255,0.35);
+
+    color:#9b8068;
+
+    font-size:13px;
+}
+
+
+/* =========================================================
+   CHARACTER NAME
+========================================================= */
+
+/* NEW: ชื่อตัวละคร */
+#player-area .character-name{
+    min-height:26px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:4px;
+
+    font-size:18px;
+    font-weight:bold;
+}
+
+
+/* =========================================================
+   CHARACTER TOOLTIP BUTTON
+========================================================= */
+
+/* NEW: ปุ่มดูข้อมูลตัวละคร */
+#player-area .character-name .character-info-button{
+    width:24px;
+    height:24px;
+
+    padding:0;
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    border:1px solid #9b8068;
+    border-radius:50%;
+
+    background:#fff8dc;
+
+    font-size:13px;
+
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   HP
+========================================================= */
+
+/* NEW: HP แบบหัวใจ */
+#player-area .character-hp{
+    min-height:26px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin-top:4px;
+
+    font-size:16px;
+    line-height:1.2;
+}
+
+
+/* =========================================================
+   EQUIPMENT
+========================================================= */
+
+/* NEW: กลุ่มอุปกรณ์ */
+#player-area .equipment-list{
     width:100%;
 
     display:flex;
-    justify-content:center;
-    align-items:center;
+    flex-direction:column;
 
-    gap:40px;
+    gap:4px;
 
-    flex:1;
+    margin-top:8px;
+
+    text-align:left;
 }
+
+
+/* NEW: ช่องอุปกรณ์ */
+#player-area .equipment-slot{
+    width:100%;
+
+    box-sizing:border-box;
+
+    padding:3px 4px;
+
+    text-align:left;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+
+/* NEW: อุปกรณ์ที่มีอยู่ */
+#player-area .equipment-slot.equipped-card{
+    border:1px solid #b79b78;
+    border-radius:5px;
+
+    background:rgba(255,255,255,0.45);
+
+    cursor:help;
+}
+
+
+/* NEW: ไม่มีอุปกรณ์ */
+#player-area .equipment-slot:not(.equipped-card){
+    opacity:0.75;
+}
+
+
+/* =========================================================
+   TARGET STATE
+========================================================= */
+
+/* NEW: เป้าหมายที่ถูกเลือก */
+#player-area .player-card.selected-target{
+    outline:3px solid red;
+}
+
+
+/* NEW: เป้าหมายที่เลือกไม่ได้ */
+#player-area .player-card.disabled-target{
+    opacity:0.45;
+}
+
+
+/* =========================================================
+   GAME LOG
+========================================================= */
 
 /* NEW: พื้นที่ Log */
 #log-area{
     width:100%;
+
     max-height:150px;
 
     box-sizing:border-box;
@@ -377,7 +652,14 @@
     background:rgba(255,248,220,0.88);
 
     overflow-y:auto;
+
+    transform:translateY(-15px);
 }
+
+
+/* =========================================================
+   HAND AREA
+========================================================= */
 
 /* NEW: พื้นที่การ์ดในมือ */
 #hand-area{
@@ -396,7 +678,12 @@
     box-sizing:border-box;
 }
 
-/* NEW: พื้นที่ปุ่ม Action / Skill */
+
+/* =========================================================
+   CONTROL AREA
+========================================================= */
+
+/* NEW: พื้นที่ปุ่ม Action */
 #control-area{
     width:100%;
 
@@ -410,6 +697,11 @@
 
     min-height:55px;
 }
+
+
+/* =========================================================
+   END TURN
+========================================================= */
 
 /* NEW: ปุ่ม End Turn */
 #end-turn{
@@ -431,354 +723,18 @@
     cursor:pointer;
 }
 
-/* NEW: Hover ปุ่ม End Turn */
+
+/* NEW: Hover End Turn */
 #end-turn:hover{
     transform:translateY(-2px);
 }
 
-/* NEW: ปรับขนาดพื้นที่ Character Card เดิมให้เข้ากับ Layout ใหม่ */
-.player-card{
-    box-sizing:border-box;
 
-    min-width:130px;
-    min-height:90px;
+/* =========================================================
+   MODAL
+========================================================= */
 
-    padding:10px;
-
-    text-align:center;
-
-    background:rgba(255,248,220,0.92);
-
-    border:2px solid #5b4636;
-
-    border-radius:10px;
-
-    outline:none;
-}
-
-/* NEW: Character ที่ถูกเลือกเป็น Target */
-.player-card.selected-target{
-    outline:3px solid red;
-}
-
-/* NEW: Character ที่เลือกไม่ได้ */
-.player-card.disabled-target{
-    opacity:0.45;
-}
-
-/* NEW: พื้นที่ Modal ต้องไม่ถูกบีบจาก Layout */
+/* NEW: ป้องกัน Modal ถูกบีบจาก Flex Layout */
 #game-modal-overlay{
     flex-shrink:0;
-}
-/* =========================
-   Step 2: Character Table Positions
-========================= */
-
-/* NEW: เปลี่ยนพื้นที่ตัวละครเป็นพื้นที่อิสระสำหรับจัดตำแหน่ง */
-#player-area{
-    position:relative;
-
-    width:100%;
-    height:600px;
-
-    flex:none;
-
-    display:block;
-}
-
-/* NEW: กำหนดตำแหน่งกลางโต๊ะ */
-#player-area .player-card{
-    position:absolute;
-
-    width:150px;
-    min-width:150px;
-
-    min-height:100px;
-
-    box-sizing:border-box;
-
-    margin:0;
-}
-/* =========================
-   Step 3: Equipment Slots
-========================= */
-
-/* NEW: กลุ่มอุปกรณ์ */
-#player-area .equipment-list{
-    width:100%;
-
-    display:flex;
-    flex-direction:column;
-
-    gap:4px;
-
-    margin-top:8px;
-
-    text-align:left;
-}
-
-/* NEW: ช่องอุปกรณ์แต่ละช่อง */
-#player-area .equipment-slot{
-    width:100%;
-
-    box-sizing:border-box;
-
-    padding:3px 4px;
-
-    text-align:left;
-
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-/* NEW: ทำให้อุปกรณ์ที่มีอยู่ดูเป็นช่อง */
-#player-area .equipment-slot.equipped-card{
-    border:1px solid #b79b78;
-    border-radius:5px;
-
-    background:rgba(255,255,255,0.45);
-
-    cursor:help;
-}
-
-/* NEW: สถานะไม่มีอุปกรณ์ */
-#player-area .equipment-slot:not(.equipped-card){
-    opacity:0.75;
-}
-/* =========================
-   Step 4: Character Header
-========================= */
-
-/* NEW: พื้นที่ Portrait ชั่วคราว */
-#player-area .character-portrait-placeholder{
-    width:100%;
-    height:90px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    box-sizing:border-box;
-
-    margin-bottom:8px;
-
-    border:1px dashed #9b8068;
-    border-radius:8px;
-
-    background:rgba(255,255,255,0.35);
-
-    color:#9b8068;
-    font-size:13px;
-}
-
-/* NEW: ชื่อตัวละคร */
-#player-area .character-name{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    gap:4px;
-
-    font-size:18px;
-    font-weight:bold;
-}
-
-/* NEW: HP แบบหัวใจ */
-#player-area .character-hp{
-    margin-top:5px;
-
-    min-height:24px;
-
-    display:flex; /* NEW: จัด HP ให้อยู่เป็นกลุ่มเดียว */
-    justify-content:center; /* NEW: จัดให้อยู่ตรงกลาง */
-
-    font-size:17px;
-    line-height:1.2;
-}
-/* =========================
-   Step 4.1: New Table Seats
-========================= */
-
-/* NEW: พื้นที่จัดที่นั่งผู้เล่น */
-#player-area{
-    position:relative;
-
-    width:100%;
-    height:600px;
-
-    display:grid;
-
-    grid-template-columns:repeat(4, 1fr);
-    grid-template-rows:1fr 1fr;
-
-    align-items:center;
-    justify-items:center;
-
-    box-sizing:border-box;
-}
-
-/* NEW: Character Card ของที่นั่งแต่ละตำแหน่ง */
-#player-area .player-card{
-    position:relative;
-
-    width:180px;
-    min-width:180px;
-
-    min-height:150px;
-
-    margin:0;
-
-    box-sizing:border-box;
-}
-
-/* NEW: Seat 1 */
-#player-area .table-seat-1{
-    grid-column:1;
-    grid-row:1;
-}
-
-/* NEW: Seat 2 */
-#player-area .table-seat-2{
-    grid-column:2;
-    grid-row:1;
-}
-
-/* NEW: Seat 3 */
-#player-area .table-seat-3{
-    grid-column:3;
-    grid-row:1;
-}
-
-/* NEW: Seat 4 */
-#player-area .table-seat-4{
-    grid-column:4;
-    grid-row:1;
-}
-
-/* NEW: Current Player = Seat 0 */
-#player-area .table-seat-0{
-    grid-column:2 / 4;
-    grid-row:2;
-
-    justify-self:center;
-}
-/* =========================
-   Step 5: Character Card Polish
-========================= */
-
-/* NEW: ปรับ Character Card ให้เป็นรูปแบบการ์ดเกม */
-#player-area .player-card{
-    width:180px;
-    min-width:180px;
-    min-height:260px;
-
-    padding:10px;
-
-    box-sizing:border-box;
-
-    display:flex;
-    flex-direction:column;
-    align-items:stretch;
-
-    background:rgba(255,248,220,0.96);
-
-    border:2px solid #5b4636;
-    border-radius:12px;
-
-    box-shadow:0 4px 10px rgba(0,0,0,0.22);
-
-    overflow:hidden;
-}
-
-/* NEW: ช่อง Portrait */
-#player-area .character-portrait-placeholder{
-    width:100%;
-    height:100px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    margin-bottom:8px;
-
-    box-sizing:border-box;
-
-    border:1px dashed #9b8068;
-    border-radius:8px;
-
-    background:rgba(255,255,255,0.35);
-
-    color:#9b8068;
-    font-size:13px;
-}
-
-/* NEW: ชื่อตัวละคร */
-#player-area .character-name{
-    min-height:26px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    gap:4px;
-
-    font-size:18px;
-    font-weight:bold;
-}
-
-/* NEW: ปุ่ม Character Tooltip */
-#player-area .character-name .character-info-button{
-    width:24px;
-    height:24px;
-
-    padding:0;
-
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-
-    border:1px solid #9b8068;
-    border-radius:50%;
-
-    background:#fff8dc;
-
-    font-size:13px;
-
-    cursor:pointer;
-}
-
-/* NEW: HP */
-#player-area .character-hp{
-    min-height:26px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    margin-top:4px;
-
-    font-size:16px;
-    line-height:1.2;
-}
-
-/* NEW: Current Player เด่นกว่า Player อื่น */
-#player-area .table-seat-0{
-    border:3px solid #8b5a2b;
-
-    box-shadow:
-        0 0 0 3px rgba(139,90,43,0.18),
-        0 6px 14px rgba(0,0,0,0.28);
-}
-
-/* NEW: การ์ดผู้เล่นอื่นลดความเด่นเล็กน้อย */
-#player-area .table-seat-1,
-#player-area .table-seat-2,
-#player-area .table-seat-3,
-#player-area .table-seat-4{
-    box-shadow:0 3px 8px rgba(0,0,0,0.18);
-}
-/* NEW: ขยับ Log ขึ้นเล็กน้อยเพื่อเพิ่มระยะจาก Character Card */
-#log-area{
-    transform:translateY(-15px);
 }
