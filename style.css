@@ -566,13 +566,16 @@
     width:100%;
 
     display:grid;
-    grid-template-columns:repeat(4, 1fr); /* NEW */
+    grid-template-columns:repeat(4, 1fr);
 
     gap:5px;
 
     margin-top:8px;
 
     text-align:left;
+
+    position:relative; /* NEW: กำหนด Layer */
+    z-index:10; /* NEW: ให้อุปกรณ์อยู่เหนือ Hand */
 }
 
 /* NEW: ช่องอุปกรณ์แบบสี่เหลี่ยม */
@@ -704,23 +707,14 @@
 
 /* NEW: แยก Hand ออกจาก Character Area */
 #hand-area{
-    width:100%;
-
-    min-height:190px;
-
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-
-    gap:10px;
-
-    padding:50px 10px 10px; /* NEW: เว้นระยะจาก Character Card เพิ่ม */
-
-    box-sizing:border-box;
-
     position:relative;
-
     z-index:5;
+
+    pointer-events:none; /* NEW */
+}
+
+#hand-area .hand-card{
+    pointer-events:auto; /* NEW */
 }
 
 
