@@ -706,7 +706,7 @@
 #hand-area{
     width:100%;
 
-    min-height:190px;
+    min-height:210px;
 
     display:flex;
     justify-content:center;
@@ -728,7 +728,7 @@
 
     left:0;
     right:0;
-    bottom:-18px;
+    bottom:-34px;
 
     width:100%;
 
@@ -739,7 +739,7 @@
 
     text-align:center;
 
-    font-size:14px;
+    font-size:15px;
     font-weight:bold;
 
     line-height:1.4;
