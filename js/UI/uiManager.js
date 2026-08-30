@@ -589,10 +589,11 @@ class UIManager{
             }
 
             if(selectedOrder !== null){
-                button.textContent = 
-                    "①②③④⑤".charAt(selectedOrder - 1) + 
-                    " " + card.name;
-                
+                const orderBadge = document.createElement("span");
+                orderBadge.classList.add("hand-card-order-badge");
+                orderBadge.textContent = 
+                    "①②③④⑤".charAt(selectedOrder - 1);
+                button.appendChild(orderBadge);
                 button.classList.add("selected-card");
             }
             //  กำหนด Event Handler เมื่อมีการคลิกที่ปุ่มการ์ดบนหน้า HTML
