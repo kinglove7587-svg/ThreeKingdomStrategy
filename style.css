@@ -722,12 +722,20 @@
 
     z-index:5;
 }
-/* NEW: ข้อความสถานะการเลือกการ์ด */
-#hand-area > div{
-    flex-basis:100%;
+/* NEW: แถบสถานะการเลือกการ์ดให้อยู่ใต้ Hand */
+#hand-area > div:not(.hand-card){
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:0;
+
     width:100%;
 
-    margin-top:8px;
+    margin:0;
+    padding:4px 10px;
+
+    box-sizing:border-box;
 
     text-align:center;
 
