@@ -495,12 +495,25 @@ class UIManager{
                         card.number + 
                     "</div>" + 
                 "</div>" + 
-                "<div class=\"hand-card-name\">" + 
+                "<div class=\"hand-card-name\" data-card-name>" + 
                     card.name + 
                 "</div>";
             if(player.controller.inputState === "waitingTriggerTarget"){
-                button.disabled = this;
+                button.disabled = true;
                 button.classList.add("disabled-card");
+            }
+            // ปรับขนาดชื่อการ์ดอัตโนมัติเมื่อข้อความยาวเกินพื้นที่
+            const nameElement = button.querySelector("[data-card-name]");
+            if(nameElement){
+                let fontSize = 17;
+                nameElement.style.fontSize = fontSize + "px";
+                while(
+                    nameElement.scrollHeight > nameElement.clientHeight && 
+                    fontSize > 12
+                ){
+                    fontSize -= 1;
+                    nameElement.style.fontSize = fontSize + "px";
+                }
             }
             // แสดงลำดับการ์ดที่เลือก
             let selectedOrder = null;

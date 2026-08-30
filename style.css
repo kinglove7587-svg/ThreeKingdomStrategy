@@ -857,9 +857,12 @@
     line-height:1;
 }
 
-/* NEW: จัดพื้นที่ชื่อการ์ดให้เป็นจุดเด่นของใบ */
+/* NEW: พื้นที่ชื่อการ์ด */
 #hand-area .hand-card-name{
     flex:1;
+
+    min-height:0;
+    max-height:54px; /* NEW: จำกัดพื้นที่ชื่อ */
 
     display:flex;
     align-items:center;
@@ -877,6 +880,8 @@
     word-break:break-word;
 
     text-align:center;
+
+    overflow:hidden; /* NEW: ป้องกันชื่อดัน Card */
 }
 /* NEW: เส้นแบ่งข้อมูลด้านบนกับชื่อการ์ด */
 #hand-area .hand-card-name::before{
