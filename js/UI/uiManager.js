@@ -1503,8 +1503,9 @@ class UIManager{
         }
 
         const status = document.createElement("div");
+        status.classList.add("target-selection-status");
         status.textContent = message;
-        this.controlArea.appendChild(status);
+        this.handArea.appendChild(status);
         // แสดงปุ่มยืนยันสำหรับ Active Skill ที่ต้องยืนยัน Target
         if(
             controller.inputState === "waitingSkillTarget" && 

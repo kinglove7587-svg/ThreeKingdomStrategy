@@ -1060,3 +1060,29 @@
 
     cursor:not-allowed;
 }
+/* NEW: ข้อความสถานะตอนเลือก Target */
+#hand-area .target-selection-status{
+    position:absolute;
+
+    left:0;
+    right:0;
+
+    top:220px; /* NEW: ใต้พื้นที่การ์ด */
+
+    width:100%;
+
+    padding:4px 10px;
+
+    box-sizing:border-box;
+
+    text-align:center;
+
+    font-size:15px;
+    font-weight:bold;
+
+    line-height:1.4;
+
+    z-index:6;
+
+    pointer-events:none;
+}
