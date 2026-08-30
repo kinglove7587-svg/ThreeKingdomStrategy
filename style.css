@@ -722,17 +722,15 @@
 
     z-index:5;
 }
-/* NEW: แถบสถานะการเลือกการ์ดให้อยู่ใต้ Hand */
+/* NEW: สถานะการเลือกการ์ดอยู่ใต้แถวไพ่ */
 #hand-area > div:not(.hand-card){
-    position:absolute;
+    position:static; /* NEW */
 
-    left:0;
-    right:0;
-    bottom:-34px;
-
+    flex-basis:100%; /* NEW */
     width:100%;
 
-    margin:0;
+    margin-top:10px; /* NEW */
+
     padding:4px 10px;
 
     box-sizing:border-box;
@@ -743,6 +741,8 @@
     font-weight:bold;
 
     line-height:1.4;
+
+    order:2; /* NEW */
 }
 
 /* =========================================================
