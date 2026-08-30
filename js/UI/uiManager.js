@@ -487,6 +487,11 @@ class UIManager{
                 (card.suit === "♥️" || card.suit === "♦️")
                     ? "suit-red" 
                     : "suit-black";
+            // แปลง Type สำหรับแสดงผลบน Hand Card
+            let cardTypeLabel = card.type;
+            if(card.type === "DeleayedTrick"){
+                cardTypeLabel = "Delayed";
+            }
             // แสดงดอกและเลขไว้ด้านบนซ้าย
             button.innerHTML =
                 "<div class=\"hand-card-header\">" +
@@ -499,6 +504,9 @@ class UIManager{
                 "</div>" +
                 "<div class=\"hand-card-name\" data-card-name>" +
                     card.name +
+                "</div>" + 
+                "<div class=\"hand-card-type\">" + 
+                    cardTypeLabel + 
                 "</div>";
             if(player.controller.inputState === "waitingTriggerTarget"){
                 button.disabled = true;

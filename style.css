@@ -891,6 +891,28 @@
 
     overflow:hidden; /* NEW: ป้องกันชื่อดัน Card */
 }
+/* NEW: ประเภทการ์ดด้านล่าง */
+#hand-area .hand-card-type{
+    min-height:18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin-top:4px;
+
+    font-size:11px;
+    font-weight:bold;
+
+    line-height:1;
+
+    opacity:0.7;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
 /* NEW: เส้นแบ่งข้อมูลด้านบนกับชื่อการ์ด */
 #hand-area .hand-card-name::before{
     content:"";
