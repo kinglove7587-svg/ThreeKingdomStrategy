@@ -945,6 +945,8 @@
     box-shadow:
         inset 0 0 0 1px rgba(255,255,255,0.7),
         0 6px 14px rgba(0,0,0,0.28);
+    
+    z-index:9;
 }
 
 /* NEW: Selected ให้มีขอบเด่น + ขอบด้านใน */
