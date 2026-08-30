@@ -900,19 +900,28 @@
     justify-content:center;
 
     margin-top:4px;
+    padding:2px 6px;
+
+    box-sizing:border-box;
+
+    border:1px solid #8b7764;
+    border-radius:3px;
+
+    background:rgba(255,255,255,0.55);
 
     font-size:11px;
     font-weight:bold;
 
     line-height:1;
 
-    opacity:0.7;
+    opacity:0.85;
 
     white-space:nowrap;
 
     overflow:hidden;
     text-overflow:ellipsis;
 }
+
 /* NEW: เส้นแบ่งข้อมูลด้านบนกับชื่อการ์ด */
 #hand-area .hand-card-name::before{
     content:"";

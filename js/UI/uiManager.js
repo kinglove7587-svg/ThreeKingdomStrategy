@@ -490,7 +490,7 @@ class UIManager{
             // แปลง Type สำหรับแสดงผลบน Hand Card
             let cardTypeLabel = card.type;
             if(card.type === "DeleayedTrick"){
-                cardTypeLabel = "Delayed";
+                cardTypeLabel = "Delayed Trick";
             }
             // แสดงดอกและเลขไว้ด้านบนซ้าย
             button.innerHTML =
