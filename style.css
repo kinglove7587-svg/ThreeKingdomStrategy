@@ -862,20 +862,23 @@
     line-height:1;
 }
 
-/* NEW: Hover */
+/* NEW: Hover การ์ด */
 #hand-area .hand-card:hover{
-    transform:translateY(-8px);
+    transform:translateY(-10px);
 
-    box-shadow:0 6px 12px rgba(0,0,0,0.28);
+    box-shadow:
+        0 6px 14px rgba(0,0,0,0.28);
 }
 
 /* NEW: การ์ดที่เลือก */
 #hand-area .hand-card.selected-card{
-    transform:translateY(-15px);
+    transform:translateY(-18px);
 
     box-shadow:
         0 0 0 3px rgba(139,90,43,0.25),
-        0 8px 14px rgba(0,0,0,0.28);
+        0 8px 16px rgba(0,0,0,0.30);
+
+    z-index:10;
 }
 
 /* NEW: การ์ดที่ถูกปิดการใช้งาน */
