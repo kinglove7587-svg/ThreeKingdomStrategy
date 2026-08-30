@@ -817,7 +817,10 @@
 
     background:#fff8dc;
 
-    box-shadow:0 3px 8px rgba(0,0,0,0.22);
+    /* NEW: เพิ่มขอบด้านใน + Shadow ภายนอก */
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.7),
+        0 3px 8px rgba(0,0,0,0.22);
 
     cursor:pointer;
 
@@ -899,19 +902,21 @@
     pointer-events:none;
 }
 
-/* NEW: Hover การ์ด */
+/* NEW: Hover ให้ยังคงเห็นขอบด้านใน */
 #hand-area .hand-card:hover{
     transform:translateY(-10px);
 
     box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.7),
         0 6px 14px rgba(0,0,0,0.28);
 }
 
-/* NEW: การ์ดที่เลือก */
+/* NEW: Selected ให้มีขอบเด่น + ขอบด้านใน */
 #hand-area .hand-card.selected-card{
     transform:translateY(-18px);
 
     box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.7),
         0 0 0 3px rgba(139,90,43,0.25),
         0 8px 16px rgba(0,0,0,0.30);
 
