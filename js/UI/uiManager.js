@@ -1403,6 +1403,7 @@ class UIManager{
         }
 
         const status = document.createElement("div");
+        status.classList.add("card-selection-status");
         // Skill แบบ Batch Selection
         if(
             controller.selectedSkill && 
@@ -1503,7 +1504,6 @@ class UIManager{
         }
 
         const status = document.createElement("div");
-        status.classList.add("card-selection-status");
         status.classList.add("target-selection-status");
         status.textContent = message;
         this.handArea.appendChild(status);
