@@ -742,6 +742,52 @@
 
     min-height:55px;
 }
+/* NEW: ปุ่ม Action ใน Control Area */
+#control-area button{
+    min-width:110px;
+
+    padding:8px 14px;
+
+    box-sizing:border-box;
+
+    border:2px solid #5b4636;
+    border-radius:8px;
+
+    background:#fff8dc;
+
+    color:#222;
+
+    font-size:14px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 2px 5px rgba(0,0,0,0.18);
+
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease;
+}
+
+/* NEW: Hover ปุ่ม Action */
+#control-area button:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 4px 8px rgba(0,0,0,0.22);
+}
+
+/* NEW: ปุ่มที่กดไม่ได้ */
+#control-area button:disabled{
+    opacity:0.45;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+    box-shadow:none;
+}
 
 
 /* =========================================================

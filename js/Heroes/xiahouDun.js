@@ -17,6 +17,6 @@ class XiahouDun extends Player{
 
         this.addSkill(new Stauchness());
 
-        this.hand.addCard(new RainingArrowsCard("♣️", 7));
+        //this.hand.addCard(new RainingArrowsCard("♣️", 7));
     }
 }
