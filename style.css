@@ -722,14 +722,15 @@
 
     z-index:5;
 }
-/* NEW: สถานะการเลือกการ์ดอยู่ใต้แถวไพ่ */
-#hand-area > div:not(.hand-card){
+/* NEW: สถานะการเลือกการ์ดและ Target อยู่ใต้แถวไพ่ */
+#hand-area .card-selection-status,
+#hand-area .target-selection-status{
     position:absolute;
 
     left:0;
     right:0;
 
-    top:220px; /* NEW: ใต้การ์ด 150px + ระยะด้านบน */
+    top:220px;
 
     width:100%;
 
