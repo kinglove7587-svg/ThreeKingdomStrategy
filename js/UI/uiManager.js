@@ -488,15 +488,17 @@ class UIManager{
                     ? "suit-red" 
                     : "suit-black";
             // แสดงดอกและเลขไว้ด้านบนซ้าย
-            button.innerHTML = 
-                "<div class=\"hand-card-suit " + suitClass + "\">" + 
-                    card.suit + 
-                    "<div class=\"hand-card-suit-number\">" + 
-                        card.number + 
-                    "</div>" + 
-                "</div>" + 
-                "<div class=\"hand-card-name\" data-card-name>" + 
-                    card.name + 
+            button.innerHTML =
+                "<div class=\"hand-card-header\">" +
+                    "<span class=\"hand-card-suit " + suitClass + "\">" +
+                        card.suit +
+                    "</span>" +
+                    "<span class=\"hand-card-number\">" +
+                        card.number +
+                    "</span>" +
+                "</div>" +
+                "<div class=\"hand-card-name\" data-card-name>" +
+                    card.name +
                 "</div>";
             if(player.controller.inputState === "waitingTriggerTarget"){
                 button.disabled = true;

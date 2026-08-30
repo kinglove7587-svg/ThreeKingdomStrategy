@@ -831,15 +831,28 @@
         box-shadow 0.15s ease;
 }
 
-/* NEW: ดอก + เลขอยู่มุมบนซ้าย */
-#hand-area .hand-card-suit{
+/* NEW: ส่วนหัวการ์ด */
+#hand-area .hand-card-header{
     align-self:flex-start;
 
     display:flex;
-    flex-direction:column;
     align-items:center;
 
+    gap:5px;
+
     font-size:18px;
+    line-height:1;
+}
+/* NEW: ดอกไพ่ */
+#hand-area .hand-card-suit{
+    font-size:18px;
+    line-height:1;
+}
+
+/* NEW: เลขไพ่อยู่ข้างดอก */
+#hand-area .hand-card-number{
+    font-size:16px;
+    font-weight:bold;
     line-height:1;
 }
 /* NEW: ดอกไพ่สีแดง */
@@ -850,14 +863,6 @@
 /* NEW: ดอกไพ่สีดำ */
 #hand-area .hand-card-suit.suit-black{
     color:#222;
-}
-/* NEW: เลขอยู่ใต้ดอก */
-#hand-area .hand-card-suit-number{
-    margin-top:3px;
-
-    font-size:16px;
-    font-weight:bold;
-    line-height:1;
 }
 
 /* NEW: พื้นที่ชื่อการ์ด */
