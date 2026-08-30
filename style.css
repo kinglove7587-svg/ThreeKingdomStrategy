@@ -839,6 +839,15 @@
     font-size:18px;
     line-height:1;
 }
+/* NEW: ดอกไพ่สีแดง */
+#hand-area .hand-card-suit.suit-red{
+    color:#c33;
+}
+
+/* NEW: ดอกไพ่สีดำ */
+#hand-area .hand-card-suit.suit-black{
+    color:#222;
+}
 /* NEW: เลขอยู่ใต้ดอก */
 #hand-area .hand-card-suit-number{
     margin-top:3px;

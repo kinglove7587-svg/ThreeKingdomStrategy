@@ -482,13 +482,22 @@ class UIManager{
                 this.tooltipHoverCard = null;
                 this.hideCardTooltip();
             };
+            // กำหนดสีของดอกไพ่ตาม Suit
+            const suitClass = 
+                (card.suit === "♥️" || card.suit === "♦️")
+                    ? "suit-red" 
+                    : "suit-black";
             // แสดงดอกและเลขไว้ด้านบนซ้าย
             button.innerHTML = 
-                "<div class=\"hand-card-suit\">" + card.suit + 
-                    "<div class=\"hand-card-suit-number\">" + card.number + 
+                "<div class=\"hand-card-suit " + suitClass + "\">" + 
+                    card.suit + 
+                    "<div class=\"hand-card-suit-number\">" + 
+                        card.number + 
                     "</div>" + 
                 "</div>" + 
-                "<div class=\"hand-card-name\">" + card.name +  "</div>"
+                "<div class=\"hand-card-name\">" + 
+                    card.name + 
+                "</div>";
             if(player.controller.inputState === "waitingTriggerTarget"){
                 button.disabled = this;
                 button.classList.add("disabled-card");
