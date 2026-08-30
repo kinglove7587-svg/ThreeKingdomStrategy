@@ -857,22 +857,42 @@
     line-height:1;
 }
 
-/* NEW: ชื่อการ์ด */
+/* NEW: จัดพื้นที่ชื่อการ์ดให้เป็นจุดเด่นของใบ */
 #hand-area .hand-card-name{
+    flex:1;
+
     display:flex;
     align-items:center;
     justify-content:center;
 
-    flex:1;
+    padding:4px;
+
+    box-sizing:border-box;
 
     font-size:17px;
     font-weight:bold;
 
-    line-height:1.2;
+    line-height:1.25;
 
     word-break:break-word;
-}
 
+    text-align:center;
+}
+/* NEW: เส้นแบ่งข้อมูลด้านบนกับชื่อการ์ด */
+#hand-area .hand-card-name::before{
+    content:"";
+
+    position:absolute;
+
+    left:10px;
+    right:10px;
+
+    top:46px;
+
+    border-top:1px solid rgba(91,70,54,0.25);
+
+    pointer-events:none;
+}
 
 /* NEW: Hover การ์ด */
 #hand-area .hand-card:hover{
