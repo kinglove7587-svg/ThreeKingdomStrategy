@@ -489,7 +489,7 @@ class UIManager{
                     : "suit-black";
             // แปลง Type สำหรับแสดงผลบน Hand Card
             let cardTypeLabel = card.type;
-            if(card.type === "DeleayedTrick"){
+            if(card.type === "DelayedTrick"){
                 cardTypeLabel = "Delayed Trick";
             }
             // แสดงดอกและเลขไว้ด้านบนซ้าย
