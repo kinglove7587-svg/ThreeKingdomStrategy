@@ -1420,7 +1420,7 @@ class UIManager{
                     " | เลือกการ์ด | เลือกแล้ว " + 
                     selectedIndices.length + " / " + requiredCount; 
             }
-            this.controlArea.appendChild(status);
+            this.handArea.appendChild(status);
             
             const confirmButton = document.createElement("button");
             confirmButton.textContent = "ยืนยัน";
@@ -1439,7 +1439,7 @@ class UIManager{
             selectedIndices.length + 
             " / " + 
             requiredCount;
-        this.controlArea.appendChild(status);
+        this.handArea.appendChild(status);
     }
     // แสดงข้อความแนะนำเมื่อกำลังรอเลือกเป้าหมาย (Target)
     renderTargetSelectionStatus(){

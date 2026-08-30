@@ -722,7 +722,20 @@
 
     z-index:5;
 }
+/* NEW: ข้อความสถานะการเลือกการ์ด */
+#hand-area > div{
+    flex-basis:100%;
+    width:100%;
 
+    margin-top:8px;
+
+    text-align:center;
+
+    font-size:14px;
+    font-weight:bold;
+
+    line-height:1.4;
+}
 
 /* =========================================================
    CONTROL AREA
