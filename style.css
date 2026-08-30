@@ -706,7 +706,7 @@
 #hand-area{
     width:100%;
 
-    min-height:210px;
+    min-height:260px;
 
     display:flex;
     justify-content:center;
@@ -722,15 +722,18 @@
 
     z-index:5;
 }
-/* NEW: สถานะการเลือกการ์ดให้อยู่แถวใหม่ใต้ไพ่ */
+/* NEW: สถานะการเลือกการ์ดอยู่ใต้แถวไพ่ */
 #hand-area > div:not(.hand-card){
-    position:static;
+    position:absolute;
 
-    flex:0 0 100%; /* NEW: บังคับให้ขึ้นบรรทัดใหม่ */
+    left:0;
+    right:0;
+
+    top:220px; /* NEW: ใต้การ์ด 150px + ระยะด้านบน */
+
     width:100%;
 
-    margin-top:10px;
-
+    margin:0;
     padding:4px 10px;
 
     box-sizing:border-box;
@@ -742,7 +745,7 @@
 
     line-height:1.4;
 
-    order:2;
+    z-index:6;
 }
 
 /* =========================================================
