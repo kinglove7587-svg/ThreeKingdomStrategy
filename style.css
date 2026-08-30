@@ -828,11 +828,23 @@
         box-shadow 0.15s ease;
 }
 
-/* NEW: Suit */
+/* NEW: ดอก + เลขอยู่มุมบนซ้าย */
 #hand-area .hand-card-suit{
     align-self:flex-start;
 
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+
     font-size:18px;
+    line-height:1;
+}
+/* NEW: เลขอยู่ใต้ดอก */
+#hand-area .hand-card-suit-number{
+    margin-top:3px;
+
+    font-size:16px;
+    font-weight:bold;
     line-height:1;
 }
 
@@ -852,15 +864,6 @@
     word-break:break-word;
 }
 
-/* NEW: Number */
-#hand-area .hand-card-number{
-    align-self:flex-end;
-
-    font-size:18px;
-    font-weight:bold;
-
-    line-height:1;
-}
 
 /* NEW: Hover การ์ด */
 #hand-area .hand-card:hover{
