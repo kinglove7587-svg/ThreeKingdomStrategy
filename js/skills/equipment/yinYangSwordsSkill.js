@@ -114,9 +114,7 @@ class YinYangSwordsSkill extends TriggerSkill{
                         resolution: resolution
                     };
                     // เริ่ม Flow เลือกการ์ดทิ้ง
-                    player.controller.startYinYangDiscardSelection(yinYangContext);
-                    
-                    game.ui.render();
+                    player.controller.startYinYangDiscardSelection(yinYangContext);                    
                     return true;
                 }
                 if(judgeResult.isRed()){
