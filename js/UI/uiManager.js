@@ -2745,7 +2745,7 @@ class UIManager{
             if(selectedIndex !== -1){
                 
                 const orderBadge = document.createElement("span");
-                orderBadge.classList.add("selected-card");
+                orderBadge.classList.add("hand-card-order-badge");
                 orderBadge.textContent = "①②③④⑤".charAt(selectedIndex);
                 button.appendChild(orderBadge);
                 button.classList.add("selected-card");
@@ -2757,9 +2757,10 @@ class UIManager{
         }
         // แสดงสถานะการเลือก
         const status = document.createElement("div");
+        status.classList.add("target-selection-status");
         status.textContent = "เลือกการ์ดที่จะทิ้ง 2 ใบ | เลือกแล้ว: " + 
             controller.selectedRestAndReorganizationCards.length + " / 2";
-        this.controlArea.appendChild(status);
+        this.handArea.appendChild(status);
         // ปุ่มยืนยันการทิ้งการ์ด
         const confirmButton = document.createElement("button");
         confirmButton.textContent = "ยืนยันการทิ้ง";
