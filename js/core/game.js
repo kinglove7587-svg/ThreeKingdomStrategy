@@ -478,11 +478,24 @@ class Game {
             }
             const trigger = this.processTriggerResolution(damage);
             if(trigger){
-                return this.runTriggerResolution(trigger, damage);
+                return this.runTriggerResolution(
+                    trigger, 
+                    damage, 
+                    "afterDamage"
+                );
             }
         }
         // ส่ง Event ก่อนเกิด Damage
         this.eventManager.emit("beforeDamage", damage);
+        // ประมวลผล TriggerSkill ของ beforeDamage ผ่าน Queue
+        const beforeDamageTrigger = this.processBeforeDamageTrigger(damage);
+        if(beforeDamageTrigger){
+            return this.runTriggerResolution(
+                beforeDamageTrigger, 
+                damage, 
+                "beforeDamage"
+            );
+        }
         // หยุดการทำงานชั่วคราวหากมี Trigger Skill
         if(damage.waitingTrigger){
             return true;
@@ -1009,6 +1022,29 @@ class Game {
         );
         return queue.next();
     }
+    // เริ่ม Trigger Queue สำหรับ beforeDamage
+    processBeforeDamageTrigger(damage){
+
+        if(!damage){
+            return null;
+        }
+
+        const queue = this.triggerResolutionQueue;
+        // ป้องกันสร้าง Queue ซ้ำ
+        if(queue.current || queue.isWaiting()){
+            return queue.current;
+        }
+
+        queue.queue = [];
+        queue.current = null;
+
+        queue.addEventListeners(
+            this.players, 
+            "beforeDamage", 
+            damage
+        );
+        return queue.next();
+    }
     // ข้าม/ดึง Trigger ถัดไปในคิวออกมาประมวลผลต่อ
     resumeTriggerResolution(damage){
 
@@ -1024,7 +1060,7 @@ class Game {
         return this.runTriggerResolution(nextTrigger, damage);
     }
     // รัน Callback ของ Trigger และส่ง Handlers (resolution) เข้าไปควบคุม State
-    runTriggerResolution(trigger, damage){
+    runTriggerResolution(trigger, damage, eventName = "afterDamage"){
 
         if(!trigger || typeof trigger.callback !== "function"){
             return false;
@@ -1041,6 +1077,10 @@ class Game {
                     return null;
                 }
                 resumed = true;
+                // beforeDamage ต้องกลับไปทำ Damage ต่อ
+                if(eventName === "beforeDamage"){
+                    return this.resumeBeforeDamageResolution(damage);
+                }
                 return this.resumeTriggerAndAction(damage);
             }
         };
@@ -1052,11 +1092,38 @@ class Game {
         if(resumed){
             return true;
         }
-        const nextTrigger = this.resumeTriggerResolution(damage);
+        // จัดการ Trigger ถัดไปตาม Event ที่กำลังทำงาน
+        const nextTrigger = queue.resume();
         if(nextTrigger){
-            return nextTrigger;
+            return this.runTriggerResolution(
+                nextTrigger, 
+                damage, 
+                eventName
+            );
+        }
+        // beforeDamage Queue หมดแล้ว ให้ Damage เดินต่อ
+        if(eventName === "beforeDamage"){
+            return damage.resume();
         }
         return this.resumeAction();
+    }
+    // ดำเนิน beforeDamage Trigger ต่อหลังผู้เล่นตอบ Modal
+    resumeBeforeDamageResolution(damage){
+
+        if(!damage){
+            return null;
+        }
+
+        const queue = this.triggerResolutionQueue;
+        const nextTrigger = queue.resume();
+        if(nextTrigger){
+            return this.runTriggerResolution(
+                nextTrigger, 
+                damage, 
+                "beforeDamage"
+            );
+        }
+        return damage.resume();
     }
     // หยุด Action ปัจจุบันเพื่อรอการตัดสินใจจาก Modal
     pauseAction(resumeCallback, autoAfterHumanAction = true){

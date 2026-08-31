@@ -51,3 +51,4 @@ FireAttackCard (พลิงผลาญ): 2 ใบ
 ม้า อย่างละ2ใบ
 f5bcf2a
 Checkpoint before UI rework
+bef8942560c8bdba207a1b9b77c76a55bcf19302
