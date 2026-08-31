@@ -1070,6 +1070,113 @@ class UIManager{
                 this.handArea.appendChild(button);
             }
         }
+        // แสดงเมนูอุปกรณ์
+        if(controller.selectedBurnSource === "equipment"){
+
+            const equipment = [
+                {
+                    source: "weapon", 
+                    card: target.weapon, 
+                    icon: "⚔️"
+                },
+                {
+                    source: "armor", 
+                    card: target.armor, 
+                    icon: "🛡️"
+                },
+                {
+                    source: "mount", 
+                    card: target.mount, 
+                    icon: "🐎"
+                }
+            ];
+
+            for(const item of equipment){
+
+                if(!item.card){
+                    continue;
+                }
+
+                const card = item.card;
+
+                const button = document.createElement("button");
+                button.classList.add("hand-card");
+                // ใช้ Tooltip เดิมของ Card
+                button.onmouseenter = (event) => {
+                    this.tooltipHoverCard = card;
+                    this.tooltipMouseX = event.clientX;
+                    this.tooltipMouseY = event.clientY;
+
+                    if(this.tooltipShiftDown){
+                        this.showCardTooltip(
+                            card, 
+                            event.clientX, 
+                            event.clientY
+                        );
+                    }
+                };
+                button.onmousemove = (event) => {
+                    this.tooltipMouseX = event.clientX;
+                    this.tooltipMouseY = event.clientY;
+
+                    if(this.tooltipShiftDown){
+                        this.showCardTooltip(
+                            card, 
+                            event.clientX, 
+                            event.clientY
+                        );
+                    }
+                };
+                button.onmouseleave = () => {
+                    this.tooltipHoverCard = null;
+                    this.hideCardTooltip();
+                };
+
+                const suitClass = 
+                    (card.suit === "♥️" || card.suit === "♦️")
+                        ? "suit-red" : "suit-black";
+                    
+                button.innerHTML = 
+                    "<div class=\"hand-card-header\">" + 
+                        "<span class=\"hand-card-suit " + suitClass + "\">" + card.suit + 
+                        "</span>" + 
+                        "<span class=\"hand-card-number\">" + card.number + 
+                        "</span>" + 
+                    "</div>" + 
+                    "<div class=\"hand-card-name\" data-card-name>" + card.name + 
+                    "</div>" + 
+                    "<div class=\"hand-card-type\">" + card.type + 
+                    "</div>";
+                // Auto-size ชื่อการ์ด
+                const nameElement = button.querySelector("[data-card-name]");
+                if(nameElement){
+                    let fontSize = 17;
+                    nameElement.style.fontSize = fontSize + "px";
+                    while(
+                        nameElement.scrollHeight > nameElement.clientHeight && 
+                        fontSize > 12
+                    ){
+                        fontSize -= 1;
+                        nameElement.style.fontSize = fontSize + "px";
+                    }
+                }
+                //เลือกอุปกรณ์แล้วใช้ Source เดิมของ Controller
+                button.onclick = () => {
+                    controller.selectedBurnSource = item.source;
+                    controller.selectBurnCard(0);
+                    controller.confirmBurnSelection();
+                };
+                this.handArea.appendChild(button);
+            }
+            // ปุ่มย้อนกลับจากเมนูอุปกรณ์
+            const backButton = document.createElement("button");
+            backButton.textContent = "↩️ ย้อนกลับ";
+            backButton.onclick = () => {
+                controller.startBurnSourceSelection();
+            };
+            this.controlArea.appendChild(backButton);
+            return;
+        }
         // กรณีเลือกทำลาย "อาวุธ"
         if(controller.selectedBurnSource === "weapon"){
             const button = document.createElement("button");
