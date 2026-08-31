@@ -75,7 +75,8 @@ class YinYangSwordsSkill extends TriggerSkill{
             damage.waitingTrigger = false;
             // Resume Trigger ผ่าน Queue
             if(resolution){
-                return resolution.resume();
+                resolution.resume();
+                return true;
             }
             return damage.resume();
         }
