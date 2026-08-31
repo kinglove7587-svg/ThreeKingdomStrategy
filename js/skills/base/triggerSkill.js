@@ -19,6 +19,13 @@ class TriggerSkill extends Skill{
     }
     // ยกเลิกการลงทะเบียน Event ทั้งหมดของสกิลนี้
     unregister(){
+        // ยกเลิก Callback ออกจาก EventManager จริงก่อนล้างรายการ
+        for(const listener of this.listeners){
+            listener.eventManager.off(
+                listener.eventName, 
+                listener.callback
+            );
+        }
         // ล้างรายการ listener
         this.listeners = [];
     }
