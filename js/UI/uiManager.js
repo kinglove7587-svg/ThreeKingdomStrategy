@@ -1061,10 +1061,20 @@ class UIManager{
         if(controller.selectedBurnSource === "hand"){
             for(let i = 0; i< target.hand.cards.length; i++){
                 const button = document.createElement("button");
+                button.classList.add("hand-card");
+                button.classList.add("steal-hidden-card");
                 
-                button.textContent = "🂠 " + (i + 1);
+                button.innerHTML = 
+                    "<div class=\"hand-card-header\">" + 
+                        "<span class=\"steal-hidden-icon\">🂠</span>" + 
+                    "</div>" + 
+                    "<div class=\"steal-hidden-number\">" + (i + 1) + 
+                    "</div>";
+                // เลือกการ์ดที่จะทำลาย
                 button.onclick = () => {
-                    controller.selectBurnCard(i);
+                    if(!controller.selectBurnCard(i)){
+                        return;
+                    }
                     controller.confirmBurnSelection();
                 };
                 this.handArea.appendChild(button);
