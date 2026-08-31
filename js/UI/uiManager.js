@@ -800,6 +800,11 @@ class UIManager{
 
                 this.handArea.appendChild(button);
             }
+            // แสดงข้อความแนะนำเมื่อกำลังเลือกอุปกรณ์ที่จะขโมย
+            const status = document.createElement("div");
+            status.classList.add("target-selection-status");
+            status.textContent = "เลือกอุปกรณ์ที่จะขโมย";
+            this.handArea.appendChild(status);
             //  ปุ่มย้อนกลับจากเมนูอุปกรณ์
             const backButton = document.createElement("button");
             backButton.textContent = "↩️ ย้อนกลับ";
