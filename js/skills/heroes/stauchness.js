@@ -134,11 +134,12 @@ class Stauchness extends TriggerSkill{
                                                             1, 
                                                             DamageType.NORMAL
                                                         );
-                                                        // ประมวลผล Damage ใหม่ผ่านระบบ Damage ปกติ
-                                                        player.game.damage(stauchnessDamage);
+                                                        // ปล่อย Trigger ของ Stauchness เดิมก่อน
                                                         if(resolution){
                                                             resolution.resume();
                                                         }
+                                                        // ประมวลผล Damage ใหม่ผ่านระบบ Damage ปกติ
+                                                        player.game.damage(stauchnessDamage);
                                                     }
                                                 }
                                             ]

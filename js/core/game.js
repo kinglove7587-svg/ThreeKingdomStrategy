@@ -8,7 +8,7 @@ class Game {
         this.reactionManager = new ReactionManager(this);
         this.triggerResolutionQueue = new TriggerResolutionQueue();
         // เก็บ Context ของ Trigger Queue สำหรับ Nested Damage
-        this.triggerResolutionStack = [];
+        //this.triggerResolutionStack = [];
         // สร้าง Listener สำหรับ Debug ดักจับ Event ความเสียหาย
         const debugListener = new DebugDamageListener();
         // ผูก Event "beforeDamage" และ "afterDamage" เข้ากับ EventManager ของเกม
