@@ -20,6 +20,10 @@ class YinYangSwordsSkill extends TriggerSkill{
         if(damage.source !== player){
             return;
         }
+        // กระบี่คู่หยินหยางทำงานเฉพาะความเสียหายจากการ์ดโจมตี
+        if(!(damage.card instanceof SlashCard)){
+            return;
+        }
 
         const target = damage.target;
         if(!target){
