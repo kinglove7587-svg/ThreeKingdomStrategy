@@ -1187,46 +1187,6 @@ class UIManager{
             this.controlArea.appendChild(backButton);
             return;
         }
-        // กรณีเลือกทำลาย "อาวุธ"
-        if(controller.selectedBurnSource === "weapon"){
-            const button = document.createElement("button");
-            button.textContent = "⚔️ " + 
-                target.weapon.name + " " + 
-                target.weapon.suit + " " + 
-                target.weapon.number;
-            button.onclick = () => {
-                controller.selectBurnCard(0);
-                controller.confirmBurnSelection();
-            };
-            this.controlArea.appendChild(button);
-        }
-        // กรณีเลือกทำลาย "เกราะ"
-        if(controller.selectedBurnSource === "armor"){
-            const button = document.createElement("button");
-            button.textContent = "🛡️ " + 
-                target.armor.name + " " + 
-                target.armor.suit + " " + 
-                target.armor.number;
-            button.onclick = () => {
-                controller.selectBurnCard(0);
-                controller.confirmBurnSelection();
-            };
-            this.controlArea.appendChild(button);
-        }
-        // กรณีเลือกทำลาย "ม้า"
-        if(controller.selectedBurnSource === "mount"){
-
-            const button = document.createElement("button");
-            button.textContent = "🐎 " + 
-                target.mount.name + " " + 
-                target.mount.suit + " " + 
-                target.mount.number;
-            button.onclick = () => {
-                controller.selectBurnCard(0);
-                controller.confirmBurnSelection();
-            };
-            this.controlArea.appendChild(button);
-        }
         // กรณีเลือกทำลาย "Judgement Zone"
         if(controller.selectedBurnSource === "judgement"){
 
@@ -1234,15 +1194,73 @@ class UIManager{
 
                 const card = target.delayedTricks[i];
                 const button = document.createElement("button");
-                button.textContent = "⚡ " + 
-                    card.name + " " + 
-                    card.suit + " " + 
-                    card.number;
+                button.classList.add("hand-card");
+                
+                // ใช้ Tooltip เดิมของ Card
+                button.onmouseenter = (event) => {
+                    this.tooltipHoverCard = card;
+                    this.tooltipMouseX = event.clientX;
+                    this.tooltipMouseY = event.clientY;
+
+                    if(this.tooltipShiftDown){
+                        this.showCardTooltip(
+                            card, 
+                            event.clientX, 
+                            event.clientY
+                        );
+                    }
+                };
+                button.onmousemove = (event) => {
+                    this.tooltipMouseX = event.clientX;
+                    this.tooltipMouseY = event.clientY;
+
+                    if(this.tooltipShiftDown){
+                        this.showCardTooltip(
+                            card, 
+                            event.clientX, 
+                            event.clientY
+                        );
+                    }
+                };
+                button.onmouseleave = () => {
+                    this.tooltipHoverCard = null;
+                    this.hideCardTooltip();
+                };
+
+                const suitClass = 
+                    (card.suit === "♥️" || card.suit === "♦️")
+                        ? "suit-red" : "suit-black";
+
+                button.innerHTML = 
+                    "<div class=\"hand-card-header\">" + 
+                        "<span class=\"hand-card-suit " + suitClass + "\">" + card.suit + 
+                        "</span>" + 
+                        "<span class=\"hand-card-number\">" + card.number + 
+                        "</span>" + 
+                    "</div>" + 
+                    "<div class=\"hand-card-name\" data-card-name>" + card.name + 
+                    "</div>" + 
+                    "<div class=\"hand-card-type\">" + card.type + 
+                    "</div>";
+                // Auto-size ชื่อการ์ด
+                const nameElement = button.querySelector("[data-card-name]");
+                if(nameElement){
+                    let fontSize = 17;
+                    nameElement.style.fontSize = fontSize + "px";
+
+                    while(
+                        nameElement.scrollHeight > nameElement.clientHeight && 
+                        fontSize > 12
+                    ){
+                        fontSize -= 1;
+                        nameElement.style.fontSize = fontSize + "px";
+                    }
+                }
                 button.onclick = () => {
                     controller.selectBurnCard(i);
                     controller.confirmBurnSelection();
                 };
-                this.controlArea.appendChild(button);
+                this.handArea.appendChild(button);
             }
         }
         // ปุ่ม ↩️ ย้อนกลับ
