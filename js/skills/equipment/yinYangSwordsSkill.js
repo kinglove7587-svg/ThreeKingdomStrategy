@@ -9,13 +9,18 @@ class YinYangSwordsSkill extends TriggerSkill{
         this.registerListener(
             eventManager, 
             "beforeDamage", 
-            (damage) => {
-                this.onBeforeDamage(player, player.game, damage);
+            (damage, resolution) => {
+                this.onBeforeDamage(
+                    player, 
+                    player.game, 
+                    damage, 
+                    resolution
+                );
             }
         );
     }
     // ดักจับ Event ก่อนเกิด Damage
-    onBeforeDamage(player, game, damage){
+    onBeforeDamage(player, game, damage, resolution){
         // ตรวจสอบว่าผู้สร้างความเสียหายคือผู้สวมใส่อาวุธหรือไม่
         if(damage.source !== player){
             return;
@@ -41,11 +46,16 @@ class YinYangSwordsSkill extends TriggerSkill{
 
         // ล็อก Damage ไว้ระหว่างรอ Judge และ Trigger ที่อาจแทรก
         damage.waitingTrigger = true;
+        // หยุด Trigger Queue ระหว่างรอผู้เล่นตัดสินใจ
+        if(resolution){
+            resolution.wait();
+        }
         // ใช้ Trigger Choice เดิมของเกม
         player.controller.startTriggerChoice(
             this, 
             {
-                damage: damage
+                damage: damage, 
+                resolution: resolution
             }
         );
     }
