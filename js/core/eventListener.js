@@ -32,6 +32,10 @@ class EventListener{
         }
         // วนลูปสั่งให้ฟังก์ชัน callback ทุกตัวที่ลงทะเบียนไว้ใน Event ชื่อนี้ทำงาน
         for (const callback of this.events[eventName]){
+            // TriggerSkill จะถูกประมวลผลผ่าน TriggerResolutionQueue
+            if(callback._isTriggerSkill){
+                continue;
+            }
             // เรียกใช้ฟังก์ชัน callback โดยส่งอาร์กิวเมนต์ทั้งหมด ...args เข้าไป
             callback(...args);
         }
