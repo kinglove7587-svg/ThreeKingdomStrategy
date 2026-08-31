@@ -7,8 +7,6 @@ class Game {
         this.eventManager = new EventManager(this); // สร้าง EventManager เข้าไปเก็บไว้ เพื่อใช้เป็นศูนย์กลางส่ง Event ในเกม
         this.reactionManager = new ReactionManager(this);
         this.triggerResolutionQueue = new TriggerResolutionQueue();
-        // เก็บ Context ของ Trigger Queue สำหรับ Nested Damage
-        //this.triggerResolutionStack = [];
         // สร้าง Listener สำหรับ Debug ดักจับ Event ความเสียหาย
         const debugListener = new DebugDamageListener();
         // ผูก Event "beforeDamage" และ "afterDamage" เข้ากับ EventManager ของเกม

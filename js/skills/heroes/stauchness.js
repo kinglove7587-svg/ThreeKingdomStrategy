@@ -140,6 +140,7 @@ class Stauchness extends TriggerSkill{
                                                         }
                                                         // ประมวลผล Damage ใหม่ผ่านระบบ Damage ปกติ
                                                         player.game.damage(stauchnessDamage);
+                                                        player.game.ui.render();
                                                     }
                                                 }
                                             ]
