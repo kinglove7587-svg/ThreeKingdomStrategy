@@ -1002,53 +1002,63 @@ class UIManager{
         if(!target){
             return;
         }
-        // ปุ่มเลือกทำลายจากมือ
+        // สร้าง Card UI สำหรับเลือก Source ให้เหมือนฉกฉวย
+        const createSourceCard = (icon, name, type, source) => {
+            const card= document.createElement("button");
+            card.classList.add("source-card");
+
+            card.innerHTML = 
+                "<div class=\"source-card-icon\">" + 
+                    icon + 
+                "</div>" + 
+                "<div class=\"source-card-name\">" + 
+                    name + 
+                "</div>" + 
+                "<div class=\"source-card-type\">" + 
+                    type + 
+                "</div>";
+
+            if(source !== "equipment"){
+                card.onclick = () => {
+                    controller.selectBurnSource(source);
+                };
+            }
+            this.handArea.appendChild(card);
+            return card;
+        };
+        // ปุ่มเลือกทำลายจาก "มือ"
         if(target.hand.cards.length > 0){
-            const handButton = document.createElement("button");
-            handButton.textContent = "🂠 มือ";
-            handButton.onclick = () => {
-                controller.selectBurnSource("hand");
-            };
-            this.controlArea.appendChild(handButton);
+            createSourceCard(
+                "🂠", 
+                "มือ", 
+                "Hand", 
+                "hand"
+            );
         }
-        // ปุ่มเลือกทำลายอาวุธ
-        if(target.weapon){
-            const weaponButton = document.createElement("button");
-            weaponButton.textContent = "⚔️ " + target.weapon.name;
-            weaponButton.onclick = () => {
-                controller.selectBurnSource("weapon");
-            };
-            this.controlArea.appendChild(weaponButton);
-        }
-        // ปุ่มเลือกทำลายเกราะ
-        if(target.armor){
-            const armorButton = document.createElement("button");
-            armorButton.textContent = "🛡️ " + target.armor.name;
-            armorButton.onclick = () => {
-                controller.selectBurnSource("armor");
-            };
-            this.controlArea.appendChild(armorButton);
-        }
-        // ปุ่มเลือกทำลายม้า
-        if(target.mount){
+        // รวม อาวุธ / เกราะ / ม้า เป็นเมนูเดียว
+        if(target.weapon || target.armor || target.mount){
 
-            const mountButton = document.createElement("button");
-            mountButton.textContent = "🐎 " + target.mount.name;
-            mountButton.onclick = () => {
-                controller.selectBurnSource("mount");
+            const equipmentButton = createSourceCard(
+                "⚔️", 
+                "อุปกรณ์", 
+                "Equipment", 
+                "equipment"
+            );
+            // Equipment เป็นเมนูย่อย ไม่ส่ง Source เข้า Controller
+            equipmentButton.onclick = () => {
+                controller.selectedBurnSource = "equipment";
+                controller.inputState = "waitingBurnCard";
+                this.game.ui.render();
             };
-            this.controlArea.appendChild(mountButton);
         }
-        // ปุ่มเลือกทำลาย Judgement Zone
+        // ปุ่มเลือกทำลายจาก "Judgement Zone"
         if(target.delayedTricks.length > 0){
-
-            const judgementButton = document.createElement("button");
-            judgementButton.textContent = "⚡ Judgement (" + 
-                target.delayedTricks.length + ")";
-            judgementButton.onclick = () => {
-                controller.selectBurnSource("judgement");
-            };
-            this.controlArea.appendChild(judgementButton);
+            createSourceCard(
+                "⚡", 
+                "Judgement", 
+                "Delayed Trick", 
+                "judgement"
+            );
         }
     }
     // แสดงปุ่มการ์ดของเป้าหมายตาม Source ที่เลือก เพื่อเตรียมทำลายการ์ด
