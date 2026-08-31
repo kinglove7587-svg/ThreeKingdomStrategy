@@ -2727,8 +2727,17 @@ class UIManager{
         const target = context.target;
         for(let i = 0; i < target.hand.cards.length; i++){
 
+            const card = target.hand.cards[i];
             const button = document.createElement("button");
-            button.textContent = (i + 1) + ". 🂠 ";
+            button.classList.add("hand-card");
+
+            button.innerHTML = 
+                "<div class=\"hand-card-header\">" + 
+                    "<span class=\"steal-hidden-icon\">🂠</span>" + 
+                "</div>" + 
+                "<div class=\"steal-hidden-number\">" + (i + 1) + 
+                "</div>";
+
             button.onclick = () => {
                 controller.selectYinYangDiscard(i);
             };
@@ -2736,8 +2745,9 @@ class UIManager{
         }
 
         const status = document.createElement("div");
-        status.textContent = target.name + " ต้องทิ้งการ์ด 1 ใบ";
-        this.controlArea.appendChild(status);
+        status.classList.add("target-selection-status");
+        status.textContent = target.name + " เลือกการ์ด 1 ใบเพื่อทิ้งด้วยกระบี่คู่หยินหยาง";
+        this.handArea.appendChild(status);
     }
     // แสดงมือสำหรับเลือกทิ้งจาก พักพลจัดทัพ
     renderRestAndReorganizationDiscardHand(){
