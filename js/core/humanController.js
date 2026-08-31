@@ -1865,11 +1865,11 @@ class HumanController extends Controller{
         attackerController.yinYangContext = null;
         attackerController.selectedCardIndex = -1;
         attackerController.inputState = "idle";
-        // ดำเนินการทำ Damage ต่อไป
-        context.damage.resume();
-        this.game.afterHumanAction(true);
-        // ดำเนินการทำ Damage ต่อไป
-        return true;
+        // Resume Trigger Queue ผ่าน resolution
+        if(context.resolution){
+            return context.resolution.resume();
+        }
+        return context.damage.resume();
     }
     // เลือกหรือยกเลิกการเลือกการ์ดสำหรับ พักพลจัดทัพ
     selectRestAndReorganizationCard(index){
