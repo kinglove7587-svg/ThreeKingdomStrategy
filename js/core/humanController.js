@@ -1865,6 +1865,7 @@ class HumanController extends Controller{
         attackerController.yinYangContext = null;
         attackerController.selectedCardIndex = -1;
         attackerController.inputState = "idle";
+        context.damage.waitingTrigger = false;
         // Resume Trigger Queue ผ่าน resolution
         let result;
         if(context.resolution){
