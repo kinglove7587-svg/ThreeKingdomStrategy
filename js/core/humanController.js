@@ -1866,10 +1866,14 @@ class HumanController extends Controller{
         attackerController.selectedCardIndex = -1;
         attackerController.inputState = "idle";
         // Resume Trigger Queue ผ่าน resolution
+        let result = true;
         if(context.resolution){
-            return context.resolution.resume();
+            result = context.resolution.resume();
+        }else{
+            result = context.damage.resume();
         }
-        return context.damage.resume();
+        this.game.ui.render();
+        return result;
     }
     // เลือกหรือยกเลิกการเลือกการ์ดสำหรับ พักพลจัดทัพ
     selectRestAndReorganizationCard(index){
