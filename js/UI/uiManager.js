@@ -684,7 +684,7 @@ class UIManager{
                 this.handArea.appendChild(button);
             }
         }
-        // NEW: แสดงเมนูอุปกรณ์
+        // แสดงเมนูอุปกรณ์
         if(controller.selectedStealSource === "equipment"){
 
             const equipment = [
@@ -711,38 +711,10 @@ class UIManager{
                     continue;
                 }
 
-                const card = item.card; // NEW
+                const card = item.card; 
 
                 const button = document.createElement("button");
-                button.classList.add("hand-card"); // NEW
-
-                // NEW: ใช้ Tooltip ของ Card เดิม
-                button.onmouseenter = (event) => {
-                    this.tooltipHoverCard = card;
-                    this.tooltipMouseX = event.clientX;
-                    this.tooltipMouseY = event.clientY;
-
-                    if(this.tooltipShiftDown){
-                        this.showCardTooltip(
-                            card,
-                            event.clientX,
-                            event.clientY
-                        );
-                    }
-                };
-
-                button.onmousemove = (event) => {
-                    this.tooltipMouseX = event.clientX;
-                    this.tooltipMouseY = event.clientY;
-
-                    if(this.tooltipShiftDown){
-                        this.showCardTooltip(
-                            card,
-                            event.clientX,
-                            event.clientY
-                        );
-                    }
-                };
+                button.classList.add("hand-card"); 
 
                 button.onmouseleave = () => {
                     this.tooltipHoverCard = null;
@@ -754,7 +726,7 @@ class UIManager{
                         ? "suit-red"
                         : "suit-black";
 
-                button.innerHTML =
+                button.innerHTML = 
                     "<div class=\"hand-card-header\">" +
                         "<span class=\"hand-card-suit " + suitClass + "\">" +
                             card.suit +
@@ -770,7 +742,7 @@ class UIManager{
                         card.type +
                     "</div>";
 
-                // NEW: กดแล้วเปลี่ยน Source เป็นตัวจริง
+                // กดแล้วเปลี่ยน Source เป็นตัวจริง
                 button.onclick = () => {
 
                     controller.selectedStealSource = item.source;
@@ -781,8 +753,14 @@ class UIManager{
 
                 this.handArea.appendChild(button);
             }
-
-            return; // NEW: ไม่ให้ไหลต่อเข้า weapon/armor/mount เดิม
+            //  ปุ่มย้อนกลับจากเมนูอุปกรณ์
+            const backButton = document.createElement("button");
+            backButton.textContent = "↩️ ย้อนกลับ";
+            backButton.onclick = () => {
+                controller.startStealSourceSelection();
+            };
+            this.controlArea.appendChild(backButton);
+            return; 
         }
         // กรณีเลือกขโมย "อาวุธ"
         if(controller.selectedStealSource === "weapon"){
