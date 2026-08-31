@@ -2532,7 +2532,15 @@ class UIManager{
             
             const card = target.hand.cards[i];
             const button = document.createElement("button");
-            button.textContent = (i + 1) +  ". 🂠";
+            button.classList.add("hand-card");
+            button.classList.add("steal-hidden-card");
+            
+            button.innerHTML = 
+                "<div class=\"hand-card-header\">" + 
+                    "<span class=\"steal-hidden-icon\">🂠</span>" + 
+                "</div>" + 
+                "<div class=\"steal-hidden-number\">" + (i + 1) + 
+                "</div>";
             
             const selectedIndex = selectedCards.findIndex(selected => 
                 selected.source === "hand" && 
@@ -2540,9 +2548,13 @@ class UIManager{
             );
             
             if(selectedIndex !== -1){
-                button.textContent = orderSymbols[selectedIndex] + " 🂠";
+                const orderBadge = document.createElement("span");
+                orderBadge.classList.add("hand-card-order-badge");
+                orderBadge.textContent = orderSymbols[selectedIndex];
+
+                button.appendChild(orderBadge);
                 button.classList.add("selected-card");
-            };
+            }
             if(selectedCards.length >= 2 && selectedIndex === -1){
                 button.disabled = true;
             }
@@ -2559,17 +2571,14 @@ class UIManager{
             {
                 source: "weapon", 
                 card: target.weapon, 
-                icon: "⚔️"
             },
             {
                 source: "armor", 
                 card: target.armor, 
-                icon: "🛡️"
             },
             {
                 source: "mount", 
                 card: target.mount, 
-                icon: "🐎"
             }
         ];
         // วาดปุ่มเลือกอุปกรณ์ (แสดงที่ controlArea)
@@ -2578,9 +2587,69 @@ class UIManager{
             if(!item.card){
                 continue;
             }
-            
+            const card = item.card;
             const button = document.createElement("button");
-            button.textContent = item.icon + " " + item.card.name;
+            button.classList.add("hand-card");
+
+            button.onmouseenter = (event) => {
+                this.tooltipHoverCard = card;
+                this.tooltipMouseX = event.clientX;
+                this.tooltipMouseY = event.clientY;
+
+                if(this.tooltipShiftDown){
+                    this.showCardTooltip(
+                        card, 
+                        event.clientX, 
+                        event.clientY
+                    );
+                }
+            };
+            button.onmousemove = (event) => {
+                this.tooltipMouseX = event.clientX;
+                this.tooltipMouseY = event.clientY;
+
+                if(this.tooltipShiftDown){
+                    this.showCardTooltip(
+                        card, 
+                        event.clientX, 
+                        event.clientY
+                    );
+                }
+            };
+            button.onmouseleave = () => {
+                this.tooltipHoverCard = null;
+                this.hideCardTooltip();
+            };
+
+            const suitClass = 
+                (card.suit === "♥️" || card.suit === "♦️")
+                    ? "suit-red" : "suit-black";
+
+            button.innerHTML = 
+                "<div class=\"hand-card-header\">" + 
+                    "<span class=\"hand-card-suit " + suitClass + "\">" + card.suit + 
+                    "</span>" + 
+                    "<span class=\"hand-card-number\">" + card.number + 
+                    "</span>" + 
+                "</div>" + 
+                "<div class=\"hand-card-name\" data-card-name>" + card.name + 
+                "</div>" + 
+                "<div class=\"hand-card-type\">" + card.type + 
+                "</div>";
+
+            const nameElement = button.querySelector("[data-card-name]");
+            if(nameElement){
+                let fontSize = 17;
+                nameElement.style.fontSize = fontSize + "px";
+
+                while(
+                    nameElement.scrollHeight > nameElement.clientHeight && 
+                    fontSize > 12
+                ){
+                    fontSize -= 1;
+                    nameElement.style.fontSize = fontSize + "px";
+                }
+            }
             
             const selectedIndex = selectedCards.findIndex(selected => 
                 selected.source === item.source && 
@@ -2588,8 +2657,11 @@ class UIManager{
             );
             
             if(selectedIndex !== -1){
-                button.textContent = orderSymbols[selectedIndex] + " " + 
-                    item.icon + " " + item.card.name;
+                const orderBadge = document.createElement("span");
+                orderBadge.classList.add("hand-card-order-badge");
+                orderBadge.textContent = orderSymbols[selectedIndex];
+
+                button.appendChild(orderBadge);
                 button.classList.add("selected-card");
             }
             
@@ -2602,13 +2674,13 @@ class UIManager{
                     this.game.ui.render();
                 }
             };
-            this.controlArea.appendChild(button);
+            this.handArea.appendChild(button);
         }
         // แสดงข้อความ Status ตามรูปแบบที่กำหนด
         const status = document.createElement("div");
-        status.className = "status-message";
+        status.classList.add("target-selection-status");
         status.textContent = "เลือกการ์ด 2 ใบ | เลือกแล้ว " + selectedCards.length + " / 2";
-        this.controlArea.appendChild(status);
+        this.handArea.appendChild(status);
     }
     // icon gender
     getGenderIcon(gender){
