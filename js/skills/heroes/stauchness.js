@@ -88,6 +88,7 @@ class Stauchness extends TriggerSkill{
                                                                 }
                                                                 player.game.log(damageSource.name + " ทิ้งการ์ด 2 ใบด้วย Stauchness");
                                                                 player.game.hideModal();
+                                                                player.game.ui.render();
                                                                 if(resolution){
                                                                     resolution.resume();
                                                                 }
