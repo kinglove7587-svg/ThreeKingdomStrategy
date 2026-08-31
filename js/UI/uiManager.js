@@ -2357,6 +2357,7 @@ class UIManager{
         const requiredCount = player.hand.cards.length - player.hp;
         // แสดงสถานะการเลือก
         const status = document.createElement("div");
+        status.classList.add("card-selection-status");
         status.textContent = 
             "ต้องทิ้ง " + requiredCount + " ใบ | เลือกแล้ว " + 
             controller.selectedHandLimitDiscardCards.length + 
