@@ -80,7 +80,8 @@ class YinYangSwordsSkill extends TriggerSkill{
                     };
                     // เริ่ม Flow เลือกการ์ดทิ้ง
                     player.controller.startYinYangDiscardSelection(yinYangContext);
-                    return true;
+                    game.ui.render();
+                    return;
                 }
                 if(judgeResult.isRed()){
                     game.log("ผลตัดสิน = สีแดง");
@@ -91,9 +92,16 @@ class YinYangSwordsSkill extends TriggerSkill{
                     }
                     // Judge จบแล้ว ให้ Damage เดินต่อ
                     damage.waitingTrigger = false;
-                    const result = damage.resume();
+                    damage.resume();
+                    // ถ้า Damage และ Trigger ทั้งหมดจบแล้ว
+                    if(
+                        !game.triggerResolutionQueue.isWaiting() && 
+                        !game.pendingJudge && 
+                        game.actionLocked
+                    ){
+                        game.afterHumanAction(true);
+                    }
                     game.ui.render();
-                    return result;
                 }
                 return true;
             }
