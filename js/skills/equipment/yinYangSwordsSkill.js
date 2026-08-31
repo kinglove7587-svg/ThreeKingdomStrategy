@@ -86,10 +86,21 @@ class YinYangSwordsSkill extends TriggerSkill{
                 // ป้องกันกรณี Judge ไม่มีผลลัพธ์
                 if(!judgeResult){
                     damage.waitingTrigger = false;
+                    let result;
                     if(resolution){
-                        return resolution.resume();
+                        result = resolution.resume();
+                    }else{
+                        result = damage.resume();
                     }
-                    return damage.resume();
+                    // Resume Action หลัง Yin-Yang จบโดยไม่มีผล Judge
+                    if(
+                        !game.triggerResolutionQueue.isWaiting() && 
+                        !game.pendingJudge && 
+                        game.actionLocked
+                    ){
+                        game.afterHumanAction(true);
+                    }
+                    return result;
                 }
                 if(judgeResult.isBlack()){
                     game.log("ผลตัดสิน = สีดำ");
@@ -103,6 +114,7 @@ class YinYangSwordsSkill extends TriggerSkill{
                     };
                     // เริ่ม Flow เลือกการ์ดทิ้ง
                     player.controller.startYinYangDiscardSelection(yinYangContext);
+                    
                     game.ui.render();
                     return true;
                 }
@@ -115,10 +127,21 @@ class YinYangSwordsSkill extends TriggerSkill{
                     }
                     // Judge จบแล้ว ให้ Damage เดินต่อ
                     damage.waitingTrigger = false;
+                    let result;
                     if(resolution){
-                        return resolution.resume();
+                        result = resolution.resume();
+                    }else{
+                        result = damage.resume();
                     }
-                    return damage.resume();
+                    // Yin-Yang จบ Flow แล้ว ให้ปลด Action ของ Human
+                    if(
+                        !game.triggerResolutionQueue.isWaiting() && 
+                        !game.pendingJudge && 
+                        game.actionLocked
+                    ){
+                        game.afterHumanAction(true);
+                    }
+                    return result;
                 }
                 return true;
             }
