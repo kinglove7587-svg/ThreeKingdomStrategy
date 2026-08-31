@@ -37,32 +37,54 @@ class YinYangSwordsSkill extends TriggerSkill{
 
         // ล็อก Damage ไว้ระหว่างรอ Judge และ Trigger ที่อาจแทรก
         damage.waitingTrigger = true;
-        // ใช้ระบบ Judge กลาง เพื่อให้ Necromancy สามารถแทรกได้
-        const judgeResult = game.judge(
+        // ใช้ Trigger Choice เดิมของเกม
+        player.controller.startTriggerChoice(
+            this, 
+            {
+                damage: damage
+            }
+        );
+    }
+    // เรียกใช้เมื่อผู้เล่นเลือกว่าจะใช้สกิลหรือไม่
+    resolveChoice(player, game, context, usedSkill){
+
+        if(!context || !context.damage){
+            return false;
+        }
+
+        const damage = context.damage;
+        const target = damage.target;
+        // ถ้าเลือกไม่ใช้ ให้ Damage เดินต่อทันที
+        if(!usedSkill){
+            game.log(player.name + " ไม่ใช้กระบี่คู่หยินหยาง");
+            damage.waitingTrigger = false;
+            damage.resume();
+            return true;
+        }
+        // ใช้ Judge กลางของเกม
+        const result = game.judge(
             target, 
-            (result) => {
-                // ตรวจผล Judge หลัง Trigger ทั้งหมดทำงานเสร็จ
-                if(!result){
+            (judgeResult) => {
+                if(!judgeResult){
                     damage.waitingTrigger = false;
                     damage.resume();
                     return;
                 }
-                if(result.isBlack()){
+                if(judgeResult.isBlack()){
                     game.log("ผลตัดสิน = สีดำ");
-                    // เก็บ Context สำหรับการเลือกการ์ดของเป้าหมาย
-                    const context = {
+                    // เก็บ Context สำหรับการเลือกการ์ดทิ้ง
+                    const yinYangContext = {
                         damage: damage, 
                         attacker: player, 
                         target: target, 
-                        judgeCard: result.card
+                        judgeCard: judgeResult.card
                     };
-                    // เริ่มขั้นตอนให้เป้าหมายเลือกการ์ดทิ้ง
-                    player.controller.startYinYangDiscardSelection(context);
+                    // เริ่ม Flow เลือกการ์ดทิ้ง
+                    player.controller.startYinYangDiscardSelection(yinYangContext);
                     return;
                 }
-                if(result.isRed()){
+                if(judgeResult.isRed()){
                     game.log("ผลตัดสิน = สีแดง");
-                    // ผู้โจมตีจั่วการ์ด 1 ใบ
                     const drawCard = game.drawCardFromDeck();
                     if(drawCard){
                         player.hand.addCard(drawCard);
@@ -74,10 +96,11 @@ class YinYangSwordsSkill extends TriggerSkill{
                 }
             }
         );
-        // ถ้า Judge ไม่สามารถเริ่มได้ และไม่มี Judge Trigger กำลังรอ
-        if(judgeResult === null && !game.pendingJudge){
+        // ถ้า Judge ไม่เริ่มและไม่มี Pending Judge
+        if(result === null && !game.pendingJudge){
             damage.waitingTrigger = false;
             damage.resume();
-        }        
+        }
+        return true;
     }
 }
