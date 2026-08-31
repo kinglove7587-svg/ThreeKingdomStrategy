@@ -1160,6 +1160,17 @@ class HumanController extends Controller{
             context, 
             useSkill
         );
+        // Skill กำลังรอ Judge Modal ให้จบก่อน จึงยังไม่ถือว่า Action ล้มเหลว
+        if(this.game.pendingJudge){
+            // ปิด Trigger Choice เพื่อไม่ให้ UI ค้างอยู่ที่ปุ่ม ใช้ / ไม่ใช้
+            this.selectedTriggerSkill = null;
+            this.triggerContext = null;
+            this.inputState = "idle";
+            this.selectedCardIndex = -1;
+            this.selectedTarget = null;
+            this.game.ui.render();
+            return true;
+        }
 
         const sameTrigger = 
             this.selectedTriggerSkill === originalSkill && 
