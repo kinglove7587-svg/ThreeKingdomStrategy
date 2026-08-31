@@ -1208,6 +1208,7 @@ class UIManager{
             );
             equipmentButton.onclick = () => {
                 controller.selectedStealSource = "equipment";
+                controller.inputState = "waitingStealCard";
                 this.game.ui.render();
             };
         }
