@@ -2746,7 +2746,8 @@ class UIManager{
 
         const status = document.createElement("div");
         status.classList.add("target-selection-status");
-        status.textContent = target.name + " เลือกการ์ด 1 ใบเพื่อทิ้งด้วยกระบี่คู่หยินหยาง";
+        status.textContent = 
+            "เลือกทิ้งการ์ดจาก " + target.name + " 1 ใบ";
         this.handArea.appendChild(status);
     }
     // แสดงมือสำหรับเลือกทิ้งจาก พักพลจัดทัพ
