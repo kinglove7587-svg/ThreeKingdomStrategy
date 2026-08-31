@@ -978,20 +978,6 @@ class UIManager{
                 "judgement"
             );
         }
-        // ปุ่ม "ไม่ขโมย" (ยกเลิกและล้าง State)
-        const cancelButton = document.createElement("button");
-        cancelButton.textContent = "ไม่ขโมย";
-        cancelButton.onclick = () => {
-            controller.game.finishAction();
-            controller.inputState = "idle";
-            controller.selectedStealTarget = null;
-            controller.selectedStealSource = null;
-            controller.selectedStealCard = null;
-            controller.selectedStealCardIndex = -1;
-            controller.selectedCardIndex = -1;
-            controller.game.ui.render();
-        };
-        this.controlArea.appendChild(cancelButton);
     }
     // แสดงปุ่มเลือกโซนที่จะทำลายการ์ด (มือ, อาวุธ หรือ เกราะ)
     renderBurnSource(){
