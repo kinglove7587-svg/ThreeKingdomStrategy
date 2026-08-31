@@ -716,6 +716,34 @@ class UIManager{
                 const button = document.createElement("button");
                 button.classList.add("hand-card"); 
 
+                // ใช้ Tooltip ของ Card เดิม
+                button.onmouseenter = (event) => {
+                    this.tooltipHoverCard = card;
+                    this.tooltipMouseX = event.clientX;
+                    this.tooltipMouseY = event.clientY;
+
+                    if(this.tooltipShiftDown){
+                        this.showCardTooltip(
+                            card,
+                            event.clientX,
+                            event.clientY
+                        );
+                    }
+                };
+
+                button.onmousemove = (event) => {
+                    this.tooltipMouseX = event.clientX;
+                    this.tooltipMouseY = event.clientY;
+
+                    if(this.tooltipShiftDown){
+                        this.showCardTooltip(
+                            card,
+                            event.clientX,
+                            event.clientY
+                        );
+                    }
+                };
+
                 button.onmouseleave = () => {
                     this.tooltipHoverCard = null;
                     this.hideCardTooltip();
@@ -726,7 +754,7 @@ class UIManager{
                         ? "suit-red"
                         : "suit-black";
 
-                button.innerHTML = 
+                button.innerHTML =
                     "<div class=\"hand-card-header\">" +
                         "<span class=\"hand-card-suit " + suitClass + "\">" +
                             card.suit +
@@ -742,7 +770,7 @@ class UIManager{
                         card.type +
                     "</div>";
 
-                // กดแล้วเปลี่ยน Source เป็นตัวจริง
+                // NEW: กดแล้วเปลี่ยน Source เป็นตัวจริง
                 button.onclick = () => {
 
                     controller.selectedStealSource = item.source;
@@ -761,279 +789,6 @@ class UIManager{
             };
             this.controlArea.appendChild(backButton);
             return; 
-        }
-        // กรณีเลือกขโมย "อาวุธ"
-        if(controller.selectedStealSource === "weapon"){
-
-            const card = target.weapon; 
-
-            const button = document.createElement("button");
-            button.classList.add("hand-card");
-
-            // Tooltip ใช้ระบบ Card Tooltip เดิม
-            button.onmouseenter = (event) => {
-                this.tooltipHoverCard = card;
-                this.tooltipMouseX = event.clientX;
-                this.tooltipMouseY = event.clientY;
-
-                if(this.tooltipShiftDown){
-                    this.showCardTooltip(
-                        card,
-                        event.clientX,
-                        event.clientY
-                    );
-                }
-            };
-
-            button.onmousemove = (event) => {
-                this.tooltipMouseX = event.clientX;
-                this.tooltipMouseY = event.clientY;
-
-                if(this.tooltipShiftDown){
-                    this.showCardTooltip(
-                        card,
-                        event.clientX,
-                        event.clientY
-                    );
-                }
-            };
-
-            button.onmouseleave = () => {
-                this.tooltipHoverCard = null;
-                this.hideCardTooltip();
-            };
-
-            const suitClass =
-                (card.suit === "♥️" || card.suit === "♦️")
-                    ? "suit-red"
-                    : "suit-black";
-
-            button.innerHTML =
-                "<div class=\"hand-card-header\">" + 
-                    "<span class=\"hand-card-suit " + suitClass + "\">" +
-                        card.suit +
-                    "</span>" +
-                    "<span class=\"hand-card-number\">" +
-                        card.number +
-                    "</span>" +
-                "</div>" +
-                "<div class=\"hand-card-name\" data-card-name>" +
-                    card.name +
-                "</div>" +
-                "<div class=\"hand-card-type\">" +
-                    card.type +
-                "</div>";
-
-            // ปรับขนาดชื่อการ์ดแบบเดียวกับ Hand
-            const nameElement =
-                button.querySelector("[data-card-name]");
-
-            if(nameElement){
-
-                let fontSize = 17;
-
-                nameElement.style.fontSize =
-                    fontSize + "px";
-
-                while(
-                    nameElement.scrollHeight > nameElement.clientHeight &&
-                    fontSize > 12
-                ){
-                    fontSize -= 1;
-
-                    nameElement.style.fontSize =
-                        fontSize + "px";
-                }
-            }
-
-            button.onclick = () => {
-                controller.selectStealCard(0);
-                controller.confirmStealSelection();
-            };
-
-            this.handArea.appendChild(button);
-        }
-        // กรณีเลือกขโมย "เกราะ"
-        if(controller.selectedStealSource === "armor"){
-
-            const card = target.armor; 
-
-            const button = document.createElement("button");
-            button.classList.add("hand-card");
-
-            // Tooltip ใช้ระบบ Card Tooltip เดิม
-            button.onmouseenter = (event) => {
-                this.tooltipHoverCard = card;
-                this.tooltipMouseX = event.clientX;
-                this.tooltipMouseY = event.clientY;
-
-                if(this.tooltipShiftDown){
-                    this.showCardTooltip(
-                        card,
-                        event.clientX,
-                        event.clientY
-                    );
-                }
-            };
-
-            button.onmousemove = (event) => {
-                this.tooltipMouseX = event.clientX;
-                this.tooltipMouseY = event.clientY;
-
-                if(this.tooltipShiftDown){
-                    this.showCardTooltip(
-                        card,
-                        event.clientX,
-                        event.clientY
-                    );
-                }
-            };
-
-            button.onmouseleave = () => {
-                this.tooltipHoverCard = null;
-                this.hideCardTooltip();
-            };
-
-            const suitClass =
-                (card.suit === "♥️" || card.suit === "♦️")
-                    ? "suit-red"
-                    : "suit-black";
-
-            button.innerHTML =
-                "<div class=\"hand-card-header\">" + 
-                    "<span class=\"hand-card-suit " + suitClass + "\">" +
-                        card.suit +
-                    "</span>" +
-                    "<span class=\"hand-card-number\">" +
-                        card.number +
-                    "</span>" +
-                "</div>" +
-                "<div class=\"hand-card-name\" data-card-name>" +
-                    card.name +
-                "</div>" +
-                "<div class=\"hand-card-type\">" +
-                    card.type +
-                "</div>";
-
-            // ปรับขนาดชื่อการ์ดแบบเดียวกับ Hand
-            const nameElement =
-                button.querySelector("[data-card-name]");
-
-            if(nameElement){
-
-                let fontSize = 17;
-
-                nameElement.style.fontSize =
-                    fontSize + "px";
-
-                while(
-                    nameElement.scrollHeight > nameElement.clientHeight &&
-                    fontSize > 12
-                ){
-                    fontSize -= 1;
-
-                    nameElement.style.fontSize =
-                        fontSize + "px";
-                }
-            }
-
-            button.onclick = () => {
-                controller.selectStealCard(0);
-                controller.confirmStealSelection();
-            };
-
-            this.handArea.appendChild(button);
-        }
-        // กรณีเลือกขโมย "ม้า"
-        if(controller.selectedStealSource === "mount"){
-
-            const card = target.mount; 
-
-            const button = document.createElement("button");
-            button.classList.add("hand-card");
-
-            // Tooltip ใช้ระบบ Card Tooltip เดิม
-            button.onmouseenter = (event) => {
-                this.tooltipHoverCard = card;
-                this.tooltipMouseX = event.clientX;
-                this.tooltipMouseY = event.clientY;
-
-                if(this.tooltipShiftDown){
-                    this.showCardTooltip(
-                        card,
-                        event.clientX,
-                        event.clientY
-                    );
-                }
-            };
-
-            button.onmousemove = (event) => {
-                this.tooltipMouseX = event.clientX;
-                this.tooltipMouseY = event.clientY;
-
-                if(this.tooltipShiftDown){
-                    this.showCardTooltip(
-                        card,
-                        event.clientX,
-                        event.clientY
-                    );
-                }
-            };
-
-            button.onmouseleave = () => {
-                this.tooltipHoverCard = null;
-                this.hideCardTooltip();
-            };
-
-            const suitClass =
-                (card.suit === "♥️" || card.suit === "♦️")
-                    ? "suit-red"
-                    : "suit-black";
-
-            button.innerHTML =
-                "<div class=\"hand-card-header\">" + 
-                    "<span class=\"hand-card-suit " + suitClass + "\">" +
-                        card.suit +
-                    "</span>" +
-                    "<span class=\"hand-card-number\">" +
-                        card.number +
-                    "</span>" +
-                "</div>" +
-                "<div class=\"hand-card-name\" data-card-name>" +
-                    card.name +
-                "</div>" +
-                "<div class=\"hand-card-type\">" +
-                    card.type +
-                "</div>";
-
-            // ปรับขนาดชื่อการ์ดแบบเดียวกับ Hand
-            const nameElement =
-                button.querySelector("[data-card-name]");
-
-            if(nameElement){
-
-                let fontSize = 17;
-
-                nameElement.style.fontSize =
-                    fontSize + "px";
-
-                while(
-                    nameElement.scrollHeight > nameElement.clientHeight &&
-                    fontSize > 12
-                ){
-                    fontSize -= 1;
-
-                    nameElement.style.fontSize =
-                        fontSize + "px";
-                }
-            }
-
-            button.onclick = () => {
-                controller.selectStealCard(0);
-                controller.confirmStealSelection();
-            };
-
-            this.handArea.appendChild(button);
         }
         // กรณีเลือกขโมยจาก "Judgement Zone"
         if(controller.selectedStealSource === "judgement"){
