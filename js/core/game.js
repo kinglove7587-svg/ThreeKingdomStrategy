@@ -517,7 +517,6 @@ class Game {
             "judgeCardRevealed", 
             judgeContext
         );
-        this.processJudgeTriggerResolution(judgeContext);
         // ถ้ามี Modal หรือ Trigger ขอ Pause ให้หยุด Judge ไว้ก่อน
         if(this.pendingJudge){
             // เก็บ Callback ของผู้เรียก game.judge() เดิมไว้สำหรับ Resume
