@@ -1866,11 +1866,18 @@ class HumanController extends Controller{
         attackerController.selectedCardIndex = -1;
         attackerController.inputState = "idle";
         // Resume Trigger Queue ผ่าน resolution
-        let result = true;
+        let result;
         if(context.resolution){
             result = context.resolution.resume();
         }else{
             result = context.damage.resume();
+        }
+        if(
+            !this.game.triggerResolutionQueue.isWaiting() && 
+            !this.game.pendingJudge && 
+            this.game.actionLocked
+        ){
+            this.game.afterHumanAction(true);
         }
         this.game.ui.render();
         return result;
