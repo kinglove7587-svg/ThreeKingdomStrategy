@@ -663,8 +663,16 @@ class UIManager{
             for(let i = 0; i < target.hand.cards.length; i++){
                 // สร้าง Element ปุ่ม <button> ขึ้นมาใหม่
                 const button = document.createElement("button");
-                // กำหนดข้อความบนปุ่มเป็นไอคอนไพ่คว่ำ พร้อมหมายเลข
-                button.textContent = "🂠 " + (i + 1);
+                button.classList.add("hand-card");
+                button.classList.add("steal-hidden-card");
+                
+                button.innerHTML = 
+                    "<div class=\"hand-card-header\">" + 
+                        "<span class=\"steal-hidden-icon\">🂠</span>" + 
+                    "</div>" + 
+                    "<div class=\"steal-hidden-number\">" + 
+                        (i + 1) + 
+                    "</div>";
                 // กำหนด Event เมื่อกดคลิก ให้เรียกใช้เมธอด selectStealCard
                 button.onclick = () => {
                     if(!controller.selectStealCard(i)){
