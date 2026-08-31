@@ -1182,7 +1182,8 @@ class HumanController extends Controller{
             this.inputState === "waitingTriggerChoice" || 
             this.inputState === "waitingTriggerCard" || 
             this.inputState === "waitingTriggerTarget" || 
-            this.inputState === "waitingFrostSwordCard"
+            this.inputState === "waitingFrostSwordCard" || 
+            this.inputState === "waitingYinYangDiscard"
         ){
             this.game.ui.render();
             return success;
