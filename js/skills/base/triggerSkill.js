@@ -6,6 +6,8 @@ class TriggerSkill extends Skill{
     }
     // ลงทะเบียน Listener สำหรับ Event ที่สกิลนี้ต้องการฟัง
     registerListener(eventManager, eventName, callback){
+        // ลงทะเบียน Callback เข้ากับ EventManager จริง
+        eventManager.on(eventName, callback);
         // เก็บข้อมูล listener ไว้สำหรับการยกเลิกการลงทะเบียนในอนาคต
         this.listeners.push({
             eventManager, 
