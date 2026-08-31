@@ -1814,9 +1814,6 @@ class HumanController extends Controller{
                 return false;
             }
             this.game.discardPile.addCard(discardedCard);
-            if(context.judgeCard){
-                this.game.discardPile.addCard(context.judgeCard);
-            }
             this.game.log(target.name + " ทิ้งการ์ด 1 ใบด้วยกระบี่คู่หยินหยาง");
             this.yinYangContext = null;
             return context.damage.resume();
@@ -1850,10 +1847,6 @@ class HumanController extends Controller{
         }
         // นำการ์ดลงกองทิ้งและบันทึก Log
         this.game.discardPile.addCard(removeCard);
-        // นำไพ่ Judge สีดำลงกองทิ้ง
-        if(context.judgeCard){
-            this.game.discardPile.addCard(context.judgeCard);
-        }
         this.game.log(target.name + " ทิ้งการ์ด 1 ใบด้วยกระบี่คู่หยินหยาง");
         // ดึง Controller ของผู้โจมตี
         const attackerController = context.attacker.controller;
