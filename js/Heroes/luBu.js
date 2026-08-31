@@ -6,7 +6,7 @@ class LuBu extends Player{
         this.maxHp = 4;
         this.hp = 4;
         this.faction = "Qun";
-        this.gender = "female";
+        this.gender = "male";
 
         this.abilityDescription = 
             "Unrivaled (ไร้เทียมทาน)\n" + 
