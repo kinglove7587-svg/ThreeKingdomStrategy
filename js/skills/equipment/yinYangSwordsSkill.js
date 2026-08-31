@@ -91,7 +91,9 @@ class YinYangSwordsSkill extends TriggerSkill{
                     }
                     // Judge จบแล้ว ให้ Damage เดินต่อ
                     damage.waitingTrigger = false;
-                    return damage.resume();
+                    const result = damage.resume();
+                    game.ui.render();
+                    return result;
                 }
                 return true;
             }
