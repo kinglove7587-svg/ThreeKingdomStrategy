@@ -688,15 +688,32 @@ class UIManager{
         if(controller.selectedStealSource === "weapon"){
 
             const button = document.createElement("button");
-            button.textContent = "⚔️ " + 
-                target.weapon.name + " " + 
-                target.weapon.suit + " " + 
-                target.weapon.number;
+            button.classList.add("hand-card");
+            const suitClass = 
+                (target.weapon.suit === "♥️" || target.weapon.suit === "♦️")
+                    ? "suit-red" : "suit-black";
+
+            button.innerHTML = 
+                "<div class\"hand-card-header\">" + 
+                    "<span class=\"hand-card-suit " + suitClass + "\">" + 
+                        target.weapon.suit + 
+                    "</span>" + 
+                    "<span class=\"hand-card-number\">" + 
+                        target.weapon.number + 
+                    "</span>" + 
+                "</div>" + 
+                "<div class=\"hand-card-name\">" + 
+                    target.weapon.name + 
+                "</div>" + 
+                "<div class=\"hand-card-type\">" + 
+                    "Equipment" + 
+                "</div>";
+
             button.onclick = () => {
                 controller.selectStealCard(0);
                 controller.confirmStealSelection();
             };
-            this.controlArea.appendChild(button);
+            this.handArea.appendChild(button);
         }
         // กรณีเลือกขโมย "เกราะ"
         if(controller.selectedStealSource === "armor"){
