@@ -769,7 +769,26 @@ class UIManager{
                     "<div class=\"hand-card-type\">" +
                         card.type +
                     "</div>";
+                const nameElement =
+                    button.querySelector("[data-card-name]");
 
+                if(nameElement){
+
+                    let fontSize = 17;
+
+                    nameElement.style.fontSize =
+                        fontSize + "px";
+
+                    while(
+                        nameElement.scrollHeight > nameElement.clientHeight &&
+                        fontSize > 12
+                    ){
+                        fontSize -= 1;
+
+                        nameElement.style.fontSize =
+                            fontSize + "px";
+                    }
+                }
                 // NEW: กดแล้วเปลี่ยน Source เป็นตัวจริง
                 button.onclick = () => {
 
