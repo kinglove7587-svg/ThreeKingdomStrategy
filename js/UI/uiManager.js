@@ -794,44 +794,68 @@ class UIManager{
                 "<div class=\"source-card-type\">" + 
                     type + 
                 "</div>";
-            card.onclick = () => {
-                controller.selectStealSource(source);
-            };
+            // Equipment เป็นเมนูย่อย ไม่ส่ง Source เข้า Controller
+            if(source !== "equipment"){
+                card.onclick = () => {
+                    controller.selectStealSource(source);
+                };
+            }
             this.handArea.appendChild(card);
             return card;
-        }
+        };
         // สร้างปุ่มเลือกขโมยจาก "มือ"
         if(target.hand.cards.length > 0){
             createSourceCard(
                 "🂠", "มือ", "Hand", "hand" 
             );
         }
-        // ตรวจสอบว่าเป้าหมายมีการใส่อาวุธอยู่หรือไม่ หากมีให้สร้างปุ่มขโมย "อาวุธ"
-        if(target.weapon){
-            createSourceCard(
+        // รวม อาวุธ / เกราะ / ม้า ไว้ในปุ่มเดียว
+        if(target.weapon || target.armor || target.mount){
+
+            const equipmentButton = createSourceCard(
                 "⚔️", 
-                target.weapon.name, 
+                "อุปกรณ์", 
                 "Equipment", 
-                "weapon"
+                "equipment"
             );
-        }
-        // ตรวจสอบว่าเป้าหมายมีการใส่เกราะอยู่หรือไม่ หากมีให้สร้างปุ่มขโมย "เกราะ"
-        if(target.armor){
-            createSourceCard(
-                "🛡️", 
-                target.armor.name, 
-                "Equipment", 
-                "armor"
-            );
-        }
-        // ปุ่มขโมย "ม้า"
-        if(target.mount){
-            createSourceCard(
-                "🐎", 
-                target.mount.name, 
-                "Equipment", 
-                "mount"
-            );
+            equipmentButton.onclick = () => {
+                // ล้าง Source Card เดิม
+                this.handArea.innerHTML = "";
+                // แสดง weapon
+                if(target.weapon){
+                    const weaponButton = createSourceCard(
+                        "⚔️", 
+                        target.weapon.name, 
+                        "Equipment", 
+                        "weapon"
+                    );
+                }
+                // แสดง armor
+                if(target.armor){
+                    createSourceCard(
+                        "🛡️", 
+                        target.armor.name, 
+                        "Equipment", 
+                        "armor"
+                    );
+                }
+                // แสดง mount
+                if(target.mount){
+                    createSourceCard(
+                        "🐎", 
+                        target.mount.name, 
+                        "Equipment", 
+                        "mount"
+                    );
+                }
+                // ปุ่มย้อนกลับ
+                const backButton = document.createElement("button");
+                backButton.textContent = "↩️ ย้อนกลับ";
+                backButton.onclick = () => {
+                    this.game.ui.render();
+                };
+                this.controlArea.appendChild(backButton);
+            };
         }
         // ปุ่มขโมยจาก "Judgement Zone"
         if(target.delayedTricks.length > 0){
