@@ -1190,7 +1190,8 @@ class Game {
         }
 
         if(
-            !hasPendingAction &&
+            !hasPendingAction && 
+            !damage?.deferActionFinalize && 
             damage?.source === this.getCurrentPlayer() &&
             damage.source.controller instanceof HumanController && 
             this.actionLocked

@@ -134,12 +134,23 @@ class Stauchness extends TriggerSkill{
                                                             1, 
                                                             DamageType.NORMAL
                                                         );
+                                                        // เลื่อนการ Finalize Action จนกว่า Nested Damage จะจบ
+                                                        damage.deferActionFinalize = true;
                                                         // ปล่อย Trigger ของ Stauchness เดิมก่อน
                                                         if(resolution){
                                                             resolution.resume();
                                                         }
                                                         // ประมวลผล Damage ใหม่ผ่านระบบ Damage ปกติ
                                                         player.game.damage(stauchnessDamage);
+                                                        // Nested Damage จบแล้ว จึงค่อย Finalize Action หลัก
+                                                        damage.deferActionFinalize = false;
+                                                        if(
+                                                            !player.game.triggerResolutionQueue.isWaiting() && 
+                                                            !player.game.pendingJudge && 
+                                                            player.game.actionLocked
+                                                        ){
+                                                            player.game.afterHumanAction(true);
+                                                        }
                                                         player.game.ui.render();
                                                     }
                                                 }
