@@ -33,16 +33,16 @@ class YinYangSwordsSkill extends TriggerSkill{
         if(player.gender === target.gender){
             return;
         }
-        console.log(player.name + " ใช้กระบี่คู่หยินหยางกับ " + target.name);
+        game.log(player.name + " ใช้กระบี่คู่หยินหยางกับ " + target.name);
 
         const judgeCard = game.drawCardFromDeck();
         if(judgeCard === null){
-            console.log("ไม่สามารถจั่วไพ่ตัดสินได้");
+            game.log("ไม่สามารถจั่วไพ่ตัดสินได้");
             return;
         }
 
         const judgeResult = new JudgeResult(judgeCard);
-        console.log(
+        game.log(
             target.name + " จั่วไพ่ตัดสิน : " + 
             judgeCard.name + " " +
             judgeCard.suit + " " + 
@@ -50,7 +50,7 @@ class YinYangSwordsSkill extends TriggerSkill{
         );
 
         if(judgeResult.isBlack()){
-            console.log("ผลตัดสิน = สีดำ");
+            game.log("ผลตัดสิน = สีดำ");
             // หยุด Damage ชั่วคราว
             damage.waitingTrigger = true;
             // เก็บ Context สำหรับการเลือกการ์ดของเป้าหมาย
@@ -65,7 +65,7 @@ class YinYangSwordsSkill extends TriggerSkill{
             return;
             
         }else if(judgeResult.isRed()){
-            console.log("ผลตัดสิน = สีแดง");
+            game.log("ผลตัดสิน = สีแดง");
             // ผู้โจมตีจั่วการ์ด 1 ใบ
             const drawCard = game.drawCardFromDeck();
             // ตรวจสอบว่ากองจั่วมีการ์ดให้จั่วหรือไม่
