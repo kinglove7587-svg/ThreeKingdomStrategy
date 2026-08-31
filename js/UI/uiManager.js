@@ -1352,7 +1352,7 @@ class UIManager{
                 }
             }
             button.onclick = () => {
-                this.game.selectSelectedCard(i);
+                this.game.selectSelectionCard(i);
             };
             this.handArea.appendChild(button);
         }
