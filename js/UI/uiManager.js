@@ -2751,7 +2751,7 @@ class UIManager{
                 button.classList.add("selected-card");
             }
             button.onclick = () => {
-                controller.toggleRestAndReorganizationCard(card);
+                controller.selectRestAndReorganizationCard(i);
             };
             this.handArea.appendChild(button);
         }

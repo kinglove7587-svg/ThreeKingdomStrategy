@@ -20,7 +20,7 @@ class LiuBei extends Player{ // เล่าปี่
         //this.equipArmor(new EightTrigramsArmor("♣️", 7));
         //this.hand.addCard(new BarbarianCard("♠️", 1));
         //this.hand.addCard(new StealCard("♠️", 1));
-        this.hand.addCard(new BumperHarvestCard("♠️", 1));
+        this.hand.addCard(new RestAndReorganizationCard("♠️", 1));
         //this.hand.addCard(new SlashCard("♠️", 1));
     }
 }
