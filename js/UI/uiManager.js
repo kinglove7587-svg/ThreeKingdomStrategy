@@ -754,55 +754,68 @@ class UIManager{
         if(!target){
             return;
         }
+        // สร้าง Card สำหรับเลือก Source
+        const createSourceCard = (icon, name, type, source) => {
+            const card = document.createElement("button");
+            card.classList.add("source-card");
+
+            card.innerHTML = 
+                "<div class=\"source-card-icon\">" + 
+                    icon + 
+                "</div>" + 
+                "<div class=\"source-card-name\">" + 
+                    name + 
+                "</div>" + 
+                "<div class=\"source-card-type\">" + 
+                    type + 
+                "</div>";
+            card.onclick = () => {
+                controller.selectStealSource(source);
+            };
+            this.handArea.appendChild(card);
+            return card;
+        }
         // สร้างปุ่มเลือกขโมยจาก "มือ"
         if(target.hand.cards.length > 0){
-            const handButton = document.createElement("button");
-            handButton.textContent = "🂠 มือ";
-            handButton.onclick = () => {
-                controller.selectStealSource("hand");
-            };
-            // แสดงปุ่ม "มือ" บน Control Area
-            this.controlArea.appendChild(handButton);
+            createSourceCard(
+                "🂠", "มือ", "Hand", "hand" 
+            );
         }
         // ตรวจสอบว่าเป้าหมายมีการใส่อาวุธอยู่หรือไม่ หากมีให้สร้างปุ่มขโมย "อาวุธ"
         if(target.weapon){
-            const weaponButton = document.createElement("button");
-            weaponButton.textContent = "⚔️ " + target.weapon.name;
-            weaponButton.onclick = () => {
-                controller.selectStealSource("weapon");
-            };
-            // แสดงปุ่ม "อาวุธ" บน Control Area
-            this.controlArea.appendChild(weaponButton);
+            createSourceCard(
+                "⚔️", 
+                target.weapon.name, 
+                "Equipment", 
+                "weapon"
+            );
         }
         // ตรวจสอบว่าเป้าหมายมีการใส่เกราะอยู่หรือไม่ หากมีให้สร้างปุ่มขโมย "เกราะ"
         if(target.armor){
-            const armorButton = document.createElement("button");
-            armorButton.textContent = "🛡️ " + target.armor.name;
-            armorButton.onclick = () => {
-                controller.selectStealSource("armor");
-            };
-            this.controlArea.appendChild(armorButton);
+            createSourceCard(
+                "🛡️", 
+                target.armor.name, 
+                "Equipment", 
+                "armor"
+            );
         }
         // ปุ่มขโมย "ม้า"
         if(target.mount){
-
-            const mountButton = document.createElement("button");
-            mountButton.textContent = "🐎 " + target.mount.name;
-            mountButton.onclick = () => {
-                controller.selectStealSource("mount");
-            };
-            this.controlArea.appendChild(mountButton);
+            createSourceCard(
+                "🐎", 
+                target.mount.name, 
+                "Equipment", 
+                "mount"
+            );
         }
         // ปุ่มขโมยจาก "Judgement Zone"
         if(target.delayedTricks.length > 0){
-
-            const judgementButton = document.createElement("button");
-            judgementButton.textContent = "⚡ Judgement (" + 
-                target.delayedTricks.length + ")";
-            judgementButton.onclick = () => {
-                controller.selectStealSource("judgement");
-            };
-            this.controlArea.appendChild(judgementButton);
+            createSourceCard(
+                "⚡", 
+                "Judgement", 
+                "Delayed Trick", 
+                "judgement"
+            );
         }
         // ปุ่ม "ไม่ขโมย" (ยกเลิกและล้าง State)
         const cancelButton = document.createElement("button");
