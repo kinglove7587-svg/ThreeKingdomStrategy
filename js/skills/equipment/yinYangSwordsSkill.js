@@ -68,10 +68,15 @@ class YinYangSwordsSkill extends TriggerSkill{
 
         const damage = context.damage;
         const target = damage.target;
+        const resolution = context.resolution;
         // ไม่ใช้กระบี่คู่หยินหยาง
         if(!usedSkill){
             game.log(player.name + " ไม่ใช้กระบี่คู่หยินหยาง");
             damage.waitingTrigger = false;
+            // Resume Trigger ผ่าน Queue
+            if(resolution){
+                return resolution.resume();
+            }
             return damage.resume();
         }
         // ใช้ Judge กลางของเกม
@@ -81,6 +86,9 @@ class YinYangSwordsSkill extends TriggerSkill{
                 // ป้องกันกรณี Judge ไม่มีผลลัพธ์
                 if(!judgeResult){
                     damage.waitingTrigger = false;
+                    if(resolution){
+                        return resolution.resume();
+                    }
                     return damage.resume();
                 }
                 if(judgeResult.isBlack()){
@@ -90,12 +98,13 @@ class YinYangSwordsSkill extends TriggerSkill{
                         damage: damage, 
                         attacker: player, 
                         target: target, 
-                        judgeCard: judgeResult.card
+                        judgeCard: judgeResult.card, 
+                        resolution: resolution
                     };
                     // เริ่ม Flow เลือกการ์ดทิ้ง
                     player.controller.startYinYangDiscardSelection(yinYangContext);
                     game.ui.render();
-                    return;
+                    return true;
                 }
                 if(judgeResult.isRed()){
                     game.log("ผลตัดสิน = สีแดง");
@@ -106,16 +115,10 @@ class YinYangSwordsSkill extends TriggerSkill{
                     }
                     // Judge จบแล้ว ให้ Damage เดินต่อ
                     damage.waitingTrigger = false;
-                    damage.resume();
-                    // ถ้า Damage และ Trigger ทั้งหมดจบแล้ว
-                    if(
-                        !game.triggerResolutionQueue.isWaiting() && 
-                        !game.pendingJudge && 
-                        game.actionLocked
-                    ){
-                        game.afterHumanAction(true);
+                    if(resolution){
+                        return resolution.resume();
                     }
-                    game.ui.render();
+                    return damage.resume();
                 }
                 return true;
             }
