@@ -1356,6 +1356,14 @@ class UIManager{
             };
             this.handArea.appendChild(button);
         }
+        // แสดงข้อความบอกผู้เล่นที่กำลังได้รับสิทธิ์เลือก
+        const selectionPlayer = zone.getCurrentPlayer();
+        if(selectionPlayer){
+            const selectionStatus = document.createElement("div");
+            selectionStatus.classList.add("target-selection-status");
+            selectionStatus.textContent = "เลือกการ์ดให้ : " + selectionPlayer.name;
+            this.handArea.appendChild(selectionStatus);
+        }
     }
     // ผูก Event ของปุ่มกดควบคุมหลัก
     bindEvents(){ 
