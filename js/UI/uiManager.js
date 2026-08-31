@@ -819,42 +819,8 @@ class UIManager{
                 "equipment"
             );
             equipmentButton.onclick = () => {
-                // ล้าง Source Card เดิม
-                this.handArea.innerHTML = "";
-                // แสดง weapon
-                if(target.weapon){
-                    const weaponButton = createSourceCard(
-                        "⚔️", 
-                        target.weapon.name, 
-                        "Equipment", 
-                        "weapon"
-                    );
-                }
-                // แสดง armor
-                if(target.armor){
-                    createSourceCard(
-                        "🛡️", 
-                        target.armor.name, 
-                        "Equipment", 
-                        "armor"
-                    );
-                }
-                // แสดง mount
-                if(target.mount){
-                    createSourceCard(
-                        "🐎", 
-                        target.mount.name, 
-                        "Equipment", 
-                        "mount"
-                    );
-                }
-                // ปุ่มย้อนกลับ
-                const backButton = document.createElement("button");
-                backButton.textContent = "↩️ ย้อนกลับ";
-                backButton.onclick = () => {
-                    this.game.ui.render();
-                };
-                this.controlArea.appendChild(backButton);
+                controller.selectedStealSource = "equipment";
+                this.game.ui.render();
             };
         }
         // ปุ่มขโมยจาก "Judgement Zone"
