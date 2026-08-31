@@ -684,6 +684,106 @@ class UIManager{
                 this.handArea.appendChild(button);
             }
         }
+        // NEW: แสดงเมนูอุปกรณ์
+        if(controller.selectedStealSource === "equipment"){
+
+            const equipment = [
+                {
+                    source: "weapon",
+                    card: target.weapon,
+                    icon: "⚔️"
+                },
+                {
+                    source: "armor",
+                    card: target.armor,
+                    icon: "🛡️"
+                },
+                {
+                    source: "mount",
+                    card: target.mount,
+                    icon: "🐎"
+                }
+            ];
+
+            for(const item of equipment){
+
+                if(!item.card){
+                    continue;
+                }
+
+                const card = item.card; // NEW
+
+                const button = document.createElement("button");
+                button.classList.add("hand-card"); // NEW
+
+                // NEW: ใช้ Tooltip ของ Card เดิม
+                button.onmouseenter = (event) => {
+                    this.tooltipHoverCard = card;
+                    this.tooltipMouseX = event.clientX;
+                    this.tooltipMouseY = event.clientY;
+
+                    if(this.tooltipShiftDown){
+                        this.showCardTooltip(
+                            card,
+                            event.clientX,
+                            event.clientY
+                        );
+                    }
+                };
+
+                button.onmousemove = (event) => {
+                    this.tooltipMouseX = event.clientX;
+                    this.tooltipMouseY = event.clientY;
+
+                    if(this.tooltipShiftDown){
+                        this.showCardTooltip(
+                            card,
+                            event.clientX,
+                            event.clientY
+                        );
+                    }
+                };
+
+                button.onmouseleave = () => {
+                    this.tooltipHoverCard = null;
+                    this.hideCardTooltip();
+                };
+
+                const suitClass =
+                    (card.suit === "♥️" || card.suit === "♦️")
+                        ? "suit-red"
+                        : "suit-black";
+
+                button.innerHTML =
+                    "<div class=\"hand-card-header\">" +
+                        "<span class=\"hand-card-suit " + suitClass + "\">" +
+                            card.suit +
+                        "</span>" +
+                        "<span class=\"hand-card-number\">" +
+                            card.number +
+                        "</span>" +
+                    "</div>" +
+                    "<div class=\"hand-card-name\" data-card-name>" +
+                        card.name +
+                    "</div>" +
+                    "<div class=\"hand-card-type\">" +
+                        card.type +
+                    "</div>";
+
+                // NEW: กดแล้วเปลี่ยน Source เป็นตัวจริง
+                button.onclick = () => {
+
+                    controller.selectedStealSource = item.source;
+
+                    controller.selectStealCard(0);
+                    controller.confirmStealSelection();
+                };
+
+                this.handArea.appendChild(button);
+            }
+
+            return; // NEW: ไม่ให้ไหลต่อเข้า weapon/armor/mount เดิม
+        }
         // กรณีเลือกขโมย "อาวุธ"
         if(controller.selectedStealSource === "weapon"){
 
