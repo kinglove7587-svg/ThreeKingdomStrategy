@@ -1290,13 +1290,69 @@ class UIManager{
             const card = zone.cards[i];
             
             const button = document.createElement("button");
-            button.textContent = 
-                card.name + " " + 
-                card.suit + " " + 
-                card.number;
+            button.classList.add("hand-card");
+            // ใช้ Tooltip เดิมของ Card
+            button.onmouseenter = (event) => {
+                this.tooltipHoverCard = card;
+                this.tooltipMouseX = event.clientX;
+                this.tooltipMouseY = event.clientY;
+
+                if(this.tooltipShiftDown){
+                    this.showCardTooltip(
+                        card, 
+                        event.clientX, 
+                        event.clientY
+                    );
+                }
+            };
+            button.onmousemove = (event) => {
+                this.tooltipMouseX = event.clientX;
+                this.tooltipMouseY = event.clientY;
+
+                if(this.tooltipShiftDown){
+                    this.showCardTooltip(
+                        card, 
+                        event.clientX, 
+                        event.clientY
+                    );
+                }
+            };
+            button.onmouseleave = () => {
+                this.tooltipHoverCard = null;
+                this.hideCardTooltip();
+            };
+
+            const suitClass = 
+                (card.suit === "♥️" || card.suit === "♦️")
+                    ? "suit-red" : "suit-black";
+
+            button.innerHTML = 
+                "<div class=\"hand-card-header\">" + 
+                    "<span class=\"hand-card-suit " + suitClass + "\">" + card.suit + 
+                    "</span>" + 
+                    "<span class=\"hand-card-number\">" + card.number + 
+                    "</span>" + 
+                "</div>" + 
+                "<div class=\"hand-card-name\" data-card-name>" + card.name + 
+                "</div>" + 
+                "<div class=\"hand-card-type\">" + card.type + 
+                "</div>";
+
+            const nameElement = button.querySelector("[data-card-name]");
+            if(nameElement){
+                let fontSize = 17;
+                nameElement.style.fontSize = fontSize + "px";
+
+                while(
+                    nameElement.scrollHeight > nameElement.clientHeight && 
+                    fontSize > 12
+                ){
+                    fontSize -= 1;
+                    nameElement.style.fontSize = fontSize + "px";
+                }
+            }
             button.onclick = () => {
-                // เลือกการ์ดเข้ามือผู้เล่นปัจจุบัน
-                this.game.selectSelectionCard(i);
+                this.game.selectSelectedCard(i);
             };
             this.handArea.appendChild(button);
         }
