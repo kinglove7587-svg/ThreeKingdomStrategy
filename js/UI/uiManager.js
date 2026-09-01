@@ -369,6 +369,15 @@ class UIManager{
             this.playerArea.appendChild(div);
         }
     }
+    //
+    renderCenterPiles(){
+
+        const centerArea = document.getElementById("center-table-area");
+        if(!centerArea){
+            return;
+        }
+        centerArea.innerHTML = "";
+    }
     // วาดปุ่มการ์ดบนมือของผู้เล่นที่ถึงตาเล่นในปัจจุบัน
     renderHands(){
         // ล้าง Element ปุ่มการ์ดเก่าทั้งหมดใน handArea ออกก่อน เพื่อเตรียมสร้างใหม่ในเฟรมนี้
