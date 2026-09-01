@@ -583,3 +583,26 @@ body{
         left:82px;
     }
 }
+
+/* =========================================================
+   HAND REPOSITION V6
+   ========================================================= */
+
+/* NEW: Move Hand upward to create space below for Controller */
+#hand-area{
+    bottom:100px;
+}
+
+/* NEW: Keep Hand lifted on short screens */
+@media (max-height:800px){
+    #hand-area{
+        bottom:90px;
+    }
+}
+
+/* NEW: Keep Hand lifted on very short screens */
+@media (max-height:700px){
+    #hand-area{
+        bottom:75px;
+    }
+}
