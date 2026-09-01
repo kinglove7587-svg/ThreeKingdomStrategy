@@ -74,7 +74,10 @@ class FrostSwordSkill extends TriggerSkill{
                 context.damage.waitingTrigger = false;
                 context.damage.canceled = false;
                 game.log(player.name + " ไม่สามารถใช้ กระบี่น้ำแข็งได้ เพราะมีการ์ดให้ทิ้งไม่ถึง 2 ใบ");
-                return context.damage.resume();
+                if(context.resolution){
+                    context.resolution.resume();
+                }
+                return true;
             }
             // กรณีการ์ดตั้งแต่ 2 ใบขึ้นไป (ใช้สกิลสำเร็จ -> ยกเลิก Damage แล้วเข้าสู่หน้าเลือกการ์ด 2 ใบ)
             context.damage.canceled = true;
