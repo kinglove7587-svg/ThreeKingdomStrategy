@@ -1176,6 +1176,11 @@ class HumanController extends Controller{
             this.selectedTriggerSkill === originalSkill && 
             this.triggerContext === originalContext;
         const queueWaiting = this.game.triggerResolutionQueue.isWaiting();
+        // ถ้ายังมี Trigger Queue รออยู่ ห้าม Finalize Action
+        if(queueWaiting){
+            this.game.ui.render();
+            return success;
+        }
         // ล้าง Controller State ทันที หากเป็น Trigger เดิมและ Queue ไม่ได้รอ Trigger อื่นต่อ
         if(
             sameTrigger && 

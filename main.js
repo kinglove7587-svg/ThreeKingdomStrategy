@@ -17,7 +17,7 @@ const game = new Game([
         controller: HumanController//AIController
     },
     {
-        hero: LuBu, 
+        hero: HuaTuo, 
         controller: HumanController//AIController
     }
 ]);
