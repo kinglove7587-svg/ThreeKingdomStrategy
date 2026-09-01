@@ -463,7 +463,7 @@ body{
 
     justify-self:center;
 
-    transform:translateY(0);
+    transform:translateY(-40px);
 
     border:3px solid #8b5a2b;
 
@@ -1224,4 +1224,12 @@ body{
 
     font-size:28px;
     font-weight:bold;
+}
+/* NEW: ป้องกันแต่ละพื้นที่หลักถูก Flex Layout บีบ */
+#enemy-area,
+#player-area,
+#center-table-area,
+#hand-area,
+#control-area{
+    flex-shrink:0;
 }

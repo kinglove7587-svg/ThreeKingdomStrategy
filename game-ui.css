@@ -9,8 +9,8 @@
     --character-card-width:165px;
     --hand-card-width:100px;
     --hand-card-height:136px;
-    --center-card-width:100px;
-    --center-card-height:136px;
+    --center-card-width:80px;
+    --center-card-height:109px;
 }
 
 /* NEW: Browser viewport is fixed to the game screen */
@@ -49,7 +49,7 @@ body{
 #center-table-area{
     position:relative;
     width:100%;
-    min-height:140px;
+    min-height:120px;
     box-sizing:border-box;
     display:flex;
     align-items:center;
