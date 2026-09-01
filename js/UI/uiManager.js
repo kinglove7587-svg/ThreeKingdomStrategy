@@ -67,6 +67,7 @@ class UIManager{
         this.hideCardTooltip();
         this.controlArea.innerHTML = ""; // ล้างพื้นที่ปุ่มเดิมก่อน
         this.renderPlayers(); // วาดข้อมูลผู้เล่นและ HP ลงบน DOM
+        this.renderCenterPiles();
         this.renderHands(); // วาดปุ่มการ์ดในมือของผู้เล่นหลัก
         // อัปเดตการแสดงผลปุ่ม End Turn ตามประเภทของ Controller
         this.renderEndTurnButton();
