@@ -495,3 +495,68 @@ body{
         width:145px;
     }
 }
+
+/* =========================================================
+   PLAYER + CONTROLLER REPOSITION V4
+   ========================================================= */
+
+/* NEW: Move Player up to leave room for Use Skill control */
+#player-area .table-seat-0{
+    top:36%;
+}
+
+/* NEW: Center Controller below the Log frame */
+#control-area{
+    left:78px;
+    right:auto;
+    bottom:214px;
+    width:165px;
+}
+
+/* NEW: Keep End Turn directly below the centered Controller */
+#end-turn{
+    left:78px;
+    right:auto;
+    bottom:165px;
+    width:165px;
+}
+
+/* NEW: Short viewport Player position */
+@media (max-height:800px){
+    #player-area .table-seat-0{
+        left:15px;
+        top:34%;
+    }
+
+    #control-area{
+        left:83px;
+        bottom:185px;
+        width:155px;
+    }
+
+    #end-turn{
+        left:83px;
+        bottom:138px;
+        width:155px;
+    }
+}
+
+/* NEW: Very short viewport Player position */
+@media (max-height:700px){
+    #player-area .table-seat-0{
+        left:10px;
+        top:32%;
+    }
+
+    #control-area{
+        left:82px;
+        bottom:155px;
+        width:145px;
+    }
+
+    #end-turn{
+        left:82px;
+        bottom:112px;
+        width:145px;
+    }
+}
