@@ -369,7 +369,7 @@ class UIManager{
             this.playerArea.appendChild(div);
         }
     }
-    //
+    // วาดกองกลาง (Deck) และแสดงจำนวนไพ่ที่เหลืออยู่
     renderCenterPiles(){
 
         const centerArea = document.getElementById("center-table-area");
@@ -377,6 +377,26 @@ class UIManager{
             return;
         }
         centerArea.innerHTML = "";
+        // สร้างพื้นที่ Deck
+        const deckPile = document.createElement("div");
+        deckPile.className = "center-pile";
+        // ชื่อ Deck
+        const deckTitle = document.createElement("div");
+        deckTitle.className = "center-pile-title";
+        deckTitle.textContent = "Deck";
+        // ภาพด้านหลังไพ่
+        const deckCard = document.createElement("div");
+        deckCard.className = "center-pile-card deck-pile-card";
+        // จำนวนไพ่ใน Deck
+        const deckCount = document.createElement("div");
+        deckCount.className = "center-pile-count";
+        deckCount.textContent = this.game.deck.cards.length;
+        // ประกอบ Deck
+        deckPile.appendChild(deckTitle);
+        deckPile.appendChild(deckCard);
+        deckPile.appendChild(deckCount);
+        // แสดง Deck ลงบนโต๊ะ
+        centerArea.appendChild(deckPile);
     }
     // วาดปุ่มการ์ดบนมือของผู้เล่นที่ถึงตาเล่นในปัจจุบัน
     renderHands(){
