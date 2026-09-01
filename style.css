@@ -1,3 +1,11 @@
+/* NEW: ล็อกหน้าเกมไม่ให้ Browser Scroll */
+html,
+body{
+    width:100%;
+    height:100%;
+    margin:0;
+    overflow:hidden;
+}
 .selected-target{
     border:3px solid red;
     border-radius:8px;
@@ -322,7 +330,8 @@
     position:relative;
 
     width:100%;
-    min-height:100vh;
+    height:100vh;
+    min-height:0;
 
     box-sizing:border-box;
 
