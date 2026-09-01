@@ -396,3 +396,48 @@ body{
         bottom:10px;
     }
 }
+
+/* =========================================================
+   PLAYER + CENTER REPOSITION V2
+   ========================================================= */
+
+/* NEW: Move Player below the Log on the left side */
+#player-area .table-seat-0{
+    position:fixed;
+    left:20px;
+    top:52%;
+    transform:none;
+    margin:0;
+    z-index:11;
+}
+
+/* NEW: Move Deck / Discard to the center of the viewport */
+#center-table-area{
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+}
+
+/* NEW: Keep the approved Player / Hand / Controls composition on short screens */
+@media (max-height:800px){
+    #player-area .table-seat-0{
+        left:15px;
+        top:51%;
+    }
+
+    #center-table-area{
+        top:50%;
+    }
+}
+
+/* NEW: Keep Player and center piles visible on very short screens */
+@media (max-height:700px){
+    #player-area .table-seat-0{
+        left:10px;
+        top:50%;
+    }
+
+    #center-table-area{
+        top:49%;
+    }
+}
