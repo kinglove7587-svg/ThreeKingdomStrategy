@@ -3,9 +3,11 @@
    GAME UI LAYOUT
    ========================================================= */
 
-/* NEW: Shared UI sizing */
+/* =========================================================
+   SHARED UI SIZING
+   ========================================================= */
+
 :root{
-    --game-padding:20px;
     --character-card-width:165px;
     --hand-card-width:100px;
     --hand-card-height:136px;
@@ -28,38 +30,104 @@ body{
     width:100vw;
     height:100vh;
     min-height:0;
-    box-sizing:border-box;
+    padding:0;
     overflow:hidden;
+    box-sizing:border-box;
 }
 
 /* =========================================================
-   CHARACTER SIZE
+   CHARACTER TABLE
    ========================================================= */
 
-/* NEW: Character cards stay compact on the game table */
+/* NEW: Character table occupies the right side */
+#player-area{
+    position:absolute;
+    left:320px;
+    right:20px;
+    top:20px;
+    width:auto;
+    height:560px;
+    min-height:0;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    grid-template-rows:220px 320px;
+    align-items:start;
+    justify-items:center;
+    z-index:5;
+}
+
+/* NEW: Character cards keep the approved size */
 #player-area .player-card{
     width:var(--character-card-width);
     min-width:var(--character-card-width);
 }
 
+/* NEW: Current Player stays aligned with the left controls */
+#player-area .table-seat-0{
+    position:fixed;
+    left:78px;
+    top:calc(36% + 25px);
+    margin:0;
+    z-index:11;
+}
+
+/* NEW: Enemy seats stay in the top row */
+#player-area .table-seat-1,
+#player-area .table-seat-2,
+#player-area .table-seat-3,
+#player-area .table-seat-4{
+    align-self:start;
+    justify-self:center;
+    transform:none;
+}
+
 /* =========================================================
-   CENTER TABLE
+   LOG
    ========================================================= */
 
-/* NEW: Central table area reserved for Deck / Discard */
+/* NEW: Log stays in the upper-left zone */
+#log-area{
+    position:absolute;
+    left:20px;
+    top:20px;
+    width:280px;
+    height:300px;
+    max-height:none;
+    margin:0;
+    padding:10px;
+    box-sizing:border-box;
+    overflow-y:auto;
+    transform:none;
+    z-index:10;
+}
+
+/* =========================================================
+   CENTER DECK / DISCARD
+   ========================================================= */
+
+/* NEW: Central pile container */
 #center-table-area{
-    position:relative;
-    width:100%;
+    position:absolute;
+    left:50%;
+    top:calc(50% + 50px);
+    width:200px;
     min-height:120px;
+    height:auto;
+    margin:0;
+    padding:0;
     box-sizing:border-box;
     display:flex;
     align-items:center;
     justify-content:center;
-    gap:42px;
-    z-index:2;
+    gap:40px;
+    transform:translate(-50%,-50%);
+    z-index:4;
 }
 
-/* NEW: Deck / Discard stack container */
+/* NEW: Deck / Discard pile */
 .center-pile{
     position:relative;
     width:var(--center-card-width);
@@ -137,148 +205,15 @@ body{
 }
 
 /* =========================================================
-   HAND SIZE
+   HAND
    ========================================================= */
-
-/* NEW: Compact hand area */
-#hand-area{
-    min-height:210px;
-    box-sizing:border-box;
-}
-
-/* NEW: Current hand card size */
-#hand-area .hand-card{
-    width:var(--hand-card-width);
-    height:var(--hand-card-height);
-}
-
-/* =========================================================
-   RESPONSIVE TABLE ADJUSTMENT
-   ========================================================= */
-
-/* NEW: Smaller desktop / laptop viewport */
-@media (max-height:800px){
-    :root{
-        --character-card-width:155px;
-        --hand-card-width:95px;
-        --hand-card-height:129px;
-        --center-card-width:95px;
-        --center-card-height:129px;
-    }
-}
-
-/* NEW: Very compact viewport */
-@media (max-height:700px){
-    :root{
-        --character-card-width:145px;
-        --hand-card-width:90px;
-        --hand-card-height:122px;
-        --center-card-width:90px;
-        --center-card-height:122px;
-    }
-
-    #center-table-area{
-        min-height:120px;
-        gap:30px;
-    }
-
-    #hand-area{
-        min-height:190px;
-        padding-top:24px;
-    }
-}
-
-/* =========================================================
-   TARGET UI LOCK V1
-   ========================================================= */
-
-/* NEW: Lock main game zones to the reference composition */
-#game{
-    position:relative;
-    width:100vw;
-    height:100vh;
-    min-height:0;
-    padding:0;
-    overflow:hidden;
-    box-sizing:border-box;
-}
-
-/* NEW: Log = upper-left zone */
-#log-area{
-    position:absolute;
-    left:20px;
-    top:20px;
-    width:280px;
-    height:300px;
-    max-height:none;
-    margin:0;
-    padding:10px;
-    box-sizing:border-box;
-    overflow-y:auto;
-    transform:none;
-    z-index:10;
-}
-
-/* NEW: Character table = full right-side stage */
-#player-area{
-    position:absolute;
-    left:320px;
-    right:20px;
-    top:20px;
-    width:auto;
-    height:560px;
-    min-height:0;
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    display:grid;
-    grid-template-columns:repeat(4,minmax(0,1fr));
-    grid-template-rows:220px 320px;
-    align-items:start;
-    justify-items:center;
-    z-index:5;
-}
-
-/* NEW: Enemy seats = top row */
-#player-area .table-seat-1,
-#player-area .table-seat-2,
-#player-area .table-seat-3,
-#player-area .table-seat-4{
-    align-self:start;
-    justify-self:center;
-    transform:none;
-}
-
-/* NEW: Player seat = centered lower row */
-#player-area .table-seat-0{
-    align-self:start;
-    justify-self:center;
-    transform:translateY(130px);
-    z-index:6;
-}
-
-/* NEW: Center pile = center of table */
-#center-table-area{
-    position:absolute;
-    left:50%;
-    top:285px;
-    width:220px;
-    min-height:120px;
-    height:auto;
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    transform:translateX(-50%);
-    gap:28px;
-    z-index:4;
-}
 
 /* NEW: Hand = lower center */
 #hand-area{
     position:absolute;
     left:320px;
     right:270px;
-    bottom:20px;
+    bottom:100px;
     width:auto;
     min-height:0;
     height:156px;
@@ -292,17 +227,24 @@ body{
     z-index:8;
 }
 
-/* NEW: Hand cards keep their own fixed dimensions */
+/* NEW: Hand cards keep their fixed dimensions */
 #hand-area .hand-card{
+    width:var(--hand-card-width);
+    height:var(--hand-card-height);
     flex:none;
 }
 
-/* NEW: Controls = lower-right */
+/* =========================================================
+   CONTROLLER
+   ========================================================= */
+
+/* NEW: Controller stays centered below the Hand */
 #control-area{
     position:absolute;
-    right:20px;
-    bottom:70px;
-    width:220px;
+    left:50%;
+    right:auto;
+    bottom:25px;
+    width:270px;
     min-height:55px;
     margin:0;
     padding:0;
@@ -311,15 +253,22 @@ body{
     justify-content:center;
     align-items:center;
     gap:10px;
+    flex-wrap:nowrap;
+    transform:translateX(-50%);
     z-index:9;
 }
 
-/* NEW: End Turn = below controls */
+/* =========================================================
+   END TURN
+   ========================================================= */
+
+/* NEW: End Turn stays below the Controller */
 #end-turn{
     position:absolute;
-    right:20px;
-    bottom:20px;
-    width:220px;
+    left:78px;
+    right:auto;
+    bottom:165px;
+    width:165px;
     min-height:42px;
     margin:0;
     box-sizing:border-box;
@@ -327,11 +276,19 @@ body{
 }
 
 /* =========================================================
-   TARGET UI LOCK - SHORT VIEWPORT
+   RESPONSIVE LAYOUT
    ========================================================= */
 
-/* NEW: Keep the same composition on shorter screens */
+/* NEW: Smaller desktop / laptop viewport */
 @media (max-height:800px){
+    :root{
+        --character-card-width:155px;
+        --hand-card-width:95px;
+        --hand-card-height:129px;
+        --center-card-width:95px;
+        --center-card-height:129px;
+    }
+
     #log-area{
         height:250px;
     }
@@ -342,29 +299,41 @@ body{
     }
 
     #player-area .table-seat-0{
-        transform:translateY(105px);
+        left:83px;
+        top:34%;
     }
 
     #center-table-area{
-        top:255px;
+        width:230px;
     }
 
     #hand-area{
+        bottom:90px;
         height:145px;
-        bottom:15px;
     }
 
     #control-area{
-        bottom:60px;
+        bottom:20px;
+        width:270px;
     }
 
     #end-turn{
-        bottom:15px;
+        left:83px;
+        bottom:138px;
+        width:155px;
     }
 }
 
-/* NEW: Keep the same composition on very short screens */
+/* NEW: Very compact viewport */
 @media (max-height:700px){
+    :root{
+        --character-card-width:145px;
+        --hand-card-width:90px;
+        --hand-card-height:122px;
+        --center-card-width:90px;
+        --center-card-height:122px;
+    }
+
     #log-area{
         height:220px;
     }
@@ -375,183 +344,22 @@ body{
     }
 
     #player-area .table-seat-0{
-        transform:translateY(80px);
-    }
-
-    #center-table-area{
-        top:220px;
-        gap:24px;
-    }
-
-    #hand-area{
-        height:132px;
-        bottom:10px;
-    }
-
-    #control-area{
-        bottom:50px;
-    }
-
-    #end-turn{
-        bottom:10px;
-    }
-}
-
-/* =========================================================
-   PLAYER + CENTER REPOSITION V2
-   ========================================================= */
-
-/* NEW: Move Player below the Log on the left side */
-#player-area .table-seat-0{
-    position:fixed;
-    left:20px;
-    top:52%;
-    transform:none;
-    margin:0;
-    z-index:11;
-}
-
-/* NEW: Move Deck / Discard to the center of the viewport */
-#center-table-area{
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
-}
-
-/* NEW: Keep the approved Player / Hand / Controls composition on short screens */
-@media (max-height:800px){
-    #player-area .table-seat-0{
-        left:15px;
-        top:51%;
-    }
-
-    #center-table-area{
-        top:50%;
-    }
-}
-
-/* NEW: Keep Player and center piles visible on very short screens */
-@media (max-height:700px){
-    #player-area .table-seat-0{
-        left:10px;
-        top:50%;
-    }
-
-    #center-table-area{
-        top:49%;
-    }
-}
-
-/* =========================================================
-   CONTROLLER REPOSITION V3
-   ========================================================= */
-
-/* NEW: Move controller under Player so it cannot overlap Hand */
-#control-area{
-    left:15px;
-    right:auto;
-    bottom:72px;
-    width:165px;
-    min-height:55px;
-    z-index:12;
-}
-
-/* NEW: Move End Turn under the controller */
-#end-turn{
-    left:15px;
-    right:auto;
-    bottom:15px;
-    width:165px;
-    min-height:42px;
-    z-index:12;
-}
-
-/* NEW: Compact controller on short screens */
-@media (max-height:800px){
-    #control-area{
-        left:15px;
-        bottom:62px;
-        width:155px;
-    }
-
-    #end-turn{
-        left:15px;
-        bottom:12px;
-        width:155px;
-    }
-}
-
-/* NEW: Very short screen controller */
-@media (max-height:700px){
-    #control-area{
-        left:10px;
-        bottom:52px;
-        width:145px;
-    }
-
-    #end-turn{
-        left:10px;
-        bottom:8px;
-        width:145px;
-    }
-}
-
-/* =========================================================
-   PLAYER + CONTROLLER REPOSITION V4
-   ========================================================= */
-
-/* NEW: Move Player up to leave room for Use Skill control */
-#player-area .table-seat-0{
-    top:36%;
-}
-
-/* NEW: Center Controller below the Log frame */
-#control-area{
-    left:78px;
-    right:auto;
-    bottom:214px;
-    width:165px;
-}
-
-/* NEW: Keep End Turn directly below the centered Controller */
-#end-turn{
-    left:78px;
-    right:auto;
-    bottom:165px;
-    width:165px;
-}
-
-/* NEW: Short viewport Player position */
-@media (max-height:800px){
-    #player-area .table-seat-0{
-        left:15px;
-        top:34%;
-    }
-
-    #control-area{
-        left:83px;
-        bottom:185px;
-        width:155px;
-    }
-
-    #end-turn{
-        left:83px;
-        bottom:138px;
-        width:155px;
-    }
-}
-
-/* NEW: Very short viewport Player position */
-@media (max-height:700px){
-    #player-area .table-seat-0{
-        left:10px;
+        left:82px;
         top:32%;
     }
 
+    #center-table-area{
+        width:220px;
+    }
+
+    #hand-area{
+        bottom:75px;
+        height:132px;
+    }
+
     #control-area{
-        left:82px;
-        bottom:155px;
-        width:145px;
+        bottom:15px;
+        width:250px;
     }
 
     #end-turn{
@@ -559,205 +367,4 @@ body{
         bottom:112px;
         width:145px;
     }
-}
-
-/* =========================================================
-   PLAYER HORIZONTAL ALIGN V5
-   ========================================================= */
-
-/* NEW: Align Player horizontally with End Turn on the left */
-#player-area .table-seat-0{
-    left:78px;
-}
-
-/* NEW: Keep Player aligned with End Turn on short screens */
-@media (max-height:800px){
-    #player-area .table-seat-0{
-        left:83px;
-    }
-}
-
-/* NEW: Keep Player aligned with End Turn on very short screens */
-@media (max-height:700px){
-    #player-area .table-seat-0{
-        left:82px;
-    }
-}
-
-/* =========================================================
-   HAND REPOSITION V6
-   ========================================================= */
-
-/* NEW: Move Hand upward to create space below for Controller */
-#hand-area{
-    bottom:100px;
-}
-
-/* NEW: Keep Hand lifted on short screens */
-@media (max-height:800px){
-    #hand-area{
-        bottom:90px;
-    }
-}
-
-/* NEW: Keep Hand lifted on very short screens */
-@media (max-height:700px){
-    #hand-area{
-        bottom:75px;
-    }
-}
-
-/* =========================================================
-   CONTROLLER REPOSITION V7
-   ========================================================= */
-
-/* NEW: Move Controller directly below Hand and center it */
-#control-area{
-    left:50%;
-    right:auto;
-    bottom:25px;
-    width:165px;
-    min-height:55px;
-    transform:translateX(-50%);
-}
-
-/* NEW: Keep Controller below Hand on short screens */
-@media (max-height:800px){
-    #control-area{
-        bottom:20px;
-        width:155px;
-    }
-}
-
-/* NEW: Keep Controller below Hand on very short screens */
-@media (max-height:700px){
-    #control-area{
-        bottom:15px;
-        width:145px;
-    }
-}
-
-/* =========================================================
-   CONTROLLER MULTI-BUTTON V8
-   ========================================================= */
-
-/* NEW: Widen Controller so Skill + Confirm stay on one row */
-#control-area{
-    width:270px;
-    flex-wrap:nowrap;
-}
-
-/* NEW: Keep wider Controller centered on short screens */
-@media (max-height:800px){
-    #control-area{
-        width:270px;
-    }
-}
-
-/* NEW: Keep wider Controller centered on very short screens */
-@media (max-height:700px){
-    #control-area{
-        width:250px;
-    }
-}
-
-/* =========================================================
-   CENTER PILES BALANCE V9
-   ========================================================= */
-
-/* NEW: Set equal Deck / Discard spacing for a balanced two-pile group */
-#center-table-area{
-    width:200px;
-    gap:40px;
-}
-
-/* NEW: Match the two-pile group width to larger center cards on short screens */
-@media (max-height:800px){
-    #center-table-area{
-        width:230px;
-        gap:40px;
-    }
-}
-
-/* NEW: Match the two-pile group width to compact center cards on very short screens */
-@media (max-height:700px){
-    #center-table-area{
-        width:220px;
-        gap:40px;
-    }
-}
-/* =========================================================
-   CENTER PILES REPOSITION V10
-   ========================================================= */
-
-/* NEW: Move Deck / Discard slightly downward */
-#center-table-area{
-    top:calc(50% + 50px);
-}
-/* =========================================================
-   TURN INDICATOR V11
-   ========================================================= */
-
-/* NEW: แสดงกรอบ TURN บน Player ที่กำลังเล่น */
-#player-area .table-seat-0::before{
-    content:"TURN";
-    position:absolute;
-    left:50%;
-    top:-32px;
-    transform:translateX(-50%);
-
-    padding:4px 14px;
-
-    border:2px solid #5b4636;
-    border-radius:8px;
-
-    background:#fff8dc;
-
-    font-size:14px;
-    font-weight:bold;
-    line-height:1;
-
-    box-shadow:
-        0 2px 6px rgba(0,0,0,0.2);
-
-    z-index:20;
-}
-/* =========================================================
-   PLAYER REPOSITION V12
-   ========================================================= */
-
-/* NEW: Move Player slightly downward to create space for TURN */
-#player-area .table-seat-0{
-    top:calc(36% + 25px);
-}
-/* =========================================================
-   TURN INDICATOR V11
-   ========================================================= */
-
-/* NEW: Move current Player slightly downward */
-#player-area .table-seat-0{
-    top:calc(36% + 25px);
-}
-
-/* NEW: Show TURN above the current Player */
-#player-area .table-seat-0::before{
-    content:"TURN";
-    position:absolute;
-    left:50%;
-    top:-32px;
-    transform:translateX(-50%);
-
-    padding:4px 14px;
-    border:2px solid #5b4636;
-    border-radius:8px;
-    background:#fff8dc;
-
-    font-size:14px;
-    font-weight:bold;
-    line-height:1;
-
-    box-shadow:
-        0 2px 6px rgba(0,0,0,0.2);
-
-    z-index:20;
 }
