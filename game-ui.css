@@ -1,0 +1,188 @@
+/* =========================================================
+   THREE KINGDOM STRATEGY
+   GAME UI LAYOUT
+   ========================================================= */
+
+/* NEW: Shared UI sizing */
+:root{
+    --game-padding:20px;
+    --character-card-width:165px;
+    --hand-card-width:100px;
+    --hand-card-height:136px;
+    --center-card-width:100px;
+    --center-card-height:136px;
+}
+
+/* NEW: Browser viewport is fixed to the game screen */
+html,
+body{
+    width:100%;
+    height:100%;
+    margin:0;
+    overflow:hidden;
+}
+
+/* NEW: Main game viewport */
+#game{
+    width:100vw;
+    height:100vh;
+    min-height:0;
+    box-sizing:border-box;
+    overflow:hidden;
+}
+
+/* =========================================================
+   CHARACTER SIZE
+   ========================================================= */
+
+/* NEW: Character cards stay compact on the game table */
+#player-area .player-card{
+    width:var(--character-card-width);
+    min-width:var(--character-card-width);
+}
+
+/* =========================================================
+   CENTER TABLE
+   ========================================================= */
+
+/* NEW: Central table area reserved for Deck / Discard */
+#center-table-area{
+    position:relative;
+    width:100%;
+    min-height:140px;
+    box-sizing:border-box;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:42px;
+    z-index:2;
+}
+
+/* NEW: Deck / Discard stack container */
+.center-pile{
+    position:relative;
+    width:var(--center-card-width);
+    min-width:var(--center-card-width);
+    text-align:center;
+}
+
+/* NEW: Pile title */
+.center-pile-title{
+    margin-bottom:6px;
+    font-size:16px;
+    font-weight:bold;
+    line-height:1.2;
+}
+
+/* NEW: Common pile card frame */
+.center-pile-card{
+    width:var(--center-card-width);
+    height:var(--center-card-height);
+    box-sizing:border-box;
+    border:2px solid #5b4636;
+    border-radius:9px;
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.7),
+        0 4px 10px rgba(0,0,0,0.24);
+}
+
+/* NEW: Deck visual */
+.deck-pile-card{
+    background:#3f4050;
+    position:relative;
+}
+
+/* NEW: Deck back inner frame */
+.deck-pile-card::after{
+    content:"";
+    position:absolute;
+    inset:8px;
+    border:1px solid rgba(255,255,255,0.45);
+    border-radius:6px;
+    pointer-events:none;
+}
+
+/* NEW: Discard visual */
+.discard-pile-card{
+    background:#fff8dc;
+    overflow:hidden;
+}
+
+/* NEW: Discard top card content */
+.discard-pile-card > .discard-card-content{
+    width:100%;
+    height:100%;
+    box-sizing:border-box;
+    padding:8px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+/* NEW: Pile count */
+.center-pile-count{
+    margin-top:6px;
+    font-size:15px;
+    font-weight:bold;
+    line-height:1;
+}
+
+/* NEW: Empty discard placeholder */
+.discard-pile-card.is-empty{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:0.55;
+}
+
+/* =========================================================
+   HAND SIZE
+   ========================================================= */
+
+/* NEW: Compact hand area */
+#hand-area{
+    min-height:210px;
+    box-sizing:border-box;
+}
+
+/* NEW: Current hand card size */
+#hand-area .hand-card{
+    width:var(--hand-card-width);
+    height:var(--hand-card-height);
+}
+
+/* =========================================================
+   RESPONSIVE TABLE ADJUSTMENT
+   ========================================================= */
+
+/* NEW: Smaller desktop / laptop viewport */
+@media (max-height:800px){
+    :root{
+        --character-card-width:155px;
+        --hand-card-width:95px;
+        --hand-card-height:129px;
+        --center-card-width:95px;
+        --center-card-height:129px;
+    }
+}
+
+/* NEW: Very compact viewport */
+@media (max-height:700px){
+    :root{
+        --character-card-width:145px;
+        --hand-card-width:90px;
+        --hand-card-height:122px;
+        --center-card-width:90px;
+        --center-card-height:122px;
+    }
+
+    #center-table-area{
+        min-height:120px;
+        gap:30px;
+    }
+
+    #hand-area{
+        min-height:190px;
+        padding-top:24px;
+    }
+}
