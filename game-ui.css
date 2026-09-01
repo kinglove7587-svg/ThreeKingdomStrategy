@@ -563,7 +563,7 @@ body{
 
 /* =========================================================
    PLAYER HORIZONTAL ALIGN V5
-   =========================================================
+   ========================================================= */
 
 /* NEW: Align Player horizontally with End Turn on the left */
 #player-area .table-seat-0{
@@ -639,7 +639,7 @@ body{
 
 /* =========================================================
    CONTROLLER MULTI-BUTTON V8
-   =========================================================
+   ========================================================= */
 
 /* NEW: Widen Controller so Skill + Confirm stay on one row */
 #control-area{
@@ -658,5 +658,31 @@ body{
 @media (max-height:700px){
     #control-area{
         width:250px;
+    }
+}
+
+/* =========================================================
+   CENTER PILES BALANCE V9
+   ========================================================= */
+
+/* NEW: Set equal Deck / Discard spacing for a balanced two-pile group */
+#center-table-area{
+    width:200px;
+    gap:40px;
+}
+
+/* NEW: Match the two-pile group width to larger center cards on short screens */
+@media (max-height:800px){
+    #center-table-area{
+        width:230px;
+        gap:40px;
+    }
+}
+
+/* NEW: Match the two-pile group width to compact center cards on very short screens */
+@media (max-height:700px){
+    #center-table-area{
+        width:220px;
+        gap:40px;
     }
 }
