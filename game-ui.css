@@ -69,7 +69,7 @@ body{
 #player-area .table-seat-0{
     position:fixed;
     left:78px;
-    top:calc(36% + 25px);
+    top:calc(36% + 78px);
     margin:0;
     z-index:11;
 }
