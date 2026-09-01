@@ -379,7 +379,7 @@ body{
     position:relative;
 
     width:100%;
-    height:390px;
+    height:380px;
 
     display:grid;
 
@@ -881,8 +881,8 @@ body{
 #hand-area .hand-card{
     position:relative;
 
-    width:110px;
-    height:150px;
+    width:100px;
+    height:136px;
 
     padding:8px;
 
