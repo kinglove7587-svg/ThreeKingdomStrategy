@@ -383,7 +383,7 @@ class UIManager{
         // ชื่อ Deck
         const deckTitle = document.createElement("div");
         deckTitle.className = "center-pile-title";
-        deckTitle.textContent = "Deck";
+        deckTitle.textContent = "กองจั่ว";
         // ภาพด้านหลังไพ่
         const deckCard = document.createElement("div");
         deckCard.className = "center-pile-card deck-pile-card";
@@ -397,6 +397,48 @@ class UIManager{
         deckPile.appendChild(deckCount);
         // แสดง Deck ลงบนโต๊ะ
         centerArea.appendChild(deckPile);
+
+        // สร้างพื้นที่สำหรับ Discard
+        const discardPile = document.createElement("div");
+        discardPile.className = "center-pile";
+        // ชื่อ Discard
+        const discardTitle = document.createElement("div");
+        discardTitle.className = "center-pile-title";
+        discardTitle.textContent = "กองทิ้ง";
+        // สร้างกรอบการ์ด Discard
+        const discardCard = document.createElement("div");
+        discardCard.className = "center-pile-card discard-pile-card";
+        // ดึงการ์ดจากกองทิ้ง
+        const discardCards= this.game.discardPile.cards;
+        // ตรวจสอบว่ามีการ์ดในกองทิ้งหรือไม่
+        if(discardCards.length > 0){
+            const topCard = discardCards[discardCards.length - 1];
+            const content = document.createElement("div");
+            content.className = "discard-card-content";
+            
+            const cardValue = document.createElement("div");
+            cardValue.textContent = topCard.suit + " " + topCard.number;
+
+            const cardName = document.createElement("div");
+            cardName.textContent = topCard.name;
+            // ประกอบข้อมูลลงในการ์ด
+            content.appendChild(cardValue);
+            content.appendChild(cardName);
+            discardCard.appendChild(content);
+        }else{
+            discardCard.classList.add("is-empty");
+            discardCard.textContent = "—";
+        }
+        // แสดงจำนวนการ์ดในกองทิ้ง
+        const discardCount = document.createElement("div");
+        discardCount.className = "center-pile-count";
+        discardCount.textContent = discardCards.length;
+        // ประกอบ Discard
+        discardPile.appendChild(discardTitle);
+        discardPile.appendChild(discardCard);
+        discardPile.appendChild(discardCount);
+
+        centerArea.appendChild(discardPile);
     }
     // วาดปุ่มการ์ดบนมือของผู้เล่นที่ถึงตาเล่นในปัจจุบัน
     renderHands(){
