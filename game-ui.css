@@ -24,6 +24,7 @@ body{
 
 /* NEW: Main game viewport */
 #game{
+    position:relative;
     width:100vw;
     height:100vh;
     min-height:0;
@@ -184,5 +185,214 @@ body{
     #hand-area{
         min-height:190px;
         padding-top:24px;
+    }
+}
+
+/* =========================================================
+   TARGET UI LOCK V1
+   ========================================================= */
+
+/* NEW: Lock main game zones to the reference composition */
+#game{
+    position:relative;
+    width:100vw;
+    height:100vh;
+    min-height:0;
+    padding:0;
+    overflow:hidden;
+    box-sizing:border-box;
+}
+
+/* NEW: Log = upper-left zone */
+#log-area{
+    position:absolute;
+    left:20px;
+    top:20px;
+    width:280px;
+    height:300px;
+    max-height:none;
+    margin:0;
+    padding:10px;
+    box-sizing:border-box;
+    overflow-y:auto;
+    transform:none;
+    z-index:10;
+}
+
+/* NEW: Character table = full right-side stage */
+#player-area{
+    position:absolute;
+    left:320px;
+    right:20px;
+    top:20px;
+    width:auto;
+    height:560px;
+    min-height:0;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    grid-template-rows:220px 320px;
+    align-items:start;
+    justify-items:center;
+    z-index:5;
+}
+
+/* NEW: Enemy seats = top row */
+#player-area .table-seat-1,
+#player-area .table-seat-2,
+#player-area .table-seat-3,
+#player-area .table-seat-4{
+    align-self:start;
+    justify-self:center;
+    transform:none;
+}
+
+/* NEW: Player seat = centered lower row */
+#player-area .table-seat-0{
+    align-self:start;
+    justify-self:center;
+    transform:translateY(130px);
+    z-index:6;
+}
+
+/* NEW: Center pile = center of table */
+#center-table-area{
+    position:absolute;
+    left:50%;
+    top:285px;
+    width:220px;
+    min-height:120px;
+    height:auto;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    transform:translateX(-50%);
+    gap:28px;
+    z-index:4;
+}
+
+/* NEW: Hand = lower center */
+#hand-area{
+    position:absolute;
+    left:320px;
+    right:270px;
+    bottom:20px;
+    width:auto;
+    min-height:0;
+    height:156px;
+    margin:0;
+    padding:10px 0;
+    box-sizing:border-box;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    gap:4px;
+    z-index:8;
+}
+
+/* NEW: Hand cards keep their own fixed dimensions */
+#hand-area .hand-card{
+    flex:none;
+}
+
+/* NEW: Controls = lower-right */
+#control-area{
+    position:absolute;
+    right:20px;
+    bottom:70px;
+    width:220px;
+    min-height:55px;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    z-index:9;
+}
+
+/* NEW: End Turn = below controls */
+#end-turn{
+    position:absolute;
+    right:20px;
+    bottom:20px;
+    width:220px;
+    min-height:42px;
+    margin:0;
+    box-sizing:border-box;
+    z-index:9;
+}
+
+/* =========================================================
+   TARGET UI LOCK - SHORT VIEWPORT
+   ========================================================= */
+
+/* NEW: Keep the same composition on shorter screens */
+@media (max-height:800px){
+    #log-area{
+        height:250px;
+    }
+
+    #player-area{
+        height:500px;
+        grid-template-rows:200px 300px;
+    }
+
+    #player-area .table-seat-0{
+        transform:translateY(105px);
+    }
+
+    #center-table-area{
+        top:255px;
+    }
+
+    #hand-area{
+        height:145px;
+        bottom:15px;
+    }
+
+    #control-area{
+        bottom:60px;
+    }
+
+    #end-turn{
+        bottom:15px;
+    }
+}
+
+/* NEW: Keep the same composition on very short screens */
+@media (max-height:700px){
+    #log-area{
+        height:220px;
+    }
+
+    #player-area{
+        height:430px;
+        grid-template-rows:170px 260px;
+    }
+
+    #player-area .table-seat-0{
+        transform:translateY(80px);
+    }
+
+    #center-table-area{
+        top:220px;
+        gap:24px;
+    }
+
+    #hand-area{
+        height:132px;
+        bottom:10px;
+    }
+
+    #control-area{
+        bottom:50px;
+    }
+
+    #end-turn{
+        bottom:10px;
     }
 }
