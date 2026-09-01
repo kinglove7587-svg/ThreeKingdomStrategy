@@ -272,19 +272,22 @@ body{
     z-index:4;
 }
 
-/* NEW: Hand - lower center */
 #hand-area{
     left:320px;
     right:270px;
     bottom:20px;
     width:auto;
-    min-height:0;
     height:156px;
+    min-height:0;
     margin:0;
-    padding:10px 0;
+
+    padding:10px 0 10px 30px; /* NEW */
+
+    display:flex;
     align-items:flex-start;
-    justify-content:center;
+    justify-content:flex-start; /* NEW */
     gap:4px;
+
     z-index:8;
 }
 
