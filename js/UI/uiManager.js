@@ -1616,6 +1616,20 @@ class UIManager{
         if(player.controller.inputState === "waitingTriggerChoice"){
             return;
         }
+        // แสดงปุ่มยกเลิกระหว่างกำลังใช้ Active Skill
+        if(
+            player.controller.inputState === "waitingSkillTarget" || 
+            player.controller.inputState === "waitingSkillCard"
+        ){
+            // สร้างปุ่มยกเลิก
+            const cancelButton = document.createElement("button");
+            cancelButton.textContent = "ยกเลิก";
+            cancelButton.onclick = () => {
+                player.controller.cancelSkillSelection();
+            };
+            this.controlArea.appendChild(cancelButton);
+            return;
+        }
         // ระหว่างเลือก Card/Target ของ Trigger ห้ามเริ่ม Skill อื่น
         if(
             player.controller.inputState === "waitingTriggerCard" || 
