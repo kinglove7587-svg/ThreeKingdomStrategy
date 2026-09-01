@@ -1618,8 +1618,8 @@ class UIManager{
         }
         // แสดงปุ่มยกเลิกระหว่างกำลังใช้ Active Skill
         if(
-            player.controller.inputState === "waitingSkillTarget" || 
-            player.controller.inputState === "waitingSkillCard"
+            player.controller.inputState === "waitingSkillTarget"
+            //player.controller.inputState === "waitingSkillCard"
         ){
             // สร้างปุ่มยกเลิก
             const cancelButton = document.createElement("button");
