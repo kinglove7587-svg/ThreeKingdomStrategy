@@ -722,3 +722,11 @@ body{
 
     z-index:20;
 }
+/* =========================================================
+   PLAYER REPOSITION V12
+   ========================================================= */
+
+/* NEW: Move Player slightly downward to create space for TURN */
+#player-area .table-seat-0{
+    top:calc(36% + 25px);
+}
