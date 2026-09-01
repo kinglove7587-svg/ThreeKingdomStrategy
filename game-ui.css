@@ -81,8 +81,7 @@ html,body{width:100%;height:100%;margin:0;overflow:hidden;}
 .center-pile-count{margin-top:6px;font-size:15px;font-weight:bold;line-height:1;}
 .discard-pile-card.is-empty{display:flex;align-items:center;justify-content:center;opacity:.55;}
 
-/* NEW: Hand - start immediately after the Log/Player column.
-   Important: justify-content is flex-start, not center. */
+/* NEW: Hand - keep current position */
 #hand-area{
     position:absolute !important;
     left:calc(var(--left-panel-width) + 8px) !important;
@@ -148,4 +147,59 @@ html,body{width:100%;height:100%;margin:0;overflow:hidden;}
     }
     #control-area{right:10px;bottom:48px;}
     #end-turn{right:10px;bottom:8px;}
+}
+
+/* =========================================================
+   ENEMY COMPACT V4
+   ========================================================= */
+
+/* NEW: Keep the four enemy cards together instead of spreading across the whole table */
+#player-area{
+    grid-template-columns:repeat(4, var(--character-card-width));
+    column-gap:clamp(12px, 1.2vw, 24px);
+    justify-content:center;
+}
+
+/* NEW: Enemy cards occupy one compact centered row */
+#player-area .table-seat-1,
+#player-area .table-seat-2,
+#player-area .table-seat-3,
+#player-area .table-seat-4{
+    grid-row:1;
+    transform:none;
+}
+
+/* NEW: Player is positioned independently in the lower-left area */
+#player-area .table-seat-0{
+    position:absolute;
+    left:clamp(30px, 3vw, 55px);
+    top:58%;
+    transform:none;
+    z-index:6;
+}
+
+/* NEW: Keep the enemy row slightly higher on shorter screens */
+@media (max-height:800px){
+    #player-area{
+        grid-template-columns:repeat(4, var(--character-card-width));
+        column-gap:clamp(10px, 1vw, 20px);
+    }
+
+    #player-area .table-seat-0{
+        left:clamp(24px, 2.5vw, 45px);
+        top:58%;
+    }
+}
+
+/* NEW: Compact enemy row for very short screens */
+@media (max-height:700px){
+    #player-area{
+        grid-template-columns:repeat(4, var(--character-card-width));
+        column-gap:12px;
+    }
+
+    #player-area .table-seat-0{
+        left:20px;
+        top:57%;
+    }
 }
