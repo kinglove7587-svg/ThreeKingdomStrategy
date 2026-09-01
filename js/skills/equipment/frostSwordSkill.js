@@ -182,7 +182,9 @@ class FrostSwordSkill extends TriggerSkill{
         // เคลียร์ State และ Resume Damage
         player.controller.selectedFrostSwordCards = [];
         context.damage.waitingTrigger = false;
-        context.damage.resume();
+        if(context.resolution){
+            context.resolution.resume();
+        }
         return true;
     }
 }
