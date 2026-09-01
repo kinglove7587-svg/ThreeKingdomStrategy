@@ -92,7 +92,9 @@ class FrostSwordSkill extends TriggerSkill{
             player.controller.triggerContext = null;
             player.controller.inputState = "idle";
             context.damage.waitingTrigger = false;
-            context.damage.resume();
+            if(context.resolution){
+                context.resolution.resume();
+            }
             return true;
         }
     }
