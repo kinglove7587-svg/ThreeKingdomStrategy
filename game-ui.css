@@ -441,3 +441,57 @@ body{
         top:49%;
     }
 }
+
+/* =========================================================
+   CONTROLLER REPOSITION V3
+   ========================================================= */
+
+/* NEW: Move controller under Player so it cannot overlap Hand */
+#control-area{
+    left:15px;
+    right:auto;
+    bottom:72px;
+    width:165px;
+    min-height:55px;
+    z-index:12;
+}
+
+/* NEW: Move End Turn under the controller */
+#end-turn{
+    left:15px;
+    right:auto;
+    bottom:15px;
+    width:165px;
+    min-height:42px;
+    z-index:12;
+}
+
+/* NEW: Compact controller on short screens */
+@media (max-height:800px){
+    #control-area{
+        left:15px;
+        bottom:62px;
+        width:155px;
+    }
+
+    #end-turn{
+        left:15px;
+        bottom:12px;
+        width:155px;
+    }
+}
+
+/* NEW: Very short screen controller */
+@media (max-height:700px){
+    #control-area{
+        left:10px;
+        bottom:52px;
+        width:145px;
+    }
+
+    #end-turn{
+        left:10px;
+        bottom:8px;
+        width:145px;
+    }
+}
