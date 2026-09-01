@@ -379,7 +379,7 @@ body{
     position:relative;
 
     width:100%;
-    height:920px;
+    height:560px;
 
     display:grid;
 
@@ -399,8 +399,8 @@ body{
 
 /* NEW: Character Card */
 #player-area .player-card{
-    width:240px; /* NEW: ความกว้าง Character Card */
-    min-width:240px; /* NEW */
+    width:190px; 
+    min-width:190px; 
 
     min-height:0; /* NEW: ไม่บังคับความสูงเกินเนื้อหา */
 
