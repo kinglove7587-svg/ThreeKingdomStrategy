@@ -10,414 +10,142 @@
     --hand-card-height:136px;
     --center-card-width:80px;
     --center-card-height:109px;
-
     --left-panel-width:clamp(230px, 18vw, 290px);
     --control-width:clamp(190px, 15vw, 230px);
     --layout-gap:clamp(12px, 1.5vw, 24px);
 }
 
-/* NEW: Lock browser to the game viewport */
-html,
-body{
-    width:100%;
-    height:100%;
-    margin:0;
-    overflow:hidden;
-}
+html,body{width:100%;height:100%;margin:0;overflow:hidden;}
 
-/* NEW: Main game viewport */
 #game{
-    position:relative;
-    width:100vw;
-    height:100vh;
-    min-height:0;
-    padding:0;
-    box-sizing:border-box;
-    overflow:hidden;
-    display:block;
+    position:relative;width:100vw;height:100vh;min-height:0;padding:0;
+    box-sizing:border-box;overflow:hidden;display:block;
 }
 
-/* =========================================================
-   CHARACTER SIZE
-   ========================================================= */
-
-/* NEW: Character card size */
 #player-area .player-card{
     width:var(--character-card-width);
     min-width:var(--character-card-width);
     box-sizing:border-box;
 }
 
-/* =========================================================
-   LOG
-   ========================================================= */
-
-/* NEW: Log occupies upper-left half */
+/* NEW: Log */
 #log-area{
-    position:absolute;
-    left:16px;
-    top:16px;
-    width:var(--left-panel-width);
-    height:calc(50vh - 24px);
-    max-height:none;
-    margin:0;
-    padding:10px;
-    box-sizing:border-box;
-    overflow-y:auto;
-    z-index:20;
+    position:absolute;left:16px;top:16px;width:var(--left-panel-width);
+    height:calc(50vh - 24px);max-height:none;margin:0;padding:10px;
+    box-sizing:border-box;overflow-y:auto;z-index:20;
 }
-
-/* =========================================================
-   PLAYER AREA
-   ========================================================= */
 
 /* NEW: Full-table positioning layer */
 #player-area{
-    position:absolute;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    display:grid;
-    grid-template-columns:var(--left-panel-width) repeat(4, minmax(0,1fr));
-    grid-template-rows:46% 54%;
-    align-items:center;
-    justify-items:center;
-    pointer-events:none;
-    z-index:5;
+    position:absolute;left:0;top:0;width:100%;height:100%;margin:0;padding:0;
+    box-sizing:border-box;display:grid;
+    grid-template-columns:var(--left-panel-width) repeat(4,minmax(0,1fr));
+    grid-template-rows:46% 54%;align-items:center;justify-items:center;
+    pointer-events:none;z-index:5;
 }
 
-/* NEW: Character cards remain clickable */
-#player-area .player-card{
-    pointer-events:auto;
-}
+#player-area .player-card{pointer-events:auto;}
 
-/* NEW: Enemy cards - compact top row */
-#player-area .table-seat-1{
-    grid-column:2;
-    grid-row:1;
-    transform:none;
-}
+/* NEW: Enemy cards */
+#player-area .table-seat-1{grid-column:2;grid-row:1;transform:none;}
+#player-area .table-seat-2{grid-column:3;grid-row:1;transform:none;}
+#player-area .table-seat-3{grid-column:4;grid-row:1;transform:none;}
+#player-area .table-seat-4{grid-column:5;grid-row:1;transform:none;}
 
-#player-area .table-seat-2{
-    grid-column:3;
-    grid-row:1;
-    transform:none;
-}
-
-#player-area .table-seat-3{
-    grid-column:4;
-    grid-row:1;
-    transform:none;
-}
-
-#player-area .table-seat-4{
-    grid-column:5;
-    grid-row:1;
-    transform:none;
-}
-
-/* NEW: Current player - lower-left panel */
+/* NEW: Current player */
 #player-area .table-seat-0{
-    grid-column:1;
-    grid-row:2;
-    align-self:center;
-    justify-self:center;
-    transform:none;
-    z-index:6;
+    grid-column:1;grid-row:2;align-self:center;justify-self:center;
+    transform:none;z-index:6;
 }
 
-/* =========================================================
-   CENTER TABLE
-   ========================================================= */
-
-/* NEW: Deck / Discard remain centered in the right-side table */
+/* NEW: Center table */
 #center-table-area{
     position:absolute;
     left:calc(var(--left-panel-width) + (100% - var(--left-panel-width)) / 2);
-    top:43%;
-    width:clamp(190px, 16vw, 220px);
-    min-height:110px;
-    height:auto;
-    margin:0;
-    transform:translate(-50%,-50%);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:clamp(16px, 2vw, 28px);
-    box-sizing:border-box;
-    z-index:7;
+    top:43%;width:clamp(190px,16vw,220px);min-height:110px;height:auto;
+    margin:0;transform:translate(-50%,-50%);display:flex;align-items:center;
+    justify-content:center;gap:clamp(16px,2vw,28px);box-sizing:border-box;z-index:7;
 }
 
-/* NEW: Pile wrapper */
-.center-pile{
-    position:relative;
-    width:var(--center-card-width);
-    min-width:var(--center-card-width);
-    text-align:center;
-}
-
-/* NEW: Pile title */
-.center-pile-title{
-    margin-bottom:6px;
-    font-size:16px;
-    font-weight:bold;
-    line-height:1.2;
-}
-
-/* NEW: Pile card frame */
+.center-pile{position:relative;width:var(--center-card-width);min-width:var(--center-card-width);text-align:center;}
+.center-pile-title{margin-bottom:6px;font-size:16px;font-weight:bold;line-height:1.2;}
 .center-pile-card{
-    width:var(--center-card-width);
-    height:var(--center-card-height);
-    box-sizing:border-box;
-    border:2px solid #5b4636;
-    border-radius:9px;
-    box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,0.7),
-        0 4px 10px rgba(0,0,0,0.24);
+    width:var(--center-card-width);height:var(--center-card-height);box-sizing:border-box;
+    border:2px solid #5b4636;border-radius:9px;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.7),0 4px 10px rgba(0,0,0,.24);
 }
+.deck-pile-card{background:#3f4050;position:relative;}
+.deck-pile-card::after{content:"";position:absolute;inset:8px;border:1px solid rgba(255,255,255,.45);border-radius:6px;pointer-events:none;}
+.discard-pile-card{background:#fff8dc;overflow:hidden;}
+.discard-pile-card>.discard-card-content{width:100%;height:100%;box-sizing:border-box;padding:8px;display:flex;flex-direction:column;justify-content:space-between;}
+.center-pile-count{margin-top:6px;font-size:15px;font-weight:bold;line-height:1;}
+.discard-pile-card.is-empty{display:flex;align-items:center;justify-content:center;opacity:.55;}
 
-/* NEW: Deck visual */
-.deck-pile-card{
-    background:#3f4050;
-    position:relative;
-}
-
-/* NEW: Deck inner frame */
-.deck-pile-card::after{
-    content:"";
-    position:absolute;
-    inset:8px;
-    border:1px solid rgba(255,255,255,0.45);
-    border-radius:6px;
-    pointer-events:none;
-}
-
-/* NEW: Discard visual */
-.discard-pile-card{
-    background:#fff8dc;
-    overflow:hidden;
-}
-
-/* NEW: Discard content */
-.discard-pile-card > .discard-card-content{
-    width:100%;
-    height:100%;
-    box-sizing:border-box;
-    padding:8px;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-}
-
-/* NEW: Pile count */
-.center-pile-count{
-    margin-top:6px;
-    font-size:15px;
-    font-weight:bold;
-    line-height:1;
-}
-
-/* NEW: Empty discard placeholder */
-.discard-pile-card.is-empty{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    opacity:0.55;
-}
-
-/* =========================================================
-   HAND
-   ========================================================= */
-
-/* NEW: Hand occupies lower-right area beside Player */
+/* NEW: Hand - start immediately after the Log/Player column.
+   Important: justify-content is flex-start, not center. */
 #hand-area{
-    position:absolute;
-    left:calc(var(--left-panel-width) + 20px);
-    right:calc(var(--control-width) + 20px);
-    bottom:15px;
-    width:auto;
-    height:150px;
-    min-height:0;
-    margin:0;
-    padding:7px 0;
-    box-sizing:border-box;
-    z-index:5;
+    position:absolute !important;
+    left:calc(var(--left-panel-width) + 8px) !important;
+    right:calc(var(--control-width) + 20px) !important;
+    bottom:15px !important;
+    width:auto !important;
+    height:150px !important;
+    min-height:0 !important;
+    margin:0 !important;
+    padding:7px 0 !important;
+    box-sizing:border-box !important;
+    display:flex !important;
+    flex-direction:row !important;
+    align-items:flex-start !important;
+    justify-content:flex-start !important;
+    gap:clamp(3px,.45vw,6px) !important;
+    z-index:8 !important;
 }
 
-/* NEW: Enemy character seats */
-#player-area .table-seat-1,
-#player-area .table-seat-2,
-#player-area .table-seat-3,
-#player-area .table-seat-4{
-    align-self:start;
-    justify-self:center;
-    transform:none;
-}
-
-/* NEW: Current player seat */
-#player-area .table-seat-0{
-    align-self:start;
-    justify-self:center;
-    transform:translateY(130px);
-    z-index:6;
-}
-
-/* NEW: Center table - Deck / Discard */
-#center-table-area{
-    left:50%;
-    top:285px;
-    width:220px;
-    min-height:120px;
-    height:auto;
-    margin:0;
-    transform:translateX(-50%);
-    gap:28px;
-    z-index:4;
-}
-
-/* NEW: Hand - lower center */
-#hand-area{
-    left:320px;
-    right:270px;
-    bottom:20px;
-    width:auto;
-    min-height:0;
-    height:156px;
-    margin:0;
-    padding:10px 0;
-    align-items:flex-start;
-    justify-content:center;
-    gap:4px;
-    z-index:8;
-}
-
-/* NEW: Hand cards use the shared compact size */
 #hand-area .hand-card{
-    width:var(--hand-card-width);
-    height:var(--hand-card-height);
-    flex:none;
+    width:var(--hand-card-width);height:var(--hand-card-height);flex:none;margin:0;
 }
 
-/* =========================================================
-   CONTROLS
-   ========================================================= */
-
-/* NEW: Controls stay to the right of the hand */
+/* NEW: Controls */
 #control-area{
-    position:absolute;
-    right:20px;
-    bottom:60px;
-    width:var(--control-width);
-    min-height:55px;
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    z-index:9;
+    position:absolute;right:20px;bottom:60px;width:var(--control-width);min-height:55px;
+    margin:0;padding:0;box-sizing:border-box;display:flex;align-items:center;
+    justify-content:center;gap:10px;z-index:9;
 }
 
-/* NEW: End Turn stays below controls */
 #end-turn{
-    position:absolute;
-    right:20px;
-    bottom:15px;
-    width:var(--control-width);
-    min-height:42px;
-    margin:0;
-    box-sizing:border-box;
-    z-index:9;
+    position:absolute;right:20px;bottom:15px;width:var(--control-width);min-height:42px;
+    margin:0;box-sizing:border-box;z-index:9;
 }
 
-/* =========================================================
-   SHORT VIEWPORT
-   ========================================================= */
-
-/* NEW: Compact laptop layout */
+/* NEW: Short viewport */
 @media (max-height:800px){
-    :root{
-        --character-card-width:155px;
-        --hand-card-width:95px;
-        --hand-card-height:129px;
-    }
-
-    #log-area{
-        left:15px;
-        top:15px;
-        height:calc(50vh - 22px);
-    }
-
-    #player-area{
-        grid-template-rows:44% 56%;
-    }
-
-    #center-table-area{
-        top:43%;
-    }
-
+    :root{--character-card-width:155px;--hand-card-width:95px;--hand-card-height:129px;}
+    #log-area{left:15px;top:15px;height:calc(50vh - 22px);}
+    #player-area{grid-template-rows:44% 56%;}
+    #center-table-area{top:43%;}
     #hand-area{
-        bottom:12px;
-        height:142px;
-        padding:5px 0;
+        left:calc(var(--left-panel-width) + 6px) !important;
+        right:calc(var(--control-width) + 12px) !important;
+        bottom:12px !important;height:142px !important;padding:5px 0 !important;
+        justify-content:flex-start !important;
     }
-
-    #control-area{
-        bottom:58px;
-    }
-
-    #end-turn{
-        bottom:12px;
-    }
+    #control-area{bottom:58px;}
+    #end-turn{bottom:12px;}
 }
 
 /* NEW: Very short viewport */
 @media (max-height:700px){
-    :root{
-        --character-card-width:140px;
-        --hand-card-width:90px;
-        --hand-card-height:122px;
-    }
-
-    #log-area{
-        left:10px;
-        top:10px;
-        width:clamp(200px, 22vw, 225px);
-        height:calc(50vh - 16px);
-        padding:8px;
-    }
-
-    #player-area{
-        grid-template-columns:clamp(220px, 23vw, 245px) repeat(4, minmax(0,1fr));
-        grid-template-rows:42% 58%;
-    }
-
-    #center-table-area{
-        top:42%;
-        width:190px;
-        gap:16px;
-    }
-
+    :root{--character-card-width:140px;--hand-card-width:90px;--hand-card-height:122px;}
+    #log-area{left:10px;top:10px;width:clamp(200px,22vw,225px);height:calc(50vh - 16px);padding:8px;}
+    #player-area{grid-template-columns:clamp(220px,23vw,245px) repeat(4,minmax(0,1fr));grid-template-rows:42% 58%;}
+    #center-table-area{top:42%;width:190px;gap:16px;}
     #hand-area{
-        left:calc(clamp(220px, 23vw, 245px) + 12px);
-        right:calc(var(--control-width) + 12px);
-        bottom:8px;
-        height:132px;
-        padding:3px 0;
+        left:calc(clamp(220px,23vw,245px) + 6px) !important;
+        right:calc(var(--control-width) + 8px) !important;
+        bottom:8px !important;height:132px !important;padding:3px 0 !important;
+        justify-content:flex-start !important;
     }
-
-    #control-area{
-        right:10px;
-        bottom:48px;
-    }
-
-    #end-turn{
-        right:10px;
-        bottom:8px;
-    }
+    #control-area{right:10px;bottom:48px;}
+    #end-turn{right:10px;bottom:8px;}
 }
