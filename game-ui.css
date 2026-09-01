@@ -636,3 +636,27 @@ body{
         width:145px;
     }
 }
+
+/* =========================================================
+   CONTROLLER MULTI-BUTTON V8
+   =========================================================
+
+/* NEW: Widen Controller so Skill + Confirm stay on one row */
+#control-area{
+    width:270px;
+    flex-wrap:nowrap;
+}
+
+/* NEW: Keep wider Controller centered on short screens */
+@media (max-height:800px){
+    #control-area{
+        width:270px;
+    }
+}
+
+/* NEW: Keep wider Controller centered on very short screens */
+@media (max-height:700px){
+    #control-area{
+        width:250px;
+    }
+}
