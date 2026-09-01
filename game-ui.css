@@ -298,9 +298,10 @@ body{
         grid-template-rows:200px 300px;
     }
 
+    /* NEW: Move Player closer to End Turn */
     #player-area .table-seat-0{
         left:83px;
-        top:34%;
+        top:calc(34% + 50px);
     }
 
     #center-table-area{
@@ -343,9 +344,10 @@ body{
         grid-template-rows:170px 260px;
     }
 
+    /* NEW: Keep Player lower on very short screens */
     #player-area .table-seat-0{
         left:82px;
-        top:32%;
+        top:calc(32% + 35px);
     }
 
     #center-table-area{
