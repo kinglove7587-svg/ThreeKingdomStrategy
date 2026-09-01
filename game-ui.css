@@ -686,3 +686,11 @@ body{
         gap:40px;
     }
 }
+/* =========================================================
+   CENTER PILES REPOSITION V10
+   ========================================================= */
+
+/* NEW: Move Deck / Discard slightly downward */
+#center-table-area{
+    top:calc(50% + 50px);
+}
