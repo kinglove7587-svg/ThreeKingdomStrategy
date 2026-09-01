@@ -560,3 +560,26 @@ body{
         width:145px;
     }
 }
+
+/* =========================================================
+   PLAYER HORIZONTAL ALIGN V5
+   ========================================================= */
+
+/* NEW: Align Player horizontally with End Turn on the left */
+#player-area .table-seat-0{
+    left:78px;
+}
+
+/* NEW: Keep Player aligned with End Turn on short screens */
+@media (max-height:800px){
+    #player-area .table-seat-0{
+        left:83px;
+    }
+}
+
+/* NEW: Keep Player aligned with End Turn on very short screens */
+@media (max-height:700px){
+    #player-area .table-seat-0{
+        left:82px;
+    }
+}
