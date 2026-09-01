@@ -388,3 +388,215 @@ body{
         bottom:10px;
     }
 }
+
+/* =========================================================
+   LAYOUT LOCK V2
+   ========================================================= */
+
+/* NEW: Make player-area cover the whole table so each seat can be placed independently */
+#player-area{
+    left:0;
+    right:0;
+    top:0;
+    width:100%;
+    height:100%;
+    display:grid;
+    grid-template-columns:300px repeat(4, minmax(0,1fr));
+    grid-template-rows:1fr 1fr;
+    align-items:start;
+    justify-items:center;
+    z-index:5;
+    pointer-events:none;
+}
+
+/* NEW: Allow character cards to remain clickable after player-area becomes a full-table layer */
+#player-area .player-card{
+    pointer-events:auto;
+}
+
+/* NEW: Enemy seats stay on the top-right side */
+#player-area .table-seat-1{
+    grid-column:2;
+    grid-row:1;
+    transform:none;
+}
+
+#player-area .table-seat-2{
+    grid-column:3;
+    grid-row:1;
+    transform:none;
+}
+
+#player-area .table-seat-3{
+    grid-column:4;
+    grid-row:1;
+    transform:none;
+}
+
+#player-area .table-seat-4{
+    grid-column:5;
+    grid-row:1;
+    transform:none;
+}
+
+/* NEW: Player character occupies the lower-left column */
+#player-area .table-seat-0{
+    grid-column:1;
+    grid-row:2;
+    align-self:start;
+    justify-self:center;
+    transform:translateY(20px);
+    z-index:6;
+}
+
+/* NEW: Log remains in the upper-left column */
+#log-area{
+    left:20px;
+    top:20px;
+    width:260px;
+    height:calc(50vh - 30px);
+    max-height:none;
+    margin:0;
+    z-index:10;
+}
+
+/* NEW: Center table stays in the middle-right area */
+#center-table-area{
+    left:calc(50% + 50px);
+    top:45%;
+    width:220px;
+    min-height:120px;
+    transform:translate(-50%,-50%);
+    gap:22px;
+    z-index:7;
+}
+
+/* NEW: Hand occupies the lower-right area, beside the player card */
+#hand-area{
+    left:320px;
+    right:270px;
+    bottom:20px;
+    width:auto;
+    height:156px;
+    min-height:0;
+    margin:0;
+    padding:10px 0;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    gap:4px;
+    z-index:8;
+}
+
+/* NEW: Controls sit to the right of the hand */
+#control-area{
+    right:20px;
+    bottom:72px;
+    width:230px;
+    min-height:55px;
+    margin:0;
+    padding:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    z-index:9;
+}
+
+/* NEW: End Turn sits below the controls */
+#end-turn{
+    right:20px;
+    bottom:20px;
+    width:230px;
+    min-height:42px;
+    margin:0;
+    z-index:9;
+}
+
+/* NEW: Short viewport keeps the same left/right composition with smaller spacing */
+@media (max-height:800px){
+    #player-area{
+        grid-template-columns:270px repeat(4, minmax(0,1fr));
+    }
+
+    #log-area{
+        width:235px;
+        height:calc(50vh - 25px);
+        left:15px;
+        top:15px;
+    }
+
+    #player-area .table-seat-0{
+        transform:translateY(15px);
+    }
+
+    #center-table-area{
+        left:calc(50% + 30px);
+        top:44%;
+        width:210px;
+    }
+
+    #hand-area{
+        left:285px;
+        right:250px;
+        bottom:15px;
+        height:145px;
+    }
+
+    #control-area{
+        right:15px;
+        bottom:62px;
+        width:215px;
+    }
+
+    #end-turn{
+        right:15px;
+        bottom:15px;
+        width:215px;
+    }
+}
+
+/* NEW: Very short viewport */
+@media (max-height:700px){
+    #player-area{
+        grid-template-columns:240px repeat(4, minmax(0,1fr));
+    }
+
+    #log-area{
+        width:210px;
+        height:calc(50vh - 20px);
+        left:10px;
+        top:10px;
+    }
+
+    #player-area .table-seat-0{
+        transform:translateY(10px);
+    }
+
+    #center-table-area{
+        left:calc(50% + 20px);
+        top:43%;
+        width:190px;
+        min-height:110px;
+        gap:18px;
+    }
+
+    #hand-area{
+        left:250px;
+        right:225px;
+        bottom:10px;
+        height:132px;
+    }
+
+    #control-area{
+        right:10px;
+        bottom:52px;
+        width:195px;
+    }
+
+    #end-turn{
+        right:10px;
+        bottom:10px;
+        width:195px;
+    }
+}
