@@ -563,7 +563,7 @@ body{
 
 /* =========================================================
    PLAYER HORIZONTAL ALIGN V5
-   ========================================================= */
+   =========================================================
 
 /* NEW: Align Player horizontally with End Turn on the left */
 #player-area .table-seat-0{
@@ -604,5 +604,35 @@ body{
 @media (max-height:700px){
     #hand-area{
         bottom:75px;
+    }
+}
+
+/* =========================================================
+   CONTROLLER REPOSITION V7
+   ========================================================= */
+
+/* NEW: Move Controller directly below Hand and center it */
+#control-area{
+    left:50%;
+    right:auto;
+    bottom:25px;
+    width:165px;
+    min-height:55px;
+    transform:translateX(-50%);
+}
+
+/* NEW: Keep Controller below Hand on short screens */
+@media (max-height:800px){
+    #control-area{
+        bottom:20px;
+        width:155px;
+    }
+}
+
+/* NEW: Keep Controller below Hand on very short screens */
+@media (max-height:700px){
+    #control-area{
+        bottom:15px;
+        width:145px;
     }
 }
