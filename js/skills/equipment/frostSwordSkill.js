@@ -13,7 +13,7 @@ class FrostSwordSkill extends TriggerSkill{
         );
     }
     // ตรวจสอบเงื่อนไขก่อนเกิดความเสียหาย
-    onBeforeDamage(player, damage){
+    onBeforeDamage(player, damage, resolution){
         // ต้องเป็น Damage ที่เกิดจากเจ้าของกระบี่น้ำแข็งเท่านั้น
         if(damage.source !== player){
             return;
@@ -25,10 +25,14 @@ class FrostSwordSkill extends TriggerSkill{
         console.log(player.name + " กระบี่น้ำแข็ง: Slash สร้าง Damage ให้ " + damage.target.name);
         // กำหนดให้ Damage หยุดรอคำตอบจากผู้เล่น
         damage.waitingTrigger = true;
+        if(resolution){
+            resolution.wait();
+        }
         // ถามผู้ใช้ว่าต้องการเปิดใช้สกิลหรือไม่
         player.controller.startTriggerChoice(this, 
             {
-                damage: damage
+                damage: damage, 
+                resolution: resolution
             }
         );
     }
