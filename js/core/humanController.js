@@ -1969,12 +1969,18 @@ class HumanController extends Controller{
         }
         // เรียกใช้ Skill
         const success = skill.use(this.player, this.game);
-        // Trigger ทำงานต่อก่อน จึงค่อย finalize Human Action
+        // ให้เก็บขั้นตอน Finalize Action ไว้ แล้วรอ Trigger Resume ก่อน
         if(this.game.triggerResolutionQueue.isWaiting()){
-            this.selectedSkill = null;
-            this.selectedSkillCardIndex = -1;
-            this.selectedSkillCardIndices = [];
-            this.inputState = "idle";
+            this.game.pauseAction(() => {
+                this.selectedSkill = null;
+                this.selectedSkillCardIndex = -1;
+                this.selectedSkillCardIndices =[];
+                this.inputState = "idle";
+                if(success){
+                    this.selectedTarget = null;
+                }
+                return success;
+            });
             return success;
         }
         // ถ้า Skill เปลี่ยนไปสู่ขั้นเลือกเป้าหมาย ให้คง State ของ Skill ไว้
