@@ -58,6 +58,16 @@ class SlashCard extends BasicCard{
             };
             // ส่ง Event ตรวจสอบเป้าหมาย
             game.eventManager.emit("beforeSlashTarget", targetContext);
+            // นำ TriggerSkill ของ beforeSlashTarget เข้า Trigger Queue
+            const nextTrigger = game.processBeforeSlashTargetTrigger(targetContext);
+            // ถ้ามี Trigger ให้เริ่มประมวลผลผ่าน Queue
+            if(nextTrigger){
+                return game.runTriggerResolution(
+                    nextTrigger, 
+                    targetContext, 
+                    "beforeSlashTarget"
+                );
+            }
             // ถ้ามีการรอเลือกเป้าหมายเพิ่ม
             if(targetContext.waitingAdditionalTargets){
                 return true;
