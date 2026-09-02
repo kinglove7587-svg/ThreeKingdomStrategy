@@ -234,9 +234,14 @@ class UIManager{
             }
             // เลือก Portrait ตามตัวละคร
             let portraitHtml = "";
-            if(player.name === "เล่าปี่"){
-                portraitHtml = 
-                    "<img src=\"assets/cards/heroes/liuBei.png\" alt=\"เล่าปี่\">";
+            if(typeof player.getPortrait === "function"){
+                const portrait = player.getPortrait();
+                if(portrait){
+                    portraitHtml = 
+                        "<img src=\"" + portrait + "\" alt=\"" + player.name + "\">";
+                }else{
+                    portraitHtml = "portrait";
+                }
             }else{
                 portraitHtml = "portrait";
             }
