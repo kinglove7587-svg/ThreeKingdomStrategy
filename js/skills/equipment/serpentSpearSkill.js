@@ -6,6 +6,10 @@ class SerpentSpearSkill extends ActiveSkill{
     cardSelectionCount(player, game){
         return 2;
     }
+    // ให้ง้าวอสรพิษรอการกดยืนยันก่อนใช้สกิล
+    waitForCardSelectionConfirmation(player, game){
+        return true;
+    }
     // ตรวจสอบเงื่อนไขว่าผู้เล่นมีการ์ดบนมืออย่างน้อย 2 ใบหรือไม่
     canUse(player, game){
         return player.hand.cards.length >= 2 && player.canUseSlash();
