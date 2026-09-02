@@ -694,23 +694,84 @@ class UIManager{
         if(!target){
             return;
         }
+        // เคลียร์พื้นที่แสดงการ์ดและปุ่มเดิมก่อนเรนเดอร์ใหม่
+        this.handArea.innerHTML = "";
+        this.controlArea.innerHTML = "";
         // วนลูปการ์ดทุกใบในมือของผู้เล่นเป้าหมาย
         for(const card of target.hand.cards){
             //สร้าง Element ปุ่ม <button> ใหม่ในหน่วยความจำ
             const button = document.createElement("button");
-            // กำหนดข้อความบนปุ่มเป็น "ชื่อดอก แต้ม" (เช่น โจมตี ♠️ 7)
-            button.textContent = 
-            card.name + " " +
-            card.suit + " " + 
-            card.number;
-            // ปิดการใช้งานปุ่ม (disabled) เพื่อให้เป็นเพียงการเปิดดู ห้ามคลิกเลือก
+            button.classList.add("hand-card");
             button.disabled = true;
-            // นำปุ่มการ์ดไปแสดงผลในโซน handArea บน UI
+
+            button.onmouseenter = (event) => {
+                this.tooltipHoverCard = card;
+                this.tooltipMouseX = event.clientX;
+                this.tooltipMouseY = event.clientY;
+
+                if(this.tooltipShiftDown){
+                    this.showCardTooltip(
+                        card, 
+                        event.clientX, 
+                        event.clientY
+                    );
+                }
+            };
+            button.onmousemove = (event) => {
+                this.tooltipMouseX = event.clientX;
+                this.tooltipMouseY = event.clientY;
+
+                if(this.tooltipShiftDown){
+                    this.showCardTooltip(
+                        card, 
+                        event.clientX, 
+                        event.clientY
+                    );
+                }
+            };
+            button.onmouseleave = () => {
+                this.tooltipHoverCard = null;
+                this.hideCardTooltip();
+            };
+
+            const suitClass = 
+                (card.suit === "♥️" || card.suit === "♦️")
+                    ? "suit-red" : "suit-black";
+
+            // แปลง Type สำหรับแสดงผล
+            let cardTypeLabel = card.type;
+            if(card.type === "DelayedTrick"){
+                cardTypeLabel = "Delayed Trick";
+            }
+
+            button.innerHTML = 
+                "<div class=\"hand-card-header\">" + 
+                    "<span class=\"hand-card-suit " + suitClass + "\">" + card.suit + 
+                    "</span>" + 
+                    "<span class=\"hand-card-number\">" + card.number + 
+                    "</span>" + 
+                "</div>" + 
+                "<div class=\"hand-card-name\" data-card-name>" + card.name + 
+                "</div>" + 
+                "<div class=\"hand-card-type\">" + cardTypeLabel + 
+                "</div>";
             this.handArea.appendChild(button);
+            const nameElement = button.querySelector("[data-card-name]");
+            if(nameElement){
+                let fontSize = 17;
+                nameElement.style.fontSize = fontSize + "px";
+                while(
+                    nameElement.scrollHeight > nameElement.clientHeight && 
+                    fontSize > 12
+                ){
+                    fontSize -= 1;
+                    nameElement.style.fontSize = fontSize + "px";
+                }
+            }
         }
         // สร้างปุ่ม "กลับ" สำหรับคลิกจบการเปิดดูมือ และคืนค่า state
         const closeButton = document.createElement("button");
-        closeButton.textContent = "กลับ";
+        closeButton.textContent = "ย้อนกลับ";
         closeButton.onclick = () => {
             this.game.getCurrentPlayer().controller.finishViewingHand();
         };
