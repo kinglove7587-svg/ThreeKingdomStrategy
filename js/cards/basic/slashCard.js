@@ -41,16 +41,29 @@ class SlashCard extends BasicCard{
                 ignoreArmor: false, 
                 damageType: context.damageType
             };
+            // Flow สำหรับทำงานต่อหลัง beforeSlashTarget เสร็จ
+            targetContext.resume = () => {
+                // ถ้ามีการรอเลือกเป้าหมายเพิ่มเติม ให้หยุด Slash ไว้ก่อน
+                if(targetContext.waitingAdditionalTargets){
+                    return true;
+                }
+                // ทำเครื่องหมายว่าใช้ Slash ไปแล้วในรอบนี้
+                player.markSlashUsed();
+                return this.resolveSlashTarget(
+                    player, 
+                    target, 
+                    game, 
+                    targetContext
+                );
+            };
             // ส่ง Event ตรวจสอบเป้าหมาย
             game.eventManager.emit("beforeSlashTarget", targetContext);
             // ถ้ามีการรอเลือกเป้าหมายเพิ่ม
             if(targetContext.waitingAdditionalTargets){
                 return true;
             }
-            // ทำเครื่องหมายว่าใช้ Slash ไปแล้วในรอบนี้
-            player.markSlashUsed();
-            // ประมวลผลเป้าหมายหลัก
-            return this.resolveSlashTarget(player, target, game, targetContext);
+            // Resume Slash หลัง beforeSlashTarget เสร็จ
+            return targetContext.resume();
             
         };
         // ส่ง Event ก่อนใช้การ์ดโจมตี เปิดโอกาสให้ Trigger Skill
