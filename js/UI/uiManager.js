@@ -1952,7 +1952,12 @@ class UIManager{
             
             const confirmButton = document.createElement("button");
             confirmButton.textContent = "ยืนยัน";
-            confirmButton.disabled = selectedIndices.length === 0;
+            // ง้าวอสรพิษต้องเลือกการ์ดให้ครบ 2 ใบก่อนยืนยัน
+            if(controller.selectedSkill instanceof SerpentSpearSkill){
+                confirmButton.disabled = selectedIndices.length < 2;
+            }else{
+                confirmButton.disabled = selectedIndices.length === 0;
+            }
             confirmButton.onclick = () => {
                 controller.confirmSkillCardSelection();
             };
