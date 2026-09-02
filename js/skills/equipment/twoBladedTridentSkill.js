@@ -112,10 +112,10 @@ class TwoBladedTridentSkill extends TriggerSkill{
             context.secondaryTarget.name + 
             " เพิ่ม 1 Damage"
         );
-        game.damage(damage);
         if(resolution){
             resolution.resume();
         }
+        game.damage(damage);
         return true;
     }
 }
