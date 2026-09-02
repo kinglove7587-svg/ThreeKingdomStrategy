@@ -65,7 +65,12 @@ body{
     width:var(--character-card-width);
     min-width:var(--character-card-width);
 }
-
+#player-area .table-seat-1 .player-card,
+#player-area .table-seat-2 .player-card,
+#player-area .table-seat-3 .player-card,
+#player-area .table-seat-4 .player-card{
+    width:140px; /* NEW */
+}
 /* NEW: Current Player stays aligned with the left controls */
 #player-area .table-seat-0{
     position:fixed;
