@@ -65,13 +65,7 @@ body{
     width:var(--character-card-width);
     min-width:var(--character-card-width);
 }
-#player-area .table-seat-1 .player-card,
-#player-area .table-seat-2 .player-card,
-#player-area .table-seat-3 .player-card,
-#player-area .table-seat-4 .player-card{
-    width:140px; /* NEW */
-    min-width:140px;
-}
+
 /* NEW: Current Player stays aligned with the left controls */
 #player-area .table-seat-0{
     position:fixed;
@@ -86,6 +80,8 @@ body{
 #player-area .table-seat-2,
 #player-area .table-seat-3,
 #player-area .table-seat-4{
+    width:155px;
+    min-width:155px;
     align-self:start;
     justify-self:center;
     transform:none;
