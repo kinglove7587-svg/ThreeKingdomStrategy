@@ -13,7 +13,7 @@ class GreenDragonBladeSkill extends TriggerSkill{
         );
     }
     // ตรวจสอบว่า Slash ของผู้สวมอาวุธนี้ถูกหลบหรือไม่
-    onBeforeSlashHit(player, context, resolution){
+    onBeforeSlashHit(player, context){
          console.log(
             "[DEBUG GreenDragon] beforeSlashHit",
             context.canceled,
@@ -34,15 +34,13 @@ class GreenDragonBladeSkill extends TriggerSkill{
         );
         // หยุด Slash เดิมไว้ก่อน เพื่อรอการตัดสินใจใช้ Trigger Choice
         context.waitingTrigger = true;
-        resolution.wait();
         console.log(
             "[DEBUG GreenDragon] Trigger ผ่าน → เปิดหน้าต่างเลือก"
         );
         // เรียก Controller เริ่มถามผู้เล่นว่าจะใช้ความสามารถง้าวมังกรเขียวหรือไม่
         player.controller.startTriggerChoice(this, 
             {
-                slashContext: context, 
-                resolution: resolution
+                slashContext: context
             }
         );
         
