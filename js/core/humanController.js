@@ -1321,6 +1321,11 @@ class HumanController extends Controller{
             this.inputState = "idle";
             this.selectedCardIndex = -1;
             this.selectedTarget = null;
+            // ถ้า Trigger ใหม่กำลังรอการตอบสนอง ห้าม Finalize Action
+            if(this.game.triggerResolutionQueue.isWaiting()){
+                this.game.ui.render();
+                return success;
+            }
 
             this.game.afterHumanAction(success);
 
