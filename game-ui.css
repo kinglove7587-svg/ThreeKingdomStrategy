@@ -65,13 +65,6 @@ body{
     width:var(--character-card-width);
     min-width:var(--character-card-width);
 }
-#player-area .table-seat-1 .equipment-list,
-#player-area .table-seat-2 .equipment-list,
-#player-area .table-seat-3 .equipment-list,
-#player-area .table-seat-4 .equipment-list{
-    width:140px; /* NEW */
-    min-width:140px;
-}
 /* NEW: Current Player stays aligned with the left controls */
 #player-area .table-seat-0{
     position:fixed;
