@@ -53,6 +53,10 @@ class RockCleavingAxeSkill extends TriggerSkill{
     triggerCardSelectionCount(player, game){
         return 2;
     }
+    // รอผู้เล่นกดยืนยันหลังเลือกการ์ด 2 ใบ
+    waitForCardSelectionConfirmation(player, game){
+        return true;
+    }
     // ยกเลิกการใช้ขวานระหว่างเลือกการ์ด
     cancelTriggerCardSelection(player, game, context){
         // ปลดสถานะการรอ Trigger
