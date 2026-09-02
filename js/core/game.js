@@ -1127,6 +1127,10 @@ class Game {
                 eventName
             );
         }
+        // beforeSlashHit Queue หมดแล้ว ให้ Slash เดิมเดินต่อ
+        if(eventName === "beforeSlashHit"){
+            return damage.resume();
+        }
         // beforeDamage Queue หมดแล้ว ให้ Damage เดินต่อ
         if(eventName === "beforeDamage"){
             return damage.resume();
