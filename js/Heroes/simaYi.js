@@ -18,4 +18,7 @@ class SimaYi extends Player{
         this.addSkill(new Retaliation());
         this.addSkill(new Necromancy());
     }
+    getPortrait(){
+        return "assets/cards/heroes/simaYi.png";
+    }
 }

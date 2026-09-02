@@ -14,4 +14,7 @@ class GuanYu extends Player{
 
         this.addSkill(new GodOfWar());
     }
+    getPortrait(){
+        return "assets/cards/heroes/guanYu.png";
+    }
 }

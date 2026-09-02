@@ -14,4 +14,7 @@ class GanNing extends Player{
 
         this.addSkill(new Ambushment());
     }
+    getPortrait(){
+        return "assets/cards/heroes/ganNing.png";
+    }
 }

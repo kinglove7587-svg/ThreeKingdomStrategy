@@ -17,4 +17,7 @@ class LuBu extends Player{
 
         //this.hand.addCard(new DuelCard("♠️", 1));
     }
+    getPortrait(){
+        return "assets/cards/heroes/LuBu.png";
+    }
 }

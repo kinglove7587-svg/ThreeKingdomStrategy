@@ -18,4 +18,7 @@ class CaoCao extends Player{
 
         //this.hand.addCard(new PeachCard("♠️", 1));
     }
+    getPortrait(){
+        return "assets/cards/heroes/caoCao.png";
+    }
 }
