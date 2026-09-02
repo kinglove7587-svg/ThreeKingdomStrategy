@@ -115,7 +115,7 @@ class Deck {
         addCards(SkyPiercingHalberdCard, 1); // ง้าวฟ้าทะลวง
         addCards(BlueSteelSwordCard, 1); // กระบี่เหล็กกล้า
         addCards(FeatheredFanCard, 1); // พัดขนนก
-        addCards(GreenDragonBladeCard, 1); // ง้าวมังกรเขียว
+        addCards('GreenDragonBladeCard', 1); // ง้าวมังกรเขียว
         addCards(FrostSwordCard, 1); // กระบี่น้ำแข็ง
         addCards(YinYangSwordsCard, 1); // กระบี่คู่หยินหยาง
         addCards(SixSwordsOfWuCard, 1); // กระบี่หกเล่มแห่งง่อก๊ก
