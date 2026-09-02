@@ -70,6 +70,7 @@ body{
 #player-area .table-seat-3 .player-card,
 #player-area .table-seat-4 .player-card{
     width:140px; /* NEW */
+    min-width:140px;
 }
 /* NEW: Current Player stays aligned with the left controls */
 #player-area .table-seat-0{
