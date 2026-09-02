@@ -69,9 +69,8 @@ body{
 #player-area .table-seat-2 .equipment-list,
 #player-area .table-seat-3 .equipment-list,
 #player-area .table-seat-4 .equipment-list{
-    width:90%; /* NEW */
-    margin-left:auto; /* NEW */
-    margin-right:auto; /* NEW */
+    width:140px; /* NEW */
+    min-width:140px;
 }
 /* NEW: Current Player stays aligned with the left controls */
 #player-area .table-seat-0{
@@ -92,6 +91,7 @@ body{
     align-self:start;
     justify-self:center;
     transform:none;
+    
 }
 
 /* =========================================================
