@@ -1077,6 +1077,10 @@ class Game {
                     return null;
                 }
                 resumed = true;
+                // beforeSlashHit ต้องกลับไปทำ Slash เดิมต่อ
+                if(eventName === "beforeSlashHit"){
+                    return this.resumeBeforeSlashHitResolution(damage);
+                }
                 // beforeDamage ต้องกลับไปทำ Damage ต่อ
                 if(eventName === "beforeDamage"){
                     return this.resumeBeforeDamageResolution(damage);
@@ -1124,6 +1128,26 @@ class Game {
             );
         }
         return damage.resume();
+    }
+    // ดำเนิน beforeSlashHit Trigger ต่อหลังผู้เล่นตอบ Modal
+    resumeBeforeSlashHitResolution(slashContext){
+
+        if(!slashContext){
+            return null;
+        }
+
+        const queue = this.triggerResolutionQueue;
+        const nextTrigger = queue.resume();
+
+        if(nextTrigger){
+            return this.runTriggerResolution(
+                nextTrigger, 
+                slashContext, 
+                "beforeSlashHit"
+            );
+        }
+        // ไม่มี Trigger เหลือแล้ว ให้ Slash เดิมทำงานต่อ
+        return slashContext.resume();
     }
     // หยุด Action ปัจจุบันเพื่อรอการตัดสินใจจาก Modal
     pauseAction(resumeCallback, autoAfterHumanAction = true){
