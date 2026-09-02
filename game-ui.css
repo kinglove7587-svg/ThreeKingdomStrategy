@@ -73,7 +73,12 @@ body{
     margin:0;
     z-index:11;
 }
-
+#player-area .table-seat-1 .equipment-slot,
+#player-area .table-seat-2 .equipment-slot,
+#player-area .table-seat-3 .equipment-slot,
+#player-area .table-seat-4 .equipment-slot{
+    font-size:18px; /* NEW */
+}
 /* NEW: Enemy seats stay in the top row */
 #player-area .table-seat-1,
 #player-area .table-seat-2,
