@@ -1969,6 +1969,14 @@ class HumanController extends Controller{
         }
         // เรียกใช้ Skill
         const success = skill.use(this.player, this.game);
+        // Trigger ทำงานต่อก่อน จึงค่อย finalize Human Action
+        if(this.game.triggerResolutionQueue.isWaiting()){
+            this.selectedSkill = null;
+            this.selectedSkillCardIndex = -1;
+            this.selectedSkillCardIndices = [];
+            this.inputState = "idle";
+            return success;
+        }
         // ถ้า Skill เปลี่ยนไปสู่ขั้นเลือกเป้าหมาย ให้คง State ของ Skill ไว้
         if(this.inputState === "waitingSkillTarget"){
             this.game.ui.render();
