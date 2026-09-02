@@ -104,8 +104,6 @@ class SlashCard extends BasicCard{
 
                 console.log(target.name + " ไม่มีการ์ดหลบ ");
             }
-            // Event ก่อนการโจมตีโดน
-            game.eventManager.emit("beforeSlashHit", slashContext);
             // กำหนดวิธี Resume หลัง Trigger
             slashContext.resume = () => {
                 if(slashContext.canceled){
@@ -130,6 +128,18 @@ class SlashCard extends BasicCard{
                 console.log(player.isDrunk());
                 return true;
             };
+            // Event ก่อนการโจมตีโดน หลังจาก Slash Flow พร้อม Resume แล้ว
+            game.eventManager.emit("beforeSlashHit", slashContext);
+            // นำ TriggerSkill ของ beforeSlashHit เข้า Trigger Queue
+            const nextTrigger = game.processBeforeSlashHitTrigger(slashContext);
+            // ถ้ามี Trigger ให้เริ่มประมวลผลผ่าน Queue
+            if(nextTrigger){
+                return game.runTriggerResolution(
+                    nextTrigger, 
+                    slashContext, 
+                    "beforeSlashHit"
+                );
+            }
             // ถ้ามี Trigger รอ Resume
             if(slashContext.waitingTrigger){
                 return true;
