@@ -1067,6 +1067,47 @@ class Game {
         );
         return queue.next();
     }
+    // เริ่ม Trigger Queue สำหรับ beforeSlashTarget
+    processBeforeSlashTargetTrigger(targetContext){
+
+        if(!targetContext){
+            return null;
+        }
+
+        const queue = this.triggerResolutionQueue;
+        // ป้องกันสร้าง Queue ซ้ำระหว่าง Trigger เดิมยังทำงาน
+        if(queue.current || queue.isWaiting()){
+            return queue.current;
+        }
+
+        queue.queue = [];
+        queue.current = null;
+        // รวบรวม TriggerSkill ที่ฟัง beforeSlashTarget
+        queue.addEventListeners(
+            this.players, 
+            "beforeSlashTarget"
+        );
+        return queue.next();
+    }
+    // ดำเนิน beforeSlashTarget Trigger ต่อหลัง Trigger Resume
+    resumeBeforeSlashTargetResolution(targetContext){
+
+        if(!targetContext){
+            return null;
+        }
+
+        const queue = this.triggerResolutionQueue;
+        const nextTrigger = queue.resume();
+
+        if(nextTrigger){
+            return this.runTriggerResolution(
+                nextTrigger, 
+                targetContext, 
+                "beforeSlashTarget"
+            );
+        }
+        return targetContext.resume();
+    }
     // ข้าม/ดึง Trigger ถัดไปในคิวออกมาประมวลผลต่อ
     resumeTriggerResolution(damage){
 
@@ -1099,6 +1140,10 @@ class Game {
                     return null;
                 }
                 resumed = true;
+                // beforeSlashTarget ต้องกลับไปทำ Slash เดิมต่อ
+                if(eventName === "beforeSlashTarget"){
+                    return this.resumeBeforeSlashTargetResolution(damage);
+                }
                 // beforeSlashHit ต้องกลับไปทำ Slash เดิมต่อ
                 if(eventName === "beforeSlashHit"){
                     return this.resumeBeforeSlashHitResolution(damage);
@@ -1126,6 +1171,10 @@ class Game {
                 damage, 
                 eventName
             );
+        }
+        // beforeSlashTarget Queue หมดแล้ว ให้ Slash เดิมเดินต่อ
+        if(eventName === "beforeSlashTarget"){
+            return damage.resume();
         }
         // beforeSlashHit Queue หมดแล้ว ให้ Slash เดิมเดินต่อ
         if(eventName === "beforeSlashHit"){

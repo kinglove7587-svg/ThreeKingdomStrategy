@@ -22,7 +22,7 @@ class LiuBei extends Player{ // เล่าปี่
         //this.hand.addCard(new BarbarianCard("♠️", 1));
         //this.hand.addCard(new RationsDepletedCard("♠️", 1));
         //this.hand.addCard(new GreenDragonBladeCard("♠️", 1));
-        this.hand.addCard(new BlueSteelSwordCard("♠️", 1));
+        //this.hand.addCard(new BlueSteelSwordCard("♠️", 1));
     }
     getPortrait(){
         return "assets/cards/heroes/liuBei.png";
