@@ -1983,8 +1983,14 @@ class HumanController extends Controller{
         if(success){
             this.selectedTarget = null;
         }
-        // ส่งต่อให้ Game Engine
-        this.game.afterHumanAction(success);
+        // ตรวจสอบว่า Trigger หรือ Judge ยังรอการทำงานอยู่หรือไม่
+        if(
+            !this.game.triggerResolutionQueue.isWaiting() && 
+            !this.game.pendingJudge && 
+            this.game.actionLocked
+        ){
+            this.game.afterHumanAction(success);
+        }
         return success;
     }
     // เลือก / ยกเลิกการ์ดสำหรับทิ้งเมื่อการ์ดในมือเกิน HP
