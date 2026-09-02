@@ -566,6 +566,7 @@ class Game {
     }
     // จัดการผลลัพธ์หลังผู้เล่นมนุษย์ทำ Action (ลงการ์ด)
     afterHumanAction(success){
+        console.log("[DEBUG afterHumanAction] ถูกเรียก");
         // Action จบแล้ว ปลดล็อก End Turn
         this.finishAction();
         // ถ้าเกมจบแล้ว ให้หยุดการทำงานทันที

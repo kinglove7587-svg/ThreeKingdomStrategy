@@ -45,6 +45,7 @@ class KirinBowSkill extends TriggerSkill{
     }
     // ประมวลผลคำตอบของผู้เล่น (กดใช้ / ไม่ใช้)
     resolveChoice(player, game, context, useSkill){
+        console.log("[DEBUG KirinBow] ก่อน resolution.resume()");
         const resolution = context.resolution;
         // หากผู้เล่นเลือก "ไม่ใช้"
         if(!useSkill){

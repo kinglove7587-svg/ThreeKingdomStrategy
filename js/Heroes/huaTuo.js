@@ -15,7 +15,7 @@ class HuaTuo extends Player{
         this.addSkill(new FirstAid());
         this.addSkill(new ProdigalHealer());
 
-        this.equipArmor(new EightTrigramsArmor("♣️", 7));
+        this.equipMount(new ShadowrunnerCard("♣️", 7));
     }
     getPortrait(){
         return "assets/cards/heroes/HuaTuo.png";
