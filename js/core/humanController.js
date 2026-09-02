@@ -1219,7 +1219,10 @@ class HumanController extends Controller{
         if(this.pendingSlashTriggerAfterDamage){
             return this.resumePendingSlashAfterTrigger();
         }
-
+        // ถ้า Action ถูก Finalize ไปแล้วจาก resolution.resume() ไม่ต้อง Finalize ซ้ำ
+        if(!this.game.actionLocked){
+            return success;
+        }
         this.game.afterHumanAction(success);
 
         return success;
