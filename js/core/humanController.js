@@ -117,6 +117,11 @@ class HumanController extends Controller{
             this.selectedCardIndex = -1;
             return;
         }
+        // ถ้า Action ถูก Pause ไว้ ให้รอ Resume ก่อน finalize
+        if(this.game.pendingAction){
+            this.selectedCardIndex = -1;
+            return;
+        }
         // รอ Trigger ที่ต่อจากการ์ดให้จบก่อน
         if(
             this.inputState === "waitingTriggerChoice" || 

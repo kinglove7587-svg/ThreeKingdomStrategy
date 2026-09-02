@@ -14,6 +14,8 @@ class HuaTuo extends Player{
             "จำกัด 1 ครั้งต่อ Play Phase ทิ้งการ์ด 1 ใบ เพื่อให้ตัวละครที่บาดเจ็บฟื้น HP 1";
         this.addSkill(new FirstAid());
         this.addSkill(new ProdigalHealer());
+
+        this.equipArmor(new EightTrigramsArmor("♣️", 7));
     }
     getPortrait(){
         return "assets/cards/heroes/HuaTuo.png";
