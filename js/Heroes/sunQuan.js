@@ -16,4 +16,7 @@ class SunQuan extends Player{
         
         this.addSkill(new Equilibrium());
     }
+    getPortrait(){
+        return "assets/cards/heroes/SunQuan.png";
+    }
 }

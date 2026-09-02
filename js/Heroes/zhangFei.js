@@ -18,4 +18,7 @@ class ZhangFei extends Player{ // เตียวหุย
         //this.hand.addCard(new PeachCard("♠️", 1));
         //this.hand.addCard(new SlashCard("♠️", 1));
     }
+    getPortrait(){
+        return "assets/cards/heroes/ZhangFei.png";
+    }
 }

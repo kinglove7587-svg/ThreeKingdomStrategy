@@ -5,7 +5,7 @@ const game = new Game([
         controller: HumanController//AIController//
     },
     {
-        hero: CaoCao, 
+        hero: XiahouDun, 
         controller: HumanController//AIController//
     },
     {
@@ -13,11 +13,11 @@ const game = new Game([
         controller: HumanController//AIController
     },
     {
-        hero: LuBu, 
+        hero: SunQuan, 
         controller: HumanController//AIController
     },
     {
-        hero: GanNing, 
+        hero: HuaTuo, 
         controller: HumanController//AIController
     }
 ]);
@@ -27,4 +27,4 @@ game.debug = new DebugTools(game);
 
 // เรียกใช้เมธอด start() เพื่อเริ่มรัน Game Loop / ระบบการเล่นของเกม
 game.start();
-// CaoCao* LuBu* GuanYu* XiahouDun SimaYi* LiuBei* ZhangFei SunQuan HuaTuo GanNing*
+// CaoCao LuBu GuanYu XiahouDun SimaYi LiuBei ZhangFei SunQuan HuaTuo GanNing

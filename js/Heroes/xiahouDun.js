@@ -19,4 +19,7 @@ class XiahouDun extends Player{
 
         //this.hand.addCard(new RainingArrowsCard("♣️", 7));
     }
+    getPortrait(){
+        return "assets/cards/heroes/XiahouDun.png";
+    }
 }
