@@ -1221,6 +1221,7 @@ class HumanController extends Controller{
         }
         // ถ้า Action ถูก Finalize ไปแล้วจาก resolution.resume() ไม่ต้อง Finalize ซ้ำ
         if(!this.game.actionLocked){
+            this.game.ui.render();
             return success;
         }
         this.game.afterHumanAction(success);
