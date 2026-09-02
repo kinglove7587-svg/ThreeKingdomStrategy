@@ -241,9 +241,9 @@ class Game {
         }
         const player = this.getCurrentPlayer();
         
-        this.ui.addLog("=============");
+        this.ui.addLog("==========================");
         this.ui.addLog(player.name + " Turn ");
-        this.ui.addLog("=============");
+        this.ui.addLog("==========================");
         this.startPhase(player); // เริ่ม phase ต่างๆ
     }
     // ประมวลผลช่วงเริ่มเทิร์น (Start Phase)

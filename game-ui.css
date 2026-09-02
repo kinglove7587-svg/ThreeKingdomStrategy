@@ -79,8 +79,8 @@ body{
 #player-area .table-seat-2,
 #player-area .table-seat-3,
 #player-area .table-seat-4{
-    width:155px;
-    min-width:155px;
+    width:160px;
+    min-width:160px;
     align-self:start;
     justify-self:center;
     transform:none;
