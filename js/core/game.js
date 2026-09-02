@@ -1045,6 +1045,28 @@ class Game {
         );
         return queue.next();
     }
+    // เริ่ม Trigger Queue สำหรับ beforeSlashHit
+    processBeforeSlashHitTrigger(slashContext){
+
+        if(!slashContext){
+            return null;
+        }
+
+        const queue = this.triggerResolutionQueue;
+        // ป้องกันสร้าง Queue ซ้ำระหว่าง Trigger เดิมยังทำงาน
+        if(queue.current || queue.isWaiting()){
+            return queue.current;
+        }
+
+        queue.queue = [];
+        queue.current = null;
+        // รวบรวม TriggerSkill ที่ฟัง beforeSlashHit
+        queue.addEventListeners(
+            this.players, 
+            "beforeSlashHit"
+        );
+        return queue.next();
+    }
     // ข้าม/ดึง Trigger ถัดไปในคิวออกมาประมวลผลต่อ
     resumeTriggerResolution(damage){
 
