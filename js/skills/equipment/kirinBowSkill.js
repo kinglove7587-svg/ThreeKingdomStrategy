@@ -51,7 +51,6 @@ class KirinBowSkill extends TriggerSkill{
         if(!useSkill){
             game.log(player.name + " ไม่ใช้ กิเลนคันธนู");
             if(resolution){
-                 console.log("[DEBUG KirinBow] ก่อน resolution.resume() - ไม่ใช้");
                 resolution.resume();
             }
             return true;
@@ -59,7 +58,6 @@ class KirinBowSkill extends TriggerSkill{
         
         if(!context || !context.target){
             if(resolution){
-                 console.log("[DEBUG KirinBow] ก่อน resolution.resume()- ไม่มี target");
                 resolution.resume();
             }
             return false;
@@ -69,7 +67,6 @@ class KirinBowSkill extends TriggerSkill{
         
         if(!target.mount){
             if(resolution){
-                 console.log("[DEBUG KirinBow] ก่อน resolution.resume()- ไม่มี mount");
                 resolution.resume();
             }
             return false;
@@ -79,7 +76,6 @@ class KirinBowSkill extends TriggerSkill{
         
         if(!mount){
             if(resolution){
-                 console.log("[DEBUG KirinBow] ก่อน resolution.resume()- ถอด mount ไม่สำเร็จ");
                 resolution.resume();
             }
             return false;
@@ -92,7 +88,6 @@ class KirinBowSkill extends TriggerSkill{
             mount.name + " ของ " + target.name
         );
         if(resolution){
-             console.log("[DEBUG KirinBow] ก่อน resolution.resume()- สำเร็จ");
             resolution.resume();
         }
         return true;
