@@ -15,7 +15,7 @@ class HuaTuo extends Player{
         this.addSkill(new FirstAid());
         this.addSkill(new ProdigalHealer());
 
-        this.equipArmor(new TengJiaArmor("♣️", 7));
+        //this.equipArmor(new TengJiaArmor("♣️", 7));
         //this.hand.addCard(new DodgeCard("♠️", 1));
     }
     getPortrait(){
