@@ -11,6 +11,8 @@ class LuMeng extends Player{
         this.abilityDescription = 
             "Composure (ความเยือกเย็น)\n" + 
             "คุณสามารถ สามารถถือการ์ด ได้ สูงสุด 5 ใบ หากคุณไม่ได้ใช้การ์ด โจมตี ในระหว่างเทิร์นของคุณ"
+
+        this.addSkill(new Composure());
     }
     getPortrait(){
         return "assets/cards/heroes/LuMeng.png"
