@@ -78,6 +78,16 @@ class SlashCard extends BasicCard{
         };
         // ส่ง Event ก่อนใช้การ์ดโจมตี เปิดโอกาสให้ Trigger Skill
         game.eventManager.emit("beforeUseSlash", context);
+        // นำ TriggerSkill ของ beforeUseSlash เข้า Trigger Queue
+        const nextTrigger = game.processBeforeUseSlashTrigger(context);
+        // ถ้ามี Trigger ให้เริ่มประมวลผลผ่าน Queue
+        if(nextTrigger){
+            return game.runTriggerResolution(
+                nextTrigger, 
+                context, 
+                "beforeUseSlash"
+            );
+        }
         console.log("allow =", context.allow);
         // ถ้า Trigger ขอหยุดรอการตัดสินใจของผู้เล่น (Trigger Choice) ให้หยุดรอ
         if(context.waitingTriggerChoice){

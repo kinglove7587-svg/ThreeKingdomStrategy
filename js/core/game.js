@@ -1067,6 +1067,47 @@ class Game {
         );
         return queue.next();
     }
+    // เริ่ม Trigger Queue สำหรับ beforeUseSlash
+    processBeforeUseSlashTrigger(context){
+
+        if(!context){
+            return null;
+        }
+
+        const queue = this.triggerResolutionQueue;
+        // ป้องกันสร้าง Queue ซ้ำระหว่าง Trigger เดิมยังทำงาน
+        if(queue.current || queue.isWaiting()){
+            return queue.current;
+        }
+
+        queue.queue = [];
+        queue.current = null;
+        // รวบรวม TriggerSkill ที่ฟัง beforeUseSlash
+        queue.addEventListeners(
+            this.players, 
+            "beforeUseSlash"
+        );
+        return queue.next();
+    }
+    // ดำเนิน beforeUseSlash Trigger ต่อหลัง Trigger Resume
+    resumeBeforeUseSlashResolution(context){
+
+        if(!context){
+            return null;
+        }
+
+        const queue = this.triggerResolutionQueue;
+        const nextTrigger = queue.resume();
+
+        if(nextTrigger){
+            return this.runTriggerResolution(
+                nextTrigger, 
+                context, 
+                "beforeUseSlash"
+            );
+        }
+        return context.resume();
+    }
     // เริ่ม Trigger Queue สำหรับ beforeSlashTarget
     processBeforeSlashTargetTrigger(targetContext){
 
@@ -1140,6 +1181,10 @@ class Game {
                     return null;
                 }
                 resumed = true;
+                // beforeUseSlash ต้องกลับไปทำ Slash เดิมต่อ
+                if(eventName === "beforeUseSlash"){
+                    return this.resumeBeforeUseSlashResolution(damage);
+                }
                 // beforeSlashTarget ต้องกลับไปทำ Slash เดิมต่อ
                 if(eventName === "beforeSlashTarget"){
                     return this.resumeBeforeSlashTargetResolution(damage);
@@ -1171,6 +1216,10 @@ class Game {
                 damage, 
                 eventName
             );
+        }
+        // beforeUseSlash Queue หมดแล้ว ให้ Slash เดิมเดินต่อ
+        if(eventName === "beforeUseSlash"){
+            return damage.resume();
         }
         // beforeSlashTarget Queue หมดแล้ว ให้ Slash เดิมเดินต่อ
         if(eventName === "beforeSlashTarget"){
