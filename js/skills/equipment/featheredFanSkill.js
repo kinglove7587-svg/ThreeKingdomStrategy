@@ -13,7 +13,7 @@ class FeatheredFanSkill extends TriggerSkill{
         );
     }
     // ดักจับการโจมตีแล้วถามผู้เล่นว่าจะแปลงเป็นโจมตีไฟหรือไม่
-    onBeforeUseSlash(player, context){
+    onBeforeUseSlash(player, context, resolution){
         // ทำงานเฉพาะตอนผู้เล่นเจ้าของสกิลกำลังใช้ โจมตี
         if(context.player !== player){
             return;
@@ -27,6 +27,7 @@ class FeatheredFanSkill extends TriggerSkill{
                     slashContext: context
                 }
             );
+            resolution.wait();
             return;
         }
         // todo AI ยังใช้ Slash ปกติไปก่อน
