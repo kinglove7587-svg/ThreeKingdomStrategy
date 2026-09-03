@@ -367,6 +367,13 @@ class Player{
     }
     //
     getHandLimit(){
-        return this.hp;
+
+        let limit = this.hp;
+        for(const skill of this.getPassiveSkills()){
+            if(typeof skill.getHandLimitModifier === "function"){
+                limit += skill.getHandLimitModifier(this, this.game);
+            }
+        }
+        return limit;
     }
 }
