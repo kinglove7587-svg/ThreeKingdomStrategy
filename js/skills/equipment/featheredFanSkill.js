@@ -24,7 +24,8 @@ class FeatheredFanSkill extends TriggerSkill{
             context.waitingTriggerChoice = true;
             player.controller.startTriggerChoice(this, 
                 {
-                    slashContext: context
+                    slashContext: context, 
+                    resolution: resolution
                 }
             );
             resolution.wait();
@@ -36,20 +37,21 @@ class FeatheredFanSkill extends TriggerSkill{
     resolveChoice(player, game, context, useSkill){
         
         const slashContext = context.slashContext;
-        if(!slashContext){
+        const resolution = context.resolution;
+        if(!slashContext || !resolution){
             return false;
         }
         // หากผู้เล่นกดไม่ใช้
         if(!useSkill){
             slashContext.waitingTriggerChoice = false;
             game.log(player.name + " ไม่ใช้ พัดขนนก");
-            return slashContext.resume();
+            return resolution.resume();
         }
         // กำหนดประเภทความเสียหายของการโจมตีครั้งนี้เป็น FIRE
         slashContext.damageType = DamageType.FIRE;
         
         slashContext.waitingTriggerChoice = false;
         game.log(player.name + " ใช้ พัดขนนก เปลี่ยนเป็น โจมตีไฟ");
-        return slashContext.resume();
+        return resolution.resume();
     }
 }
