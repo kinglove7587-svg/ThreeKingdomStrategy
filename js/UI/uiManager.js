@@ -3021,7 +3021,7 @@ class UIManager{
 
         const player = this.game.getCurrentPlayer();
         const controller = player.controller;
-        const requiredCount = player.hand.cards.length - player.hp;
+        const requiredCount = player.hand.cards.length - player.getHandLimit();
         // แสดงสถานะการเลือก
         const status = document.createElement("div");
         status.classList.add("card-selection-status");
