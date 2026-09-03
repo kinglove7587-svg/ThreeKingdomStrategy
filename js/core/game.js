@@ -178,13 +178,6 @@ class Game {
         this.log(player.name + " Recast " + cardToRecast.name + " ได้ " + newCard.name);
         return true;
     }
-    
-    playCurrentPlayerTurn(cardIndex = 0){ // เล่น 1 เทิร์นแบบย่อ
-        this.playCardFromCurrentPlayer(cardIndex); // ใช้ไพ่ที่เลือก
-        this.discardPhase(
-            this.getCurrentPlayer()
-        );
-    }
 
     getCurrentPlayer(){ // คืนผู้เล่นที่กำลังถึงตาอยู่ตอนนี้
         return this.players[this.currentPlayerIndex];

@@ -191,36 +191,6 @@ class SlashCard extends BasicCard{
         // ถ้าไม่มี Pause ให้ทำ Flow ต่อทันที
         return dodgeContext.resume();
     }
-    // ใช้สำหรับ Multi-target แต่ยังไม่ผูกเข้ากับ Flow จริง
-    resolveSlashTargets(player, targets, game){
-        // ตรวจสอบว่า targets เป็น Array หรือไม่
-        if(!Array.isArray(targets)){
-            return false;
-        }
-        // หากไม่มีเป้าหมายให้ คืนค่า true
-        if(targets.length === 0){
-            return true;
-        }
-        console.log(
-            "Resolve Slash Targets", 
-            targets.map(target => target.name)
-        );
-        // วนลูปประมวลผลเป้าหมายทีละคน
-        for(let i = 0; i < targets.length; i++){
-            
-            const target = targets[i];
-            if(!target){
-                continue;
-            }
-            console.log("กำลังประมวลผลเป้าหมายลำดับ", i, target.name);
-            // ส่งเป้าหมายเข้าเมธอดประมวลผลเดี่ยว
-            const success = this.resolveSlashTarget(player, target, game);
-            if(!success){
-                return false;
-            }
-        }
-        return true;
-    }
     // การ์ดใบนี้จำเป็นต้องเลือกเป้าหมายก่อนใช้งาน (เช่น การ์ด โจมตี / Slash)
     needTarget(){
         return true;
