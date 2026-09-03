@@ -32,7 +32,7 @@ class TengJiaSkill extends ArmorSkill{
                 return;
             }
             // ตรวจสอบว่าเป็นความเสียหายปกติหรือไม่ (ถ้าเป็น Fire Slash / Thunder Slash ให้ข้ามไป)
-            if (context.card.damageType !== DamageType.NORMAL){
+            if (context.damageType !== DamageType.NORMAL){
                 return;
             }
             // ยกเลิกการถูกโจมตีด้วยการ์ดโจมตีธรรมดา
