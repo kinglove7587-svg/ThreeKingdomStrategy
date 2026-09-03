@@ -45,7 +45,6 @@ FireAttackCard (พลิงผลาญ): 2 ใบ
 -------------------------------------
 การ์ดอุปกรณ์ (Equipment Cards)
 อย่างละ1ใบ
-ม้า อย่างละ2ใบ
-f5bcf2a
-Checkpoint before UI rework
-bef8942560c8bdba207a1b9b77c76a55bcf19302
+ม้า อย่างละ2ใ
+
+da386da500b88709a09e89c601e882156d0c9538
