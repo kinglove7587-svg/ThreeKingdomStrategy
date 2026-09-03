@@ -1250,3 +1250,10 @@ body{
 
     font-size:14px;
 }
+/* NEW: Debug Character Toggle */
+#debug-character-toggle{
+    position:fixed;
+    right:10px;
+    bottom:10px;
+    z-index:19001;
+}

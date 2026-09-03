@@ -74,11 +74,6 @@ class DebugTools {
         const toggleButton = document.createElement("button");
         toggleButton.id = "debug-character-toggle";
         toggleButton.textContent = "🛠 DEBUG";
-        // ตำแหน่งปุ่มมุมขวาล่าง
-        toggleButton.style.position = "fixed";
-        toggleButton.style.right = "10px";
-        toggleButton.style.bottom = "10px";
-        toggleButton.style.zIndex = "19001";
         // เริ่มต้นเปิด Panel
         panel.style.display = "none";
         toggleButton.onclick = () => {
