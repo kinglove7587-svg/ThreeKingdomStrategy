@@ -88,6 +88,66 @@ class DebugTools {
         console.log("ติดตั้ง Pause Slash Test แล้ว");
         return {testCancel, testPause};
     }
+    // เปลี่ยนตัวละครของ Player ผ่าน Debug
+    changeCharacter(playerIndex, HeroClass){
+
+        if(!Number.isInteger(playerIndex)){
+            console.error("playerIndex ต้องเป็นจำนวนเต็ม");
+            return false;
+        }
+
+        const player = this.game.players[playerIndex];
+
+        if(!player){
+            console.error("ไม่พบ Player index =", playerIndex);
+            return false;
+        }
+
+        if(typeof HeroClass !== "function"){
+            console.error("HeroClass ไม่ถูกต้อง");
+            return false;
+        }
+        // สร้าง Hero ชั่วคราวเพื่อดึงข้อมูลและ Skill ของตัวละครใหม่
+        const newHero = new HeroClass(
+            this.game, 
+            player.controller.constructor
+        );
+        // ถอน Skill เดิมออกจาก EventManager
+        for(const skill of [...player.skills]){
+            player.removeSkill(skill);
+        }
+        // ถอน Skill ของ Hero ชั่วคราวออกก่อน
+        for(const skill of [...newHero.skills]){
+            skill.unregister();
+        }
+        // โอนข้อมูลของ Hero ใหม่มาให้ Player เดิม
+        player.name = newHero.name;
+        player.maxHp = newHero.maxHp;
+        player.hp = newHero.hp;
+        player.faction = newHero.faction;
+        player.gender = newHero.gender;
+        player.abilityDescription = newHero.abilityDescription;
+        // เปลี่ยน Prototype ให้ Player เดิมเป็น Hero ใหม่
+        Object.setPrototypeOf(
+            player, 
+            HeroClass.prototype
+        );
+        // โอน Skill ของ Hero ใหม่มาให้ Player เดิม
+        player.skills = [];
+        for(const skill of newHero.skills){
+            skill.owner = player;
+            player.skills.push(skill);
+            skill.register(
+                this.game.eventManager, 
+                player
+            );
+        }
+        this.game.ui.render();
+        console.log(
+            "Debug เปลี่ยน Player", playerIndex, "เป็น", player.name
+        );
+        return true;
+    }
 
     removePauseSlashTest(player = this.game.players[0]){
 
