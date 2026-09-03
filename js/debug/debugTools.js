@@ -80,7 +80,7 @@ class DebugTools {
         toggleButton.style.bottom = "10px";
         toggleButton.style.zIndex = "19001";
         // เริ่มต้นเปิด Panel
-        panel.style.display = "block";
+        panel.style.display = "none";
         toggleButton.onclick = () => {
             this.toggleCharacterDebugPanel();
         };
