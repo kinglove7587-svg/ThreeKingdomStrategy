@@ -1233,3 +1233,20 @@ body{
 #control-area{
     flex-shrink:0;
 }
+/* NEW: Debug Character Panel */
+#debug-character-panel{
+    position:fixed;
+    right:10px;
+    bottom:10px;
+    z-index:19000;
+
+    padding:10px;
+
+    background:#fff8dc;
+    border:2px solid #5b4636;
+    border-radius:8px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,0.28);
+
+    font-size:14px;
+}

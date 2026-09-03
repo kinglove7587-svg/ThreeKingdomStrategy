@@ -68,6 +68,36 @@ class DebugTools {
 
         document.body.appendChild(panel);
         this.characterDebugPanel = panel;
+        // ซ่อน Panel ตอนเริ่มต้น
+        panel.style.bottom = "50px";
+        // สร้างปุ่มเปิด/ปิด Debug Character
+        const toggleButton = document.createElement("button");
+        toggleButton.id = "debug-character-toggle";
+        toggleButton.textContent = "🛠 DEBUG";
+        // ตำแหน่งปุ่มมุมขวาล่าง
+        toggleButton.style.position = "fixed";
+        toggleButton.style.right = "10px";
+        toggleButton.style.bottom = "10px";
+        toggleButton.style.zIndex = "19001";
+        // เริ่มต้นเปิด Panel
+        panel.style.display = "block";
+        toggleButton.onclick = () => {
+            this.toggleCharacterDebugPanel();
+        };
+        document.body.appendChild(toggleButton);
+        this.characterDebugToggleButton = toggleButton;
+    }
+    // เปิด/ปิด Debug Character Panel
+    toggleCharacterDebugPanel(){
+
+        if(!this.characterDebugPanel){
+            return;
+        }
+        if(this.characterDebugPanel.style.display === "none"){
+            this.characterDebugPanel.style.display = "block";
+        }else{
+            this.characterDebugPanel.style.display = "none";
+        }
     }
 
     installPauseSlashTest(player = this.game.players[0]){
