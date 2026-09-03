@@ -546,7 +546,7 @@ class Game {
         const player = this.getCurrentPlayer();
         const controller = player.controller;
         // ตรวจจำนวนการ์ดในมือก่อนจบเทิร์น (Hand Limit Check)
-        if(player.hand.cards.length > player.hp){
+        if(player.hand.cards.length > player.getHandLimit()){
             controller.selectedHandLimitDiscardCards = [];
             controller.inputState = "waitingHandLimitDiscard";
             this.actionLocked = true;
