@@ -935,6 +935,11 @@ class HumanController extends Controller{
         // ถ้าสกิลไม่ต้องการเลือกการ์ดต่อ ให้รันสกิลทันที
         this.inputState = "idle";
         const success = skill.use(this.player, this.game);
+        // Skill สามารถต่อเข้า Target อีกขั้นได้
+        if(this.inputState === "waitingSkillTarget"){
+            this.game.ui.render();
+            return success;
+        }
         this.game.afterHumanAction(success);
     }
     // จัดการเลือกการ์ดบนมือเพื่อใช้ Active Skill

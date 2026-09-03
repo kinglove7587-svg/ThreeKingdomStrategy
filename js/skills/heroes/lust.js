@@ -60,7 +60,7 @@ class Lust extends ActiveSkill{
         return true;
     }
     // เมื่อมี firstTarget แล้ว UI จึงแสดงปุ่ม "ยืนยัน"
-    waitForTriggerConfirmation(player, game){
+    waitForTargetConfirmation(player, game){
         return this.firstTarget !== null;
     }
     // ประมวลผล Lust แบบหลายขั้นตอน
