@@ -59,7 +59,7 @@ class AIController extends Controller{
     // ทิ้งการ์ดเมื่อจำนวนการ์ดในมือเกิน HP
     discardHandLimit(){
 
-        const requiredCount = this.player.hand.cards.length - this.player.hp;
+        const requiredCount = this.player.hand.cards.length - this.player.getHandLimit();
         // ถ้าไม่เกิน HP ไม่ต้องทิ้ง
         if(requiredCount <= 0){
             return true;
