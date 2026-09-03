@@ -4,6 +4,70 @@ class DebugTools {
         this.game = game;
         this.pauseSlashTestSkills = [];
         this.triggerCardPatchInstalled = false;
+        this.createCharacterDebugPanel();
+    }
+    // สร้าง Debug Panel สำหรับเปลี่ยนตัวละครทั้ง 5 คน
+    createCharacterDebugPanel(){
+
+        const panel = document.createElement("div");
+        panel.id = "debug-character-panel";
+
+        const title = document.createElement("div");
+        title.textContent = "DEBUG CHARACTER";
+        panel.appendChild(title);
+        // รายชื่อตัวละครที่สามารถเลือกผ่าน Debug
+        const heros = [
+            { hero: LiuBei, name: "เล่าปี่" },
+            { hero: ZhangFei, name: "เตียวหุย" },
+            { hero: CaoCao, name: "โจโฉ" },
+            { hero: SunQuan, name: "ซุนกวน" },
+            { hero: HuaTuo, name: "ฮัวโต๋" },
+            { hero: SimaYi, name: "สุมาอี้" },
+            { hero: GanNing, name: "กำเหลง" },
+            { hero: LuBu, name: "ลิโป้" },
+            { hero: XiahouDun, name: "แฮหัวตุ้น" },
+            { hero: GuanYu, name: "กวนอู" },
+
+        ];
+        // สร้าง Select ให้ Player ทั้ง 5 คน
+        for(let i = 0; i < this.game.players.length; i++){
+
+            const player = this.game.players[i];
+            const row = document.createElement("div");
+            const label = document.createElement("span");
+            label.textContent = "P" + (i + 1) + " ";
+            
+            const select = document.createElement("select");
+            for(const data of heros){
+                const option = document.createElement("option");
+                option.value = data.hero.name;
+                option.textContent = data.name;
+
+                if(player.constructor === data.hero){
+                    option.selected = true;
+                }
+
+                select.appendChild(option);
+            }
+
+            select.onchange = () => {
+                const selectedHero = heros.find(
+                    data => data.hero.name === select.value
+                );
+                if(!selectedHero){
+                    return;
+                }
+                this.changeCharacter(i, selectedHero.hero);
+            };
+
+            row.appendChild(label);
+            row.appendChild(select);
+
+            panel.appendChild(row);
+        }
+
+        document.body.appendChild(panel);
+        this.characterDebugPanel = panel;
     }
 
     installPauseSlashTest(player = this.game.players[0]){
