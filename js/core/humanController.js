@@ -2053,7 +2053,7 @@ class HumanController extends Controller{
 
         const player = this.player;
         // จำนวนที่ต้องทิ้ง
-        const requiredCount = player.hand.cards.length - player.hp;
+        const requiredCount = player.hand.cards.length - player.getHandLimit();
         // ตรวจว่าจำนวนที่เลือกครบหรือไม่
         if(this.selectedHandLimitDiscardCards.length !== requiredCount){
             return false;
