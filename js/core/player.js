@@ -365,4 +365,8 @@ class Player{
     setDrunk(drunk){
         this.drunk = drunk;
     }
+    //
+    getHandLimit(){
+        return this.hp;
+    }
 }
