@@ -4,4 +4,5 @@ class Lust extends ActiveSkill{
         super("Lust");
         
     }
+    
 }
