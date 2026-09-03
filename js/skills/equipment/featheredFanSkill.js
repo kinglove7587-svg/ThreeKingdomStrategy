@@ -41,6 +41,11 @@ class FeatheredFanSkill extends TriggerSkill{
         if(!slashContext || !resolution){
             return false;
         }
+        if (player.controller) {
+            player.controller.inputState = "idle";
+            player.controller.selectedTriggerSkill = null;
+            player.controller.triggerContext = null;
+        }
         // หากผู้เล่นกดไม่ใช้
         if(!useSkill){
             slashContext.waitingTriggerChoice = false;
