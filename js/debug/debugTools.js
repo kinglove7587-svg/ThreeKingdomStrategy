@@ -27,6 +27,7 @@ class DebugTools {
             { hero: LuBu, name: "ลิโป้" },
             { hero: XiahouDun, name: "แฮหัวตุ้น" },
             { hero: GuanYu, name: "กวนอู" },
+            { hero: LuMeng, name: "ลิบอง" }
 
         ];
         // สร้าง Select ให้ Player ทั้ง 5 คน
