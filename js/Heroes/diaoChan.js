@@ -18,7 +18,7 @@ class DiaoChan extends Player{
             "Beauty Outshining the Moon (จันทร์งามล่มเมือง)\n" +
             "Final Phase คุณสามารถจั่วการ์ด 1 ใบ";
 
-        //
+        this.addSkill(new Lust());
         //
     }
     getPortrait(){
