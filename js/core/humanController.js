@@ -919,10 +919,25 @@ class HumanController extends Controller{
             this.game.log("ไม่สามารถเลือกเป้าหมายนี้ได้");
             return;
         }
-        // Lust: เก็บ Target คนแรกไว้ก่อน ไม่ Execute ทันที
+        // Lust: จัดการการเลือก Target 1 และ Target 2 แยกจาก Skill Target ปกติ
         if(skill instanceof Lust){
-            this.selectedLustFirstTarget = player;
-            this.game.ui.render();
+            // Target 1: คนเริ่ม Duel
+            if(!this.selectedLustFirstTarget){
+                this.selectedLustFirstTarget = player;
+                this.game.ui.render();
+                return;
+            }
+            // Target 2: คนรับ Duel
+            if(!this.selectedLustSecondTarget){
+                // ห้ามเลือกคนเดิมซ้ำเป็น Target 2
+                if(player === this.selectedLustFirstTarget){
+                    this.game.log("Lust ไม่สามารถเลือกผู้เล่นคนเดิมซ้ำได้");
+                    return;
+                }
+                this.selectedLustSecondTarget = player;
+                this.game.ui.render();
+                return;
+            }
             return;
         }
         // บันทึกตัวละครเป้าหมายที่เลือกไว้ใน selectedTarget
@@ -2223,5 +2238,87 @@ class HumanController extends Controller{
         this.game.ui.render();
         return true;
     }
+    // ยืนยันการเลือก Target ทั้งสองคนของ Lust
+    confirmLustSelection(){
 
+        const skill = this.selectedSkill;
+        if(!(skill instanceof Lust)){
+            return false;
+        }
+
+        const card = this.selectedLustCard;
+        const firstTarget = this.selectedLustFirstTarget;
+        const secondTarget = this.selectedLustSecondTarget;
+        // ตรวจสอบข้อมูลหลักอีกครั้งก่อน Execute
+        if(!card || !firstTarget || !secondTarget){
+            return false;
+        }
+        // ตรวจสอบ Target 1
+        if(!skill.canTarget(this.player, firstTarget)){
+            return false;
+        }
+        // ตรวจสอบ Target 2
+        if(!skill.canTarget(this.player, secondTarget)){
+            return false;
+        }
+        // ห้าม Target ซ้ำกัน
+        if(firstTarget === secondTarget){
+            return false;
+        }
+        // ตรวจสอบว่าการ์ดที่เลือกยังอยู่ในมือจริง
+        const cardIndex = this.player.hand.cards.indexOf(card);
+        if(cardIndex === -1){
+            return false;
+        }
+        // ทิ้งการ์ดของ Lust
+        const discardCard = this.player.hand.removeCard(cardIndex);
+        if(!discardCard){
+            return false;
+        }
+
+        this.game.discardPile.addCard(discardCard);
+        this.game.log(
+            this.player.name + " ใช้ Lust ให้ " + 
+            firstTarget.name + " เป็นฝ่ายเริ่ม Duel กับ " + 
+            secondTarget.name
+        );
+        // ถือว่าใช้ Lust สำเร็จแล้ว
+        skill.usedThisPlayPhase = true;
+        // ล้าง Lust State
+        this.selectedLustCard = null;
+        this.selectedLustFirstTarget = null;
+        this.selectedLustSecondTarget = null;
+
+        this.selectedSkill = null;
+        this.selectedSkillCardIndex = -1;
+        this.selectedSkillCardIndices = [];
+        this.selectedTarget = null;
+
+        this.inputState = "idle";
+        // Lust ใช้ Duel Engine โดยตรง
+        this.game.duel(firstTarget, secondTarget);
+        this.game.afterHumanAction(true);
+        return true;
+    }
+    // ยกเลิก Lust และคืน State กลับไปก่อนเริ่มใช้สกิล
+    cancelLustSelection(){
+        
+        if(!(this.selectedSkill instanceof Lust)){
+            return false;
+        }
+
+        // ล้าง Lust State
+        this.selectedLustCard = null;
+        this.selectedLustFirstTarget = null;
+        this.selectedLustSecondTarget = null;
+
+        this.selectedSkill = null;
+        this.selectedSkillCardIndex = -1;
+        this.selectedSkillCardIndices = [];
+        this.selectedTarget = null;
+
+        this.inputState = "idle";
+        this.game.ui.render();
+        return true;
+    }
 }
