@@ -16,21 +16,25 @@ class Lust extends ActiveSkill{
             player.hand.cards.length > 0
         );
     }
-    // ขั้นแรกของ Lust: เลือกการ์ด 1 ใบเพื่อทิ้ง
+    // Lust จะเริ่มจากการเลือกการ์ดก่อน
     needsTarget(player, game){
         return false;
     }
-    // 
+    // Lust ต้องเลือกการ์ด 1 ใบ
     needsCardSelection(player, game){
         return true;
     }
-    //
+    // เลือกการ์ด 1 ใบ
     cardSelectionCount(player, game){
         return 1;
     }
-    // ชั่วคราวในขั้นทดสอบ ให้การ์ดที่เลือกถูกใช้ทันที
+    // หลังเลือกการ์ดแล้ว ให้ไปเลือก Target ต่อทันที
     waitForCardSelectionConfirmation(player, game){
         return false;
+    }
+    // รอการเลือก Target โดยยังไม่ Execute ทันที
+    waitForTargetConfirmation(player, game){
+        return true;
     }
     // ทดสอบการทิ้งการ์ด 1 ใบ
     use(player, game){
@@ -48,15 +52,9 @@ class Lust extends ActiveSkill{
         if(!card){
             return false;
         }
-
-        const removeCard = player.hand.removeCard(selectedIndex);
-        if(!removeCard){
-            return false;
-        }
-
-        game.discardPile.addCard(removeCard);
-        this.usedThisPlayPhase = true;
-        game.log(player.name + " ใช้ Lust ทิ้ง " + removeCard.name);
+        // ยังไม่ทิ้งการ์ด เพราะต้องรอ Target และ Confirm
+        player.controller.inputState = "waitingSkillTarget";
+        game.ui.render();
         return true;
     }
     getDescription(){
