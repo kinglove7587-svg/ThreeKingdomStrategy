@@ -76,7 +76,11 @@ class UIManager{
         this.renderReactionChoice();
         this.renderTriggerCardCancelButton();
         this.renderCardSelectionStatus();
-        this.renderTargetSelectionStatus();
+        // Lust ใช้ UI ของตัวเอง
+        if(!(this.game.getCurrentPlayer().controller.selectedSkill instanceof Lust)){
+            this.renderTargetSelectionStatus();
+        }
+        this.renderLustTargetSelection();
         this.renderAdditionalTargetSelection();
     }
     // วาดการ์ดแสดงตัวละครฝั่งเราและฝั่งศัตรู
@@ -3320,5 +3324,46 @@ class UIManager{
                 card.suit + " " + 
                 card.number;
         }
+    }
+    // แสดงสถานะและปุ่มควบคุมเฉพาะของ Lust
+    renderLustTargetSelection(){
+
+        const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
+
+        if(!(controller.selectedSkill instanceof Lust)){
+            return;
+        }
+
+        const firstTarget = controller.selectedLustFirstTarget;
+        const secondTarget = controller.selectedLustSecondTarget;
+        const status = document.createElement("div");
+        status.classList.add("target-selection-status");
+        if(!firstTarget){
+            status.textContent = "เลือกผู้เล่น 1/2 | เลือกผู้เล่นที่จะเป็นฝ่ายเริ่ม ดวลเดี่ยว";
+        }else if(!secondTarget){
+            status.textContent = "ผู้เล่น 1/2 | " + firstTarget.name + "  เป็นคนเริ่ม ดวลเดี่ยว";
+        }else{
+            status.textContent = 
+                "ผู้เล่น 2/2 | " + firstTarget.name + " เป็นคนเริ่ม → " + 
+                secondTarget.name + " เป็นคนรับ ดวลเดี่ยว";
+        }
+        this.handArea.appendChild(status);
+        // ปุ่มยืนยันเมื่อเลือกครบ 2 คน
+        if(firstTarget && secondTarget){
+            const confirmButton = document.createElement("button");
+            confirmButton.textContent = "ยืนยัน";
+            confirmButton.onclick = () => {
+                controller.confirmLustSelection();
+            };
+            this.controlArea.appendChild(confirmButton);
+        }
+        // ปุ่มยกเลิก
+        const cancelButton = document.createElement("button");
+        cancelButton.textContent = "ยกเลิก";
+        cancelButton.onclick = () => {
+            controller.cancelLustSelection();
+        };
+        this.controlArea.appendChild(cancelButton);
     }
 }
