@@ -48,6 +48,7 @@ class Lust extends ActiveSkill{
             return false;
         }
 
+        const controller = player.controller;
         const selectedIndex = player.controller.selectedSkillCardIndices[0];
         if(selectedIndex === undefined){
             return false;
@@ -57,8 +58,12 @@ class Lust extends ActiveSkill{
         if(!card){
             return false;
         }
-        player.controller.selectedLustCard = card;
-        player.controller.inputState = "waitingSkillTarget";
+        
+        controller.selectedLustCard = card;
+        controller.selectedLustFirstTarget = null;
+        controller.selectedLustSecondTarget = null;
+        controller.inputState = "waitingSkillTarget";
+
         game.ui.render();
         return true;
     }
