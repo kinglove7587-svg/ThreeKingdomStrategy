@@ -919,6 +919,12 @@ class HumanController extends Controller{
             this.game.log("ไม่สามารถเลือกเป้าหมายนี้ได้");
             return;
         }
+        // Lust: เก็บ Target คนแรกไว้ก่อน ไม่ Execute ทันที
+        if(skill instanceof Lust){
+            this.selectedLustFirstTarget = player;
+            this.game.ui.render();
+            return;
+        }
         // บันทึกตัวละครเป้าหมายที่เลือกไว้ใน selectedTarget
         this.setSelectedTarget(player);
         // ถ้าสกิลต้องรอยืนยันเป้าหมาย ให้หยุดรอการยืนยันก่อน Execute
