@@ -40,10 +40,6 @@ class Lust extends ActiveSkill{
     waitForCardSelectionConfirmation(player, game){
         return false;
     }
-    // รอการเลือก Target โดยยังไม่ Execute ทันที
-    waitForTargetConfirmation(player, game){
-        return true;
-    }
     // ทดสอบการทิ้งการ์ด 1 ใบ
     use(player, game){
 
