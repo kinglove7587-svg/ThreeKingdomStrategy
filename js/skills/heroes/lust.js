@@ -20,6 +20,7 @@ class Lust extends ActiveSkill{
     canTarget(player, target){
         return (
             target && 
+            target.isAlive() && 
             target !== player && 
             target.gender === "male"
         );
