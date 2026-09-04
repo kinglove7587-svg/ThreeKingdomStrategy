@@ -56,6 +56,9 @@ class Lust extends ActiveSkill{
         if(!card){
             return false;
         }
+        player.controller.selectedLustCard = card;
+        player.controller.inputState = "waitingSkillTarget";
+        game.ui.render();
         return true;
     }
     getDescription(){
