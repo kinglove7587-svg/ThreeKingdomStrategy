@@ -134,6 +134,18 @@ class UIManager{
                     div.classList.add("disabled-target");
                 }
             }
+            // ตรวจ Target ของ Lust
+            if(
+                (
+                    controller.inputState === "waitingLustFirstTarget" || 
+                    controller.inputState === "waitingLustSecondTarget"
+                ) && 
+                controller.selectedSkill
+            ){
+                if(!controller.selectedSkill.canTarget(currentPlayer, player)){
+                    div.classList.add("disabled-target");
+                }
+            }
             // ตรวจ Target ที่สองของ Trigger
             if(
                 controller.inputState === "waitingTriggerTarget" && 
