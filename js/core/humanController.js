@@ -2226,6 +2226,7 @@ class HumanController extends Controller{
         if(cardIndex === -1){
             return false;
         }
+        this.game.log(this.player.name + " ใช้ Lust");
         // ทิ้งการ์ดที่ใช้สำหรับ Lust
         const discardCard = this.player.hand.removeCard(cardIndex);
         if(!discardCard){
