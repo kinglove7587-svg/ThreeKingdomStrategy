@@ -2203,6 +2203,44 @@ class HumanController extends Controller{
         this.game.ui.render();
         return true;
     }
+    // ยืนยันการเลือกเป้าหมายของ Lust และเริ่ม Duel
+    confirmLustSelection(){
+        // ต้องอยู่ในขั้นตอนยืนยัน Lust เท่านั้น
+        if(this.inputState !== "waitingLustConfirmation"){
+            return false;
+        }
+        // ต้องมี Lust Context
+        if(!this.lustContext){
+            return false;
+        }
+
+        const firstTarget = this.lustContext.firstTarget;
+        const secondTarget = this.lustContext.secondTarget;
+        const card = this.lustContext.card;
+        // ต้องเลือกเป้าหมายครบทั้ง 2 คน และต้องมีการ์ดที่ใช้ทิ้ง
+        if(!firstTarget || !secondTarget || !card){
+            return false;
+        }
+        // ตรวจว่าการ์ดที่เลือกยังอยู่ในมือจริง
+        const cardIndex = this.player.hand.cards.indexOf(card);
+        if(cardIndex === -1){
+            return false;
+        }
+        // ทิ้งการ์ดที่ใช้สำหรับ Lust
+        const discardCard = this.player.hand.removeCard(cardIndex);
+        if(!discardCard){
+            return false;
+        }
+        this.game.discardPile.addCard(discardCard);
+        // ใช้ Lust สำเร็จ 1 ครั้งใน Play Phase
+        this.player.lustUsed = true;
+        // ล้าง State ของ Lust ก่อนเริ่ม Duel
+        this.lustContext = null;
+        this.inputState = "idle";
+        // เริ่ม Duel โดยให้ Target 1 เป็นคนโจมตีก่อน
+        this.game.dule(firstTarget, secondTarget);
+        return true;
+    }
     // เลือกเป้าหมายคนที่ 1 สำหรับ Lust
     selectLustFirstTarget(player){
         // ต้องอยู่ในขั้นตอนรอเลือกเป้าหมายคนที่ 1
