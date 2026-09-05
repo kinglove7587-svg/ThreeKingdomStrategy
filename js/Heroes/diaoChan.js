@@ -18,7 +18,7 @@ class DiaoChan extends Player{
             "Final Phase คุณสามารถจั่วการ์ด 1 ใบ";
 
         this.addSkill(new Lust());
-        //
+        this.addSkill(new EclipseTheMoon());
     }
     getPortrait(){
         return "assets/cards/heroes/DiaoChan.png"
