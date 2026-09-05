@@ -1303,7 +1303,7 @@ class Game {
         return result;
     }
     // ดำเนิน Trigger และ Action ที่หยุดไว้ต่อ
-    resumeTriggerAndAction(damage){
+    resumeTriggerAndAction2(damage){
 
         const nextTrigger = this.resumeTriggerResolution(damage);
         if(nextTrigger){
@@ -1334,6 +1334,61 @@ class Game {
         if(
             !hasPendingAction && 
             !damage?.deferActionFinalize && 
+            damage?.source === this.getCurrentPlayer() &&
+            damage.source.controller instanceof HumanController && 
+            this.actionLocked
+        ){
+            this.afterHumanAction(true);
+        }
+
+        return actionResult;
+    }
+    resumeTriggerAndAction(damage){
+
+        const nextTrigger = this.resumeTriggerResolution(damage);
+        if(nextTrigger){
+            return nextTrigger;
+        }
+
+        const pendingPlayer = this.pendingAction?.player;
+        const autoAfterHumanAction = this.pendingAction?.autoAfterHumanAction;
+        const hasPendingAction = !!this.pendingAction;
+
+        const deferActionFinalize = damage?.deferActionFinalize === true; 
+
+        const pendingAction = this.pendingAction; 
+        const originalAutoAfterHumanAction = pendingAction?.autoAfterHumanAction; 
+
+        if(hasPendingAction && deferActionFinalize && pendingAction){ 
+            pendingAction.autoAfterHumanAction = false; 
+        }
+
+        const actionResult = hasPendingAction
+            ? this.resumeAction()
+            : true;
+
+        if(hasPendingAction && deferActionFinalize && pendingAction){ 
+            pendingAction.autoAfterHumanAction = originalAutoAfterHumanAction; 
+        }
+
+        if(this.triggerResolutionQueue.isWaiting()){
+            return true;
+        }
+
+        if(
+            hasPendingAction &&
+            !deferActionFinalize && 
+            pendingPlayer &&
+            pendingPlayer.controller instanceof HumanController && 
+            autoAfterHumanAction
+        ){
+            this.afterHumanAction(actionResult);
+            return actionResult;
+        }
+
+        if(
+            !hasPendingAction && 
+            !deferActionFinalize && 
             damage?.source === this.getCurrentPlayer() &&
             damage.source.controller instanceof HumanController && 
             this.actionLocked
