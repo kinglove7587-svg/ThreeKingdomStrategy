@@ -544,7 +544,8 @@ class UIManager{
         if(
             player.controller.inputState === "waitingSkillTarget" || 
             player.controller.inputState === "waitingLustFirstTarget" || 
-            player.controller.inputState === "waitingLustSecondTarget"
+            player.controller.inputState === "waitingLustSecondTarget" || 
+            player.controller.inputState === "waitingLustConfirmation"
         ){
             return;
         }
