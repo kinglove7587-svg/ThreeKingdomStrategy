@@ -315,6 +315,18 @@ class Game {
         this.playPhase(player);
         return true;
     }
+    // ดำเนินการต่อ Draw Phase โดยไม่จั่วการ์ด
+    completeDrawPhaseWithoutDraw(player){
+
+        if(this.pendingDrawPhase !== player){
+            return false;
+        }
+
+        this.pendingDrawPhase = null;
+        this.ui.render();
+        this.playPhase(player);
+        return true;
+    }
     // เฟส Action ( Play Phase )
     playPhase(player){ 
         // เช็กสถานะข้าม Play Phase (เช่น ผลจากการ์ดสุราลืมกลับ)
