@@ -292,7 +292,7 @@ class Game {
         }
 
         player.drawCard(this.deck); // แสดงสถานะ
-        this.ui.addlog(player.name + " จั่วการ์ด 1 ใบ");
+        this.ui.addLog(player.name + " จั่วการ์ด 1 ใบ");
         this.ui.render();
         this.playPhase(player); // ส่งต่เฟส
     }
