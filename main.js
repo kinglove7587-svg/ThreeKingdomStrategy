@@ -13,7 +13,7 @@ const game = new Game([
         controller: HumanController//AIController
     },
     {
-        hero: SunQuan, 
+        hero: DiaoChan, 
         controller: HumanController//AIController
     },
     {
