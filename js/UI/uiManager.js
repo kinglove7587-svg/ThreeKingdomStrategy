@@ -2029,6 +2029,13 @@ class UIManager{
                 message = "เลือกเป้าหมายสำหรับสกิล " + skill.name;
             }
         }
+        // Lust - เลือกเป้าหมายคนที่ 1 หรือคนที่ 2
+        if(controller.inputState === "waitingLustFirstTarget"){
+            message = "เลือกตัวละครชายคนที่ 1 (ผู้เริ่ม ดวลเดี่ยว)";
+        }
+        if(controller.inputState === "waitingLustSecondTarget"){
+            message = "เลือกตัวละครชายคนที่ 2 (ผู้รับ ดวลเดี่ยว)";
+        }
         // Trigger Target เช่น ง้าวสามคม
         if(
             controller.inputState === "waitingTriggerTarget" && 
