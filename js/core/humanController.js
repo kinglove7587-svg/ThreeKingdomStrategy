@@ -9,6 +9,8 @@ class HumanController extends Controller{
         this.selectedSkill = null; // บันทึกออบเจกต์ Skill ที่ผู้เล่นเลือกใช้งาน
         this.selectedSkillCardIndex = -1; // บันทึกตำแหน่ง Index ของการ์ดที่ผู้เล่นเลือกเพื่อมอบผ่านสกิล
         this.selectedSkillCardIndices = [];
+        // Lust State
+        this.lustContext = null;
         //Steal (ฉกฉวย) State
         this.selectedStealTarget = null;
         this.selectedStealCard = null; 
