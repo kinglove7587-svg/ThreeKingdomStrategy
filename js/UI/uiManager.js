@@ -2188,6 +2188,16 @@ class UIManager{
         if (!(controller instanceof HumanController)){
             return;
         }
+        // เลือกเป้าหมายคนที่ 1 สำหรับ Lust
+        if(controller.inputState === "waitingLustFirstTarget"){
+            controller.selectLustFirstTarget(player);
+            return;
+        }
+        // เลือกเป้าหมายคนที่ 2 สำหรับ Lust
+        if(controller.inputState === "waitingLustSecondTarget"){
+            controller.selectLustSecondTarget(player);
+            return;
+        }
         // กรณี Controller กำลังรอเลือกเป้าหมายให้กับ สกิล (Skill)
         if(controller.inputState === "waitingSkillTarget"){
             controller.selectSkillTarget(player);
