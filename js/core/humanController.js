@@ -2203,4 +2203,28 @@ class HumanController extends Controller{
         this.game.ui.render();
         return true;
     }
+    // เลือกเป้าหมายคนที่ 1 สำหรับ Lust
+    selectLustFirstTarget(player){
+        // ต้องอยู่ในขั้นตอนรอเลือกเป้าหมายคนที่ 1
+        if(this.inputState !== "waitingLustFirstTarget"){
+            return;
+        }
+        // ต้องมี Lust Context
+        if(!this.lustContext){
+            return;
+        }
+        // ห้ามเลือกตัวเอง
+        if(player === this.player){
+            return;
+        }
+        // ต้องเป็นตัวละครชาย
+        if(player.gender !== "male"){
+            return;
+        }
+        // บันทึกเป้าหมายคนที่ 1
+        this.lustContext.firstTarget = player;
+        // เปลี่ยนไปเลือกเป้าหมายคนที่ 2
+        this.inputState = "waitingLustSecondTarget";
+        this.game.ui.render();
+    }
 }
