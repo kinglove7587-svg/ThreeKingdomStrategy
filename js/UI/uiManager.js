@@ -2103,6 +2103,23 @@ class UIManager{
             };
             this.controlArea.appendChild(cancelButton);
         }
+        // Lust - ปุ่มยืนยัน/ยกเลิกหลังเลือกเป้าหมายครบ 2 คน
+        if(controller.inputState === "waitingLustConfirmation"){
+
+            const confirmButton = document.createElement("button");
+            confirmButton.textContent = "ยืนยัน";
+            confirmButton.onclick = () => {
+                controller.confirmLustSelection();
+            };
+            this.controlArea.appendChild(confirmButton);
+
+            const cancelButton = document.createElement("button");
+            cancelButton.textContent = "ยกเลิก";
+            cancelButton.onclick = () => {
+                controller.cancelLustSelection();
+            };
+            this.controlArea.appendChild(cancelButton);
+        }
     }
     // เมธอดสำหรับจัดการ Event เมื่อมีการคลิกการ์ด
     onCardClick(index){
