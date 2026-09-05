@@ -38,6 +38,7 @@ class Game {
         this.pendingModal = null;
         this.pendingJudge = null;
         this.pendingAction = null;
+        this.pendingDrawPhase = null;
         this.isGameOver = false;
     }
     // รองรับ onComplete / onCancel สำหรับ Generic Modal
@@ -282,6 +283,14 @@ class Game {
             return;
         }
         this.eventManager.emitToPlayer("onDrawPhase", player);
+
+        for(const skill of player.skills){
+            skill.onDrawPhase(player, this);
+        }
+        if(this.pendingDrawPhase){
+            return;
+        }
+        
         player.drawCard(this.deck); // แสดงสถานะ
         this.ui.addLog(player.name + " จั่วการ์ด 1 ใบ");
         this.ui.render();
