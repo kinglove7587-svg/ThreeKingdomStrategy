@@ -1999,6 +1999,11 @@ class HumanController extends Controller{
             });
             return success;
         }
+        // ถ้า Skill อยู่ในขั้นตอนรอเลือกเป้าหมายแรก
+        if(this.inputState === "waitingLustFirstTarget"){
+            this.game.ui.render();
+            return success;
+        }
         // ถ้า Skill เปลี่ยนไปสู่ขั้นเลือกเป้าหมาย ให้คง State ของ Skill ไว้
         if(this.inputState === "waitingSkillTarget"){
             this.game.ui.render();
