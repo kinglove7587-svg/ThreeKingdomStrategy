@@ -1,7 +1,7 @@
 // Instance ของเกม โดยกำหนดข้อมูลฮีโร่ ชื่อผู้เล่น และชนิด Controller ของแต่ละคน
 const game = new Game([
     {
-        hero: DiaoChan, 
+        hero: ZhangLiao, 
         controller: HumanController//AIController//
     },
     {
@@ -28,3 +28,4 @@ game.debug = new DebugTools(game);
 // เรียกใช้เมธอด start() เพื่อเริ่มรัน Game Loop / ระบบการเล่นของเกม
 game.start();
 // CaoCao LuBu GuanYu XiahouDun SimaYi LiuBei ZhangFei SunQuan HuaTuo GanNing LuMeng DiaoChan
+// ZhangLiao 
