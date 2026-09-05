@@ -9,6 +9,18 @@ class Lust extends ActiveSkill{
         return !player.lustUsed && 
             player.hand.cards.length > 0;
     }
+    //
+    needsCardSelection(player, game){
+        return true;
+    }
+    //
+    cardSelectionCount(player, game){
+        return 1;
+    }
+    //
+    waitForCardSelectionConfirmation(player, game){
+        return true;
+    }
     getDescription(){
         return "Lust (เสน่หา)\n" +
             "จำกัด 1 ครั้งต่อ Play Phase คุณสามารถทิ้งการ์ด 1 ใบ " +
