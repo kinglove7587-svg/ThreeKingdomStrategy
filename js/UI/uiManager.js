@@ -185,6 +185,14 @@ class UIManager{
                 // เพิ่ม class "selected-target" เพื่อปรับแต่งรูปแบบ CSS (เช่น ใส่กรอบสีแดง)
                 div.classList.add("selected-target");
             }
+            // Lust - Highlight เป้าหมายที่เลือกแล้ว
+            if(
+                controller.inputState === "waitingLustSecondTarget" && 
+                controller.lustContext && 
+                player === controller.lustContext.firstTarget 
+            ){
+                div.classList.add("selected-target");
+            }
             // ไฮไลต์เป้าหมายเพิ่มเติม
             if(
                 controller.inputState === "waitingAdditionalTargets" && 
