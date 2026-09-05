@@ -3,7 +3,6 @@ class Lust extends ActiveSkill{
     constructor(){
         super("Lust");
 
-        this.usedThisPlayPhase = false;
     }
     getDescription(){
         return "Lust (เสน่หา)\n" +
