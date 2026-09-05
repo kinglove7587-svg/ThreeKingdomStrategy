@@ -2242,6 +2242,23 @@ class HumanController extends Controller{
         this.game.finishAction();
         return true;
     }
+    // ยกเลิกการยืนยัน Lust และกลับไป Play Phase
+    cancelLustSelection(){
+        // ต้องอยู่ในขั้นตอนยืนยัน Lust เท่านั้น
+        if(this.inputState !== "waitingLustConfirmation"){
+            return false;
+        }
+        // ล้าง Context ของ Lust
+        this.lustContext = null;
+        // ล้าง State ของ Skill
+        this.selectedSkill = null;
+        this.selectedSkillCardIndex = -1;
+        this.selectedSkillCardIndices = [];
+        this.inputState = "idle";
+        this.game.finishAction();
+        this.game.ui.render();
+        return true;
+    }
     // เลือกเป้าหมายคนที่ 1 สำหรับ Lust
     selectLustFirstTarget(player){
         // ต้องอยู่ในขั้นตอนรอเลือกเป้าหมายคนที่ 1
