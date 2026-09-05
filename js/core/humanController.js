@@ -2237,12 +2237,12 @@ class HumanController extends Controller{
         // ล้าง State ของ Lust ก่อนเริ่ม Duel
         this.lustContext = null;
         this.inputState = "idle";
+        this.game.pauseAction(() => true);
         // เริ่ม Duel โดยให้ Target 1 เป็นคนโจมตีก่อน
         this.game.duel(firstTarget, secondTarget);
         if(this.game.triggerResolutionQueue.isWaiting()){
             return true;
         }
-        this.game.afterHumanAction(true);
         return true;
     }
     // ยกเลิกการยืนยัน Lust และกลับไป Play Phase
