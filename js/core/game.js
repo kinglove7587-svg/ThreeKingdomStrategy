@@ -290,11 +290,30 @@ class Game {
         if(this.pendingDrawPhase){
             return;
         }
-        
+
         player.drawCard(this.deck); // แสดงสถานะ
         this.ui.addLog(player.name + " จั่วการ์ด 1 ใบ");
         this.ui.render();
         this.playPhase(player); // ส่งต่เฟส
+    }
+    // หยุดเฟสจั่วไพ่
+    pauseDrawPhase(player){
+        this.pendingDrawPhase = player;
+    }
+    // ดำเนินการต่อเฟสจั่วไพ่
+    resumeDrawPhase(){
+        
+        const player = this.pendingDrawPhase;
+        if(!player){
+            return false;
+        }
+
+        this.pendingDrawPhase = null;
+        player.drawCard(this.deck);
+        this.ui.addlog(player.name + "  จั่วการ์ด 1 ใบ");
+        this.ui.render();
+        this.playPhase(player);
+        return true;
     }
     // เฟส Action ( Play Phase )
     playPhase(player){ 
