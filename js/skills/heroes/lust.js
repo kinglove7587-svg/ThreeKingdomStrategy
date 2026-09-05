@@ -10,6 +10,15 @@ class Lust extends ActiveSkill{
             player.hand.cards.length > 0;
     }
     //
+    canTarget(player, target){
+        return (
+            target && 
+            target.isAlive() && 
+            target !== player && 
+            target.gender === "male"
+        );
+    }
+    //
     needsCardSelection(player, game){
         return true;
     }
