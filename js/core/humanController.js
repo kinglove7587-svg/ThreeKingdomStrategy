@@ -2240,6 +2240,7 @@ class HumanController extends Controller{
         // เริ่ม Duel โดยให้ Target 1 เป็นคนโจมตีก่อน
         this.game.duel(firstTarget, secondTarget);
         this.game.finishAction();
+        this.game.ui.render();
         return true;
     }
     // ยกเลิกการยืนยัน Lust และกลับไป Play Phase
