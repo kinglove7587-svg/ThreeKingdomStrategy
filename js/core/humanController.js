@@ -2228,4 +2228,35 @@ class HumanController extends Controller{
         this.inputState = "waitingLustSecondTarget";
         this.game.ui.render();
     }
+    // เลือกเป้าหมายคนที่ 2 สำหรับ Lust
+    selectLustSecondTarget(player){
+        // ต้องอยู่ในขั้นตอนรอเลือกเป้าหมายคนที่ 2
+        if(this.inputState !== "waitingLustSecondTarget"){
+            return;
+        }
+        // ต้องมี Lust Context
+        if(!this.lustContext){
+            return;
+        }
+        // ดึง Lust ที่กำลังใช้งาน
+        const skill = this.selectedSkill;
+        if(!skill){
+            return;
+        }
+        // ตรวจสอบเป้าหมายผ่านกฎของ Lust
+        if(!skill.canTarget(this.player, player)){
+            this.game.log("Lust: ไม่สามารถเลือกเป้าหมายนี้ได้");
+            return;
+        }
+        // ห้ามเลือก Target 1 ซ้ำ
+        if(player === this.lustContext.firstTarget){
+            this.game.log("Lust: ห้ามเลือกเป้าหมายเดิมซ้ำ");
+            return;
+        }
+        // บันทึกเป้าหมายคนที่ 2
+        this.lustContext.secondTarget = player;
+        // เปลี่ยนไปสู่ขั้นตอนรอยืนยัน Lust
+        this.inputState = "waitingLustConfirmation";
+        this.game.ui.render();
+    }
 }
