@@ -2238,7 +2238,8 @@ class HumanController extends Controller{
         this.lustContext = null;
         this.inputState = "idle";
         // เริ่ม Duel โดยให้ Target 1 เป็นคนโจมตีก่อน
-        this.game.duel(secondTarget, firstTarget);
+        this.game.duel(firstTarget, secondTarget);
+        this.game.finishAction();
         return true;
     }
     // เลือกเป้าหมายคนที่ 1 สำหรับ Lust
