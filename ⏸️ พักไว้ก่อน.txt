@@ -47,7 +47,4 @@ FireAttackCard (พลิงผลาญ): 2 ใบ
 อย่างละ1ใบ
 ม้า อย่างละ2ใ
 
-159f73e0bbb746296b8fbcc2c6139eb10b113d41
 53d8a6daccc413f6a534d833971dd64914f2cb26
-git reset --hard 4c76ade
-4125339514379303f0ce82bdcf9f62f2d114a2eb
