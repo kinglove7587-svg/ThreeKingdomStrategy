@@ -2239,6 +2239,9 @@ class HumanController extends Controller{
         this.inputState = "idle";
         // เริ่ม Duel โดยให้ Target 1 เป็นคนโจมตีก่อน
         this.game.duel(firstTarget, secondTarget);
+        if(this.game.triggerResolutionQueue.isWaiting()){
+            return true;
+        }
         this.game.afterHumanAction(true);
         return true;
     }
