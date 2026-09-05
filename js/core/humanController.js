@@ -2239,7 +2239,7 @@ class HumanController extends Controller{
         this.inputState = "idle";
         // เริ่ม Duel โดยให้ Target 1 เป็นคนโจมตีก่อน
         this.game.duel(firstTarget, secondTarget);
-        this.game.finishAction();
+        this.game.finishAction(true);
         this.game.ui.render();
         return true;
     }
