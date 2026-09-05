@@ -161,6 +161,15 @@ class UIManager{
                 // ดึงเป้าหมายที่เลือกไว้จาก Controller
                 target = controller.getSelectedTarget();
             }
+            // Lust Target Highlight
+            if(controller.selectedSkill instanceof Lust){
+                if(player === controller.selectedLustFirstTarget){
+                    div.classList.add("selected-target");
+                }
+                if(player === controller.selectedLustSecondTarget){
+                    div.classList.add("selected-target");
+                }
+            }
             // Wooden Cart - ถ้าอยู่ใน state waitingWoodenCartCard
             if(
                 controller.inputState === "waitingWoodenCartCard" && 

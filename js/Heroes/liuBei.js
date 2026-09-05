@@ -7,7 +7,7 @@ class LiuBei extends Player{ // เล่าปี่
         this.maxHp = 4;
         this.hp = 4;
         this.faction = "Shu";
-        this.gender = "male";
+        this.gender = "female";
         this.abilityDescription =
             "Rende (จิตเมตตา)\n" +
             "ช่วง Play Phase สามารถมอบการ์ดจากมือให้ตัวละครอื่นได้จำนวนเท่าใดก็ได้\n" +
