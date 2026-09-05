@@ -14,6 +14,10 @@ class Lust extends ActiveSkill{
         return true;
     }
     //
+    needsTarget(player, game){
+        return false;
+    }
+    //
     cardSelectionCount(player, game){
         return 1;
     }
