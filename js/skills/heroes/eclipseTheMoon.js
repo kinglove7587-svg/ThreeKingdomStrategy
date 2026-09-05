@@ -9,7 +9,7 @@ class EclipseTheMoon extends TriggerSkill{
             return;
         }
         game.log(
-            player.name + " จั่วการ์ดจาก Eclipse the Moon 1 ใบ"
+            player.name + " จั่วการ์ดจาก Eclipse The Moon 1 ใบ"
         );
         player.drawCard(game.deck);
     }
