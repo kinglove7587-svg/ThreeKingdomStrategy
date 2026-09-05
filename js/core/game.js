@@ -365,6 +365,10 @@ class Game {
         this.ui.addLog("End Phase");
         // ส่ง Event "onTurnEnd" ผ่าน eventManager ไปยังผู้เล่นเป้าหมาย เพื่อเปิดใช้งานสกิลช่วงสิ้นสุดเทิร์น
         this.eventManager.emitToPlayer("onTurnEnd", player);
+
+        for(const skill of player.skills){
+            skill.onTurnEnd(player, this);
+        }
         if(player.isDying()){
             player.dead();
             this.removeDeadPlayer(player);
