@@ -2002,23 +2002,6 @@ class HumanController extends Controller{
         if(this.selectedSkillCardIndices.length === 0){
             return false;
         }
-        // Lust ใช้ Card ที่เลือกเพื่อเข้าสู่ขั้นเลือก Target
-        if(skill.name === "Lust"){
-
-            const cardIndex = this.selectedSkillCardIndices[0];
-            const card = this.player.hand.cards[cardIndex];
-
-            if(!card){
-                return false;
-            }
-            
-            this.selectedLustCard = card;
-            this.selectedSkillCardIndex = cardIndex;
-            this.selectedSkillCardIndices = [];
-            this.inputState = "waitingLustTarget1";
-            this.game.ui.render();
-            return true;
-        }
         // เรียกใช้ Skill
         const success = skill.use(this.player, this.game);
         // ให้เก็บขั้นตอน Finalize Action ไว้ แล้วรอ Trigger Resume ก่อน
