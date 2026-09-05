@@ -193,6 +193,14 @@ class UIManager{
             ){
                 div.classList.add("selected-target");
             }
+            // Lust - Highlight เป้าหมายคนที่ 2
+            if(
+                controller.inputState === "waitingLustConfirmation" && 
+                controller.lustContext && 
+                player === controller.lustContext.secondTarget
+            ){
+                div.classList.add("selected-target");
+            }
             // ไฮไลต์เป้าหมายเพิ่มเติม
             if(
                 controller.inputState === "waitingAdditionalTargets" && 
