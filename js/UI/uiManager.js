@@ -2055,6 +2055,10 @@ class UIManager{
         if(controller.inputState === "waitingLustSecondTarget"){
             message = "เลือกตัวละครชายคนที่ 2 (ผู้รับ ดวลเดี่ยว)";
         }
+        // Lust - รอยืนยันเป้าหมายทั้ง 2 คน
+        if(controller.inputState === "waitingLustConfirmation"){
+            message = "ตรวจสอบเป้าหมาย แล้วกดยืนยันเพื่อเริ่ม ดวลเดี่ยว";
+        }
         // Trigger Target เช่น ง้าวสามคม
         if(
             controller.inputState === "waitingTriggerTarget" && 
