@@ -14,7 +14,7 @@ class ZhangLiao extends Player{
             "และเลือกตัวละครได้สูงสุด 2 คน " +
             "เพื่อรับการ์ดจากมือของแต่ละคนแทน";
 
-        //
+        this.addSkill(new Assault());
     }
     getPortrait(){
         return "assets/cards/heroes/ZhangLiao.png"
