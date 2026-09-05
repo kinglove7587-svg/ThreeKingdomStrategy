@@ -4,6 +4,11 @@ class Lust extends ActiveSkill{
         super("Lust");
 
     }
+    //
+    canUse(player, game){
+        return !player.lustUsed && 
+            player.hand.cards.length > 0;
+    }
     getDescription(){
         return "Lust (เสน่หา)\n" +
             "จำกัด 1 ครั้งต่อ Play Phase คุณสามารถทิ้งการ์ด 1 ใบ " +
