@@ -522,7 +522,11 @@ class UIManager{
             return;
         }
         // ระหว่างรอเลือกเป้าหมายของ Active Skill ไม่ต้องแสดงไพ่ในมือ
-        if(player.controller.inputState === "waitingSkillTarget"){
+        if(
+            player.controller.inputState === "waitingSkillTarget" || 
+            player.controller.inputState === "waitingLustFirstTarget" || 
+            player.controller.inputState === "waitingLustSecondTarget"
+        ){
             return;
         }
         // ถ้าไม่ใช่ผู้เล่นมนุษย์ ไม่ต้องแสดงการ์ดในมือ
