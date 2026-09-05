@@ -2213,12 +2213,13 @@ class HumanController extends Controller{
         if(!this.lustContext){
             return;
         }
-        // ห้ามเลือกตัวเอง
-        if(player === this.player){
+        // ดึง Lust ที่กำลังใช้งาน
+        const skill = this.selectedSkill;
+        if(!skill){
             return;
         }
-        // ต้องเป็นตัวละครชาย
-        if(player.gender !== "male"){
+        // ตรวจสอบเป้าหมายผ่านกฎของ Lust
+        if(!skill.canTarget(this.player, player)){
             return;
         }
         // บันทึกเป้าหมายคนที่ 1
