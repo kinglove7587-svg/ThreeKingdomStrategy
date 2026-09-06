@@ -983,7 +983,6 @@ class HumanController extends Controller{
         if(index < 0 || index >= target.hand.cards.length){
             return false;
         }
-        this.selectedAssaultCard = target.hand.cards[index];
         this.selectedAssaultCardIndex = index;
         console.log("Assault เลือกการ์ดลำดับ", this.selectedAssaultCardIndex);
 
