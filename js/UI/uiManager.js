@@ -73,6 +73,7 @@ class UIManager{
         this.renderEndTurnButton();
         this.renderSkillButtons();
         this.renderTriggerChoice();
+        this.renderStargazingChoice();
         this.renderReactionChoice();
         this.renderTriggerCardCancelButton();
         this.renderCardSelectionStatus();
