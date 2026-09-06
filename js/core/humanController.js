@@ -1042,6 +1042,14 @@ class HumanController extends Controller{
     finishAssault(){
 
         this.inputState = "idle";
+        this.selectedTarget = null;
+        this.selectedAssaultTarget = null;
+        this.selectedAssaultCard = null;
+        this.selectedAssaultCardIndex = -1;
+        this.selectedAssaultTargets = [];
+        this.selectedSkill = null;
+        this.selectedSkillCardIndex = -1;
+        this.selectedSkillCardIndices = [];
         this.game.finishAction();
         this.game.completeDrawPhaseWithoutDraw(this.player);
     }
