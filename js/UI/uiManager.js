@@ -1664,7 +1664,9 @@ class UIManager{
             controller.inputState === "waitingBurnCard" || 
             controller.inputState === "waitingTriggerChoice" || 
             controller.inputState === "waitingTriggerCard" || 
-            controller.inputState === "waitingTriggerTarget"
+            controller.inputState === "waitingTriggerTarget" || 
+            controller.inputState === "waitingStargazingChoice" || 
+            controller.inputState === "waitingStargazingSelection"
         ){
             this.endTurnButton.disabled = true;
             return;
