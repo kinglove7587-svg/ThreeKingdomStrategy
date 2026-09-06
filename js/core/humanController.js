@@ -914,7 +914,10 @@ class HumanController extends Controller{
     selectSkillTarget(player){
         console.log("selectSkillTarget ถูกเรียก", player.name);
         // ตรวจสอบสถานะว่าต้องอยู่ในช่วงรอเลือกเป้าหมายให้สกิลเท่านั้น
-        if(this.inputState !== "waitingSkillTarget"){
+        if(
+            this.inputState !== "waitingSkillTarget" && 
+            this.inputState !== "waitingAssaultSecondTarget"
+        ){
             return;
         }
         // ดึงออบเจกต์ สกิล ที่เก็บบันทึกไว้
