@@ -1973,7 +1973,11 @@ class UIManager{
 
             const button = document.createElement("button");
             button.classList.add("hand-card");
-            button.disabled = true;
+            button.onclick = () => {
+                controller.selectStargazingCard(
+                    controller.stargazingCards.indexOf(card)
+                );
+            };
 
             button.onmouseenter = (event) => {
                 this.tooltipHoverCard = card;
@@ -2013,6 +2017,13 @@ class UIManager{
             if(card.type === "DelayedTrick"){
                 cardTypeLabel = "Delayed Trick";
             }
+            // ตรวจสอบว่าการ์ดใบนี้ถูกเลือกแล้วหรือไม่
+            const selectedIndex = controller.selectedStargazingCards.indexOf(card);
+            let orderBadge = "";
+            if(selectedIndex !== -1){
+                orderBadge = 
+                    "<div class=\"stargazing-order\">" + (selectedIndex + 1) + "</div>";
+            }
 
             button.innerHTML = 
                 "<div class=\"hand-card-header\">" + 
@@ -2021,6 +2032,7 @@ class UIManager{
                     "<span class=\"hand-card-number\">" + card.number + 
                     "</span>" + 
                 "</div>" + 
+                orderBadge + 
                 "<div class=\"hand-card-name\">" + card.name + 
                 "</div>" + 
                 "<div class=\"hand-card-type\">" + cardTypeLabel + 
