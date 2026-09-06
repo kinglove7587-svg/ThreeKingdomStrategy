@@ -2152,14 +2152,7 @@ class UIManager{
         const status = document.createElement("div");
         status.classList.add("target-selection-status");
         status.textContent = message;
-        this.handArea.appendChild(status);
-        // แสดงปุ่มเลือกการ์ดโจมตีสำหรับสกิล Assault
-        if(
-            controller.selectedSkill && 
-            controller.selectedSkill.constructor.name === "Assault"
-        ){
-            return;
-        }
+        this.handArea.appendChild(status);ห
         // แสดงปุ่มยืนยันสำหรับ Active Skill ที่ต้องยืนยัน Target
         if(
             controller.inputState === "waitingSkillTarget" && 
