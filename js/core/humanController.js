@@ -1037,6 +1037,12 @@ class HumanController extends Controller{
         this.inputState = "waitingAssaultNextTargetChoice";
         this.game.ui.render();
     }
+    // จบการทำงานของ Assault
+    finishAssault(){
+
+        this.inputState = "idle";
+        this.game.afterHumanAction(true);
+    }
     // จัดการเลือกการ์ดบนมือเพื่อใช้ Active Skill
     selectSkillCard(index){
         console.log("selectSkillCard ถูกเรียก", index);

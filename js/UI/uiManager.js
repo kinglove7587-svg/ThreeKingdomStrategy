@@ -782,7 +782,7 @@ class UIManager{
         const controller = player.controller;
         // สร้างปุ่มเลือกเป้าหมายคนที่ 2
         const targetButton = document.createElement("button");
-        targetButton.textContent = "เลือกเป้าหมายคนที่ 2";
+        targetButton.textContent = "เลือกเป้าหมาย 2";
         targetButton.onclick = () => {
             controller.startAssaultSecondTargetSelection();
         };
