@@ -932,7 +932,10 @@ class HumanController extends Controller{
             return;
         }
         // เช็กด้วย Framework ใหม่: ถ้าสกิลต้องการให้เลือกการ์ดต่อ ให้เปลี่ยนสถานะรอเลือกการ์ด
-        if(skill.needsCardSelection(this.player, this.game)){
+        if(
+            typeof skill.needsCardSelection === "function" && 
+            skill.needsCardSelection(this.player, this.game)
+        ){
             this.selectedSkillCardIndices = [];
             this.inputState = "waitingSkillCard";
             this.game.ui.render();
