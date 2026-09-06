@@ -2058,6 +2058,22 @@ class UIManager{
             controller.confirmStargazing();
         };
         this.controlArea.appendChild(confirmButton);
+        // แสดงสถานะจำนวนการ์ดที่เลือก
+        const status = document.createElement("div");
+        status.classList.add("card-selection-status");
+        if(
+            controller.selectedStargazingCards.length === 
+            controller.stargazingCards.length
+        ){
+            status.textContent = 
+                "เลือกครบแล้ว " + controller.selectedStargazingCards.length + 
+                " / " + controller.stargazingCards.length;
+        }else{
+            status.textContent = 
+                "เลือกการ์ดตามลำดับที่ต้องการ " + controller.selectedStargazingCards.length + 
+                " / " + controller.stargazingCards.length;
+        }
+        this.controlArea.appendChild(status);
     }
     // แสดงปุ่มตัดสินใจ Reaction สำหรับผู้เล่นที่กำลังถูกถาม
     renderReactionChoice(){
