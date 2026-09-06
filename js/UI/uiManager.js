@@ -775,6 +775,26 @@ class UIManager{
         status.textContent = "เลือกการ์ดจากมือของ " + target.name;
         this.handArea.appendChild(status);
     }
+    // แสดงตัวเลือกหลังได้รับการ์ด Assault ใบแรก
+    renderAssaultNextTargetChoice(){
+
+        const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
+        // สร้างปุ่มเลือกเป้าหมายคนที่ 2
+        const targetButton = document.createElement("button");
+        targetButton.textContent = "เลือกเป้าหมายคนที่ 2";
+        targetButton.onclick = () => {
+            controller.startAssaultSecondTargetSelection();
+        };
+        this.controlArea.appendChild(targetButton);
+        // สร้างปุ่มจบ Assault
+        const finishButoon = document.createElement("button");
+        finishButoon.textContent = "จบ Assault";
+        finishButoon.onclick = () => {
+            controller.finishAssault();
+        };
+        this.controlArea.appendChild(finishButoon);
+    }
     // แสดงการ์ดบนมือทั้งหมดของผู้เล่นเป้าหมาย
     renderTargetHand(target){
         // หากไม่มีออบเจกต์เป้าหมาย ให้ยกเลิกการทำงาน
