@@ -993,6 +993,11 @@ class HumanController extends Controller{
         if(!success){
             return false;
         }
+        if(this.selectedAssaultTargets.length >= 2){
+            this.inputState = "idle";
+            this.game.afterHumanAction(true);
+            return true;
+        }
         return true;
         
     }
