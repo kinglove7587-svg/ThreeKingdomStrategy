@@ -203,7 +203,7 @@ class HumanController extends Controller{
         this.game.startAction();
         this.finishTurn();
     }
-    // รับเลือกการ์ดจากมือที่จะส่งมอบด้วย Wooden Cart
+    // รับเลือกการ์ดจากมือที่จะส่งมอบด้วย Wooden Car
     selectWoodenCartCard(index){
         
         if(this.inputState !== "waitingWoodenCartCard"){
