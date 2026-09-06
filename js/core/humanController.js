@@ -2440,6 +2440,7 @@ class HumanController extends Controller{
         }
         // เปลี่ยนเข้าสู่ขั้นเลือกและจัดลำดับการ์ด
         this.inputState = "waitingStargazingSelection";
+        this.game.log(this.player.name + " ใช้ Stargazing");
         // ล้างรายการการ์ดที่เลือกไว้ก่อนเริ่ม
         this.selectedStargazingCards = [];
         this.stargazingCards = [];
