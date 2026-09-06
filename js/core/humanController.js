@@ -20,6 +20,7 @@ class HumanController extends Controller{
         this.selectedAssaultTarget = null;
         this.selectedAssaultCard = null;
         this.selectedAssaultCardIndex = -1;
+        this.selectedAssaultTargets = [];
         // Retaliation State
         this.retaliationTarget = null;
         this.selectedRetaliationCard = null;
