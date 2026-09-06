@@ -2162,6 +2162,11 @@ class UIManager{
             controller.selectStealCard(index);
             return;
         }
+        // ตรวจสอบว่าถ้าอยู่ในสถานะรอเลือกการ์ดสำหรับ Assault
+        if(controller.inputState === "waitingAssaultCard"){
+            controller.selectAssaultCard(index);
+            return;
+        }
         // ตรวจสอบสถานะการเลือกการ์ดสำหรับ Wooden Cart
         if(controller.inputState === "waitingWoodenCartCard"){
             controller.selectWoodenCartCard(index);
