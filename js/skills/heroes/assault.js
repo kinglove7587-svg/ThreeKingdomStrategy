@@ -41,4 +41,8 @@ class Assault extends TriggerSkill{
         }
         return true;
     }
+    //
+    needsCardSelection(player, game){
+        return true;
+    }
 }
