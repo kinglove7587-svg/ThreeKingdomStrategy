@@ -2121,6 +2121,10 @@ class UIManager{
                 message = "เลือกเป้าหมายสำหรับสกิล " + skill.name;
             }
         }
+        // Assault - เลือกเป้าหมายคนที่ 2
+        if(controller.inputState === "waitingAssaultSecondTarget"){
+            message = "เลือกเป้าหมายคนที่ 2";
+        }
         // Lust - เลือกเป้าหมายคนที่ 1 หรือคนที่ 2
         if(controller.inputState === "waitingLustFirstTarget"){
             message = "เลือกตัวละครชายคนที่ 1 (ผู้เริ่ม ดวลเดี่ยว)";
