@@ -2302,6 +2302,11 @@ class UIManager{
             controller.selectSkillTarget(player);
             return;
         }
+        // กรณี Assault กำลังรอเลือกเป้าหมายคนที่ 2
+        if(controller.inputState === "waitingAssaultSecondTarget"){
+            controller.selectSkillTarget(player);
+            return;
+        }
         // เลือกเป้าหมายที่สองสำหรับ Trigger
         if(controller.inputState === "waitingTriggerTarget"){
             controller.selectTriggerTarget(player);
