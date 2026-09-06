@@ -1794,6 +1794,10 @@ class UIManager{
         !(
             player.controller.selectedSkill && 
             player.controller.selectedSkill.name === "God Of War"
+        ) && 
+        !(
+            player.controller.selectedSkill && 
+            player.controller.selectedSkill.name === "Assault"
         )
         ){
             // สร้างปุ่มยกเลิก
