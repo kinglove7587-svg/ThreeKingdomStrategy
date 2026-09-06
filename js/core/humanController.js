@@ -926,6 +926,7 @@ class HumanController extends Controller{
         this.setSelectedTarget(player);
         if(skill.constructor.name === "Assault"){
             this.selectedAssaultTarget = player;
+            this.selectedAssaultTargets.push(player);
             this.inputState = "waitingAssaultCard";
             this.game.ui.render();
             return;
