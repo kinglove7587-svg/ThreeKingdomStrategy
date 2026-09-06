@@ -930,6 +930,14 @@ class HumanController extends Controller{
             this.game.log("ไม่สามารถเลือกเป้าหมายนี้ได้");
             return;
         }
+        if(
+            skill.constructor.name === "Assault" && 
+            this.inputState === "waitingAssaultSecondTarget" && 
+            this.selectedAssaultTargets.includes(player)
+        ){
+            this.game.log("Assault ไม่สามารถเลือกเป้าหมายเดิมซ้ำได้");
+            return;
+        }
         // บันทึกตัวละครเป้าหมายที่เลือกไว้ใน selectedTarget
         this.setSelectedTarget(player);
         if(skill.constructor.name === "Assault"){
