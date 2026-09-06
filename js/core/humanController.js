@@ -952,6 +952,27 @@ class HumanController extends Controller{
         const success = skill.use(this.player, this.game);
         this.game.afterHumanAction(success);
     }
+    // จัดการเลือกการ์ดโจมตี (Assault) จากมือของเป้าหมาย
+    selectAssaultCard(index){
+
+        console.log("SelectAssaultCard ถูกเรียก", index);
+        if(this.inputState !== "waitingAssaultCard"){
+            return false;
+        }
+
+        const target = this.selectedAssaultTarget;
+        if(!target){
+            return false;
+        }
+        if(index < 0 || index >= target.hand.cards.length){
+            return false;
+        }
+        this.selectedAssaultCard = target.hand.cards[index];
+        this.selectedAssaultCardIndex = index;
+        console.log("Assault เลือกการ์ดลำดับ", this.selectedAssaultCardIndex);
+        return true;
+        
+    }
     // จัดการเลือกการ์ดบนมือเพื่อใช้ Active Skill
     selectSkillCard(index){
         console.log("selectSkillCard ถูกเรียก", index);
