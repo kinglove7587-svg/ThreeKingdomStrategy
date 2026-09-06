@@ -569,6 +569,10 @@ class UIManager{
         ){
             return;
         }
+        // ล็อกการ์ดในมือระหว่าง Stargazing
+        const stargazingLocked = 
+            player.controller.inputState === "waitingStargazingChoice" || 
+            player.controller.inputState === "waitingStargazingSelection";
         // ถ้าไม่ใช่ผู้เล่นมนุษย์ ไม่ต้องแสดงการ์ดในมือ
         if (!(player.controller instanceof HumanController)){
             return;
@@ -581,6 +585,11 @@ class UIManager{
             const button = document.createElement("button");
             // เปลี่ยนปุ่มการ์ดให้เป็น Hand Card รูปแบบใหม่
             button.classList.add("hand-card");
+            // ปิดการใช้งานการ์ดในมือระหว่าง Stargazing
+            if(stargazingLocked){
+                button.disabled = true;
+                button.classList.add("disabled-card");
+            }
             // ระบบ Shift + Hover Tooltip
             button.onmouseenter = (event) => {
 
