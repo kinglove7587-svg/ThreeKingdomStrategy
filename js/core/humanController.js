@@ -879,7 +879,7 @@ class HumanController extends Controller{
         this.selectedAssaultCard = null;
         this.selectedAssaultCardIndex = -1;
         this.selectedAssaultTargets = [];
-        
+
         this.game.startAction();
         // ปลี่ยนสถานะ Input ให้เป็น "waitingSkillTarget" เพื่อรอผู้เล่นคลิกเลือกตัวละครเป้าหมาย
         this.inputState = "waitingSkillTarget";
@@ -1007,6 +1007,13 @@ class HumanController extends Controller{
             target.name + " ด้วย Assault"
         );
         return true;
+    }
+    // เริ่มต้นการเลือกเป้าหมายคนที่ 2 ของ Assault
+    startAssaultSecondTargetSelection(){
+
+        this.selectedTarget = null;
+        this.inputState = "waitingAssaultSecondTarget";
+        this.game.ui.render();
     }
     // จัดการเลือกการ์ดบนมือเพื่อใช้ Active Skill
     selectSkillCard(index){
