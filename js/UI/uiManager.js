@@ -557,6 +557,13 @@ class UIManager{
         }
         // ระหว่างรอ Trigger Choice ไม่ต้องแสดงปุ่มการ์ดปกติ
         if(player.controller.inputState === "waitingTriggerChoice"){
+            // Assault ให้แสดงมือ แต่ล็อกการ์ดไว้
+            if(
+                !player.controller.selectedTriggerSkill || 
+                player.controller.selectedTriggerSkill.constructor.name !== "Assault"
+            ){
+                return;
+            }
             return;
         }
         // ระหว่างรอเลือกเป้าหมายของ Active Skill ไม่ต้องแสดงไพ่ในมือ
@@ -573,6 +580,11 @@ class UIManager{
         const stargazingLocked = 
             player.controller.inputState === "waitingStargazingChoice" || 
             player.controller.inputState === "waitingStargazingSelection";
+        // ล็อกการ์ดในมือระหว่าง Assault Trigger Choice
+        const assaultLocked = 
+            player.controller.inputState === "waitingTriggerChoice" && 
+            player.controller.selectedTriggerSkill && 
+            player.controller.selectedTriggerSkill.constructor.name === "Assault";
         // ถ้าไม่ใช่ผู้เล่นมนุษย์ ไม่ต้องแสดงการ์ดในมือ
         if (!(player.controller instanceof HumanController)){
             return;
@@ -587,6 +599,11 @@ class UIManager{
             button.classList.add("hand-card");
             // ปิดการใช้งานการ์ดในมือระหว่าง Stargazing
             if(stargazingLocked){
+                button.disabled = true;
+                button.classList.add("disabled-card");
+            }
+            // ปิดการใช้งานการ์ดในมือระหว่าง Assault
+            if(assaultLocked){
                 button.disabled = true;
                 button.classList.add("disabled-card");
             }
