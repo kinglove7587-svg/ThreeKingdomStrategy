@@ -531,6 +531,11 @@ class UIManager{
             this.renderStealHand();
             return;
         }
+        // หากอยู่ในสถานะรอเลือกการ์ดสำหรับ Assault
+        if(player.controller.inputState === "waitingAssaultCard"){
+            this.renderAssaultHand();
+            return;
+        }
         // หากอยู่ในสถานะรอเลือกการ์ด Frost Sword ให้เรียก renderFrostSwordHand()
         if(player.controller.inputState === "waitingFrostSwordCard"){
             this.renderFrostSwordHand();
