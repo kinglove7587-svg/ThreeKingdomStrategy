@@ -19,7 +19,7 @@ class ZhugeLiang extends Player{
             "คุณไม่สามารถตกเป็นเป้าหมายของ โจมตี " +
             "หากคุณไม่มีการ์ดในมือ";
         
-        //this.addSkill(new Stargazing());
+        this.addSkill(new Stargazing());
         //
     }
     getPortrait(){

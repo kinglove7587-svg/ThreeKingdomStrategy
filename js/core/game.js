@@ -264,6 +264,17 @@ class Game {
         player.startJudgePhase(0, () => {
             // Judge Phase ทำงานครบแล้วจึงส่ง Event
             this.eventManager.emitToPlayer("onJudgePhase", player);
+            // เรียก lifecycle onJudgePhase ของทุกสกิลที่ผู้เล่นมี
+            for(const skill of player.skills){
+                skill.onJudgePhase(player, this);
+            }
+            // ถ้า Stargazing กำลังรอการเลือก ให้หยุดก่อนเข้าสู่ Draw Phase
+            if(
+                player.controller.inputState === "waitingStargazingChoice" || 
+                player.controller.inputState === "waitingStargazingSelection"
+            ){
+                return;
+            }
             // Judge Phase เสร็จจริงแล้วจึงเข้าสู่ Draw Phase
             this.drawPhase(player);
         });
