@@ -314,7 +314,7 @@ class HumanController extends Controller{
         this.inputState = "idle";
         this.game.ui.render();
     }
-    // เลือกการ์ดที่จะขโมยจากเป้าหมายตาม Zone ที่ระบุ
+    // เลือกการ์ดที่จะขโมยจากเป้าหมายตาม Zone ที่ระบ
     selectStealCard(index){
         // ดึงเป้าหมายที่เลือกไว้
         const target = this.selectedStealTarget;
