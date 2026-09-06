@@ -3,7 +3,7 @@ class Assault extends TriggerSkill{
     constructor(){
         super("Assault");
     }
-    //
+    // จัดการขั้นตอนการดึงการ์ดในตาของผู้เล่น
     onDrawPhase(player, game){
 
         if(player !== this.owner){
@@ -19,7 +19,7 @@ class Assault extends TriggerSkill{
             );
         }
     }
-    //
+    // จัดการการเลือกสกิล
     resolveChoice(player, game, context, useSkill){
 
         if(!useSkill){
@@ -30,7 +30,7 @@ class Assault extends TriggerSkill{
         player.controller.startSkillTargetSelection(this);
         return true;
     }
-    //
+    // ตรวจสอบว่าเป้าหมายสามารถถูกเลือกได้หรือไม่
     canTarget(player, target){
 
         if(target === player){

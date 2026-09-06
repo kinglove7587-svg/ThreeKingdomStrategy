@@ -1,0 +1,23 @@
+class Stargazing extends TriggerSkill{
+
+    constructor(){
+        super("Stargazing");
+    }
+    //
+    onJudgePhase(player, game){
+
+        if(player !== this.owner){
+            return;
+        }
+        if(player.controller instanceof HumanController){
+            //
+        }
+    }
+    getDescription(){
+        return "Stargazing (มองฟ้า)\n" +
+            "ก่อนเริ่มเทิร์น คุณสามารถดูการ์ด X ใบบนสุดของกองจั่ว " +
+            "(X = จำนวนตัวละครในเกม สูงสุด 5 ใบ) " +
+            "จากนั้นจัดการ์ดเหล่านั้นเรียงลำดับใดก็ได้ไว้ด้านบนสุดของกองจั่ว " +
+            "และนำการ์ดที่เหลือไปไว้ด้านล่างสุดของกองจั่ว";
+    }
+}
