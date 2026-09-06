@@ -1933,6 +1933,30 @@ class UIManager{
         };
         this.controlArea.appendChild(noButton);
     }
+    // แสดงปุ่ม Choice ของ Stargazing
+    renderStargazingChoice(){
+
+        const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
+        // ตรวจสอบว่าอยู่ในสถานะรอเลือกใช้ Stargazing หรือไม่
+        if(controller.inputState !== "waitingStargazingChoice"){
+            return;
+        }
+        // สร้างปุ่มใช้ Stargazing
+        const useButton = document.createElement("button");
+        useButton.textContent = "ใช้ Stargazing";
+        useButton.onclick = () => {
+            controller.useStargazing();
+        };
+        this.controlArea.appendChild(useButton);
+        // สร้างปุ่มไม่ใช้ Stargazing
+        const skipButton = document.createElement("button");
+        skipButton.textContent = "ไม่ใช้";
+        skipButton.onclick = () => {
+            controller.skipStargazing();
+        };
+        this.controlArea.appendChild(skipButton);
+    }
     // แสดงปุ่มตัดสินใจ Reaction สำหรับผู้เล่นที่กำลังถูกถาม
     renderReactionChoice(){
 
