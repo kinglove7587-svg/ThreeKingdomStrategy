@@ -30,4 +30,15 @@ class Assault extends TriggerSkill{
         player.controller.startSkillTargetSelection(this);
         return true;
     }
+    //
+    canTarget(player, target){
+
+        if(target === player){
+            return false;
+        }
+        if(!target || target.hand.cards.length === 0){
+            return false;
+        }
+        return true;
+    }
 }
