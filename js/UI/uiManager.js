@@ -2157,7 +2157,6 @@ class UIManager{
         if(
             controller.inputState === "waitingSkillTarget" && 
             controller.selectedSkill && 
-            controller.selectedSkill.constructor.name !== "Assault" && 
             typeof controller.selectedSkill.waitForTargetConfirmation === "function" && 
             controller.selectedSkill.waitForTargetConfirmation(player, this.game)
         ){
