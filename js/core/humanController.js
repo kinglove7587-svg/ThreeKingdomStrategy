@@ -2440,8 +2440,21 @@ class HumanController extends Controller{
         }
         // เปลี่ยนเข้าสู่ขั้นเลือกและจัดลำดับการ์ด
         this.inputState = "waitingStargazingSelection";
-
+        // ล้างรายการการ์ดที่เลือกไว้ก่อนเริ่ม
         this.selectedStargazingCards = [];
+        this.stargazingCards = [];
+        // คำนวณจำนวนการ์ดที่สามารถเปิดดูได้ สูงสุด 5 ใบ
+        const cardCount = Math.min(this.game.players.length, 5);
+        // ดึงการ์ดจากด้านบนของกองจั่วตามจำนวนที่กำหนด
+        for(let i = 0; i < cardCount; i++){
+            // ดึงการ์ดบนสุดออกจาก Deck
+            const card = this.game.deck.draw();
+            if(card === null){
+                break;
+            }
+            // เก็บการ์ดไว้ใน State ของ Stargazing
+            this.stargazingCards.push(card);
+        }
         this.game.ui.render();
     }
     // ยกเลิกการเลือก Stargazing และกลับไป Draw Phase
