@@ -134,6 +134,13 @@ class UIManager{
                     div.classList.add("disabled-target");
                 }
             }
+            // Assault - ล็อกเป้าหมายคนที่ 1 เมื่อกำลังเลือกเป้าหมายคนที่ 2
+            if(
+                controller.inputState === "waitingAssaultSecondTarget" && 
+                controller.selectedAssaultTargets.includes(player)
+            ){
+                div.classList.add("disabled-target");
+            }
             // ตรวจ Target ของ Lust
             if(
                 (
