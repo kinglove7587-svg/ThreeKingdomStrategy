@@ -74,6 +74,7 @@ class UIManager{
         this.renderSkillButtons();
         this.renderTriggerChoice();
         this.renderStargazingChoice();
+        this.renderStargazingSelection();
         this.renderReactionChoice();
         this.renderTriggerCardCancelButton();
         this.renderCardSelectionStatus();
@@ -1956,6 +1957,77 @@ class UIManager{
             controller.skipStargazing();
         };
         this.controlArea.appendChild(skipButton);
+    }
+    // แสดงการ์ดที่เปิดจาก Stargazing
+    renderStargazingSelection(){
+
+        const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
+        // ตรวจสอบว่าอยู่ในขั้นเลือกการ์ดของ Stargazing หรือไม่
+        if(controller.inputState !== "waitingStargazingSelection"){
+            return;
+        }
+        this.handArea.innerHTML = "";
+        // วนแสดงการ์ดที่ Stargazing เปิดออกมา
+        for(const card of controller.stargazingCards){
+
+            const button = document.createElement("button");
+            button.classList.add("hand-card");
+            button.disabled = true;
+
+            button.onmouseenter = (event) => {
+                this.tooltipHoverCard = card;
+                this.tooltipMouseX = event.clientX;
+                this.tooltipMouseY = event.clientY;
+
+                if(this.tooltipShiftDown){
+                    this.showCardTooltip(
+                        card, 
+                        event.clientX, 
+                        event.clientY
+                    );
+                }
+            };
+            button.onmousemove = (event) => {
+                this.tooltipMouseX = event.clientX;
+                this.tooltipMouseY = event.clientY;
+
+                if(this.tooltipShiftDown){
+                    this.showCardTooltip(
+                        card, 
+                        event.clientX, 
+                        event.clientY
+                    );
+                }
+            };
+            button.onmouseleave = () => {
+                this.tooltipHoverCard = null;
+                this.hideCardTooltip();
+            };
+
+            const suitClass = 
+                (card.suit === "♥️" || card.suit === "♦️") 
+                    ? "suit-red" : "suit-black";
+
+            let cardTypeLabel = card.type;
+            if(card.type === "DelayedTrick"){
+                cardTypeLabel = "Delayed Trick";
+            }
+
+            button.innerHTML = 
+                "<div class=\"hand-card-header\">" + 
+                    "<span class=\"hand-card-suit " + suitClass + "\">" + card.suit + 
+                    "</span>" + 
+                    "<span class=\"hand-card-number\">" + card.number + 
+                    "</span>" + 
+                "</div>" + 
+                "<div class=\"hand-card-name\">" + card.name + 
+                "</div>" + 
+                "<div class=\"hand-card-type\">" + cardTypeLabel + 
+                "</div>";
+
+            this.handArea.appendChild(button);
+        }
     }
     // แสดงปุ่มตัดสินใจ Reaction สำหรับผู้เล่นที่กำลังถูกถาม
     renderReactionChoice(){
