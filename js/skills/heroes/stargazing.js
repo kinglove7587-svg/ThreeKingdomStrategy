@@ -10,7 +10,9 @@ class Stargazing extends TriggerSkill{
             return;
         }
         if(player.controller instanceof HumanController){
-            //
+            //เปลี่ยนสถานะเพื่อหยุด Flow ก่อนเข้าสู่ Draw Phase
+            player.controller.inputState = "waitingStargazingChoice";
+            game.ui.render();
         }
     }
     getDescription(){
