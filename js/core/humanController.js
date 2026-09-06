@@ -41,6 +41,9 @@ class HumanController extends Controller{
         this.triggerContext = null;
         this.selectedTriggerCardIndex = -1;
         this.selectedTriggerCardIndices = [];
+        // Stargazing State
+        this.stargazingCards = [];
+        this.selectedStargazingCards = [];
         // เก็บการ์ดที่เลือกทิ้งจาก พักพลจัดทัพ
         this.selectedRestAndReorganizationCards = [];
         // เก็บการ์ดที่เลือกทิ้งเมื่อจำนวนการ์ดในมือเกิน HP
@@ -2428,5 +2431,26 @@ class HumanController extends Controller{
         // เปลี่ยนไปสู่ขั้นตอนรอยืนยัน Lust
         this.inputState = "waitingLustConfirmation";
         this.game.ui.render();
+    }
+    // เริ่มขั้นตอนเลือกการ์ด Stargazing
+    useStargazing(){
+
+        if(this.inputState !== "waitingStargazingChoice"){
+            return;
+        }
+        // เปลี่ยนเข้าสู่ขั้นเลือกและจัดลำดับการ์ด
+        this.inputState = "waitingStargazingSelection";
+
+        this.selectedStargazingCards = [];
+        this.game.ui.render();
+    }
+    // ยกเลิกการเลือก Stargazing และกลับไป Draw Phase
+    skipStargazing(){
+
+        if(this.inputState !== "waitingStargazingChoice"){
+            return;
+        }
+        this.inputState = "idle";
+        this.game.drawPhase(this.player);
     }
 }
