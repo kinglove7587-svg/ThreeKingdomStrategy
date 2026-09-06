@@ -564,7 +564,6 @@ class UIManager{
             ){
                 return;
             }
-            return;
         }
         // ระหว่างรอเลือกเป้าหมายของ Active Skill ไม่ต้องแสดงไพ่ในมือ
         if(
