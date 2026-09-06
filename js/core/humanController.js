@@ -1042,7 +1042,8 @@ class HumanController extends Controller{
     finishAssault(){
 
         this.inputState = "idle";
-        this.game.afterHumanAction(true);
+        this.game.finishAction();
+        this.game.completeDrawPhaseWithoutDraw(this.player);
     }
     // จัดการเลือกการ์ดบนมือเพื่อใช้ Active Skill
     selectSkillCard(index){
