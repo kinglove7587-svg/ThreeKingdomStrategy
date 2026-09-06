@@ -973,6 +973,29 @@ class HumanController extends Controller{
         return true;
         
     }
+    // ย้ายการ์ดที่เลือกจากมือของเป้าหมายเข้ามือผู้ใช้ Assault
+    takeAssaultCard(){
+
+        const target = this.selectedAssaultTarget;
+        const index = this.selectedAssaultCardIndex;
+        if(!target){
+            return false;
+        }
+        if(index < 0 || index >= target.hand.cards.length){
+            return false;
+        }
+
+        const card = target.hand.removeCard(index);
+        if(!card){
+            return false;
+        }
+        this.player.hand.addCard(card);
+        this.game.log(
+            this.player.name + " ได้รับการ์ด 1 ใบจาก " + 
+            target.name + " ด้วย Assault"
+        );
+        return true;
+    }
     // จัดการเลือกการ์ดบนมือเพื่อใช้ Active Skill
     selectSkillCard(index){
         console.log("selectSkillCard ถูกเรียก", index);
