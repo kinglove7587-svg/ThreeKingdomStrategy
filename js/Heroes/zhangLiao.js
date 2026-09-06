@@ -6,7 +6,7 @@ class ZhangLiao extends Player{
         this.maxHp = 4;
         this.hp = 4;
         this.faction = "Wei";
-        this.gender = "male";
+        this.gender = "female";
 
         this.abilityDescription = 
             "Assault (จู่โจม)\n" +
