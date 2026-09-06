@@ -734,6 +734,43 @@ class UIManager{
             this.renderHandLimitDiscard();
         }
     }
+    // แสดงการ์ดบนมือของเป้าหมายสำหรับ Assault
+    renderAssaultHand(){
+
+        const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
+        const target = controller.selectedAssaultTarget;
+        // ตรวจสอบว่ามีเป้าหมาย Assault หรือไม่
+        if(!target){
+            return;
+        }
+        
+        // ล้างพื้นที่การ์ดเดิม
+        this.handArea.innerHTML = "";
+        // วนสร้างการ์ดคว่ำตามจำนวนการ์ดในมือของเป้าหมาย
+        for(let i = 0; i < target.hand.cards.length; i++){
+            const button = document.createElement("button");
+            button.classList.add("hand-card");
+            button.classList.add("steal-hidden-card");
+
+            button.innerHTML = 
+                "<div class=\"hand-card-header\">" + 
+                    "<span class=\"steal-hidden-icon\">🂠</span>" + 
+                "</div>" + 
+                "<div class=\"steal-hidden-number\">" + (i + 1) + 
+                "</div>";
+                
+            button.onclick = () => {
+                controller.selectAssaultCard(i);
+            };
+            this.handArea.appendChild(button);
+        }
+        // แสดงข้อความบอกผู้เล่นว่ากำลังเลือกการ์ด
+        const status = document.createElement("div");
+        status.classList.add("target-selection-status");
+        status.textContent = "เลือกการ์ดจากมือของ " + target.name;
+        this.handArea.appendChild(status);
+    }
     // แสดงการ์ดบนมือทั้งหมดของผู้เล่นเป้าหมาย
     renderTargetHand(target){
         // หากไม่มีออบเจกต์เป้าหมาย ให้ยกเลิกการทำงาน
