@@ -904,7 +904,7 @@ class HumanController extends Controller{
         // ส่งผลลัพธ์การทำงานหลังผู้เล่นทำ Action
         this.game.afterHumanAction(success);
     }
-    // รับตัวละครเป้าหมาย (player) จากการคลิกเลือกของ Human แล้วส่งให้ Skill ประมวลผล
+    // รับตัวละครเป้าหมาย (player) จากการคลิกเลือกของ Human ส่งให้ Skill ประมวลผล
     selectSkillTarget(player){
         console.log("selectSkillTarget ถูกเรียก", player.name);
         // ตรวจสอบสถานะว่าต้องอยู่ในช่วงรอเลือกเป้าหมายให้สกิลเท่านั้น
