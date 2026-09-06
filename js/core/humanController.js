@@ -970,6 +970,11 @@ class HumanController extends Controller{
         this.selectedAssaultCard = target.hand.cards[index];
         this.selectedAssaultCardIndex = index;
         console.log("Assault เลือกการ์ดลำดับ", this.selectedAssaultCardIndex);
+
+        const success = this.takeAssaultCard();
+        if(!success){
+            return false;
+        }
         return true;
         
     }
