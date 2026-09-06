@@ -2048,6 +2048,16 @@ class UIManager{
 
             this.handArea.appendChild(button);
         }
+        // สร้างปุ่มยืนยันลำดับ
+        const confirmButton = document.createElement("button");
+        confirmButton.textContent = "ยืนยันลำดับ";
+        confirmButton.disabled = 
+            controller.selectedStargazingCards.length !== 
+            controller.stargazingCards.length;
+        confirmButton.onclick = () => {
+            controller.confirmStargazing();
+        };
+        this.controlArea.appendChild(confirmButton);
     }
     // แสดงปุ่มตัดสินใจ Reaction สำหรับผู้เล่นที่กำลังถูกถาม
     renderReactionChoice(){
