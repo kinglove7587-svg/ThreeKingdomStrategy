@@ -2489,4 +2489,29 @@ class HumanController extends Controller{
         }
         this.game.ui.render();
     }
+    // ยืนยันลำดับการ์ดของ Stargazing
+    confirmStargazing(){
+
+        if(this.inputState !== "waitingStargazingSelection"){
+            return;
+        }
+        // ตรวจสอบว่ามีการเลือกการ์ดครบทุกใบก่อนยืนยัน
+        if(
+            this.selectedStargazingCards.length !== 
+            this.stargazingCards.length
+        ){
+            return;
+        }
+        // นำการ์ดกลับเข้า Deck ตามลำดับย้อนกลับเพื่อให้ใบแรกที่เลือกอยู่บนสุด
+        for(let i = this.selectedStargazingCards.length - 1; i >= 0; i--){
+            this.game.deck.cards.push(this.selectedStargazingCards[i]);
+        }
+        this.game.log(this.player.name + " จัดลำดับ Stargazing เสร็จแล้ว");
+        // ล้าง State ของ Stargazing
+        this.stargazingCards = [];
+        this.selectedStargazingCards = [];
+        this.inputState = "idle";
+        this.game.ui.render();
+        this.game.drawPhase(this.player);
+    }
 }
