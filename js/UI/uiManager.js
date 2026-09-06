@@ -536,6 +536,10 @@ class UIManager{
             this.renderAssaultHand();
             return;
         }
+        // หากอยู่ในสถานะรอเลือกว่าจะเลือกเป้าหมาย Assault คนที่ 2 หรือจบ Assault
+        if(player.controller.inputState === "waitingAssaultNextTargetChoice"){
+            return;
+        }
         // หากอยู่ในสถานะรอเลือกการ์ด Frost Sword ให้เรียก renderFrostSwordHand()
         if(player.controller.inputState === "waitingFrostSwordCard"){
             this.renderFrostSwordHand();
