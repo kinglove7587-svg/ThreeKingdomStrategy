@@ -2466,4 +2466,26 @@ class HumanController extends Controller{
         this.inputState = "idle";
         this.game.drawPhase(this.player);
     }
+    // ยืนยันการเลือก Stargazing และจัดเรียงการ์ดที่เลือกไว้
+    selectStargazingCard(index){
+
+        if(this.inputState !== "waitingStargazingSelection"){
+            return;
+        }
+
+        const card = this.stargazingCards[index];
+        if(!card){
+            return;
+        }
+
+        const selectedIndex = this.selectedStargazingCards.indexOf(card);
+        if(selectedIndex === -1){
+            // เพิ่มการ์ดตามลำดับที่ผู้เล่นคลิก
+            this.selectedStargazingCards.push(card);
+        }else{
+            // ถ้าคลิกการ์ดเดิมอีกครั้ง ให้ยกเลิกการเลือก
+            this.selectedStargazingCards.splice(selectedIndex, 1);
+        }
+        this.game.ui.render();
+    }
 }
