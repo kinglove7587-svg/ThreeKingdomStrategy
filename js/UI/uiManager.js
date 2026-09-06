@@ -2019,11 +2019,9 @@ class UIManager{
             }
             // ตรวจสอบว่าการ์ดใบนี้ถูกเลือกแล้วหรือไม่
             const selectedIndex = controller.selectedStargazingCards.indexOf(card);
-            let orderBadge = "";
-            if(selectedIndex !== -1){
-                orderBadge = 
-                    "<div class=\"stargazing-order\">" + (selectedIndex + 1) + "</div>";
-            }
+            // แปลงตำแหน่ง index เป็นลำดับ 1-5
+            const selectedOrder = selectedIndex === -1 
+                ? null : selectedIndex + 1;
 
             button.innerHTML = 
                 "<div class=\"hand-card-header\">" + 
@@ -2032,11 +2030,21 @@ class UIManager{
                     "<span class=\"hand-card-number\">" + card.number + 
                     "</span>" + 
                 "</div>" + 
-                orderBadge + 
                 "<div class=\"hand-card-name\">" + card.name + 
                 "</div>" + 
                 "<div class=\"hand-card-type\">" + cardTypeLabel + 
                 "</div>";
+            
+            // แสดงเลขลำดับด้วยระบบ Badge เดิมของเกม
+            if(selectedOrder !== null){
+                
+                const orderBadge = document.createElement("span");
+                orderBadge.classList.add("hand-card-order-badge");
+                orderBadge.textContent = 
+                    "①②③④⑤".charAt(selectedOrder - 1);
+                button.appendChild(orderBadge);
+                button.classList.add("selected-card");
+            }
 
             this.handArea.appendChild(button);
         }
