@@ -873,8 +873,13 @@ class HumanController extends Controller{
     startSkillTargetSelection(skill){
         // บันทึกสกิลที่กำลังจะใช้งานลงในตัวแปร selectedSkill
         this.selectedSkill = skill;
-        // ล้างค่าเป้าหมายเดิมออกก่อน
         this.selectedTarget = null;
+        // ล้าง Assault State
+        this.selectedAssaultTarget = null;
+        this.selectedAssaultCard = null;
+        this.selectedAssaultCardIndex = -1;
+        this.selectedAssaultTargets = [];
+        
         this.game.startAction();
         // ปลี่ยนสถานะ Input ให้เป็น "waitingSkillTarget" เพื่อรอผู้เล่นคลิกเลือกตัวละครเป้าหมาย
         this.inputState = "waitingSkillTarget";
