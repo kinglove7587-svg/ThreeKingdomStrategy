@@ -998,6 +998,7 @@ class HumanController extends Controller{
             this.game.afterHumanAction(true);
             return true;
         }
+        this.startAssaultNextTargetChoice();
         return true;
         
     }
