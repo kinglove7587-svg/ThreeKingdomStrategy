@@ -27,6 +27,7 @@ class Assault extends TriggerSkill{
             return game.resumeDrawPhase();
         }
         game.log(player.name + " ใช้ Assault");
+        player.controller.startSkillTargetSelection(this);
         return true;
     }
 }
