@@ -18,7 +18,6 @@ class HumanController extends Controller{
         this.selectedStealCardIndex = -1;
         // Assault State
         this.selectedAssaultTarget = null;
-        this.selectedAssaultCard = null;
         this.selectedAssaultCardIndex = -1;
         this.selectedAssaultTargets = [];
         // Retaliation State
@@ -876,7 +875,6 @@ class HumanController extends Controller{
         this.selectedTarget = null;
         // ล้าง Assault State
         this.selectedAssaultTarget = null;
-        this.selectedAssaultCard = null;
         this.selectedAssaultCardIndex = -1;
         this.selectedAssaultTargets = [];
 
@@ -1043,7 +1041,6 @@ class HumanController extends Controller{
         this.inputState = "idle";
         this.selectedTarget = null;
         this.selectedAssaultTarget = null;
-        this.selectedAssaultCard = null;
         this.selectedAssaultCardIndex = -1;
         this.selectedAssaultTargets = [];
         this.selectedSkill = null;
