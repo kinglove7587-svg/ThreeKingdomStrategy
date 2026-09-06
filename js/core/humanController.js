@@ -923,6 +923,12 @@ class HumanController extends Controller{
         }
         // บันทึกตัวละครเป้าหมายที่เลือกไว้ใน selectedTarget
         this.setSelectedTarget(player);
+        if(skill.constructor.name === "Assault"){
+            this.selectedAssaultTarget = player;
+            this.inputState = "waitingAssaultCard";
+            this.game.ui.render();
+            return;
+        }
         // ถ้าสกิลต้องรอยืนยันเป้าหมาย ให้หยุดรอการยืนยันก่อน Execute
         if(
             typeof skill.waitForTargetConfirmation === "function" && 
