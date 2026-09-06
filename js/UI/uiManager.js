@@ -553,6 +553,7 @@ class UIManager{
         // ระหว่างรอเลือกเป้าหมายของ Active Skill ไม่ต้องแสดงไพ่ในมือ
         if(
             player.controller.inputState === "waitingSkillTarget" || 
+            player.controller.inputState === "waitingAssaultSecondTarget" || 
             player.controller.inputState === "waitingLustFirstTarget" || 
             player.controller.inputState === "waitingLustSecondTarget" || 
             player.controller.inputState === "waitingLustConfirmation"
