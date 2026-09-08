@@ -1196,6 +1196,10 @@ class Game {
                 "beforeSlashTarget"
             );
         }
+        // ถ้า Trigger ยกเลิก Slash ให้หยุด Flow
+        if(targetContext.canceled){
+            return true;
+        }
         return targetContext.resume();
     }
     // ข้าม/ดึง Trigger ถัดไปในคิวออกมาประมวลผลต่อ
