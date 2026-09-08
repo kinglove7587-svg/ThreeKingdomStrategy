@@ -2,6 +2,8 @@ class BaredBodied extends TriggerSkill{
 
     constructor(){
         super("Bared Bodied");
+        // เก็บสถานะว่า Bared Bodied ถูกเปิดใช้งานในเทิร์นปัจจุบันหรือไม่
+        this.activeThisTurn = false;
     }
     // แทรกเข้าสู่ Draw Phase เพื่อถามว่าจะใช้ Bared Bodied หรือไม่
     onDrawPhase(player, game){
@@ -30,7 +32,18 @@ class BaredBodied extends TriggerSkill{
             return game.resumeDrawPhase();
         }
         game.log(player.name + " ใช้ Bared Bodied");
+        // เปิดสถานะ Bared Bodied ให้มีผลตลอดเทิร์นปัจจุบัน
+        this.activeThisTurn = true;
         // ใช้ Draw Phase แบบจั่วเพียง 1 ใบ
         return game.resumeDrawPhase(1);
+    }
+    // ล้างสถานะ Bared Bodied เมื่อจบเทิร์นของเจ้าของ
+    onTurnEnd(player, game){
+        // ป้องกันไม่ให้ล้างสถานะจากผู้เล่นคนอื่น
+        if(player !== this.owner){
+            return;
+        }
+        // Bared Bodied มีผลเฉพาะเทิร์นปัจจุบัน
+        this.activeThisTurn = false;
     }
 }
