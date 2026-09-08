@@ -1274,6 +1274,10 @@ class Game {
         if(eventName === "beforeUseSlash"){
             return damage.resume();
         }
+        // ถ้า Trigger ยกเลิก Slash ให้หยุด Flow
+        if(eventName === "beforeSlashTarget" && damage.canceled){
+            return true;
+        }
         // beforeSlashTarget Queue หมดแล้ว ให้ Slash เดิมเดินต่อ
         if(eventName === "beforeSlashTarget"){
             return damage.resume();
