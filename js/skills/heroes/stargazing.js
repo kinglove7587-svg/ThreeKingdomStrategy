@@ -3,7 +3,6 @@ class Stargazing extends TriggerSkill{
     constructor(){
         super("Stargazing");
     }
-    //
     onJudgePhase(player, game){
 
         if(player !== this.owner){

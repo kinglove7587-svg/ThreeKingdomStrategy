@@ -20,7 +20,7 @@ class ZhugeLiang extends Player{
             "หากคุณไม่มีการ์ดในมือ";
         
         this.addSkill(new Stargazing());
-        //
+        this.addSkill(new EmptyFortress());
     }
     getPortrait(){
         return "assets/cards/heroes/ZhugeLiang.png";
