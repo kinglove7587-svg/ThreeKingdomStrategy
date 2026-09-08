@@ -99,10 +99,9 @@ class Stauchness extends TriggerSkill{
                                                         );
                                                         // เปิด Modal เดิมใหม่ พร้อม Card Selection Content
                                                         player.game.showModal({
-                                                            title: "สกิล Stauchness ทำงาน", 
-                                                            message: 
-                                                                "ผู้ตัดสินใจ : " + damageSource.name + 
-                                                                "\nเลือกการ์ด 2 ใบเพื่อทิ้ง", 
+                                                            title: "สกิล Stauchness ทำงาน",
+                                                            owner: damageSource, 
+                                                            message: "เลือกการ์ด 2 ใบเพื่อทิ้ง",
                                                             content: content, 
                                                             buttons: [
                                                                 {
