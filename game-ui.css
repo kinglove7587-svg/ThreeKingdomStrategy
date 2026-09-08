@@ -262,7 +262,7 @@ body{
     align-items:center;
     gap:10px;
     flex-wrap:nowrap;
-    transform:translateX(-50%);
+    transform:translateX(-24%);
     z-index:9;
 }
 
