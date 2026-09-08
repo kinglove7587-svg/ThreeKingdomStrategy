@@ -1,0 +1,1 @@
+class EmptyFortress extends TriggerSkill{}
