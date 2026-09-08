@@ -49,4 +49,4 @@ FireAttackCard (พลิงผลาญ): 2 ใบ
 ①
 
 0ab834172fcd4e8fb4408cb3e4002deac3329068 ปิด อุยกาย
-f497d9fd813e4a729f45ad288386bdecd585d371 เริ่ม Triumphant
+acc05294a5cd77422b67b363b3b6a4ef390573c1 เริ่ม Triumphant

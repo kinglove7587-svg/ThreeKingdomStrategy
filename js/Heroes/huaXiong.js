@@ -10,8 +10,10 @@ class HuaXiong extends Player{
 
         this.abilityDescription = 
             "Triumphant (ฮึกเหิม)\n" +
-            "เมื่อมีตัวละครสร้างความเสียหายแก่คุณด้วยการ์ด โจมตี สีแดง " +
+            "เมื่อมีตัวละครสร้างความเสียหายแก่คุณด้วยการ์ด โจมตี สีแดง ♥️ ♦️ " +
             "ตัวละครนั้นสามารถเลือกฟื้นฟู HP 1 หน่วย หรือจั่วการ์ด 1 ใบ";
+
+        this.addSkill(new Triumphant());
     }
     getPortrait(){
         return "assets/cards/heroes/HuaXiong.png";
