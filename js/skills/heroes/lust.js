@@ -6,8 +6,15 @@ class Lust extends ActiveSkill{
     }
     //
     canUse(player, game){
-        return !player.lustUsed && 
-            player.hand.cards.length > 0;
+        // นับจำนวนตัวละครชายที่ยังอยู่ในเกม
+        const maleCount = game.players.filter(
+            target => target.isAlive() && target.gender === "male"
+        ).length;
+        // ต้องมีตัวละครชายอย่างน้อย 2 คนจึงจะใช้ Lust ได้
+        if(maleCount < 2){
+            return false;
+        }
+        return !player.lustUsed && player.hand.cards.length > 0;
     }
     //
     canTarget(player, target){
