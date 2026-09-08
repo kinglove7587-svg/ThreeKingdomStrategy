@@ -689,7 +689,7 @@ class Game {
         return true;
     }
     // ประมวลผลเริ่มต้นการดวลเดี่ยว (Duel Engine)
-    duel(attacker, defender){
+    duel(attacker, defender, context){
         this.log(attacker.name + " เริ่ม Duel กับ " + defender.name);
         // กำหนดให้ฝ่ายป้องกัน (Defender) ต้องเป็นฝ่ายทิ้งการ์ด "โจมตี" ก่อน
         let current = defender;
@@ -707,6 +707,8 @@ class Game {
             if(!success){
                 // สร้างความเสียหาย 1 หน่วย โดยมี opponent เป็นผู้สร้างความเสียหายให้ current
                 const damage = new Damage(opponent, current, 1);
+                // บันทึกการ์ด Duel ที่เป็นต้นเหตุของ Damage
+                damage.card = context ? context.card : null;
                 // ประมวลผลสร้างความเสียหายใส่ระบบ
                 this.damage(damage);
                 break;
