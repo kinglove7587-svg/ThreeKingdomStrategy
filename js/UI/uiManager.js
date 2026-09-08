@@ -558,8 +558,7 @@ class UIManager{
         if(player.controller.inputState === "waitingTriggerChoice"){
             // Assault ให้แสดงมือ แต่ล็อกการ์ดไว้
             if(
-                !player.controller.selectedTriggerSkill || 
-                player.controller.selectedTriggerSkill.constructor.name !== "Assault"
+                !player.controller.selectedTriggerSkill
             ){
                 return;
             }
@@ -583,6 +582,11 @@ class UIManager{
             player.controller.inputState === "waitingTriggerChoice" && 
             player.controller.selectedTriggerSkill && 
             player.controller.selectedTriggerSkill.constructor.name === "Assault";
+        // ล็อกการ์ดในมือระหว่าง Bared Bodied Trigger Choice
+        const baredBodiedLocked = 
+            player.controller.inputState === "waitingTriggerChoice" && 
+            player.controller.selectedTriggerSkill && 
+            player.controller.selectedTriggerSkill.constructor.name === "BaredBodied";
         // ถ้าไม่ใช่ผู้เล่นมนุษย์ ไม่ต้องแสดงการ์ดในมือ
         if (!(player.controller instanceof HumanController)){
             return;
@@ -602,6 +606,11 @@ class UIManager{
             }
             // ปิดการใช้งานการ์ดในมือระหว่าง Assault
             if(assaultLocked){
+                button.disabled = true;
+                button.classList.add("disabled-card");
+            }
+            // ปิดการใช้งานการ์ดในมือระหว่าง Bared Bodied
+            if(baredBodiedLocked){
                 button.disabled = true;
                 button.classList.add("disabled-card");
             }
