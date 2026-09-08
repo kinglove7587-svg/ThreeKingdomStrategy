@@ -26,7 +26,8 @@ class Stauchness extends TriggerSkill{
             }
             player.game.showModal({
                 title: " สกิล Stauchness ทำงาน", 
-                message: "ผู้ตัดสินใจ : " + player.name, 
+                owner: player, 
+                message: "", 
                 content: content,  
                 buttons: [
                     {
