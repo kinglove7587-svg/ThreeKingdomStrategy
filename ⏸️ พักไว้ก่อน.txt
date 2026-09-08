@@ -55,5 +55,5 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
     new SilverLionHelmetCard("♠️", 1)
 );
 game.ui.render();
-3d70ccc2426e420c281f22462b8d8c9983a9e846 ปิด ฮัวหยง
 1bfa4e793bdd62f4733615f74787c5ceffe187cd เริ่ม Bared Bodied
+39188e8de6b1d46e4b7f24b19e424c4a7b382c25
