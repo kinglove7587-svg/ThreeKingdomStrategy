@@ -47,7 +47,11 @@ class Game {
         if(!config){
             return false;
         }
-        this.pendingModal = config;
+        // กำหนดผู้ตัดสินใจของ Modal ให้เป็นข้อมูลมาตรฐาน
+        this.pendingModal = {
+            ...config, 
+            owner: config.owner || null
+        };
 
         const originalButtons = config.buttons || [];
         const buttons = originalButtons.map(buttonData => ({

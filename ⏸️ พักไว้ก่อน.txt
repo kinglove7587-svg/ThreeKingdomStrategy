@@ -48,5 +48,5 @@ FireAttackCard (พลิงผลาญ): 2 ใบ
 ม้า อย่างละ2ใ
 ①
 
-43e3008e9d9a0fe1380a7dc4d1ec9c09986e2cee ก่อนเริ่ม สกิล
 0ab834172fcd4e8fb4408cb3e4002deac3329068 ปิด อุยกาย
+f497d9fd813e4a729f45ad288386bdecd585d371 เริ่ม Triumphant
