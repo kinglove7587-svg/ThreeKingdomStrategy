@@ -17,8 +17,11 @@ class BaredBodied extends TriggerSkill{
             if(damage.source !== player){
                 return;
             }
-            // ต้องเป็น Damage จาก Slash เท่านั้น
-            if(!(damage.card instanceof SlashCard)){
+            // ต้องเป็น Damage จาก Slash หรือ Duel เท่านั้น
+            if(
+                !(damage.card instanceof SlashCard) && 
+                !(damage.card instanceof DuelCard)
+            ){
                 return;
             }
             // เพิ่ม Damage อีก 1 หน่วย
