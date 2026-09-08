@@ -3431,6 +3431,16 @@ class UIManager{
             buttonsElement.appendChild(button);
         }
         overlay.style.display = "flex";
+        // ไฮไลต์การ์ดตัวละครของผู้ตัดสินใจ
+        if(owner){
+            const ownerIndex = this.game.players.indexOf(owner);
+            const ownerCard = document.querySelector(
+                '.player-card[data-player-index="' + ownerIndex + '"]'
+            );
+            if(ownerCard){
+                ownerCard.classList.add("decision-owner");
+            }
+        }
         return true;
     }
     // ปิด Generic Modal กลางหน้าจอ
