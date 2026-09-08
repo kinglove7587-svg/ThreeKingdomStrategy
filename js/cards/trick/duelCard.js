@@ -26,7 +26,7 @@ class DuelCard extends TrickCard{
                     return true;
                 }
                 // เริ่ม Duel หลัง Reaction จบ
-                game.duel(player, target);
+                game.duel(player, target, context);
                 return true;
             }
         };
