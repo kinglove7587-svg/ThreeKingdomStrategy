@@ -24,7 +24,7 @@ class SelfSacrifice extends ActiveSkill{
         for(let i = 0; i < 2; i++){
             player.drawCard(game.deck);
         }
-        game.log(player.name + " ใช้ Self Sacrifice");
+        game.log(player.name + " ใช้ Self Sacrifice จั่วการ์ด 2 ใบ");
         return true;
     }
     getDescription(){
