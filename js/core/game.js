@@ -312,8 +312,9 @@ class Game {
             return;
         }
 
-        player.drawCard(this.deck); // แสดงสถานะ
-        this.ui.addLog(player.name + " จั่วการ์ด 1 ใบ");
+        player.drawCard(this.deck);
+        player.drawCard(this.deck);
+        this.ui.addLog(player.name + " จั่วการ์ด 2 ใบ");
         this.ui.render();
         this.playPhase(player); // ส่งต่เฟส
     }
