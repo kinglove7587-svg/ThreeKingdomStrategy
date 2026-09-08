@@ -15,6 +15,10 @@ class Stauchness extends TriggerSkill{
             if(damage.amount <= 0){
                 return;
             }
+            // Stauchness ไม่ทำงานกับความเสียหายที่ไม่มีผู้สร้าง เช่น สายฟ้า
+            if(!damage.source){
+                return;
+            }
             player.game.log(" สกิล Stauchness " + " ของ " +  player.name + " ทำงาน ");
 
             const content = document.createElement("div");
@@ -53,13 +57,6 @@ class Stauchness extends TriggerSkill{
                                     }
                                     // ถ้าไม่ใช่ ♥️ ให้ผู้สร้างความเสียหายเป็นผู้ตัดสินใจ
                                     const damageSource = damage.source;
-                                    // ถ้าไม่มีผู้สร้างความเสียหาย จะไม่มีผู้เล่นให้เลือกผลของ Stauchness
-                                    if(!damageSource){
-                                        if(resolution){
-                                            resolution.resume();
-                                        }
-                                        return;
-                                    }
                                     // สร้างฟังก์ชันสำหรับเปิด Choice ของ Stauchness
                                     const showStauchnessChoice = () => {
                                         player.game.showModal({

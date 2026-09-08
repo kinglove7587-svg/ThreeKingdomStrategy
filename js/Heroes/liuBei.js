@@ -21,7 +21,7 @@ class LiuBei extends Player{ // เล่าปี่
         //this.equipArmor(new EightTrigramsArmor("♣️", 7));
         //this.hand.addCard(new BarbarianCard("♠️", 1));
         //this.hand.addCard(new ShadowrunnerCard("♠️", 1));
-        //this.hand.addCard(new FerganaSteedCard("♠️", 1));
+        this.hand.addCard(new LightningCard("♠️", 1));
         //this.hand.addCard(new SlashCard("♠️", 1));
     }
     getPortrait(){
