@@ -57,9 +57,8 @@ class Stauchness extends TriggerSkill{
                                     const showStauchnessChoice = () => {
                                         player.game.showModal({
                                             title: "สกิล Stauchness ทำงาน", 
-                                            message:  
-                                                "ผู้ตัดสินใจ : " + damageSource.name + 
-                                                "\nผล จั่ว ไม่ใช่ ♥️",
+                                            owner: damageSource, 
+                                            message: "ผล จั่ว ไม่ใช่ ♥️",                                                
                                             buttons: [
                                                 {
                                                     text: "ทิ้งการ์ด 2 ใบ", 
