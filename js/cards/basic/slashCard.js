@@ -39,8 +39,7 @@ class SlashCard extends BasicCard{
                 skyPiercingHalberdActive: context.skyPiercingHalberdActive, 
                 waitingAdditionalTargets: false, 
                 ignoreArmor: false, 
-                damageType: context.damageType, 
-                canceled: false
+                damageType: context.damageType
             };
             // Flow สำหรับทำงานต่อหลัง beforeSlashTarget เสร็จ
             targetContext.resume = () => {
@@ -71,10 +70,6 @@ class SlashCard extends BasicCard{
             }
             // ถ้ามีการรอเลือกเป้าหมายเพิ่ม
             if(targetContext.waitingAdditionalTargets){
-                return true;
-            }
-            // ถ้า Trigger ยกเลิกการโจมตี ให้หยุด Slash ทันที
-            if(targetContext.canceled){
                 return true;
             }
             // Resume Slash หลัง beforeSlashTarget เสร็จ
