@@ -14,7 +14,7 @@ class XuZhu extends Player{
             "หากทำเช่นนั้น โจมตี หรือ ดวลเดี่ยว ที่คุณใช้ในเทิร์นนี้ " +
             "จะสร้างความเสียหายเพิ่ม 1 หน่วย";
 
-        //this.addSkill(new BaredBodied());
+        this.addSkill(new BaredBodied());
     }
     getPortrait(){
         return "assets/cards/heroes/XuZhu.png";
