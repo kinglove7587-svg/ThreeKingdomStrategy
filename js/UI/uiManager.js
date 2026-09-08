@@ -3460,6 +3460,11 @@ class UIManager{
         if(buttonsElement){
             buttonsElement.innerHTML = "";
         }
+        // ล้าง Highlight ของผู้ตัดสินใจเมื่อ Modal ปิด
+        const decisionOwnerCards = document.querySelectorAll(".decision-owner");
+        for(const card of decisionOwnerCards){
+            card.classList.remove("decision-owner");
+        }
         return true;
     }
     // สร้างปุ่มการ์ดกลางสำหรับ UI ต่าง ๆ
