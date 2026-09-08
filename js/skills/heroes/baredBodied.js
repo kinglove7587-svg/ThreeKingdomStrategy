@@ -5,6 +5,35 @@ class BaredBodied extends TriggerSkill{
         // เก็บสถานะว่า Bared Bodied ถูกเปิดใช้งานในเทิร์นปัจจุบันหรือไม่
         this.activeThisTurn = false;
     }
+    // ลงทะเบียนตรวจสอบ Damage ก่อนเกิดจริง
+    register(eventManager, player){
+        // Callback สำหรับตรวจสอบ Damage ของ Bared Bodied
+        const callback = (damage) => {
+            // ถ้า Bared Bodied ไม่ได้เปิดใช้งาน ให้ข้าม
+            if(!this.activeThisTurn){
+                return;
+            }
+            // ต้องเป็น Damage ที่ Xu Zhu เป็นผู้สร้างเท่านั้น
+            if(damage.source !== player){
+                return;
+            }
+            // ต้องเป็น Damage จาก Slash เท่านั้น
+            if(!(damage.card instanceof SlashCard)){
+                return;
+            }
+            // เพิ่ม Damage อีก 1 หน่วย
+            damage.amount++;
+            player.game.log(
+                player.name + " ได้รับผลของ Bared Bodied ความเสียหาย +1"
+            );
+        };
+        // ลงทะเบียน Listener ดักจับ Event beforeDamage
+        this.registerListener(
+            eventManager, 
+            "beforeDamage", 
+            callback
+        );
+    }
     // แทรกเข้าสู่ Draw Phase เพื่อถามว่าจะใช้ Bared Bodied หรือไม่
     onDrawPhase(player, game){
 
