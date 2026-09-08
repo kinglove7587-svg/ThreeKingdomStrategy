@@ -47,6 +47,13 @@ FireAttackCard (พลิงผลาญ): 2 ใบ
 อย่างละ1ใบ
 ม้า อย่างละ2ใ
 ①
-
+game.players.find(p => p.name === "เล่าปี่").hand.addCard(
+    new DodgeCard("♥️", 1)
+);
+game.ui.render();
+game.players.find(p => p.name === "เล่าปี่").equipArmor(
+    new SilverLionHelmetCard("♠️", 1)
+);
+game.ui.render();
 0ab834172fcd4e8fb4408cb3e4002deac3329068 ปิด อุยกาย
 acc05294a5cd77422b67b363b3b6a4ef390573c1 เริ่ม Triumphant
