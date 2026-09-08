@@ -206,6 +206,13 @@ class SlashCard extends BasicCard{
         if (player === target){
             return false;
         }
+        // Empty Fortress — ถ้าจูกัดเหลียงไม่มีการ์ดในมือ ห้ามเป็นเป้าหมาย
+        if(
+            target.skills.some(skill => skill instanceof EmptyFortress) && 
+            target.hand.cards.length === 0
+        ){
+            return false;
+        }
         // เงื่อนไขที่ 2: คำนวณระยะห่างระหว่างผู้ใช้การ์ดกับเป้าหมายผ่านระบบ Distance ของเกม
         const distance = player.game.getAttackDistance(player, target);
         // เงื่อนไขที่ 3: ถ้าระยะห่างจริง ไกลกว่าระยะการโจมตีจากอาวุธที่ผู้เล่นถืออยู่ จะไม่สามารถตกเป็นเป้าหมายได้
