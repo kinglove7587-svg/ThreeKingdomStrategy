@@ -78,17 +78,13 @@ class Game {
                 }
             }
         }));
-        // สร้างข้อความ Modal พร้อมชื่อผู้ตัดสินใจ
-        const modalMessage = config.owner 
-            ? "ผู้ตัดสินใจ: " + config.owner.name + "\n" + (config.message || "") 
-            : config.message || "";
-
+        // ส่ง owner ให้ UI โดยตรง
         this.ui.showModal(
             config.title || "", 
-            modalMessage, 
             config.message || "", 
             config.content || null, 
-            buttons
+            buttons, 
+            config.owner || null
         );
         return true;
     }
