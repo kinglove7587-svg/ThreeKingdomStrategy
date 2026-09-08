@@ -2465,7 +2465,7 @@ class HumanController extends Controller{
             return;
         }
         this.inputState = "idle";
-        this.game.drawPhase(this.player);
+        this.game.continueJudgePhase(this.player);
     }
     // ยืนยันการเลือก Stargazing และจัดเรียงการ์ดที่เลือกไว้
     selectStargazingCard(index){
@@ -2512,6 +2512,6 @@ class HumanController extends Controller{
         this.selectedStargazingCards = [];
         this.inputState = "idle";
         this.game.ui.render();
-        this.game.drawPhase(this.player);
+        this.game.continueJudgePhase(this.player);
     }
 }
