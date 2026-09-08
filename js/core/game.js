@@ -1196,10 +1196,6 @@ class Game {
                 "beforeSlashTarget"
             );
         }
-        // ถ้า Trigger ยกเลิก Slash ให้หยุด Flow
-        if(targetContext.canceled){
-            return true;
-        }
         return targetContext.resume();
     }
     // ข้าม/ดึง Trigger ถัดไปในคิวออกมาประมวลผลต่อ
@@ -1273,10 +1269,6 @@ class Game {
         // beforeUseSlash Queue หมดแล้ว ให้ Slash เดิมเดินต่อ
         if(eventName === "beforeUseSlash"){
             return damage.resume();
-        }
-        // ถ้า Trigger ยกเลิก Slash ให้หยุด Flow
-        if(eventName === "beforeSlashTarget" && damage.canceled){
-            return true;
         }
         // beforeSlashTarget Queue หมดแล้ว ให้ Slash เดิมเดินต่อ
         if(eventName === "beforeSlashTarget"){
