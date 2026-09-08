@@ -92,7 +92,7 @@ body{
     
 }
 /* NEW: Highlight ตัวละครที่กำลังเป็นผู้ตัดสินใจ */
-.player-card.decision-owner{
+#player-area .player-card.decision-owner{
     position:relative;
     z-index:20;
     transform:scale(1.04);
