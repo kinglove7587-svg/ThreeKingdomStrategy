@@ -73,6 +73,10 @@ class SlashCard extends BasicCard{
             if(targetContext.waitingAdditionalTargets){
                 return true;
             }
+            // ถ้า Trigger ยกเลิกการโจมตี ให้หยุด Slash ทันที
+            if(targetContext.canceled){
+                return true;
+            }
             // Resume Slash หลัง beforeSlashTarget เสร็จ
             return targetContext.resume();
             
