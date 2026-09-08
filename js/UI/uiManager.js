@@ -3388,7 +3388,7 @@ class UIManager{
         this.controlArea.appendChild(buttonArea);
     }
     // แสดง Generic Modal กลางหน้าจอ
-    showModal(title, message = "", content = null, buttons = []){
+    showModal(title, message = "", content = null, buttons = [], owner = null){
 
         const overlay = document.getElementById("game-modal-overlay");
         const titleElement = document.getElementById("game-modal-title");
@@ -3407,7 +3407,8 @@ class UIManager{
         }
 
         titleElement.textContent = title;
-        messageElement.textContent = message;
+        messageElement.textContent = owner 
+            ? "ผู้ตัดสินใจ : " + owner.name + "\n" + message : message;
         messageElement.style.whiteSpace = "pre-line";
         contentElement.innerHTML = "";
         buttonsElement.innerHTML = "";
