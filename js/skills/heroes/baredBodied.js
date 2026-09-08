@@ -9,11 +9,7 @@ class BaredBodied extends TriggerSkill{
         if(player !== this.owner){
             return;
         }
-        // ถ้ามีสุราลืมกลับอยู่ จะไม่สามารถใช้ Bared Bodied
-        const hasLeBuSiShu = player.delayedTricks.some(
-            card => card instanceof LeBuSiShuCard
-        );
-        if(hasLeBuSiShu){
+        if(player.skipPlayPhase){
             return;
         }
         // หยุด Draw Phase เพื่อรอการตัดสินใจ
