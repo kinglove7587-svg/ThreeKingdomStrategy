@@ -39,7 +39,8 @@ class SlashCard extends BasicCard{
                 skyPiercingHalberdActive: context.skyPiercingHalberdActive, 
                 waitingAdditionalTargets: false, 
                 ignoreArmor: false, 
-                damageType: context.damageType
+                damageType: context.damageType, 
+                canceled: false
             };
             // Flow สำหรับทำงานต่อหลัง beforeSlashTarget เสร็จ
             targetContext.resume = () => {
