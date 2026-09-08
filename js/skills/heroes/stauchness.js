@@ -53,6 +53,13 @@ class Stauchness extends TriggerSkill{
                                     }
                                     // ถ้าไม่ใช่ ♥️ ให้ผู้สร้างความเสียหายเป็นผู้ตัดสินใจ
                                     const damageSource = damage.source;
+                                    // ถ้าไม่มีผู้สร้างความเสียหาย จะไม่มีผู้เล่นให้เลือกผลของ Stauchness
+                                    if(!damageSource){
+                                        if(resolution){
+                                            resolution.resume();
+                                        }
+                                        return;
+                                    }
                                     // สร้างฟังก์ชันสำหรับเปิด Choice ของ Stauchness
                                     const showStauchnessChoice = () => {
                                         player.game.showModal({
