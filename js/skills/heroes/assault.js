@@ -9,6 +9,10 @@ class Assault extends TriggerSkill{
         if(player !== this.owner){
             return;
         }
+        // ถ้าผู้เล่นถูกสั่งข้าม Play Phase จากสุราลืมกลับ จะไม่สามารถใช้ Assault ได้
+        if(player.skipPlayPhase){
+            return;
+        }
         if(player.controller instanceof HumanController){
             game.pauseDrawPhase(player);
             player.controller.startTriggerChoice(
