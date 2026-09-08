@@ -17,7 +17,7 @@ const game = new Game([
         controller: HumanController//AIController
     },
     {
-        hero: XiahouDun, 
+        hero: HuaXiong, 
         controller: HumanController//AIController
     }
 ]);
@@ -28,4 +28,4 @@ game.debug = new DebugTools(game);
 // เรียกใช้เมธอด start() เพื่อเริ่มรัน Game Loop / ระบบการเล่นของเกม
 game.start();
 // CaoCao LuBu GuanYu XiahouDun SimaYi LiuBei ZhangFei SunQuan HuaTuo GanNing LuMeng DiaoChan
-// ZhangLiao ZhugeLiang HuangGai 
+// ZhangLiao ZhugeLiang HuangGai HuaXiong
