@@ -323,7 +323,7 @@ class Game {
         this.pendingDrawPhase = player;
     }
     // ดำเนินการต่อเฟสจั่วไพ่
-    resumeDrawPhase(){
+    resumeDrawPhase(drawCount = 2){
         
         const player = this.pendingDrawPhase;
         if(!player){
@@ -331,9 +331,12 @@ class Game {
         }
 
         this.pendingDrawPhase = null;
-        player.drawCard(this.deck);
-        player.drawCard(this.deck);
-        this.ui.addLog(player.name + "  จั่วการ์ด 2 ใบ");
+
+        for(let i = 0; i < drawCount; i++){
+            player.drawCard(this.deck);
+        }
+
+        this.ui.addLog(player.name + " จั่วการ์ด " + drawCount + " ใบ");
         this.ui.render();
         this.playPhase(player);
         return true;

@@ -57,3 +57,4 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
 game.ui.render();
 acc05294a5cd77422b67b363b3b6a4ef390573c1 เริ่ม Triumphant
 3d70ccc2426e420c281f22462b8d8c9983a9e846 ปิด ฮัวหยง
+1bfa4e793bdd62f4733615f74787c5ceffe187cd เริ่ม Bared Bodied
