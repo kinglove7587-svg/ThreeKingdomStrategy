@@ -97,14 +97,14 @@ class SlashCard extends BasicCard{
         return context.resume();
     }
     // ประมวลผลการใช้ Slash ต่อ 1 เป้าหมาย (เช็กหลบ -> emit beforeSlashHit -> ทำความเสียหาย)
-    resolveSlashTarget(player, target, game, targetContext = null){
+    resolveSlashTarget(player, target, game, targetContext = null, sourceCard = this){
         
         game.log("→ เป้าหมาย : " + target.name);
         // เปิดโอกาสให้ Skill แทรกก่อน Dodge
         const dodgeContext = {
             attacker: player, 
             target: target, 
-            card: this, 
+            card: sourceCard, 
             dodge: false, 
             requiredDodgeCount: 1, 
             ignoreArmor: targetContext ? targetContext.ignoreArmor : false, 
@@ -117,10 +117,10 @@ class SlashCard extends BasicCard{
         const slashContext = {
             source: player, 
             target: target, 
-            card: this, 
+            card: sourceCard, 
             canceled: false, 
             ignoreArmor: targetContext ? targetContext.ignoreArmor : false, 
-            damageType: targetContext ? targetContext.damageType : this.damageType
+            damageType: targetContext ? targetContext.damageType : sourceCard.damageType
         };
         // กำหนด Flow ที่ต้องทำหลัง beforeDodge เสร็จ
         dodgeContext.resume = () => {
@@ -154,7 +154,7 @@ class SlashCard extends BasicCard{
                 }
                 // สร้าง Damage และบันทึกการ์ดต้นทาง
                 const damage = new Damage(player, target, damageAmount, slashContext.damageType);
-                damage.card = this;
+                damage.card = sourceCard;
                 damage.ignoreArmor = slashContext.ignoreArmor;
                 // ส่ง Damage เข้าระบบ
                 game.damage(damage);
