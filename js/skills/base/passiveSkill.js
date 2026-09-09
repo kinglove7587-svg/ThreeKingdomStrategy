@@ -7,6 +7,10 @@ class PassiveSkill extends Skill{
     getAttackDistanceModifier(player, attacker, target, game){
         return 0;
     }
+    // ใช้สำหรับ PassiveSkill ที่ต้องการปรับ Effective Distance
+    getEffectDistanceModifier(player, fromPlayer, toPlayer, game){
+        return 0;
+    }
     // ใช้สำหรับ PassiveSkill ที่ต้องการปรับ Hand Limit
     getHandLimitModifier(player, game){
         return 0;
