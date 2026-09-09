@@ -81,7 +81,15 @@ class SowingDistrust extends ActiveSkill{
                     1, 
                     DamageType.NORMAL
                 );
+                game.hideModal();
+                // หยุด Action หลักไว้ก่อน เพื่อรอ Damage และ Trigger ทั้งหมด
+                game.pauseAction(() => true);
                 game.damage(damage);
+                // ถ้ามี Trigger รอ Modal ให้ Trigger เป็นผู้ Resume Action ต่อ (แก้ไขชื่อคุณลักษณะเป็น Queue)
+                if(game.triggerResolutionQueue.isWaiting()){
+                    return true;
+                }
+                return game.resumeAction();
             }
             game.hideModal();
             game.afterHumanAction(true);
