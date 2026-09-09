@@ -40,6 +40,29 @@ class SowingDistrust extends ActiveSkill{
             player.name + "  ใช้ Sowing Distrust กับ " + target.name
         );
 
+        const resolveSuit = (chosenSuit) => {
+            game.log(target.name + " เลือกดอก " + chosenSuit);
+
+            const randomIndex = Math.floor(
+                Math.random() * player.hand.cards.length
+            );
+            const transferredCard = player.hand.removeCard(randomIndex);
+            if(!transferredCard){
+                game.hideModal();
+                game.afterHumanAction(false);
+                return;
+            }
+            target.hand.addCard(transferredCard);
+            game.log(
+                player.name + " ส่ง " + transferredCard.name + " ให้ " + target.name
+            );
+            game.log(
+                target.name + " เปิดเผย " + transferredCard.name + " " + transferredCard.suit
+            );
+            game.hideModal();
+            game.afterHumanAction(true);
+        };
+
         game.showModal({
             owner: target, 
             title: "Sowing Distrust", 
@@ -48,33 +71,25 @@ class SowingDistrust extends ActiveSkill{
                 {
                     text: "♠️", 
                     onClick: () => {
-                        game.log(target.name + "  เลือกดอก ♠️");
-                        game.hideModal();
-                        game.afterHumanAction(true);
+                        resolveSuit("♠️")
                     }
                 }, 
                 {
                     text: "♥️", 
                     onClick: () => {
-                        game.log(target.name + " เลือกดอก ♥️");
-                        game.hideModal();
-                        game.afterHumanAction(true);
+                        resolveSuit("♥️")
                     }
                 }, 
                 {
                     text: "♣️", 
                     onClick: () => {
-                        game.log(target.name + "  เลือกดอก ♣️");
-                        game.hideModal();
-                        game.afterHumanAction(true);
+                        resolveSuit("♣️")
                     }
                 }, 
                 {
                     text: "♦️", 
                     onClick: () => {
-                        game.log(target.name + " เลือกดอก ♦️");
-                        game.hideModal();
-                        game.afterHumanAction(true);
+                        resolveSuit("♦️")
                     }
                 }
             ]
