@@ -46,6 +46,7 @@ FireAttackCard (พลิงผลาญ): 2 ใบ
 การ์ดอุปกรณ์ (Equipment Cards)
 อย่างละ1ใบ
 ม้า อย่างละ2ใ
+จูล่ง ยังไม่สร้าง สกิล
 ①
 game.players.find(p => p.name === "เล่าปี่").hand.addCard(
     new DodgeCard("♥️", 1)
