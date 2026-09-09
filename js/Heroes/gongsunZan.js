@@ -15,7 +15,7 @@ class GongsunZan extends Player{
             "หาก HP ของคุณน้อยกว่าหรือเท่ากับ 2 หน่วย " +
             "ระยะห่างระหว่างตัวละครอื่นกับคุณเพิ่มขึ้น 1 หน่วย";
 
-        //this.addSkill(new Militia());
+        this.addSkill(new Militia());
     }
     getPortrait(){
         return "assets/cards/heroes/GongsunZan.png";
