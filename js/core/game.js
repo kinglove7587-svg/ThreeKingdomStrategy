@@ -1404,16 +1404,6 @@ class Game {
         }
 
         if(
-            hasPendingAction &&
-            pendingPlayer &&
-            pendingPlayer.controller instanceof HumanController && 
-            autoAfterHumanAction
-        ){
-            this.afterHumanAction(actionResult);
-            return actionResult;
-        }
-
-        if(
             !hasPendingAction && 
             !damage?.deferActionFinalize && 
             damage?.source === this.getCurrentPlayer() &&
