@@ -197,6 +197,24 @@ class HumanController extends Controller{
         if (!card){
             return;
         }
+        // Skill Braveheart จากผู้เล่น
+        const braveheartSkill = this.player.skills.find(
+            skill => skill.constructor.name === "Braveheart"
+        );
+        // ตรวจสอบว่า Dodge ใบนี้สามารถใช้แทน Slash ได้หรือไม่
+        if(
+            card instanceof DodgeCard && 
+            braveheartSkill && 
+            !this.player.slashUsed
+        ){
+            // บันทึกว่า Dodge ใบนี้กำลังถูกใช้แทน Slash
+            this.selectedDodgeAsSlash = true;
+            // เริ่ม Action และเข้าสู่การเลือก Target แบบ Slash
+            this.game.startAction();
+            this.inputState = "waitingTarget";
+            this.game.ui.render();
+            return;
+        }
         // ถ้าการ์ดต้องเลือกเป้าหมาย (เช่น การ์ดโจมตี, ดวล) ให้ Render UI ใหม่ แล้วหยุดรอให้ผู้เล่นคลิกเลือกเป้าหมาย
         if (card.needTarget()){
             this.game.startAction();
