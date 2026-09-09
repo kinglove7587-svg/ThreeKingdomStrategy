@@ -22,8 +22,8 @@ class StealCard extends TrickCard{
         ){
             return false;
         }
-        // ระยะห่าง (Distance) ต้องไม่เกิน 1
-        return player.game.getDistance(player, target) <= 1;
+        // ใช้ Effective Distance เพื่อรวมผลของ Mount
+        return player.game.getEffectDistance(player, target) <= 1;
     }
     // ประมวลผลการใช้การ์ดฉกฉวย (Steal)
     use(player, game){
