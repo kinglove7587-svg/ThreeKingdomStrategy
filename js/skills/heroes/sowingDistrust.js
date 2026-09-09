@@ -20,6 +20,9 @@ class SowingDistrust extends ActiveSkill{
     needsTarget(player, game){
         return true;
     }
+    needsCardSelection(player, game){
+        return true;
+    }
     // ตรวจสอบว่า Target สามารถถูกเลือกได้หรือไม่
     canTarget(player, target){
         return (
@@ -35,6 +38,13 @@ class SowingDistrust extends ActiveSkill{
         if(!target){
             return false;
         }
+
+        const selectedCardIndex = player.controller.selectedSkillCardIndex;
+        const selectedCard = player.hand.cards[selectedCardIndex];
+        if(!selectedCard){
+            return false;
+        }
+
         this.usedThisPlayPhase = true;
         game.log(
             player.name + "  ใช้ Sowing Distrust กับ " + target.name
@@ -43,15 +53,14 @@ class SowingDistrust extends ActiveSkill{
         const resolveSuit = (chosenSuit) => {
             game.log(target.name + " เลือกดอก " + chosenSuit);
 
-            const randomIndex = Math.floor(
-                Math.random() * player.hand.cards.length
-            );
-            const transferredCard = player.hand.removeCard(randomIndex);
-            if(!transferredCard){
+            const cardIndex = player.hand.cards.indexOf(selectedCard);
+            if(cardIndex === -1){
                 game.hideModal();
                 game.afterHumanAction(false);
                 return;
             }
+
+            const transferredCard = player.hand.removeCard(cardIndex);
             target.hand.addCard(transferredCard);
             game.log(
                 player.name + " ส่ง " + transferredCard.name + " ให้ " + target.name

@@ -1137,6 +1137,13 @@ class HumanController extends Controller{
         }
         // เมื่อเลือกครบตามจำนวนแล้ว ให้สั่งเรียกใช้งาน สกิล
         const success = skill.use(this.player, this.game);
+        if(this.game.pendingModal){
+            this.selectedSkill = null;
+            this.selectedSkillCardIndex = -1;
+            this.selectedSkillCardIndices = [];
+            this.inputState = "idle";
+            return;
+        }
         // Skill สามารถต่อเข้า Target หรือ Burn Source ได้
         if(
             this.inputState === "waitingSkillTarget" || 
