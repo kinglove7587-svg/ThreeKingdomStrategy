@@ -22,7 +22,7 @@ class BurnBridgeCard extends TrickCard{
         ){
             return false;
         }
-        return true;
+        return player.game.getEffectDistance(player, target) <= 1;
     }
     // ประมวลผลการใช้งานการ์ดถอนสะพาน (BurnBridgeCard)
     use(player, game){
