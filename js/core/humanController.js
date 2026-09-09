@@ -66,6 +66,8 @@ class HumanController extends Controller{
         this.pendingSlashTriggerAfterDamage = false;
         // State สำหรับเก็บ Context ของ Reaction
         this.reactionContext = null;
+        // เก็บสถานะว่า Dodge ใบที่เลือกกำลังถูกใช้แทน Slash
+        this.selectedDodgeAsSlash = false;
     }
     // จัดการเทิร์นของผู้เล่นมนุษย์
     playTurn(){ 
