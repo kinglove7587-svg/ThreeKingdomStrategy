@@ -240,18 +240,37 @@ class Game {
         const fromMountModifer = fromPlayer.getMountAttackDistanceModifier();
         // ระยะจาก Mount ของเป้าหมาย
         const toMountModifier = toPlayer.getMountDefenseDistanceModifier();
+        // รวมผล PassiveSkill ที่ปรับ Effective Distance
+        let passiveModifier = 0;
+        for(const player of this.players){
+            for(const skill of player.getPassiveSkills()){
+                if(typeof skill.getEffectDistanceModifier !== "function"){
+                    continue;
+                }
+
+                passiveModifier += skill.getEffectDistanceModifier(
+                    player, 
+                    fromPlayer, 
+                    toPlayer, 
+                    this
+                );
+            }
+        }
         // รวมค่าระยะทั้งหมด
         const distance = 
             baseDistance + 
             fromMountModifer + 
-            toMountModifier;
+            toMountModifier + 
+            passiveModifier;
         // ระยะต่ำสุดต้องไม่ต่ำกว่า 1
         const finalDistance = Math.max(1, distance);
 
         console.log(
-            "Effect Distance =", baseDistance, "+", 
+            "Effect Distance =", 
+            baseDistance, "+", 
             fromMountModifer, "+", 
-            toMountModifier, "=", 
+            toMountModifier, "+", 
+            passiveModifier, "=", 
             finalDistance
         );
         return finalDistance;
