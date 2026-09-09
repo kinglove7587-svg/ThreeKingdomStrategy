@@ -989,6 +989,9 @@ class HumanController extends Controller{
         // ถ้าสกิลไม่ต้องการเลือกการ์ดต่อ ให้รันสกิลทันที
         this.inputState = "idle";
         const success = skill.use(this.player, this.game);
+        if(this.game.pendingModal){
+            return;
+        }
         this.game.afterHumanAction(success);
     }
     // จัดการเลือกการ์ดโจมตี (Assault) จากมือของเป้าหมาย

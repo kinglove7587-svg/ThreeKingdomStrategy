@@ -39,6 +39,46 @@ class SowingDistrust extends ActiveSkill{
         game.log(
             player.name + "  ใช้ Sowing Distrust กับ " + target.name
         );
+
+        game.showModal({
+            owner: target, 
+            title: "Sowing Distrust", 
+            message: target.name + "  กรุณาเลือก 1 ดอก", 
+            buttons: [
+                {
+                    text: "♠️", 
+                    onClick: () => {
+                        game.log(target.name + "  เลือกดอก ♠️");
+                        game.hideModal();
+                        game.afterHumanAction(true);
+                    }
+                }, 
+                {
+                    text: "♥️", 
+                    onClick: () => {
+                        game.log(target.name + " เลือกดอก ♥️");
+                        game.hideModal();
+                        game.afterHumanAction(true);
+                    }
+                }, 
+                {
+                    text: "♣️", 
+                    onClick: () => {
+                        game.log(target.name + "  เลือกดอก ♣️");
+                        game.hideModal();
+                        game.afterHumanAction(true);
+                    }
+                }, 
+                {
+                    text: "♦️", 
+                    onClick: () => {
+                        game.log(target.name + " เลือกดอก ♦️");
+                        game.hideModal();
+                        game.afterHumanAction(true);
+                    }
+                }
+            ]
+        });
         return true;
     }
     getDescription(){
