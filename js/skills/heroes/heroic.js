@@ -14,5 +14,5 @@ class Heroic extends TriggerSkill{
         game.log(player.name + "  ใช้ Heroic จั่วการ์ด 3 ใบ");
         return game.resumeDrawPhase(3);
     }
-
+    
 }
