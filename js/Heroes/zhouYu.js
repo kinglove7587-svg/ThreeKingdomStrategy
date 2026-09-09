@@ -18,7 +18,7 @@ class ZhouYu extends Player{
             "(ไม่ว่าผลจะเป็นอย่างไร ตัวละครเป้าหมายจะเก็บการ์ดใบนั้นไว้ในมือ)";
 
         this.addSkill(new Heroic());
-        //this.addSkill(new SowingDistrust());
+        this.addSkill(new SowingDistrust());
     }
     getPortrait(){
         return "assets/cards/heroes/ZhouYu.png";
