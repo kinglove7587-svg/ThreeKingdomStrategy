@@ -8,8 +8,8 @@ class RationsDepletedCard extends DelayedTrickCard{
         if(player === target){
             return false;
         }
-        // เป้าหมายต้องอยู่ในระยะทางกายภาพ
-        return player.game.getDistance(player, target) <= 1;
+        // ใช้ Effective Distance เพื่อรวมผลของ Mount
+        return player.game.getEffectDistance(player, target) <= 1;
     }
     // สั่งใช้การ์ดเสบียงหมด! โดยนำการ์ดไปวางในพื้นที่ Delayed Trick
     use(player, game){
