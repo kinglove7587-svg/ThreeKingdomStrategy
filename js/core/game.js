@@ -996,15 +996,30 @@ class Game {
         const targetModifier = 
             target.getMountDefenseDistanceModifier();
         let passiveModifier = 0;
+        // แยก Passive Modifier สำหรับ Effect Distance
+        let effectPassiveModifier = 0;
         for(const player of this.players){
             if(!player.isAlive()){
                 continue;
             }
             for(const skill of player.getPassiveSkills()){
-                if(typeof skill.getAttackDistanceModifier !== "function"){
-                    continue;
+                if(typeof skill.getAttackDistanceModifier === "function"){
+                    passiveModifier += skill.getAttackDistanceModifier(
+                        player, 
+                        attacker, 
+                        target, 
+                        this
+                    );
                 }
-                passiveModifier += skill.getAttackDistanceModifier(player, attacker, target, this);
+                // รองรับ Passive ที่ปรับ Effective Distance เช่น Militia
+                if(typeof skill.getEffectDistanceModifier === "function"){
+                    effectPassiveModifier += skill.getEffectDistanceModifier(
+                        player, 
+                        attacker, 
+                        target, 
+                        this
+                    );
+                }
             }
         }
         // คำนวณระยะสำหรับการโจมตี (ขั้นต่ำไม่ต่ำกว่า 1)
@@ -1013,7 +1028,8 @@ class Game {
             baseDistance + 
             attackerModifier + 
             targetModifier + 
-            passiveModifier
+            passiveModifier + 
+            effectPassiveModifier
         );
 
         console.log(
@@ -1021,7 +1037,8 @@ class Game {
             baseDistance, "+", 
             attackerModifier, "+", 
             targetModifier, "+", 
-            passiveModifier, "=", 
+            passiveModifier, "+", 
+            effectPassiveModifier, "=", 
             distance
         );
         return distance;
