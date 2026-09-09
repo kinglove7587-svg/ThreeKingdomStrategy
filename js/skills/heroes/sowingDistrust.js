@@ -72,6 +72,7 @@ class SowingDistrust extends ActiveSkill{
             );
             if(transferredCard.suit === chosenSuit){
                 game.log("ดอกตรงกัน → ไม่ได้รับความเสียหาย");
+            }else{
                 game.log("ดอกไม่ตรงกัน → เป้าหมายต้องได้รับความเสียหาย 1");
             }
             game.hideModal();
