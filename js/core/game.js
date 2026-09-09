@@ -232,6 +232,30 @@ class Game {
 
         return distance;
     }
+    // คำนวณระยะ Effective สำหรับ Card / Effect ที่ใช้ระยะ
+    getEffectDistance(fromPlayer, toPlayer){
+        // ระยะพื้นฐานบนโต๊ะ
+        const baseDistance = this.getDistance(fromPlayer, toPlayer);
+        // ระยะจาก Mount ของฝ่ายกระทำ
+        const fromMountModifer = fromPlayer.getMountAttackDistanceModifier();
+        // ระยะจาก Mount ของเป้าหมาย
+        const toMountModifier = toPlayer.getMountDefenseDistanceModifier();
+        // รวมค่าระยะทั้งหมด
+        const distance = 
+            baseDistance + 
+            fromMountModifer + 
+            toMountModifier;
+        // ระยะต่ำสุดต้องไม่ต่ำกว่า 1
+        const finalDistance = Math.max(1, distance);
+
+        console.log(
+            "Effect Distance =", baseDistance, "+", 
+            fromMountModifer, "+", 
+            toMountModifier, "=", 
+            finalDistance
+        );
+        return finalDistance;
+    }
 
     startTurn(){ // เริ่ม ตา
         // ถ้าเกมจบแล้ว ห้ามเริ่มเทิร์น
