@@ -56,4 +56,4 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
 );
 game.ui.render();
 1bfa4e793bdd62f4733615f74787c5ceffe187cd เริ่ม Bared Bodied
-39188e8de6b1d46e4b7f24b19e424c4a7b382c25
+c28b995258d2ba089815d22e2c1b8121745f8405 เริ่ม Heroic
