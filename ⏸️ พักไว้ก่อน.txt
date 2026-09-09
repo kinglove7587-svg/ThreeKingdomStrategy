@@ -55,5 +55,5 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
     new SilverLionHelmetCard("♠️", 1)
 );
 game.ui.render();
-12b3a62249462703c0ce5a752ea4283d7fb4435f ปิด Sowing Distrust
 0b58c9137bab315efc550b94253577036a07f788 เริ่ม Militia
+64f9c0f01fc924c84b39e2423d926c6cd611d95c ปิด กองซุนจ้าน
