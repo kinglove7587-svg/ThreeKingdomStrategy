@@ -74,6 +74,14 @@ class SowingDistrust extends ActiveSkill{
                 game.log("ดอกตรงกัน → ไม่ได้รับความเสียหาย");
             }else{
                 game.log("ดอกไม่ตรงกัน → เป้าหมายต้องได้รับความเสียหาย 1");
+
+                const damage = new Damage(
+                    player, 
+                    target, 
+                    1, 
+                    DamageType.NORMAL
+                );
+                game.damage(damage);
             }
             game.hideModal();
             game.afterHumanAction(true);
