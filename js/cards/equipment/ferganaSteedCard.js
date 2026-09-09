@@ -4,6 +4,6 @@ class FerganaSteedCard extends MountCard{
     }
     // NEW: คำอธิบายความสามารถสำหรับ Tooltip
     getDescription(){
-        return "ม้า ลดระยะห่างจากผู้เล่นอื่นลง 1";
+        return "เมื่อคุณเป็นฝ่ายกระทำ ระยะห่างจากคุณไปยังผู้เล่นอื่นลดลง 1 หน่วย";
     }
 }

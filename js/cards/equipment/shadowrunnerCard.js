@@ -4,6 +4,6 @@ class ShadowrunnerCard extends MountCard{
     }
     // คำอธิบายความสามารถสำหรับ Tooltip
     getDescription(){
-        return "ม้า +1 ระยะการโจมตี"
+        return "เมื่อคุณตกเป็นเป้าหมาย ระยะห่างจากผู้เล่นอื่นมายังคุณเพิ่มขึ้น 1 หน่วย"
     }
 }

@@ -56,5 +56,4 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
 );
 game.ui.render();
 c28b995258d2ba089815d22e2c1b8121745f8405 เริ่ม Heroic
-9d9210b676656b5731cc673a2c9fffc560bd4ed8 เริ่ม Sowing Distrust
 e07fab6ef7b699e5831102f96e0baf1f1276ab24 ปิด Sowing Distrust
