@@ -66,8 +66,14 @@ class SowingDistrust extends ActiveSkill{
                 player.name + " ส่ง " + transferredCard.name + " ให้ " + target.name
             );
             game.log(
-                target.name + " เปิดเผย " + transferredCard.name + " " + transferredCard.suit
+                target.name + " เปิดเผย " + 
+                transferredCard.name + " " + 
+                transferredCard.suit
             );
+            if(transferredCard.suit === chosenSuit){
+                game.log("ดอกตรงกัน → ไม่ได้รับความเสียหาย");
+                game.log("ดอกไม่ตรงกัน → เป้าหมายต้องได้รับความเสียหาย 1");
+            }
             game.hideModal();
             game.afterHumanAction(true);
         };
