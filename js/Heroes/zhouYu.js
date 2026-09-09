@@ -17,7 +17,7 @@ class ZhouYu extends Player{
             "หากดอกของการ์ดที่เปิดเผยแตกต่างจากดอกการ์ดที่เลือก ตัวละครเป้าหมายได้รับความเสียหาย 1 หน่วย " +
             "(ไม่ว่าผลจะเป็นอย่างไร ตัวละครเป้าหมายจะเก็บการ์ดใบนั้นไว้ในมือ)";
 
-        //this.addSkill(new Heroic());
+        this.addSkill(new Heroic());
         //this.addSkill(new SowingDistrust());
     }
     getPortrait(){
