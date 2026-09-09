@@ -304,9 +304,19 @@ class Game {
             return;
         }
         this.eventManager.emitToPlayer("onDrawPhase", player);
-
+        // ตรวจว่า Skill ใดรับผิดชอบ Draw Phase และดำเนินการต่อให้แล้ว
+        let drawPhaseHandled = false;
         for(const skill of player.skills){
-            skill.onDrawPhase(player, this);
+            // รับผลลัพธ์จาก Skill ว่า Draw Phase ถูกจัดการแล้วหรือไม่
+            const result = skill.onDrawPhase(player, this);
+            // ถ้า Skill จัดการ Draw Phase เรียบร้อยแล้ว ให้หยุด Default Draw
+            if(result === true){
+                drawPhaseHandled = true;
+            }
+        }
+        // ถ้า Skill จัดการ Draw Phase แล้ว ไม่ต้องจั่ว Default อีกครั้ง
+        if(drawPhaseHandled){
+            return;
         }
         if(this.pendingDrawPhase){
             return;
