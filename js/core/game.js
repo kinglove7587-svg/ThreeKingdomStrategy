@@ -662,6 +662,11 @@ class Game {
                 card: judgeResult
             }
         );
+        // ตรวจว่ามี Trigger ใหม่ขอ Pause หลัง judgeResolved หรือไม่
+        if(this.pendingJudge){
+            this.pendingJudge.onComplete = onComplete;
+            return null;
+        }
         // ถ้ามี Callback ให้ประมวลผลผล Judge ต่อทันที
         if(typeof onComplete === "function"){
             return onComplete(judgeResult);
@@ -1129,6 +1134,40 @@ class Game {
         // ถ้ามี Callback ให้ส่งผล Judge กลับไปทำงานต่อ
         if(typeof pendingJudge.onResume === "function"){
             pendingJudge.onResume(result);
+        }
+        // แจ้งว่า Judge ได้ผลลัพธ์สุดท้ายจาก Trigger ก่อนหน้าแล้ว
+        this.eventManager.emit(
+            "judgeResolved", 
+            {
+                player: pendingJudge.player, 
+                card: result
+            }
+        );
+        // ถ้า Trigger ใหม่ขอ Pause ต่อ เช่น Jealousy of God
+        if(this.pendingJudge){
+            // ส่ง Callback เดิมต่อให้ Pending ใหม่
+            if(
+                !this.pendingJudge.onComplete && 
+                typeof pendingJudge.onComplete === "function"
+            ){
+                this.pendingJudge.onComplete = pendingJudge.onComplete;
+            }
+            // ส่ง Flow เดิมต่อให้ Pending ใหม่
+            if(
+                !this.pendingJudge.resumeFlow && 
+                typeof pendingJudge.resumeFlow === "function"
+            ){
+                this.pendingJudge.resumeFlow = pendingJudge.resumeFlow;
+            }
+            // ส่ง Judge Phase เดิมต่อให้ Pending ใหม่
+            if(
+                !this.pendingJudge.judgePhaseResume && 
+                typeof pendingJudge.judgePhaseResume === "function"
+            ){
+                this.pendingJudge.judgePhaseResume = 
+                    pendingJudge.judgePhaseResume;
+            }
+            return null;
         }
         // ส่ง JudgeResult ใหม่กลับไปยังผู้เรียก game.judge() เดิม
         if(typeof pendingJudge.onComplete === "function"){
