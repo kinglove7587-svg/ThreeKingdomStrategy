@@ -184,11 +184,33 @@ class Legacy extends TriggerSkill{
                             return;
                         }
                         this.legacySelectedTarget = selectedTarget;
-                        // ไปหน้า Confirmation
-                        this.showLegacyConfirmation(
-                            player, 
-                            resolution
+                        // เก็บการ์ดที่เหลืออีก 1 ใบ
+                        const remainingCard = 
+                            this.legacyCards.find(
+                                card => card !== this.legacySelectedCard
+                            );
+                        // แจกการ์ดที่เลือกให้ Target
+                        selectedTarget.hand.addCard(this.legacySelectedCard);
+                        // แจกการ์ดที่เหลือให้กุยแก
+                        player.hand.addCard(remainingCard);
+                        player.game.log(
+                            player.name + " มอบ " + 
+                            this.legacySelectedCard.name + " ให้ " + 
+                            selectedTarget.name
                         );
+                        player.game.log(
+                            player.name + " ได้รับการ์ดที่เหลือ " + remainingCard.name
+                        );
+                        // จบ Legacy และล้าง Temporary State
+                        this.legacyCards = null;
+                        this.legacySelectedCard = null;
+                        this.legacySelectedTarget = null;
+
+                        player.game.hideModal();
+                        // Resume Flow เดิม
+                        if(resolution){
+                            resolution.resume();
+                        }
                     }
                 }, 
                 {
@@ -198,45 +220,6 @@ class Legacy extends TriggerSkill{
                         this.legacySelectedTarget = null;
                         player.game.hideModal();
                         this.showCardSelection(
-                            player, 
-                            resolution
-                        );
-                    }
-                }
-            ]
-        });
-    }
-    // แสดงหน้า Confirmation ของ Legacy
-    showLegacyConfirmation(player, resolution){
-
-        if(!this.legacySelectedCard || !this.legacySelectedTarget){
-            return;
-        }
-
-        player.game.showModal({
-            owner: player, 
-            title: "Legacy (มรดก)", 
-            message: 
-                "มอบ " + this.legacySelectedCard.name + " ให้ " + 
-                this.legacySelectedTarget.name + " ใช่หรือไม่?", 
-            buttons: [
-                {
-                    text: "ยืนยัน", 
-                    onClick: () => {
-                        player.game.log(
-                            player.name + " ยืนยันการมอบ " + 
-                            this.legacySelectedCard.name + " ให้ " + 
-                            this.legacySelectedTarget.name
-                        );
-                        // รอบนี้ยังไม่ย้ายการ์ด
-                        player.game.log("Legacy Confirmation ผ่าน");
-                    }
-                }, 
-                {
-                    text: "ยกเลิก", 
-                    onClick: () => {
-                        // กลับไปหน้าเลือก Target
-                        this.showTargetSelection(
                             player, 
                             resolution
                         );
