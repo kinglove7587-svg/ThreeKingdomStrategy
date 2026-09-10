@@ -27,6 +27,39 @@ class Legacy extends TriggerSkill{
             if(resolution){
                 resolution.wait();
             }
+            // แสดง Modal ให้กุยแกตัดสินใจว่าจะใช้ Legacy หรือไม่
+            player.game.showModal({
+                owner: player, 
+                title: "Legacy (มรดก)", 
+                message: 
+                    player.name + " ได้รับความเสียหาย " + 
+                    damage.amount + " หน่วย\n" + "ต้องการใช้ Legacy หรือไม่?", 
+                buttons: [
+                    {
+                        text: "ใช้", 
+                        role: "confirm", 
+                        onClick: () => {
+                            player.game.hideModal();
+                            player.game.log(player.name + "  เลือกใช้ Legacy");
+                            // รอบนี้ยังไม่ Draw
+                            if(resolution){
+                                resolution.resume();
+                            }
+                        }
+                    }, 
+                    {
+                        text: "ไม่ใช้", 
+                        role: "cancel", 
+                        onClick: () => {
+                            player.game.hideModal();
+                            player.game.log(player.name + " ไม่ใช้ Legacy");
+                            if(resolution){
+                                resolution.resume();
+                            }
+                        }
+                    }
+                ]
+            });
         };
 
         this.registerListener(
