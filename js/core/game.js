@@ -648,6 +648,12 @@ class Game {
             judgeContext
         );
         this.processJudgeTriggerResolution(judgeContext);
+        // ถ้ามี Modal หรือ Trigger ขอ Pause ให้หยุด Judge ไว้ก่อน
+        if(this.pendingJudge){
+            // เก็บ Callback ของผู้เรียก game.judge() เดิมไว้สำหรับ Resume
+            this.pendingJudge.onComplete = onComplete;
+            return null;
+        }
         // แจ้งว่า Judge ผ่านการประมวลผล Trigger แล้ว
         this.eventManager.emit(
             "judgeResolved", 
@@ -656,12 +662,6 @@ class Game {
                 card: judgeResult
             }
         );
-        // ถ้ามี Modal หรือ Trigger ขอ Pause ให้หยุด Judge ไว้ก่อน
-        if(this.pendingJudge){
-            // เก็บ Callback ของผู้เรียก game.judge() เดิมไว้สำหรับ Resume
-            this.pendingJudge.onComplete = onComplete;
-            return null;
-        }
         // ถ้ามี Callback ให้ประมวลผลผล Judge ต่อทันที
         if(typeof onComplete === "function"){
             return onComplete(judgeResult);
