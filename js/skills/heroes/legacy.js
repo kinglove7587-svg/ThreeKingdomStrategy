@@ -114,8 +114,11 @@ class Legacy extends TriggerSkill{
                     this.legacySelectedCard.suit + " " + 
                     this.legacySelectedCard.number
                 );
-                // รอบนี้หยุดไว้หลังเลือกการ์ด
-                player.game.hideModal();
+                // ไปขั้นเลือกตัวละครหลังเลือกการ์ด
+                this.showTargetSelection(
+                    player, 
+                    resolution
+                );
             }, 
             {
                 requiredCount: 1
@@ -133,6 +136,110 @@ class Legacy extends TriggerSkill{
                     onClick: () => {
                         // ตรวจสอบว่าผู้เล่นเลือกครบ 1 ใบแล้วหรือยัง
                         content.confirmSelection();
+                    }
+                }
+            ]
+        });
+    }
+    // แสดงขั้นเลือกตัวละครที่จะได้รับการ์ด
+    showTargetSelection(player, resolution){
+
+        if(!this.legacyCards || this.legacyCards.length !== 2){
+            return;
+        }
+        if(!this.legacySelectedCard){
+            return;
+        }
+
+        const content = player.game.ui.createTargetSelectionContent(
+            player.game.players, 
+            (selectedPlayer) => {
+                // รับค่าตัวละครที่เลือก หรือ null เมื่อยกเลิกการเลือก
+                this.legacySelectedTarget = selectedPlayer;
+
+                if(selectedPlayer){
+                    player.game.log(
+                        player.name + "  เลือก Target ของ Legacy: " + selectedPlayer.name
+                    );
+                }else{
+                    player.game.log(player.name + " ยกเลิกการเลือก Target ของ Legacy");
+                }
+            }
+        );
+
+        player.game.showModal({
+            owner: player, 
+            title: "Legacy (มรดก)", 
+            message: "เลือกตัวละครที่จะได้รับ " + this.legacySelectedCard.name, 
+            content: content, 
+            buttons: [
+                {
+                    text: "ยืนยัน", 
+                    onClick: () => {
+
+                        const selectedTarget = content.getSelectedPlayer();
+                        // ยังไม่ได้เลือก Target
+                        if(!selectedTarget){
+                            player.game.log("Legacy: กรุณาเลือกตัวละครก่อนยืนยัน");
+                            return;
+                        }
+                        this.legacySelectedTarget = selectedTarget;
+                        // ไปหน้า Confirmation
+                        this.showLegacyConfirmation(
+                            player, 
+                            resolution
+                        );
+                    }
+                }, 
+                {
+                    text: "ยกเลิก", 
+                    onClick: () => {
+                        // ย้อนกลับไปเลือกการ์ด
+                        this.legacySelectedTarget = null;
+                        player.game.hideModal();
+                        this.showCardSelection(
+                            player, 
+                            resolution
+                        );
+                    }
+                }
+            ]
+        });
+    }
+    // แสดงหน้า Confirmation ของ Legacy
+    showLegacyConfirmation(player, resolution){
+
+        if(!this.legacySelectedCard || !this.legacySelectedTarget){
+            return;
+        }
+
+        player.game.showModal({
+            owner: player, 
+            title: "Legacy (มรดก)", 
+            message: 
+                "มอบ " + this.legacySelectedCard.name + " ให้ " + 
+                this.legacySelectedTarget.name + " ใช่หรือไม่?", 
+            buttons: [
+                {
+                    text: "ยืนยัน", 
+                    onClick: () => {
+                        player.game.log(
+                            player.name + " ยืนยันการมอบ " + 
+                            this.legacySelectedCard.name + " ให้ " + 
+                            this.legacySelectedTarget.name
+                        );
+                        // รอบนี้ยังไม่ย้ายการ์ด
+                        player.game.log("Legacy Confirmation ผ่าน");
+                    }
+                }, 
+                {
+                    text: "ยกเลิก", 
+                    onClick: () => {
+                        // กลับไปหน้าเลือก Target
+                        this.showTargetSelection(
+                            player, 
+                            resolution
+                        );
                     }
                 }
             ]
