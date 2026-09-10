@@ -56,4 +56,4 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
 );
 game.ui.render();
 64f9c0f01fc924c84b39e2423d926c6cd611d95c ปิด กองซุนจ้าน
-7c7e257b94063e4a1a975eb6a845c15e8e574099 เปิด JealousyOfGod
+96601a127daaff6d2d3c4aa7070d5b7b3ae34a98 เปิด JealousyOfGod

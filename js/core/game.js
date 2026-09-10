@@ -648,6 +648,14 @@ class Game {
             judgeContext
         );
         this.processJudgeTriggerResolution(judgeContext);
+        // แจ้งว่า Judge ผ่านการประมวลผล Trigger แล้ว
+        this.eventManager.emit(
+            "judgeResolved", 
+            {
+                player: player, 
+                card: judgeResult
+            }
+        );
         // ถ้ามี Modal หรือ Trigger ขอ Pause ให้หยุด Judge ไว้ก่อน
         if(this.pendingJudge){
             // เก็บ Callback ของผู้เรียก game.judge() เดิมไว้สำหรับ Resume
