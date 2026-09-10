@@ -662,6 +662,11 @@ class Game {
                 card: judgeResult
             }
         );
+        // ประมวลผล TriggerSkill ที่ฟัง judgeResolved
+        this.processJudgeResolvedTriggerResolution({
+            player: player, 
+            card: judgeResult
+        });
         // ตรวจว่ามี Trigger ใหม่ขอ Pause หลัง judgeResolved หรือไม่
         if(this.pendingJudge){
             this.pendingJudge.onComplete = onComplete;
@@ -1521,6 +1526,43 @@ class Game {
         }
 
         return actionResult;
+    }
+    // ประมวลผล Trigger ของสกิลที่ทำงานหลัง Judge เสร็จสมบูรณ์
+    processJudgeResolvedTriggerResolution(context){
+
+        if(!context){
+            return false;
+        }
+
+        for(const player of this.players){
+            if(
+                !player || 
+                typeof player.getTriggerSkills !== "function"
+            ){
+                continue;
+            }
+
+            for(const skill of player.getTriggerSkills()){
+                if(!skill.listeners){
+                    continue;
+                }
+
+                for(const listener of skill.listeners){
+                    if(listener.eventName !== "judgeResolved"){
+                        continue;
+                    }
+                    if(typeof listener.callback !== "function"){
+                        continue;
+                    }
+                    listener.callback(context);
+                    // หยุดทันทีถ้า Trigger สร้าง Pending Judge
+                    if(this.pendingJudge){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
     // ประมวลผล Trigger ของสกิลที่ทำงานเมื่อเปิดไพ่เสี่ยงทาย (Judge Card Revealed)
     processJudgeTriggerResolution(context){
