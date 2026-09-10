@@ -1148,6 +1148,11 @@ class Game {
                 card: result
             }
         );
+        // ประมวลผล TriggerSkill ที่ฟัง judgeResolved หลัง Resume
+        this.processJudgeResolvedTriggerResolution({
+            player: pendingJudge.player, 
+            card: result
+        });
         // ถ้า Trigger ใหม่ขอ Pause ต่อ เช่น Jealousy of God
         if(this.pendingJudge){
             // ส่ง Callback เดิมต่อให้ Pending ใหม่
