@@ -17,7 +17,7 @@ class GuoJia extends Player{
             "คุณสามารถดูการ์ด 2 ใบจากด้านบนของกองจั่ว " +
             "จากนั้นแจกการ์ดเหล่านั้นให้ตัวละครใดก็ได้ รวมถึงตัวคุณเอง";
 
-        //this.addSkill(new JealousyOfGod());
+        this.addSkill(new JealousyOfGod());
         //this.addSkill(new Legacy());
     }
     getPortrait(){
