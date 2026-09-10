@@ -413,8 +413,8 @@ class Game {
             this.ui.addLog(player.name + " ถูกสุราลืมกลับ ข้าม Play Phase");
             // รีเซ็ต Flag ให้มีผลแค่เทิร์นนี้
             player.resetPhaseFlag();
-            // ข้ามไป Discard Phase ทันที
-            this.discardPhase(player);
+            // ตรวจสอบ Hand Limit ก่อนเข้าสู่ Discard Phase
+            this.finishTurn();
             return;
         }
         this.ui.addLog("Play Phase");

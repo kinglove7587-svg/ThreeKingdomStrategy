@@ -55,5 +55,5 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
     new SilverLionHelmetCard("♠️", 1)
 );
 game.ui.render();
-64f9c0f01fc924c84b39e2423d926c6cd611d95c ปิด กองซุนจ้าน
 96601a127daaff6d2d3c4aa7070d5b7b3ae34a98 เปิด JealousyOfGod
+491762675c503209222d30c2a8ea51f7cc0f620a ปิด JealousyOfGod
