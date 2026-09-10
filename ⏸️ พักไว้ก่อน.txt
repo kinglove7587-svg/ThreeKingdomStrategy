@@ -56,4 +56,4 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
 );
 game.ui.render();
 2d61ed5678282e52b9db4dd44a6e21c388d8baa4 ปิด JealousyOfGod
-17fa88542dbe21860f37e2badcfd053168edc7f6 ปิด legacy
+13b670accd3e0917dcb81fa715f9c5011abbece7 ปิด legacy
