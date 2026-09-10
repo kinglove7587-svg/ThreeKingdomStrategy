@@ -211,6 +211,15 @@ class Legacy extends TriggerSkill{
                         if(resolution){
                             resolution.resume();
                         }
+                        // Finalize Action กรณี Legacy ทำงานจาก Nested Damage
+                        if(
+                            !player.game.triggerResolutionQueue.isWaiting() && 
+                            !player.game.pendingJudge && 
+                            player.game.actionLocked
+                        ){
+                            player.game.afterHumanAction(true);
+                        }
+                        player.game.ui.render();
                     }
                 }, 
                 {

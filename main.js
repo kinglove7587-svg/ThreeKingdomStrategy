@@ -1,11 +1,11 @@
 // Instance ของเกม โดยกำหนดข้อมูลฮีโร่ ชื่อผู้เล่น และชนิด Controller ของแต่ละคน
 const game = new Game([
     {
-        hero: GongsunZan, 
+        hero: GuoJia, 
         controller: HumanController//AIController//
     },
     {
-        hero: GuoJia, 
+        hero: XiahouDun, 
         controller: HumanController//AIController//
     },
     {
