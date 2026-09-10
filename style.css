@@ -1257,12 +1257,14 @@ body{
     bottom:10px;
     z-index:19001;
 }
-/* NEW: จัด Target Selection เป็น 2 ตัวต่อแถว */
-#game-modal-content{
+/* NEW: พื้นที่ Target Selection */
+#game-modal-content .target-selection-container{
     display:grid;
     grid-template-columns:repeat(2, 1fr);
+
     gap:10px;
-    margin-bottom:16px;
+
+    width:100%;
 }
 
 /* NEW: การ์ดตัวละครสำหรับเลือก Target */

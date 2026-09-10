@@ -3611,7 +3611,9 @@ class UIManager{
     createTargetSelectionContent(players, onSelect, options = {}){
 
         const container = document.createElement("div");
-        const selectedPlayer = options.selectedPlayer || null;
+        // กำหนด Container เฉพาะสำหรับ Target Selection
+        container.classList.add("target-selection-container");
+        let currentSelectedPlayer = options.selectedPlayer || null;
         const filter = 
             typeof options.filter === "function" 
                 ? options.filter : () => true;
@@ -3623,7 +3625,7 @@ class UIManager{
 
             const button = document.createElement("button");
             button.classList.add("target-selection-player");
-            if(player === selectedPlayer){
+            if(player === currentSelectedPlayer){
                 button.classList.add("selected-target");
             }
 
@@ -3639,6 +3641,27 @@ class UIManager{
                 "</div>";
             
             button.onclick = () => {
+                // กดตัวละครเดิมซ้ำเพื่อยกเลิกการเลือก
+                if(currentSelectedPlayer === player){
+                    currentSelectedPlayer = null;
+                    button.classList.remove("selected-target");
+                    if(typeof onSelect === "function"){
+                        onSelect(null);
+                    }
+                    return;
+                }
+                // เลือกตัวละครใหม่
+                if(currentSelectedPlayer){
+                    const previousButton = container.querySelector(
+                        ".target-selection-player.selected-target"
+                    );
+                    if(previousButton){
+                        previousButton.classList.remove("selected-target");
+                    }
+                }
+                currentSelectedPlayer = player;
+                button.classList.add("selected-target");
+
                 if(typeof onSelect === "function"){
                     onSelect(player);
                 }
@@ -3647,7 +3670,7 @@ class UIManager{
         }
         // คืนค่า Player ที่เลือกจาก Content นี้
         container.getSelectedPlayer = () => {
-            return selectedPlayer;
+            return currentSelectedPlayer;
         };
         return container;
     }
