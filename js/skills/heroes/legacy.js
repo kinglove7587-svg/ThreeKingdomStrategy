@@ -41,10 +41,29 @@ class Legacy extends TriggerSkill{
                         onClick: () => {
                             player.game.hideModal();
                             player.game.log(player.name + "  เลือกใช้ Legacy");
-                            // รอบนี้ยังไม่ Draw
-                            if(resolution){
-                                resolution.resume();
+                            // ตรวจสอบว่ามีการ์ดเพียงพอสำหรับ Legacy 2 ใบ
+                            if(player.game.deck.cards.length < 2){
+                                player.game.log("Legacy ไม่สามารถทำงานได้ เนื่องจากการ์ดในกองจั่วไม่พอ 2 ใบ");
+                                // รอบนี้ยังไม่ Draw
+                                if(resolution){
+                                    resolution.resume();
+                                }
+                                return;
                             }
+                            // จั่วการ์ด 2 ใบจากด้านบนของกองจั่ว
+                            const card1 = player.game.deck.draw();
+                            const card2 = player.game.deck.draw();
+                            // เก็บการ์ดไว้ใน Temporary State ของ Legacy
+                            this.legacyCards = [
+                                card1, 
+                                card2
+                            ];
+                            // แสดงผลตรวจสอบการ์ดที่ Legacy ได้มา
+                            player.game.log(
+                                player.name + "  Legacy ได้การ์ด 2 ใบ: " + 
+                                card1.name + " " + card1.suit + " " + card1.number + " | " + 
+                                card2.name + " " + card2.suit + " " + card2.number
+                            );
                         }
                     }, 
                     {
