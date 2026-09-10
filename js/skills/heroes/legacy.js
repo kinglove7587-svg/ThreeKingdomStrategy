@@ -7,7 +7,7 @@ class Legacy extends TriggerSkill{
         this.legacySelectedCard = null;
         this.legacySelectedTarget = null;
     }
-
+    // ลงทะเบียน Listener สำหรับ Trigger Skill Legacy
     register(eventManager, player){
 
         const callback = (damage, resolution) => {
@@ -64,6 +64,11 @@ class Legacy extends TriggerSkill{
                                 card1.name + " " + card1.suit + " " + card1.number + " | " + 
                                 card2.name + " " + card2.suit + " " + card2.number
                             );
+                            // เปิดขั้นเลือกการ์ด 1 ใบจาก Legacy
+                            this.showCardSelection(
+                                player, 
+                                resolution
+                            );
                         }
                     }, 
                     {
@@ -86,5 +91,51 @@ class Legacy extends TriggerSkill{
             "afterDamage", 
             callback
         );
+    }
+    // แสดงการ์ด 2 ใบของ Legacy เพื่อเลือก 1 ใบ
+    showCardSelection(player, resolution){
+
+        if(!this.legacyCards || this.legacyCards.length !== 2){
+            return;
+        }
+
+        const content = player.game.ui.createCardSelectionContent(
+            this.legacyCards, 
+            (selectedCards) => {
+
+                if(!selectedCards || selectedCards.length !== 1){
+                    return;
+                }
+                // จดจำการ์ดที่เลือก แต่ยังไม่ย้ายการ์ด
+                this.legacySelectedCard = selectedCards[0];
+                player.game.log(
+                    player.name + "  เลือกการ์ด Legacy: " + 
+                    this.legacySelectedCard.name + " " + 
+                    this.legacySelectedCard.suit + " " + 
+                    this.legacySelectedCard.number
+                );
+                // รอบนี้หยุดไว้หลังเลือกการ์ด
+                player.game.hideModal();
+            }, 
+            {
+                requiredCount: 1
+            }
+        );
+
+        player.game.showModal({
+            owner: player, 
+            title: "Legacy (มรดก)", 
+            message: "เลือกการ์ด 1 ใบ", 
+            content: content, 
+            buttons: [
+                {
+                    text: "ยืนยัน", 
+                    onClick: () => {
+                        // ตรวจสอบว่าผู้เล่นเลือกครบ 1 ใบแล้วหรือยัง
+                        content.confirmSelection();
+                    }
+                }
+            ]
+        });
     }
 }
