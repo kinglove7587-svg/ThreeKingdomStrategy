@@ -3393,7 +3393,10 @@ class UIManager{
             controller.cancelHandLimitDiscard();
         };
         buttonArea.appendChild(confirmButton);
-        buttonArea.appendChild(cancelButton);
+        // Hand Limit จากการบังคับจบเทิร์นห้ามยกเลิกกลับไป Play Phase
+        if(!controller.handLimitForcedEndTurn){
+            buttonArea.appendChild(cancelButton);
+        }
         this.controlArea.appendChild(buttonArea);
     }
     // แสดง Generic Modal กลางหน้าจอ

@@ -414,7 +414,7 @@ class Game {
             // รีเซ็ต Flag ให้มีผลแค่เทิร์นนี้
             player.resetPhaseFlag();
             // ตรวจสอบ Hand Limit ก่อนเข้าสู่ Discard Phase
-            this.finishTurn();
+            this.finishTurn(true);
             return;
         }
         this.ui.addLog("Play Phase");
@@ -679,7 +679,7 @@ class Game {
         return judgeResult;
     }
     // เมธอดสำหรับจบเทิร์น และส่งต่อผู้เล่นปัจจุบันเข้าสู่เฟสทิ้งการ์ด
-    finishTurn(){
+    finishTurn(forceEndTurn = false){
         // ห้ามจบเทิร์นถ้า Action ปัจจุบันยังไม่จบ
         if(this.actionLocked){
             return false;
@@ -690,6 +690,8 @@ class Game {
         // ตรวจจำนวนการ์ดในมือก่อนจบเทิร์น (Hand Limit Check)
         if(player.hand.cards.length > player.getHandLimit()){
             controller.selectedHandLimitDiscardCards = [];
+            // จดจำว่า Hand Limit ครั้งนี้เกิดจากการบังคับจบเทิร์น
+            controller.handLimitForcedEndTurn = forceEndTurn;
             controller.inputState = "waitingHandLimitDiscard";
             this.actionLocked = true;
             this.ui.render();
