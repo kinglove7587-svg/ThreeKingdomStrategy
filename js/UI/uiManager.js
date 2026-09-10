@@ -3607,6 +3607,66 @@ class UIManager{
         };
         return container;
     }
+    // สร้าง Content สำหรับเลือกตัวละครภายใน Generic Modal
+    createTargetSelectionContent(players, onSelect, options = {}){
+
+        const container = document.createElement("div");
+        const selectedPlayer = options.selectedPlayer || null;
+        const filter = 
+            typeof options.filter === "function" 
+                ? options.filter : () => true;
+        for(const player of players){
+
+            if(!filter(player)){
+                continue;
+            }
+
+            const button = document.createElement("button");
+            button.classList.add("player-card");
+            if(player === selectedPlayer){
+                button.classList.add("selected-target");
+            }
+
+            const hpHearts = [];
+            for(let hpIndex = 0; hpIndex < player.maxHp; hpIndex++){
+                hpHearts.push(hpIndex < player.hp ? "❤️" : "🖤");
+            }
+
+            let portraitHtml = "";
+            if(typeof player.getPortrait === "function"){
+                const portrait = player.getPortrait();
+                if(portrait){
+                    portraitHtml = 
+                        "<img src=\"" + 
+                        portrait + "\" alt=\"" + 
+                        player.name + "\">";
+                }
+            }
+            if(!portraitHtml){
+                portraitHtml = "portrait";
+            }
+
+            button.innerHTML = 
+                "<div class=\"character-portrait-placeholder\">" + portraitHtml + 
+                "</div>" + 
+                "<div class=\"character-name\">" + player.name + 
+                "</div>" + 
+                "<div class=\"character-hp\">" + hpHearts.join("") + 
+                "</div>";
+            
+            button.onclick = () => {
+                if(typeof onSelect === "function"){
+                    onSelect(player);
+                }
+            };
+            container.appendChild(button);
+        }
+        // คืนค่า Player ที่เลือกจาก Content นี้
+        container.getSelectedPlayer = () => {
+            return selectedPlayer;
+        };
+        return container;
+    }
     // สร้าง Content สำหรับเลือกการ์ดแบบคว่ำ
     createCardBackSelectionContent(cards, onSelect, options = {}){
 
