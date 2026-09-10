@@ -1538,7 +1538,7 @@ class Game {
                 continue;
             }
             // ตรวจ TriggerSkill ของผู้ที่กำลังถูก Judge
-            for(const skill of context.player.getTriggerSkills()){
+            for(const skill of currentPlayer.getTriggerSkills()){
 
                 if(!skill.listeners){
                     continue;
