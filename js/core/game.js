@@ -1134,6 +1134,8 @@ class Game {
         }
         // เก็บข้อมูล Judge ที่กำลังรอ
         const pendingJudge = this.pendingJudge;
+        // จำว่า Judge นี้ถูกประมวลผลผ่าน judgeResolved Trigger แล้วหรือไม่
+        const skipJudgeResolvedTrigger = pendingJudge.judgeResolvedTrigger === true;
         // ล้าง Pending ก่อนดำเนินต่อ ป้องกัน Resume ซ้ำ
         this.pendingJudge = null;
         // ถ้ามี Callback ให้ส่งผล Judge กลับไปทำงานต่อ
@@ -1148,11 +1150,13 @@ class Game {
                 card: result
             }
         );
-        // ประมวลผล TriggerSkill ที่ฟัง judgeResolved หลัง Resume
-        this.processJudgeResolvedTriggerResolution({
-            player: pendingJudge.player, 
-            card: result
-        });
+        // ถ้า Judge นี้ถูก Trigger judgeResolved ประมวลผลไปแล้ว
+        if(!skipJudgeResolvedTrigger){
+            this.processJudgeResolvedTriggerResolution({
+                player: pendingJudge.player, 
+                card: result
+            });
+        }
         // ถ้า Trigger ใหม่ขอ Pause ต่อ เช่น Jealousy of God
         if(this.pendingJudge){
             // ส่ง Callback เดิมต่อให้ Pending ใหม่
