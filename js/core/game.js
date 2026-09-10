@@ -1560,8 +1560,9 @@ class Game {
                         continue;
                     }
                     listener.callback(context);
-                    // หยุดทันทีถ้า Trigger สร้าง Pending Judge
+                    // ถ้า Trigger judgeResolved หยุด Judge
                     if(this.pendingJudge){
+                        this.pendingJudge.judgeResolvedTrigger = true;
                         return true;
                     }
                 }
