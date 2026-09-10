@@ -3622,7 +3622,7 @@ class UIManager{
             }
 
             const button = document.createElement("button");
-            button.classList.add("player-card");
+            button.classList.add("target-selection-player");
             if(player === selectedPlayer){
                 button.classList.add("selected-target");
             }
