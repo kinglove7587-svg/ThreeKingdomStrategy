@@ -3632,23 +3632,7 @@ class UIManager{
                 hpHearts.push(hpIndex < player.hp ? "❤️" : "🖤");
             }
 
-            let portraitHtml = "";
-            if(typeof player.getPortrait === "function"){
-                const portrait = player.getPortrait();
-                if(portrait){
-                    portraitHtml = 
-                        "<img src=\"" + 
-                        portrait + "\" alt=\"" + 
-                        player.name + "\">";
-                }
-            }
-            if(!portraitHtml){
-                portraitHtml = "portrait";
-            }
-
             button.innerHTML = 
-                "<div class=\"character-portrait-placeholder\">" + portraitHtml + 
-                "</div>" + 
                 "<div class=\"character-name\">" + player.name + 
                 "</div>" + 
                 "<div class=\"character-hp\">" + hpHearts.join("") + 
