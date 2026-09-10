@@ -9,7 +9,7 @@ class GuoJia extends Player{
         this.gender= "male";
 
         this.abilityDescription = 
-            "Jealousy of God (ริษยาแห่งเทพ)\n" +
+            "Jealousy Of God (ริษยาแห่งเทพ)\n" +
             "หลังจากการ์ด Judge ของคุณมีผล " +
             "คุณสามารถนำการ์ดใบนั้นมาไว้ในมือของคุณได้\n\n" +
             "Legacy (มรดก)\n" +
