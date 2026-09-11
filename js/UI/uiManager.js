@@ -577,6 +577,9 @@ class UIManager{
         const stargazingLocked = 
             player.controller.inputState === "waitingStargazingChoice" || 
             player.controller.inputState === "waitingStargazingSelection";
+        // ล็อกการ์ดทั้งหมดระหว่าง Trigger Choice
+        const triggerChoiceLocked = 
+            player.controller.inputState === "waitingTriggerChoice";
         // ล็อกการ์ดในมือระหว่าง Assault Trigger Choice
         const assaultLocked = 
             player.controller.inputState === "waitingTriggerChoice" && 
@@ -601,6 +604,11 @@ class UIManager{
             button.classList.add("hand-card");
             // ปิดการใช้งานการ์ดในมือระหว่าง Stargazing
             if(stargazingLocked){
+                button.disabled = true;
+                button.classList.add("disabled-card");
+            }
+            // ปิดการใช้งานการ์ดระหว่าง Trigger Choice
+            if(triggerChoiceLocked){
                 button.disabled = true;
                 button.classList.add("disabled-card");
             }
@@ -764,6 +772,10 @@ class UIManager{
             }
             //  กำหนด Event Handler เมื่อมีการคลิกที่ปุ่มการ์ดบนหน้า HTML
             button.onclick = () => {
+                // Trigger Choice ห้ามเลือกการ์ดในมือ
+                if(triggerChoiceLocked){
+                    return;
+                }
                 // ป้องกันการกดการ์ดที่ Skill ล็อกไว้
                 if(!skillCardAllowed){
                     return;
