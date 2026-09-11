@@ -19,7 +19,7 @@ class DaQiao extends Player{
             "ไปยังตัวละครอื่นที่อยู่ในระยะโจมตีของคุณ " +
             "(ยกเว้นตัวละครที่ใช้ [โจมตี] ใบนั้น)";
 
-        //this.addSkill(new Captivating());
+        this.addSkill(new Captivating());
         //this.addSkill(new Deflection());
     }
     getPortrait(){
