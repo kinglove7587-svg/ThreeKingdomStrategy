@@ -38,7 +38,8 @@ class DebugTools {
             { hero: ZhouYu, name: "จิวยี่"}, 
             { hero: GongsunZan, name: "กองซุนจ้าน"}, 
             { hero: GuoJia, name: "กุยแก"}, 
-            { hero: MaChao, name: "ม้าเฉียว"}
+            { hero: MaChao, name: "ม้าเฉียว"}, 
+            { hero: DaQiao, name: "ไต้เกี้ยว"}
 
         ];
         // สร้าง Select ให้ Player ทั้ง 5 คน
