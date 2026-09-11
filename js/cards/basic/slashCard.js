@@ -188,6 +188,16 @@ class SlashCard extends BasicCard{
         };
         // ส่ง Event ก่อน Dodge
         game.eventManager.emit("beforeDodge", dodgeContext);
+        // นำ TriggerSkill ของ beforeDodge เข้า Trigger Queue
+        const nextTrigger = game.processBeforeDodgeTrigger(dodgeContext);
+        // ถ้ามี Trigger ให้เริ่มประมวลผลผ่าน Queue
+        if(nextTrigger){
+            return game.runTriggerResolution(
+                nextTrigger, 
+                dodgeContext, 
+                "beforeDodge"
+            );
+        }
         // ถ้า Trigger ขอให้ผู้เล่นตัดสินใจ ให้หยุด Slash ไว้ก่อน
         if(dodgeContext.waitingTriggerChoice){
             return true;
