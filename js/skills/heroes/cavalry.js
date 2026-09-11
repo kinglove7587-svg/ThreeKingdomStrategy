@@ -87,7 +87,7 @@ class Cavalry extends TriggerSkill{
                 controller.selectedTriggerSkill = null;
                 controller.triggerContext = null;
 
-                return dodgeContext.resume();
+                return context.resolution.resume();
             }
         );
         // ถ้า Judge ต้องรอ
