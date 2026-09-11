@@ -18,7 +18,7 @@ class MaChao extends Player{
             "เป้าหมายจะไม่สามารถใช้ [หลบ] ได้";
 
         this.addSkill(new HorseRiding());
-        //this.addSkill(new Cavalry());
+        this.addSkill(new Cavalry());
     }
     getPortrait(){
         return "assets/cards/heroes/MaChao.png";
