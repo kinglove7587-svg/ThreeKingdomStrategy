@@ -91,8 +91,7 @@ class Cavalry extends TriggerSkill{
                 if(
                     !game.triggerResolutionQueue.isWaiting() && 
                     !game.pendingAction && 
-                    game.actionLocked && 
-                    !controller.pendingSlashContext
+                    game.actionLocked
                 ){
                     game.afterHumanAction(true);
                 }
