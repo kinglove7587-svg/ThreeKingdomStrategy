@@ -6,7 +6,7 @@ class Cavalry extends TriggerSkill{
     //
     register(eventManager, player){
 
-        const callback = (context) => {
+        const callback = (context, resolution) => {
 
             if(!context){
                 return;
@@ -22,11 +22,16 @@ class Cavalry extends TriggerSkill{
             }
             // หยุด Slash ไว้ก่อนถามผู้เล่น
             context.waitingTriggerChoice = true;
+            // แจ้ง Trigger Queue ว่ากำลังรอ Trigger Choice
+            if(resolution){
+                resolution.wait();
+            }
             // เปิด Trigger Choice เดิมของเกม
             player.controller.startTriggerChoice(
                 this, 
                 {
-                    dodgeContext: context
+                    dodgeContext: context, 
+                    resolution: resolution
                 }
             );
         };
