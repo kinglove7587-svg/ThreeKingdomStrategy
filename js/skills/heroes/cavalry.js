@@ -86,8 +86,16 @@ class Cavalry extends TriggerSkill{
                 controller.inputState = "idle";
                 controller.selectedTriggerSkill = null;
                 controller.triggerContext = null;
-
-                return context.resolution.resume();
+                // Resume Slash เดิมผ่าน Trigger Resolution
+                const resumeResult = context.resolution.resume();
+                if(
+                    !game.triggerResolutionQueue.isWaiting() && 
+                    !game.pendingAction && 
+                    game.actionLocked
+                ){
+                    game.afterHumanAction(true);
+                }
+                return resumeResult;
             }
         );
         // ถ้า Judge ต้องรอ
