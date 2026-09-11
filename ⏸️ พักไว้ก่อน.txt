@@ -55,5 +55,5 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
     new SilverLionHelmetCard("♠️", 1)
 );
 game.ui.render();
-d8a7eef5703495f8d1a0de6473febd27a2536e17 ปิด Horse Riding
 8bdf7ee7c9356d6211afd158cba4fe76c21b1624 ปิด Cavalry
+2e7e2454f1555ff88cb51351ec14d2c1febc2f51 Captivating
