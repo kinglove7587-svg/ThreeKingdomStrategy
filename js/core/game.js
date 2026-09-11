@@ -1348,6 +1348,24 @@ class Game {
         );
         return queue.next();
     }
+    // ดำเนิน beforeDodge Trigger ต่อหลัง Trigger Resume
+    resumeBeforeDodgeResolution(dodgeContext){
+
+        if(!dodgeContext){
+            return null;
+        }
+
+        const queue = this.triggerResolutionQueue;
+        const nextTrigger = queue.resume();
+        if(nextTrigger){
+            return this.runTriggerResolution(
+                nextTrigger, 
+                dodgeContext, 
+                "beforeDodge"
+            );
+        }
+        return dodgeContext.resume();
+    }
     // ดำเนิน beforeSlashTarget Trigger ต่อหลัง Trigger Resume
     resumeBeforeSlashTargetResolution(targetContext){
 
