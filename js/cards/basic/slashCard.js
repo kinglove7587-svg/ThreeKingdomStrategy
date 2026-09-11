@@ -2,7 +2,7 @@ class SlashCard extends BasicCard{
     //
     constructor(suit, number, damageType = DamageType.NORMAL){
         super("Basic", "โจมตี", suit, number); 
-        this.damageType = damageType; // กำหนดประเภทความเสียหายของการ์ดโจมตี
+        this.damageType = damageType; 
     }
     // ประมวลผลการใช้การ์ดโจมตี (SlashCard)
     use(player, game){ 
@@ -110,6 +110,8 @@ class SlashCard extends BasicCard{
             ignoreArmor: targetContext ? targetContext.ignoreArmor : false, 
             // รองรับ Skill ที่ห้ามเป้าหมายใช้ Dodge
             disableDodge: false, 
+            // รองรับ Trigger Choice ก่อนการตรวจ Dodge
+            waitingTriggerChoice: false, 
             // สถานะรอ Judge จาก Trigger
             waitingJudge: false, 
             // Flow สำหรับทำงานต่อหลัง Judge / Trigger เสร็จ
@@ -186,6 +188,10 @@ class SlashCard extends BasicCard{
         };
         // ส่ง Event ก่อน Dodge
         game.eventManager.emit("beforeDodge", dodgeContext);
+        // ถ้า Trigger ขอให้ผู้เล่นตัดสินใจ ให้หยุด Slash ไว้ก่อน
+        if(dodgeContext.waitingTriggerChoice){
+            return true;
+        }
         // ถ้า Judge ถูก Pause ให้หยุด Slash ไว้ก่อน
         if(
             dodgeContext.waitingJudge && 
