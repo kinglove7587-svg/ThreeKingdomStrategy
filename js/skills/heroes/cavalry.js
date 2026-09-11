@@ -3,7 +3,7 @@ class Cavalry extends TriggerSkill{
     constructor(){
         super("Cavalry");
     }
-    //
+    // เมื่อผู้เล่นใช้ [โจมตี] กับเป้าหมายที่มีการ์ด "หลบ" ให้ผู้เล่นสามารถเข้าสู่ Judge Phase ได้
     register(eventManager, player){
 
         const callback = (context, resolution) => {
@@ -42,7 +42,7 @@ class Cavalry extends TriggerSkill{
             callback
         );
     }
-    //
+    // เมื่อผู้เล่นเลือกว่าจะใช้ Cavalry หรือไม่
     resolveChoice(player, game, context, useSkill){
 
         const controller = player.controller;
