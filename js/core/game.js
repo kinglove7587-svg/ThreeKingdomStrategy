@@ -1329,6 +1329,25 @@ class Game {
         );
         return queue.next();
     }
+    // เริ่ม Trigger Queue สำหรับ beforeDodge
+    processBeforeDodgeTrigger(dodgeContext){
+
+        if(!dodgeContext){
+            return null;
+        }
+
+        const queue = this.triggerResolutionQueue;
+        if(queue.current || queue.isWaiting()){
+            return queue.current;
+        }
+        queue.current = null;
+        // รวบรวม TriggerSkill ที่ฟัง beforeDodge
+        queue.addEventListeners(
+            this.players, 
+            "beforeDodge"
+        );
+        return queue.next();
+    }
     // ดำเนิน beforeSlashTarget Trigger ต่อหลัง Trigger Resume
     resumeBeforeSlashTargetResolution(targetContext){
 
