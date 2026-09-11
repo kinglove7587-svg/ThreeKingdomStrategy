@@ -167,6 +167,10 @@ class HumanController extends Controller{
     }
     // เมธอด API ที่เปิดไว้ให้ส่วน UI (เช่น HTML/DOM Event) เรียกใช้งานเพื่ออัปเดตการ์ดที่เลือก
     selectCard(index){
+        // ระหว่างรอ Trigger Choice ห้ามเลือกการ์ดในมือ
+        if(this.inputState === "waitingTriggerChoice"){
+            return;
+        }
         // หากกำลังรอเลือกเป้าหมายอยู่ แล้วผู้เล่นกดเลือกการ์ดใบเดิมซ้ำ -> ให้ยกเลิกการเลือกการ์ด
         if(
             this.inputState === "waitingTarget" && 
