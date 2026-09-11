@@ -59,7 +59,7 @@ class Cavalry extends TriggerSkill{
             dodgeContext.waitingTriggerChoice = false;
             game.log(player.name + " ไม่ใช้ Cavalry");
             // ให้ HumanController เป็นผู้ล้าง Trigger Choice State
-            return dodgeContext.resume();
+            return context.resolution.resume();
         }
         game.log(
             player.name + " ใช้ Cavalry กับ " + dodgeContext.target.name
