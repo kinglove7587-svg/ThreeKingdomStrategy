@@ -1429,6 +1429,10 @@ class Game {
                 if(eventName === "beforeSlashHit"){
                     return this.resumeBeforeSlashHitResolution(damage);
                 }
+                // beforeDodge ต้องกลับไปทำขั้นตอน Dodge เดิมต่อ
+                if(eventName === "beforeDodge"){
+                    return this.resumeBeforeDodgeResolution(damage);
+                }
                 // beforeDamage ต้องกลับไปทำ Damage ต่อ
                 if(eventName === "beforeDamage"){
                     return this.resumeBeforeDamageResolution(damage);
