@@ -108,6 +108,8 @@ class SlashCard extends BasicCard{
             dodge: false, 
             requiredDodgeCount: 1, 
             ignoreArmor: targetContext ? targetContext.ignoreArmor : false, 
+            // รองรับ Skill ที่ห้ามเป้าหมายใช้ Dodge
+            disableDodge: false, 
             // สถานะรอ Judge จาก Trigger
             waitingJudge: false, 
             // Flow สำหรับทำงานต่อหลัง Judge / Trigger เสร็จ
@@ -130,6 +132,9 @@ class SlashCard extends BasicCard{
                     game.log(target.name + " หลบการโจมตี");
                 }
                 slashContext.canceled = true;
+            // Skill บางชนิดสามารถห้ามเป้าหมายใช้ Dodge ได้
+            }else if(dodgeContext.disableDodge){
+                game.log(target.name + " ไม่สามารถใช้หลบได้");
 
             }else if(game.askDodge(target, dodgeContext.requiredDodgeCount)){
                 slashContext.canceled = true;
