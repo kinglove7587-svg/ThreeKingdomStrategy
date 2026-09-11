@@ -10,14 +10,14 @@ class MaChao extends Player{
 
         this.abilityDescription = 
             "Horse Riding (ความชำนาญอาชา)\n" +
-            "Passive: ระยะห่างระหว่างคุณกับตัวละครอื่นลดลง 1\n\n" +
+            "ระยะห่างระหว่างคุณกับตัวละครอื่นลดลง 1\n\n" +
             "Cavalry (เพลงหอกเหล็กไหล)\n" +
             "เมื่อคุณใช้ [โจมตี] กับเป้าหมาย " +
             "คุณสามารถเข้าสู่ Judge Phase ได้ " +
             "หากการ์ด Judge เป็นไพ่สีแดง " +
             "เป้าหมายจะไม่สามารถใช้ [หลบ] ได้";
 
-        //this.addSkill(new HorseRiding());
+        this.addSkill(new HorseRiding());
         //this.addSkill(new Cavalry());
     }
     getPortrait(){
