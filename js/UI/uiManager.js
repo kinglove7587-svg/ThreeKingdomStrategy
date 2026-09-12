@@ -256,6 +256,16 @@ class UIManager{
                     card: leBuSiShuCard
                 });
             }
+            // Captivating
+            const captivatingCard = player.delayedTricks.find(
+                card => card.isCaptivatingDelayedTrick
+            );
+            if(captivatingCard){
+                statusItems.push({
+                    icon: "🍷", 
+                    card: captivatingCard
+                });
+            }
             //
             const genderIcon = this.getGenderIcon(player.gender);
             const factionIcon = this.getFactionIcon(player.faction);
