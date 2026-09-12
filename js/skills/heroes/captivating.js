@@ -17,6 +17,10 @@ class Captivating extends ActiveSkill{
     needsTarget(player, game){
         return true;
     }
+    // หลังเลือก Target ต้องเข้าสู่ขั้นเลือกการ์ด
+    needsCardSelection(player, game){
+        return true;
+    }
     // เลือกการ์ดเพียง 1 ใบ
     cardSelectionCount(player, game){
         return 1;
