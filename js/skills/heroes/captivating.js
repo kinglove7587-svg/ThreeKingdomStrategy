@@ -60,6 +60,8 @@ class Captivating extends ActiveSkill{
         if(!delayedCard){
             return false;
         }
+        // ระบุว่าการ์ดใบนี้กำลังทำหน้าที่เป็น สุราลืมกลับ จาก Captivating
+        delayedCard.isCaptivatingDelayedTrick = true;
         // เก็บ onJudge เดิมของการ์ดไว้
         const originalOnJudge = delayedCard.onJudge;
         // ทำให้การ์ด ♦️ ใบนี้ทำงานเหมือน LeBuSiShu
