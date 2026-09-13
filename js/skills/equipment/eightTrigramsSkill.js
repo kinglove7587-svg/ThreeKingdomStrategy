@@ -64,6 +64,10 @@ class EightTrigramsSkill extends ArmorSkill{
             }
         };
         // ใช้ registerListener ของ TriggerSkill เพื่อลงทะเบียน Event "beforeDodge"
-        this.registerListener(eventManager, "beforeDodge", callback);
+        this.registerListener(
+            eventManager, 
+            "beforeDodge", 
+            callback
+        );
     }
 }
