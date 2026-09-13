@@ -1366,6 +1366,11 @@ class HumanController extends Controller{
         if(this.pendingSlashTriggerAfterDamage){
             return this.resumePendingSlashAfterTrigger();
         }
+        // ถ้า Action ถูก Pause ไว้เพื่อรอ Modal ให้รอ Resume ก่อน
+        if(this.game.pendingAction){
+            this.game.ui.render();
+            return success;
+        }
         // ถ้า Action ถูก Finalize ไปแล้วจาก resolution.resume() ไม่ต้อง Finalize ซ้ำ
         if(!this.game.actionLocked){
             this.game.ui.render();

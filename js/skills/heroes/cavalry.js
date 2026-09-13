@@ -58,12 +58,8 @@ class Cavalry extends TriggerSkill{
         if(!useSkill){
             dodgeContext.waitingTriggerChoice = false;
             game.log(player.name + " ไม่ใช้ Cavalry");
-            // Resume Trigger เดิมเพื่อเข้าสู่ Dodge Flow ต่อ
-            const resumeResult = context.resolution.resume();
-            if(game.pendingAction){
-                return resumeResult;
-            }
-            return resumeResult;
+            // ให้ HumanController เป็นผู้ล้าง Trigger Choice State
+            return context.resolution.resume();
         }
         game.log(
             player.name + " ใช้ Cavalry กับ " + dodgeContext.target.name
