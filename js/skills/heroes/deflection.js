@@ -89,12 +89,68 @@ class Deflection extends TriggerSkill{
                                             }
                                             // เก็บการ์ดที่เลือก
                                             this.selectedCard = selectedCards[0];
-                                            player.game.log(
-                                                player.name + " ยืนยันการ์ด Deflection: " + 
-                                                this.selectedCard.name + " " + 
-                                                this.selectedCard.suit + " " + 
-                                                this.selectedCard.number
+                                            // สร้างรายการ Target ที่อยู่ในระยะโจมตีของไต้เกี้ยว
+                                            const availableTargets = player.game.players.filter(
+                                                target => {
+                                                    // ห้ามเลือกตัวเอง
+                                                    if(target === player){
+                                                        return false;
+                                                    }
+                                                    // ห้ามเลือกผู้ที่ใช้ [โจมตี]
+                                                    if(target === context.attacker){
+                                                        return false;
+                                                    }
+                                                    // ต้องอยู่ในระยะโจมตีของไต้เกี้ยว
+                                                    return player.game.getAttackDistance(
+                                                        player, 
+                                                        target
+                                                    ) <= 1;
+                                                }
                                             );
+                                            // ถ้าไม่มี Target ที่ถูกต้อง ไม่ให้ไปต่อ
+                                            if(availableTargets.length === 0){
+                                                player.game.log(
+                                                    player.name + " ไม่มี Target ที่สามารถใช้ Deflection ได้"
+                                                );
+                                                return;
+                                            }
+                                            // สร้าง UI สำหรับเลือก Target ใหม่
+                                            const targetContent = 
+                                                player.game.ui.createTargetSelectionContent(
+                                                    availableTargets, 
+                                                    (selectedPlayer) => {
+                                                        if(selectedPlayer){
+                                                            this.selectedTarget = selectedPlayer;
+                                                            player.game.log(
+                                                                player.name + 
+                                                                " เลือก Target ของ Deflection: " + 
+                                                                selectedPlayer.name
+                                                            );
+                                                        }
+                                                    }
+                                                );
+                                            // เปลี่ยน Modal เป็นขั้นเลือก Target
+                                            player.game.showModal({
+                                                owner: player, 
+                                                title: "Deflection (เบี่ยงเบน)", 
+                                                message: "เลือกตัวละครที่เป็นเป้าหมายใหม่ของ [โจมตี]", 
+                                                content: targetContent, 
+                                                buttons: [
+                                                    {
+                                                        text: "ยืนยัน", 
+                                                        onClick: () => {
+                                                            const selectedTarget = targetContent.getSelectedPlayer();
+                                                            if(!selectedTarget){
+                                                                player.game.log(
+                                                                    "Deflection: กรุณาเลือก Target ก่อนยืนยัน"
+                                                                );
+                                                                return;
+                                                            }
+                                                            this.selectedTarget = selectedTarget;
+                                                        }
+                                                    }
+                                                ]
+                                            });
                                         }
                                     }
                                 ]
