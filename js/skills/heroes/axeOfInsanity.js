@@ -32,6 +32,10 @@ class AxeOfInsanity extends TriggerSkill{
             }
             // บันทึกว่า Axe Of Insanity ถูกใช้แล้วใน Play Phase นี้
             player.axeOfInsanityUsed = true;
+            // หยุด Trigger Resolution เพื่อประมวลผลผลของ Axe Of Insanity
+            if(resolution){
+                resolution.wait();
+            }
             console.log(
                 "Axe Of Insanity ตรวจ afterDamage:", 
                 damage.source?.name, "→", 
