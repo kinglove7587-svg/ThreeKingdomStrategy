@@ -63,6 +63,10 @@ class AxeOfInsanity extends TriggerSkill{
                     player.name + " เสีย HP 1 จาก Axe Of Insanity"
                 );
             }
+            // Resume Trigger Resolution หลัง Axe Of Insanity ทำงานเสร็จ
+            if(resolution){
+                resolution.resume();
+            }
             console.log(
                 "Axe Of Insanity ตรวจ afterDamage:", 
                 damage.source?.name, "→", 
