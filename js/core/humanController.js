@@ -2252,6 +2252,9 @@ class HumanController extends Controller{
         this.inputState = "idle";
         // เรียกใช้ Skill หลังยืนยัน
         const success = skill.use(this.player, this.game);
+        if(skill.name === "Braveheart Slash"){
+            this.selectedTarget = null;
+        }
         // ทิ้งการ์ดต้นฉบับของ God Of War หลัง Execute สำเร็จ
         if(skill.name === "God Of War"){
             this.selectedTarget = null;
