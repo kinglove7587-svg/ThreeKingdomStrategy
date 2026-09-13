@@ -169,12 +169,18 @@ class SlashCard extends BasicCard{
                 currentTarget, 
                 dodgeContext.requiredDodgeCount, 
                 {
-                    wait: () => true, 
-                    resume: () => true
+                    wait: () => {
+                        return game.pauseAction(
+                            () => true, false
+                        );
+                    }, 
+                    resume: () => {
+                        return game.resumeAction();
+                    }
                 }, 
                 result => {
                     slashContext.canceled = result;
-                    continueSlash();
+                    return continueSlash();
                 }
             );
             // askDodge จัดการ Flow ต่อผ่าน Callback แล้ว
@@ -182,7 +188,7 @@ class SlashCard extends BasicCard{
                 return true;
             }
             // ไม่มี Dodge ให้ใช้
-            return true;
+            return continueSlash();
         };
         // กำหนดวิธี Resume หลัง Trigger
         slashContext.resume = () => {
