@@ -12,6 +12,10 @@ class EightTrigramsSkill extends ArmorSkill{
                 return;
             }
             player.game.log(player.name + " ใช้เกราะเกราะแปดทิศ");
+            // ล็อก Before Dodge ก่อนเริ่ม Judge
+            if(resolution){
+                resolution.wait();
+            }
             // เรียก Judge และรอผลลัพธ์
             const result = player.game.judge(
                 player,
@@ -53,6 +57,10 @@ class EightTrigramsSkill extends ArmorSkill{
                     return context.resume();
                 };
                 return;
+            }
+            // Judge จบโดยไม่ Pause ต้องปลดล็อก Trigger ทันที
+            if(resolution){
+                return resolution.resume();
             }
         };
         // ใช้ registerListener ของ TriggerSkill เพื่อลงทะเบียน Event "beforeDodge"
