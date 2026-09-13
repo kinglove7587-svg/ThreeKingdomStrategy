@@ -196,6 +196,7 @@ class SlashCard extends BasicCard{
                 game.log(slashContext.target.name + " ป้องกันการโจมตี");
                 if(sourceCard.physicalCard && !sourceCard.physicalCard.treacheryClaimed){
                     game.discardPile.addCard(sourceCard.physicalCard);
+                    game.ui.render();
                 }
                 return true;
             }
@@ -225,6 +226,7 @@ class SlashCard extends BasicCard{
             game.damage(damage);
             if(sourceCard.physicalCard && !sourceCard.physicalCard.treacheryClaimed){
                 game.discardPile.addCard(sourceCard.physicalCard);
+                game.ui.render();
             }
             console.log(player.isDrunk());
             return true;
