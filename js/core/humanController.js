@@ -66,8 +66,6 @@ class HumanController extends Controller{
         this.pendingSlashTriggerAfterDamage = false;
         // State สำหรับเก็บ Context ของ Reaction
         this.reactionContext = null;
-        // เก็บสถานะว่า Dodge ใบที่เลือกกำลังถูกใช้แทน Slash
-        this.selectedDodgeAsSlash = false;
     }
     // จัดการเทิร์นของผู้เล่นมนุษย์
     playTurn(){ 
@@ -196,24 +194,6 @@ class HumanController extends Controller{
         const card = this.getSelectedCard();
         // ดัก Error: ถ้าไม่พบวัตถุการ์ด ให้ยกเลิกการทำงาน
         if (!card){
-            return;
-        }
-        // Skill Braveheart จากผู้เล่น
-        const braveheartSkill = this.player.skills.find(
-            skill => skill.constructor.name === "Braveheart"
-        );
-        // ตรวจสอบว่า Dodge ใบนี้สามารถใช้แทน Slash ได้หรือไม่
-        if(
-            card instanceof DodgeCard && 
-            braveheartSkill && 
-            !this.player.slashUsed
-        ){
-            // บันทึกว่า Dodge ใบนี้กำลังถูกใช้แทน Slash
-            this.selectedDodgeAsSlash = true;
-            // เริ่ม Action และเข้าสู่การเลือก Target แบบ Slash
-            this.game.startAction();
-            this.inputState = "waitingTarget";
-            this.game.ui.render();
             return;
         }
         // ถ้าการ์ดต้องเลือกเป้าหมาย (เช่น การ์ดโจมตี, ดวล) ให้ Render UI ใหม่ แล้วหยุดรอให้ผู้เล่นคลิกเลือกเป้าหมาย
