@@ -867,10 +867,10 @@ class Game {
         // ถ้ามีการ์ดหลบไม่ครบตามจำนวนที่ต้องการ
         if(dodgeCards.length < requiredCount){
             this.log(
-                player.name + " มี หลบ ไม่ครบ " + 
-                requiredCount + " ใบ"
+                player.name + " ไม่มี หลบ"
             );
-            return false;
+            complete(false);
+            return true;
         }
         // AI ใช้ Dodge อัตโนมัติ
         if(player.controller instanceof AIController){
