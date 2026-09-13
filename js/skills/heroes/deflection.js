@@ -159,6 +159,8 @@ class Deflection extends TriggerSkill{
                                                                 player.game.log("Deflection: ไม่สามารถทิ้งการ์ดได้");
                                                                 return;
                                                             }
+                                                            // นำการ์ดที่ทิ้งเข้า Discard Pile
+                                                            player.game.discardPile.addCard(discardedCard);
                                                             player.game.log(
                                                                 player.name + " ทิ้ง " + 
                                                                 discardedCard.name + " เพื่อใช้ Deflection"
