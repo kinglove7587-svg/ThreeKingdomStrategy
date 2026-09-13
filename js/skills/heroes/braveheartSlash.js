@@ -16,6 +16,10 @@ class BraveheartSlash extends ActiveSkill{
     needsTarget(player, game){
         return this.selectedCard !== null;
     }
+    // ตรวจสอบว่าต้องเลือกการ์ดจากมือหรือไม่
+    needsCardSelection(player, game){
+        return this.selectedCard === null;
+    }
     // ระบุจำนวนการ์ดที่ต้องเลือก
     cardSelectionCount(player, game){
         return 1;
