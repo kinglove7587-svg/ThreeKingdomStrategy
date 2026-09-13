@@ -88,8 +88,6 @@ class BraveheartSlash extends ActiveSkill{
             this.selectedCard = null;
             return false;
         }
-        // ทิ้ง DodgeCard ตัวเดิมลง Discard Pile
-        game.discardPile.addCard(usedCard);
         // ใช้ Slash Engine เดิมเป็นตัวประมวลผลการโจมตี
         const slashCard = new SlashCard(
             usedCard.suit, 
