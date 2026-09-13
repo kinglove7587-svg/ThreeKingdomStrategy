@@ -170,9 +170,18 @@ class Deflection extends TriggerSkill{
                                                             );
                                                             // ปิด Modal
                                                             player.game.hideModal();
-                                                            if(resolution){
-                                                                resolution.resume();
+                                                            // Resume Slash เดิม
+                                                            const resumeResult = resolution 
+                                                                ? resolution.resume() : null;
+                                                            // Finalize Action หลัง Deflection ทำงานนอก Turn
+                                                            if(
+                                                                !player.game.triggerResolutionQueue.isWaiting() && 
+                                                                !player.game.pendingAction && 
+                                                                player.game.actionLocked
+                                                            ){
+                                                                player.game.afterHumanAction(true);
                                                             }
+                                                            return resumeResult;
                                                         }
                                                     }
                                                 ]
