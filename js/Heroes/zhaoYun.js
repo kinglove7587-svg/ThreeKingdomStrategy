@@ -13,6 +13,7 @@ class ZhaoYun extends Player{
             "คุณสามารถใช้หรือเล่น โจมตี เป็น หลบ หรือ หลบ เป็น โจมตี";
 
         this.addSkill(new BraveheartSlash());
+        this.addSkill(new BraveheartDodge());
     }
     getPortrait(){
         return "assets/cards/heroes/ZhaoYun.png";
