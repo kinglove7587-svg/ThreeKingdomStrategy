@@ -5,11 +5,11 @@ const game = new Game([
         controller: HumanController//AIController//
     },
     {
-        hero: DaQiao, 
+        hero: MaChao, 
         controller: HumanController//AIController//
     },
     {
-        hero: MaChao, 
+        hero: DaQiao, 
         controller: HumanController//AIController
     },
     {
