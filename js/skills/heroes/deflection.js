@@ -121,11 +121,6 @@ class Deflection extends TriggerSkill{
                                                     (selectedPlayer) => {
                                                         if(selectedPlayer){
                                                             this.selectedTarget = selectedPlayer;
-                                                            player.game.log(
-                                                                player.name + 
-                                                                " เลือก Target ของ Deflection: " + 
-                                                                selectedPlayer.name
-                                                            );
                                                         }
                                                     }
                                                 );
@@ -147,6 +142,11 @@ class Deflection extends TriggerSkill{
                                                                 return;
                                                             }
                                                             this.selectedTarget = selectedTarget;
+                                                            player.game.log(
+                                                                player.name + 
+                                                                " ยืนยัน Target Deflection: " + 
+                                                                this.selectedTarget.name
+                                                            );
                                                         }
                                                     }
                                                 ]
