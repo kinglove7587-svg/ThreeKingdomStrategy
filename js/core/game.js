@@ -294,6 +294,8 @@ class Game {
         player.slashUsed = false;
         player.woodenCartUsed = false;
         player.lustUsed = false;
+        // รีเซ็ตสถานะการใช้ Axe Of Insanity
+        player.axeOfInsanityUsed = false;
         // ส่งข้อความ "Start Phase" ไปบันทึกและแสดงในกล่อง Log บนหน้าเว็บ
         this.ui.addLog("Start Phase");
         // ส่ง Event "onTurnStart" เจาะจงไปยังผู้เล่นเป้าหมาย เพื่อกระตุ้นสกิลที่ทำงานช่วงเริ่มเทิร์น
