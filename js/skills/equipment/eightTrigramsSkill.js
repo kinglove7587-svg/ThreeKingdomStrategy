@@ -6,7 +6,7 @@ class EightTrigramsSkill extends ArmorSkill{
     // ลงทะเบียน Event เข้ากับ EventManager
     register(eventManager, player){
         // สร้าง Callback Function สำหรับดักจับ Event beforeDodge
-        const callback = (context)=>{
+        const callback = (context, resolution)=>{
             // ทำงานเฉพาะเมื่อผู้เล่นที่เป็นเป้าหมาย (target) คือเจ้าของเกราะเกราะแปดทิศนี้
             if(context.target !== player){
                 return;
@@ -31,16 +31,17 @@ class EightTrigramsSkill extends ArmorSkill{
                 player.game.pendingJudge
             ){
                 context.waitingJudge = true;
-                // ฝาก Action เดิมไว้จนกว่า Judge และ Dodge จะทำงานเสร็จ
-                player.game.pauseAction(() => {
-                    context.waitingJudge = false;
-                    return context.resume();
-                });
-                // ให้ Resume ของ Judge กลับมาเรียก Dodge ต่อเพียงครั้งเดียว
+                if(resolution){
+                    resolution.wait();
+                }
+                // เมื่อ Judge Resume ให้ Trigger นี้ Resume ต่อเพียงครั้งเดียว
                 player.game.pendingJudge.resumeFlow = () => {
-                    return player.game.resumeAction();
+                    context.waitingJudge = false;
+                    if(resolution){
+                        return resolution.resume();
+                    }
+                    return context.resume();
                 };
-
                 return;
             }
         };
