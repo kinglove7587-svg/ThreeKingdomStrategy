@@ -870,7 +870,6 @@ class Game {
                 player.name + " มี หลบ ไม่ครบ " + 
                 requiredCount + " ใบ"
             );
-            complete(false);
             return false;
         }
         // AI ใช้ Dodge อัตโนมัติ
