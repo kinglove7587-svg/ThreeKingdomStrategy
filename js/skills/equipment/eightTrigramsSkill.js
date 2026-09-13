@@ -67,7 +67,15 @@ class EightTrigramsSkill extends ArmorSkill{
                     }
                     context.waitingJudge = false;
                     if(resolution){
-                        return resolution.resume();
+                        const result = resolution.resume();
+                        if(
+                            !player.game.triggerResolutionQueue.isWaiting() && 
+                            !player.game.pendingAction && 
+                            player.controller instanceof HumanController
+                        ){
+                            player.game.afterHumanAction(true);
+                        }
+                        return result;
                     }
                     return context.resume();
                 };
