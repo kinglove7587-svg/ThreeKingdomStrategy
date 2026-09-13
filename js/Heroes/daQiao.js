@@ -20,7 +20,7 @@ class DaQiao extends Player{
             "(ยกเว้นตัวละครที่ใช้ [โจมตี] ใบนั้น)";
 
         this.addSkill(new Captivating());
-        //this.addSkill(new Deflection());
+        this.addSkill(new Deflection());
     }
     getPortrait(){
         return "assets/cards/heroes/DaQiao.png";
