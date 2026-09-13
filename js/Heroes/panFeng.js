@@ -4,7 +4,7 @@ class PanFeng extends Player{
         super("พัวฮอง", game, controllerClass);
 
         this.maxHp = 4;
-        this.hp = 4;
+        this.hp = 2;
         this.faction = "Qun";
         this.gender = "male";
 

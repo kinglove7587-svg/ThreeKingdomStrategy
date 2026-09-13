@@ -46,6 +46,9 @@ class AxeOfInsanity extends TriggerSkill{
                     "Axe Of Insanity Branch: Target HP < Pan Feng HP", targetHp, 
                     "<", playerHp
                 );
+                // จั่วการ์ด 2 ใบ
+                player.drawCard(player.game.deck);
+                player.drawCard(player.game.deck);
             }else{
                 console.log(
                     "Axe Of Insanity Branch: Target HP >= Pan Feng HP", targetHp, 
