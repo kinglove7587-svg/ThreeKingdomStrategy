@@ -15,7 +15,7 @@ class PanFeng extends Player{
             "หาก HP ของตัวละครนั้นน้อยกว่าคุณ คุณจั่วการ์ด 2 ใบ " +
             "หาก HP ของตัวละครนั้นมากกว่าหรือเท่ากับคุณ คุณเสีย HP 1 หน่วย";
 
-        //this.addSkill(new AxeOfInsanity());
+        this.addSkill(new AxeOfInsanity());
     }
     getPortrait(){
         return "assets/cards/heroes/PanFeng.png";
