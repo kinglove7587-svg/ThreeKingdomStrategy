@@ -57,6 +57,11 @@ class AxeOfInsanity extends TriggerSkill{
                     "Axe Of Insanity Branch: Target HP >= Pan Feng HP", targetHp, 
                     ">=", playerHp
                 );
+                // เสีย HP 1 หน่วย
+                player.loseHp(1);
+                player.game.log(
+                    player.name + " เสีย HP 1 จาก Axe Of Insanity"
+                );
             }
             console.log(
                 "Axe Of Insanity ตรวจ afterDamage:", 
