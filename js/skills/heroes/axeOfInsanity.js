@@ -67,6 +67,7 @@ class AxeOfInsanity extends TriggerSkill{
             if(resolution){
                 resolution.resume();
             }
+            player.game.ui.render();
             console.log(
                 "Axe Of Insanity ตรวจ afterDamage:", 
                 damage.source?.name, "→", 
