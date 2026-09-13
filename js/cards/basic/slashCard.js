@@ -171,7 +171,7 @@ class SlashCard extends BasicCard{
                 {
                     wait: () => {
                         return game.pauseAction(
-                            () => true, false
+                            () => true, true
                         );
                     }, 
                     resume: () => {
