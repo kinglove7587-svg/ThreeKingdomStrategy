@@ -55,5 +55,5 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
     new SilverLionHelmetCard("♠️", 1)
 );
 game.ui.render();
-76f408e3e5075e6d174b0f789a250c99a59aa958 เปิด AxeOfInsanity
 44af4750dc711175948099bbaaf81d399feb2081 ปิด PanFeng
+5e125114b095008a1832ec94ea598bb8e412a685 หลบ เกราะแปดทิศ
