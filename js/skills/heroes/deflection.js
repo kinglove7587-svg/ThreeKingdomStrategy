@@ -41,6 +41,64 @@ class Deflection extends TriggerSkill{
                             player.game.log(
                                 player.name + " เลือกใช้ Deflection"
                             );
+                            // สร้าง Card Selection สำหรับเลือกการ์ด 1 ใบจากมือ
+                            const content = 
+                                player.game.ui.createCardSelectionContent(
+                                    player.hand.cards, 
+                                    (selectedCards) => {
+                                        if(
+                                            !selectedCards || 
+                                            selectedCards.length !== 1
+                                        ){
+                                            return;
+                                        }
+                                        // เก็บการ์ดที่เลือกไว้ก่อน ยังไม่ทิ้งทันที
+                                        this.selectedCard = selectedCards[0];
+                                        player.game.log(
+                                            player.name + "  เลือกการ์ด Deflection: " + 
+                                            this.selectedCard.name + " " + 
+                                            this.selectedCard.suit + " " + 
+                                            this.selectedCard.number
+                                        );
+                                    }, 
+                                    {
+                                        requiredCount: 1
+                                    }
+                                );
+                            // เปิด Modal สำหรับเลือกการ์ด
+                            player.game.showModal({
+                                owner: player, 
+                                title: "Deflection (เบี่ยงเบน)", 
+                                message: "เลือกการ์ด 1 ใบเพื่อทิ้ง", 
+                                content: content, 
+                                buttons: [
+                                    {
+                                        text: "ยืนยัน", 
+                                        onClick: () => {
+                                            // ต้องเลือกการ์ดให้ครบ 1 ใบก่อน
+                                            if(!content.confirmSelection()){
+                                                return;
+                                            }
+
+                                            const selectedCards = content.getSelectedCards();
+                                            if(
+                                                !selectedCards || 
+                                                selectedCards.length !== 1
+                                            ){
+                                                return;
+                                            }
+                                            // เก็บการ์ดที่เลือก
+                                            this.selectedCard = selectedCards[0];
+                                            player.game.log(
+                                                player.name + " ยืนยันการ์ด Deflection: " + 
+                                                this.selectedCard.name + " " + 
+                                                this.selectedCard.suit + " " + 
+                                                this.selectedCard.number
+                                            );
+                                        }
+                                    }
+                                ]
+                            });
                         }
                     }, 
                     {
