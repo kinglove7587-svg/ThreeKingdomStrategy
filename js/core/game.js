@@ -874,7 +874,7 @@ class Game {
             return false;
         }
         // AI ใช้ Dodge อัตโนมัติ
-        if(player.controller instanceof AIcontroller){
+        if(player.controller instanceof AIController){
             for(let i = 0; i < requiredCount; i++){
                 const dodge = player.hand.removeCard(
                     player.hand.cards.indexOf(dodgeCards[i])
