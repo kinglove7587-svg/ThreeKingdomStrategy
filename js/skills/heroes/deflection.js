@@ -170,6 +170,9 @@ class Deflection extends TriggerSkill{
                                                             player.game.log(
                                                                 "Deflection เปลี่ยนเป้าหมายเป็น " + context.target.name
                                                             );
+                                                            // ล้าง Temporary State หลัง Deflection ใช้งานเสร็จ
+                                                            this.selectedCard = null;
+                                                            this.selectedTarget = null;
                                                             // ปิด Modal
                                                             player.game.hideModal();
                                                             // Resume Slash เดิม
