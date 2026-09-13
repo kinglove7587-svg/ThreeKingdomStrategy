@@ -141,12 +141,38 @@ class Deflection extends TriggerSkill{
                                                                 );
                                                                 return;
                                                             }
+                                                            // ตรวจสอบว่าการ์ดที่เลือกยังอยู่ในมือจริง
+                                                            const cardIndex = player.hand.cards.indexOf(this.selectedCard);
+                                                            if(cardIndex === -1){
+                                                                player.game.log("Deflection: ไม่พบการ์ดที่เลือกในมือ");
+                                                                return;
+                                                            }
                                                             this.selectedTarget = selectedTarget;
                                                             player.game.log(
                                                                 player.name + 
                                                                 " ยืนยัน Target Deflection: " + 
                                                                 this.selectedTarget.name
                                                             );
+                                                            // ทิ้งการ์ดที่เลือก
+                                                            const discardedCard = player.hand.removeCard(cardIndex);
+                                                            if(!discardedCard){
+                                                                player.game.log("Deflection: ไม่สามารถทิ้งการ์ดได้");
+                                                                return;
+                                                            }
+                                                            player.game.log(
+                                                                player.name + " ทิ้ง " + 
+                                                                discardedCard.name + " เพื่อใช้ Deflection"
+                                                            );
+                                                            // เปลี่ยน Target ของ Dodge Context
+                                                            context.target = this.selectedTarget;
+                                                            player.game.log(
+                                                                "Deflection เปลี่ยนเป้าหมายเป็น " + context.target.name
+                                                            );
+                                                            // ปิด Modal
+                                                            player.game.hideModal();
+                                                            if(resolution){
+                                                                resolution.resume();
+                                                            }
                                                         }
                                                     }
                                                 ]
