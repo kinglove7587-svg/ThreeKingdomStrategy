@@ -1411,6 +1411,23 @@ class Game {
             this.players, 
             "beforeDodge"
         );
+        // รวบรวม Armor Skill ที่ฟัง beforeDodge เข้า Queue
+        for(const player of this.players){
+            if(!player || !player.armor || !Array.isArray(player.armor.skills)){
+                continue;
+            }
+            for(const skill of player.armor.skills){
+                if(!skill.listeners){
+                    continue;
+                }
+                for(const listener of skill.listeners){
+                    if(listener.eventName !== "beforeDodge"){
+                        continue;
+                    }
+                    queue.add(listener);
+                }
+            }
+        }
         return queue.next();
     }
     // ดำเนิน beforeDodge Trigger ต่อหลัง Trigger Resume
