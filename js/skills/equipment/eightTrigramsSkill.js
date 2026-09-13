@@ -12,6 +12,8 @@ class EightTrigramsSkill extends ArmorSkill{
                 return;
             }
             player.game.log(player.name + " ใช้เกราะเกราะแปดทิศ");
+            // เก็บผล Judge ตัวสุดท้ายไว้ใช้หลัง Judge Resume
+            let finalJudgeResult = null;
             // ล็อก Before Dodge ก่อนเริ่ม Judge
             if(resolution){
                 resolution.wait();
@@ -20,7 +22,8 @@ class EightTrigramsSkill extends ArmorSkill{
             const result = player.game.judge(
                 player,
                 (judgeResult) => {
-
+                    // จำผล Judge ตัวสุดท้าย
+                    finalJudgeResult = judgeResult;
                     // ตรวจผล Judge หลัง Judge เสร็จหรือ Resume
                     if(judgeResult.isRed()){
                         context.fromArmor = true;
@@ -40,12 +43,9 @@ class EightTrigramsSkill extends ArmorSkill{
                 }
                 // เมื่อ Judge Resume ให้ Trigger นี้ Resume ต่อเพียงครั้งเดียว
                 player.game.pendingJudge.resumeFlow = () => {
-                    // อ่านผล Judge หลังถูกแก้ไขโดย Necromancy
-                    const finalJudge = player.game.pendingJudge 
-                        ? player.game.pendingJudge.result : null;
-                    // ใช้ผล Judge ตัวสุดท้ายเป็นตัวตัดสิน Eight Trigrams
+                    // ตรวจผล Judge ที่ถูก Resume แล้ว
                     if(
-                        finalJudge && finalJudge.isRed()
+                        finalJudgeResult && finalJudgeResult.isRed()
                     ){
                         context.fromArmor = true;
                         context.dodge = true;
