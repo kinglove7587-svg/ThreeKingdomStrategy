@@ -6,6 +6,7 @@ class Damage{
         this.amount = amount; // จำนวนความเสียหาย
         this.type = type; // ประเภทความเสียหาย (NORMAL, THUNDER, FIRE)
         this.card = null; // การ์ดที่เป็นต้นเหตุความเสียหาย
+        this.physicalCard = null; // การ์ดจริงที่ถูกใช้สร้างความเสียหาย
         this.canceled = false; // สถานะการถูกยกเลิกความเสียหาย
         this.ignoreArmor = false; // ข้ามการคำนวณเกราะป้องกัน
         this.isEffectDamage = false; // เกิดจากเอฟเฟกต์/เสี่ยงทาย ไม่ใช่การโจมตีปกติ
