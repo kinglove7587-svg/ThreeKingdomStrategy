@@ -853,53 +853,116 @@ class Game {
         return true;
     }
     // ตรวจสอบและบังคับใช้การ์ด "หลบ" ในมือของผู้เล่น
-    askDodge(player, requiredCount = 1){
+    askDodge(player, requiredCount = 1, resolution = null, onComplete = null){
 
-        if(requiredCount > 1){
-
-            const dodgeCount = player.hand.cards.filter(
-                card => card.name === "หลบ"
-                ).length;
-                if(dodgeCount < requiredCount){
-                    this.log(
-                        player.name + " มี หลบ ไม่ครบ " + 
-                        requiredCount + " ใบ"
-                    );
-                    return false;
-                }
-
-            const dodgeCards = player.hand.cards.filter(
-                card => card.name === "หลบ"
+        const complete = (result) => {
+            if(typeof onComplete === "function"){
+                onComplete(result);
+            }
+        };
+        // ตรวจจำนวนการ์ด "หลบ" ที่มีอยู่จริง
+        const dodgeCards = player.hand.cards.filter(
+            card => card.name === "หลบ"
+        );
+        // ถ้ามีการ์ดหลบไม่ครบตามจำนวนที่ต้องการ
+        if(dodgeCards.length < requiredCount){
+            this.log(
+                player.name + " มี หลบ ไม่ครบ " + 
+                requiredCount + " ใบ"
             );
-
+            complete(false);
+            return false;
+        }
+        // AI ใช้ Dodge อัตโนมัติ
+        if(player.controller instanceof AIcontroller){
             for(let i = 0; i < requiredCount; i++){
-
                 const dodge = player.hand.removeCard(
                     player.hand.cards.indexOf(dodgeCards[i])
                 );
-                this.discardPile.addCard(dodge);
+                if(dodge){
+                    this.discardPile.addCard(dodge);
+                }
             }
             this.log(
                 player.name + " ใช้ หลบ " + 
                 requiredCount + " ใบ"
             );
             this.ui.render();
+            complete(true);
             return true;
         }
-        // ส่งคำร้องขอเลือกการ์ด "หลบ" ไปยัง Controller ของผู้เล่น
-        const index = player.controller.askDodge(player, this);
-        // หากผู้เล่นไม่มีการ์ด "หลบ" บนมือ (หรือเลือกไม่ใช้)
-        if(index === -1){
-            this.log(player.name + " ไม่มี หลบ");
-            return false;
+        // Human ต้องหยุด Flow เพื่อถามการตัดสินใจ
+        if(resolution){
+            resolution.wait();
         }
-        // ดึงการ์ด "หลบ" ออกจากมือตามตำแหน่งที่พบ
-        const dodge = player.hand.removeCard(index);
-        //
-        this.discardPile.addCard(dodge);
-        this.log(player.name + " ใช้ หลบ");
-        this.ui.render();
-        // คืนค่า true แสดงว่าตอบโต้ด้วยการ์ดหลบสำเร็จ
+
+        this.showModal({
+            owner: player, 
+            title: "หลบ", 
+            message: 
+                requiredCount === 1 
+                    ? player.name + " ต้องการใช้ หลบ หรือไม่?" 
+                    : player.name + "  ต้องการใช้ หลบ " + 
+                      requiredCount + " ใบ หรือไม่?", 
+            buttons: [
+                {
+                    text: "ใช้", 
+                    onClick: () => {
+                        // ตรวจสอบการ์ดอีกครั้งก่อนใช้
+                        const currentDodgeCards = player.hand.cards.filter(
+                            card => card.name === "หลบ"
+                        );
+                        if(currentDodgeCards.length < requiredCount){
+                            this.hideModal();
+                            this.log(
+                                player.name + " มี หลบ ไม่เพียงพอ"
+                            );
+                            complete(false);
+                            if(resolution){
+                                resolution.resume();
+                            }
+                            return;
+                        }
+                        // ทิ้ง Dodge ตามจำนวนที่ต้องการ
+                        for(let i = 0; i < requiredCount; i++){
+                            const cardIndex = player.hand.cards.indexOf(
+                                currentDodgeCards[i]
+                            );
+                            if(cardIndex === -1){
+                                continue;
+                            }
+                            const dodge = player.hand.removeCard(cardIndex);
+                            if(dodge){
+                                this.discardPile.addCard(dodge);
+                            }
+                        }
+                        this.hideModal();
+                        this.log(
+                            player.name + " ใช้ หลบ " + 
+                            requiredCount + " ใบ"
+                        );
+                        this.ui.render();
+                        complete(true);
+                        if(resolution){
+                            resolution.resume();
+                        }
+                    }
+                }, 
+                {
+                    text: "ไม่ใช้", 
+                    onClick: () => {
+                        this.hideModal();
+                        this.log(
+                            player.name + " ไม่ใช้ หลบ"
+                        );
+                        complete(false);
+                        if(resolution){
+                            resolution.resume();
+                        }
+                    }
+                }
+            ]
+        });
         return true;
     }
     // จัดการเข้าสู่สถานะ Dying ของผู้เล่น
