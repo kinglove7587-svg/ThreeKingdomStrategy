@@ -9,7 +9,7 @@ class PanFeng extends Player{
         this.gender = "male";
 
         this.abilityDescription = 
-            "AxeOfInsanity (ขวานคลุ้มคลั่ง)\n" +
+            "Axe Of Insanity (ขวานคลุ้มคลั่ง)\n" +
             "จำกัดการใช้ได้ 1 ครั้งต่อ Play Phase " +
             "หลังจาก [โจมตี] ของคุณสร้างความเสียหายให้ตัวละครอื่น " +
             "หาก HP ของตัวละครนั้นน้อยกว่าคุณ คุณจั่วการ์ด 2 ใบ " +
