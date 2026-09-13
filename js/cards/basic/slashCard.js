@@ -128,26 +128,28 @@ class SlashCard extends BasicCard{
         };
         // กำหนด Flow ที่ต้องทำหลัง beforeDodge เสร็จ
         dodgeContext.resume = () => {
+            const currentTarget = dodgeContext.target;
             // ตรวจสอบการหลบจาก Skill หรือการ์ดหลบ
             if(dodgeContext.dodge){
                 if(!dodgeContext.fromArmor){
-                    game.log(target.name + " หลบการโจมตี");
+                    game.log(currentTarget.name + " หลบการโจมตี");
                 }
                 slashContext.canceled = true;
             // Skill บางชนิดสามารถห้ามเป้าหมายใช้ Dodge ได้
             }else if(dodgeContext.disableDodge){
-                game.log(target.name + " ไม่สามารถใช้หลบได้");
+                game.log(currentTarget.name + " ไม่สามารถใช้หลบได้");
 
-            }else if(game.askDodge(target, dodgeContext.requiredDodgeCount)){
+            }else if(game.askDodge(currentTarget, dodgeContext.requiredDodgeCount)){
                 slashContext.canceled = true;
             }else{
 
-                console.log(target.name + " ไม่มีการ์ดหลบ ");
+                console.log(currentTarget.name + " ไม่มีการ์ดหลบ ");
             }
+            slashContext.target = currentTarget;
             // กำหนดวิธี Resume หลัง Trigger
             slashContext.resume = () => {
                 if(slashContext.canceled){
-                    game.log(target.name + " ป้องกันการโจมตี");
+                    game.log(slashContext.target.name + " ป้องกันการโจมตี");
                     return true;
                 }
                 console.log("Slash DamageType =", slashContext.damageType);
@@ -160,7 +162,12 @@ class SlashCard extends BasicCard{
                     game.log(player.name + " ได้รับผลของสุรา ความเสียหาย +1");
                 }
                 // สร้าง Damage และบันทึกการ์ดต้นทาง
-                const damage = new Damage(player, target, damageAmount, slashContext.damageType);
+                const damage = new Damage(
+                    player, 
+                    slashContext.target, 
+                    damageAmount, 
+                    slashContext.damageType
+                );
                 damage.card = sourceCard;
                 damage.ignoreArmor = slashContext.ignoreArmor;
                 // ส่ง Damage เข้าระบบ
