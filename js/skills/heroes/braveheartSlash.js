@@ -32,6 +32,10 @@ class BraveheartSlash extends ActiveSkill{
             target
         );
     }
+    // อนุญาตให้เลือกเฉพาะการ์ดหลบ
+    canSelectSkillCard(player, card, game){
+        return card instanceof DodgeCard;
+    }
     // รอการยืนยันการเลือกการ์ด
     waitForCardSelectionConfirmation(player, game){
         return true;
