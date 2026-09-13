@@ -39,7 +39,17 @@ class EightTrigramsSkill extends ArmorSkill{
             ){
                 context.waitingJudge = true;
                 if(resolution){
-                    resolution.wait();
+                    console.log(
+                        "TRACE EightTrigrams resolution =",
+                        resolution
+                    ); // NEW
+
+                    const waitResult = resolution.wait(); // NEW
+
+                    console.log(
+                        "TRACE EightTrigrams waitResult =",
+                        waitResult
+                    ); 
                 }
                 // เมื่อ Judge Resume ให้ Trigger นี้ Resume ต่อเพียงครั้งเดียว
                 player.game.pendingJudge.resumeFlow = () => {
