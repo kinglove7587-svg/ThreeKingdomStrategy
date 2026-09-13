@@ -36,6 +36,16 @@ class EightTrigramsSkill extends ArmorSkill{
                 }
                 // เมื่อ Judge Resume ให้ Trigger นี้ Resume ต่อเพียงครั้งเดียว
                 player.game.pendingJudge.resumeFlow = () => {
+                    // อ่านผล Judge หลังถูกแก้ไขโดย Necromancy
+                    const finalJudge = player.game.pendingJudge 
+                        ? player.game.pendingJudge.result : null;
+                    // ใช้ผล Judge ตัวสุดท้ายเป็นตัวตัดสิน Eight Trigrams
+                    if(
+                        finalJudge && finalJudge.isRed()
+                    ){
+                        context.fromArmor = true;
+                        context.dodge = true;
+                    }
                     context.waitingJudge = false;
                     if(resolution){
                         return resolution.resume();
