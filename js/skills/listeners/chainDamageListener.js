@@ -50,6 +50,7 @@ class ChainDamageListener{
             );
             // ส่งต่อการ์ดที่เป็นต้นเหตุความเสียหาย
             chainDamage.card = damage.card;
+            chainDamage.physicalCard = damage.physicalCard;
             // ทำเครื่องหมายว่าเป็นความเสียหายจากการส่งต่อโซ่ตรวน
             chainDamage.chain = true;
             // ส่งความเสียหายลูกใหม่เข้าระบบประมวลผลเกมจริง!
