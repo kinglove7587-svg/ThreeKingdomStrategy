@@ -95,6 +95,8 @@ class BraveheartSlash extends ActiveSkill{
             usedCard.suit, 
             usedCard.number
         );
+        // เก็บการ์ดจริงที่ใช้เป็น Braveheart Slash
+        slashCard.physicalCard = usedCard;
 
         const success = slashCard.use(player, game);
         this.selectedCard = null;
