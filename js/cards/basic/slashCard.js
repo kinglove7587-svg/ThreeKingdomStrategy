@@ -175,6 +175,9 @@ class SlashCard extends BasicCard{
                         );
                     }, 
                     resume: () => {
+                        if(game.triggerResolutionQueue.isWaiting()){
+                            return true;
+                        }
                         return game.resumeAction();
                     }
                 }, 
