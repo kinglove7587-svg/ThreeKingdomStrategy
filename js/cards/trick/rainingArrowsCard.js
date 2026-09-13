@@ -36,7 +36,7 @@ class RainingArrowsCard extends TrickCard{
                     // หยุด Action หลักไว้จนกว่าเป้าหมายจะตัดสินใจ Dodge
                     return game.pauseAction(
                         resolveTarget, 
-                        true
+                        false
                     );
                 }, 
                 resume: () => {
