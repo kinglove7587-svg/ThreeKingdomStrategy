@@ -2384,12 +2384,6 @@ class UIManager{
             };
             this.controlArea.appendChild(confirmButton);
             
-            const cancelButton = document.createElement("button");
-            cancelButton.textContent = "ยกเลิก";
-            cancelButton.onclick = () => {
-                controller.cancelSkillTargetSelection();
-            };
-            this.controlArea.appendChild(cancelButton);
         }
         // Lust - ปุ่มยืนยัน/ยกเลิกหลังเลือกเป้าหมายครบ 2 คน
         if(controller.inputState === "waitingLustConfirmation"){
