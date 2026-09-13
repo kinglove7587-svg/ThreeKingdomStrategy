@@ -155,6 +155,14 @@ class BraveheartDodge extends TriggerSkill{
                                 if(resolution){
                                     resolution.resume();
                                 }
+                                // Finalize Action หลัง Braveheart Dodge ทำงานนอก Turn
+                                if(
+                                    !player.game.triggerResolutionQueue.isWaiting() && 
+                                    !player.game.pendingAction && 
+                                    player.game.actionLocked
+                                ){
+                                    player.game.afterHumanAction(true);
+                                }
                             }
                         }
                     ]
