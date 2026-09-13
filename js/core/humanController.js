@@ -895,6 +895,7 @@ class HumanController extends Controller{
         this.selectedTarget = null;
         this.selectedSkillCardIndex = -1;
         this.selectedSkillCardIndices = [];
+        this.game.startAction();
         // ตรวจสอบว่า สกิล ต้องการให้เลือกเป้าหมายก่อนหรือไม่
         if(skill.needsTarget(this.player, this.game)){
             this.inputState = "waitingSkillTarget";

@@ -57,3 +57,4 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
 game.ui.render();
 5e125114b095008a1832ec94ea598bb8e412a685 หลบ เกราะแปดทิศ
 38ed7417abe11728313c18237e15238113697e5a เริ่ม braveheart
+f5f2d40f003d112d1b142a23a65929743f638c68
