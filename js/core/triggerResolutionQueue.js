@@ -8,11 +8,6 @@ class TriggerResolutionQueue{
     }
     // สั่งเข้าสู่สถานะรอการตอบสนองจาก UI/Modal
     wait(){
-        console.trace(
-            "TRACE Queue.wait",
-            "current =", this.current,
-            "waiting =", this.waiting
-        );
 
         if(!this.current){
             return false;

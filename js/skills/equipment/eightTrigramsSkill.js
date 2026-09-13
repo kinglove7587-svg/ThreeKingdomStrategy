@@ -7,11 +7,6 @@ class EightTrigramsSkill extends ArmorSkill{
     register(eventManager, player){
         // สร้าง Callback Function สำหรับดักจับ Event beforeDodge
         const callback = (context, resolution)=>{
-            console.log(
-                "TRACE EightTrigrams callback",
-                "context =", context,
-                "resolution =", resolution
-            );
             // ทำงานเฉพาะเมื่อผู้เล่นที่เป็นเป้าหมาย (target) คือเจ้าของเกราะเกราะแปดทิศนี้
             if(context.target !== player){
                 return;
@@ -44,17 +39,7 @@ class EightTrigramsSkill extends ArmorSkill{
             ){
                 context.waitingJudge = true;
                 if(resolution){
-                    console.log(
-                        "TRACE EightTrigrams resolution =",
-                        resolution
-                    ); // NEW
-
-                    const waitResult = resolution.wait(); // NEW
-
-                    console.log(
-                        "TRACE EightTrigrams waitResult =",
-                        waitResult
-                    ); 
+                    resolution.wait();
                 }
                 // เมื่อ Judge Resume ให้ Trigger นี้ Resume ต่อเพียงครั้งเดียว
                 player.game.pendingJudge.resumeFlow = () => {

@@ -1194,7 +1194,6 @@ class Game {
     }
     // ดำเนิน Judge ที่หยุดไว้ต่อ พร้อมรับผลลัพธ์ที่ถูกแก้ไข
     resumeJudge(result){
-        console.trace("TRACE resumeJudge");
 
         if(!this.pendingJudge){
             return false;
@@ -1495,7 +1494,6 @@ class Game {
                 return queue.wait();
             }, 
             resume: () => {
-                console.trace("TRACE resolution.resume");
                 if(resumed){
                     return null;
                 }

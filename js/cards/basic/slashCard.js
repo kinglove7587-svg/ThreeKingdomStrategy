@@ -128,7 +128,6 @@ class SlashCard extends BasicCard{
         };
         // กำหนด Flow ที่ต้องทำหลัง beforeDodge เสร็จ
         dodgeContext.resume = () => {
-            console.trace("TRACE dodgeContext.resume");
             const currentTarget = dodgeContext.target;
             slashContext.target = currentTarget;
             // Flow กลางหลัง Dodge ตัดสินใจเสร็จ
