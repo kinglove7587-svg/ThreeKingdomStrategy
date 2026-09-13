@@ -81,7 +81,7 @@ class BraveheartSlash extends ActiveSkill{
         if(!this.canTarget(player, target)){
             return false;
         }
-        game.log(player.name + " ใช้ การ์ด หลบ แทน โจมตี");
+        game.log(player.name + " ใช้การ์ด หลบ แทน โจมตี");
         // นำ DodgeCard ตัวจริงออกจากมือ
         const usedCard = player.hand.removeCard(selectedIndex);
         if(!usedCard){
