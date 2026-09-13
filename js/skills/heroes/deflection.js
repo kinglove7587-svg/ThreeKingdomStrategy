@@ -3,7 +3,7 @@ class Deflection extends TriggerSkill{
     constructor(){
         super("Deflection");
     }
-    //
+    // ลงทะเบียน Event Listener สำหรับ Deflection
     register(eventManager, player){
 
         const callback = (context, resolution) => {

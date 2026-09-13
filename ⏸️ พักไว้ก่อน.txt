@@ -55,5 +55,5 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
     new SilverLionHelmetCard("♠️", 1)
 );
 game.ui.render();
-8bdf7ee7c9356d6211afd158cba4fe76c21b1624 ปิด Cavalry
 2ffa08d15e3e6353b533f9d92936d251ac00e4fe Captivating off
+2f48aed56bb28d3f05c93da0fbc269808fedf310 ปิด DaQiao
