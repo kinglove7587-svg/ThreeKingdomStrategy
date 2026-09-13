@@ -7,6 +7,11 @@ class EightTrigramsSkill extends ArmorSkill{
     register(eventManager, player){
         // สร้าง Callback Function สำหรับดักจับ Event beforeDodge
         const callback = (context, resolution)=>{
+            console.log(
+                "TRACE EightTrigrams callback",
+                "context =", context,
+                "resolution =", resolution
+            );
             // ทำงานเฉพาะเมื่อผู้เล่นที่เป็นเป้าหมาย (target) คือเจ้าของเกราะเกราะแปดทิศนี้
             if(context.target !== player){
                 return;
