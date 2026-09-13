@@ -11,7 +11,9 @@ class ArmorSkill extends TriggerSkill{
             }
             callback(context, resolution);
         };
-        wrappedCallback._isTriggerSkill = true;
+        if(eventName === "beforeDodge"){
+            wrappedCallback._isTriggerSkill = true;
+        }
         // ลงทะเบียน Event และเก็บ Reference ไว้สำหรับ Unregister ในอนาคต
         eventManager.on(eventName, wrappedCallback);
         this.listeners.push({
