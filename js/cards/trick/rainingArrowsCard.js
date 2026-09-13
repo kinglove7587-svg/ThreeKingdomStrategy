@@ -60,6 +60,13 @@ class RainingArrowsCard extends TrickCard{
                 // ถ้าไม่ใช้/ไม่สามารถใช้ Dodge ให้รับ Damage
                 const damage = new Damage(player, target, 1);
                 damage.card = this;
+                // กรณีไม่มี Dodge Modal ต้องพัก Action ไว้ก่อน Damage
+                if(!waitingForDodge){
+                    game.pauseAction(
+                        resolveTarget, 
+                        false
+                    );
+                }
                 game.damage(damage);
                 // ถ้ามี Trigger รออยู่ ให้หยุดไว้ก่อน
                 if(game.triggerResolutionQueue.isWaiting()){
@@ -67,7 +74,7 @@ class RainingArrowsCard extends TrickCard{
                 }
                 // ถ้าไม่มี Trigger ให้ดำเนินเป้าหมายถัดไปต่อ
                 if(!waitingForDodge){
-                    return resolveTarget();
+                    return game.resumeAction();
                 }
             };
             // ให้ askDodge จัดการ Modal และเรียก handleDodgeResult เมื่อจบ
