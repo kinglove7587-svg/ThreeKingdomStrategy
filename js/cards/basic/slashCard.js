@@ -129,69 +129,89 @@ class SlashCard extends BasicCard{
         // กำหนด Flow ที่ต้องทำหลัง beforeDodge เสร็จ
         dodgeContext.resume = () => {
             const currentTarget = dodgeContext.target;
+            slashContext.target = currentTarget;
+            // Flow กลางหลัง Dodge ตัดสินใจเสร็จ
+            const continueSlash = () => {
+                // Event ก่อนการโจมตีโดน
+                game.eventManager.emit(
+                    "beforeSlashHit", 
+                    slashContext
+                );
+                // ประมวลผล Trigger ของ beforeSlashHit
+                const nextTrigger = game.processBeforeSlashHitTrigger(slashContext);
+                if(nextTrigger){
+                    return game.runTriggerResolution(
+                        nextTrigger, 
+                        slashContext, 
+                        "beforeSlashHit"
+                    );
+                }
+                if(slashContext.waitingTrigger){
+                    return true;
+                }
+                return slashContext.resume();
+            };
             // ตรวจสอบการหลบจาก Skill หรือการ์ดหลบ
             if(dodgeContext.dodge){
                 if(!dodgeContext.fromArmor){
                     game.log(currentTarget.name + " หลบการโจมตี");
                 }
                 slashContext.canceled = true;
-            // Skill บางชนิดสามารถห้ามเป้าหมายใช้ Dodge ได้
-            }else if(dodgeContext.disableDodge){
+                return continueSlash();
+            }
+            // Skill ห้ามใช้ Dodge
+            if(dodgeContext.disableDodge){
                 game.log(currentTarget.name + " ไม่สามารถใช้หลบได้");
-
-            }else if(game.askDodge(currentTarget, dodgeContext.requiredDodgeCount)){
-                slashContext.canceled = true;
-            }else{
-
-                console.log(currentTarget.name + " ไม่มีการ์ดหลบ ");
+                return continueSlash();
             }
-            slashContext.target = currentTarget;
-            // กำหนดวิธี Resume หลัง Trigger
-            slashContext.resume = () => {
-                if(slashContext.canceled){
-                    game.log(slashContext.target.name + " ป้องกันการโจมตี");
-                    return true;
+            // ตรวจสอบการ์ด Dodge
+            const dodgeStarted = game.askDodge(
+                currentTarget, 
+                dodgeContext.requiredDodgeCount, 
+                {
+                    wait: () => true, 
+                    resume: () => true
+                }, 
+                result => {
+                    slashContext.canceled = result;
+                    continueSlash();
                 }
-                console.log("Slash DamageType =", slashContext.damageType);
-                // Damage เริ่มต้น
-                let damageAmount = 1;
-                // ผลของสุรา
-                if(player.isDrunk()){
-                    damageAmount++;
-                    player.setDrunk(false);
-                    game.log(player.name + " ได้รับผลของสุรา ความเสียหาย +1");
-                }
-                // สร้าง Damage และบันทึกการ์ดต้นทาง
-                const damage = new Damage(
-                    player, 
-                    slashContext.target, 
-                    damageAmount, 
-                    slashContext.damageType
-                );
-                damage.card = sourceCard;
-                damage.ignoreArmor = slashContext.ignoreArmor;
-                // ส่ง Damage เข้าระบบ
-                game.damage(damage);
-                console.log(player.isDrunk());
-                return true;
-            };
-            // Event ก่อนการโจมตีโดน หลังจาก Slash Flow พร้อม Resume แล้ว
-            game.eventManager.emit("beforeSlashHit", slashContext);
-            // นำ TriggerSkill ของ beforeSlashHit เข้า Trigger Queue
-            const nextTrigger = game.processBeforeSlashHitTrigger(slashContext);
-            // ถ้ามี Trigger ให้เริ่มประมวลผลผ่าน Queue
-            if(nextTrigger){
-                return game.runTriggerResolution(
-                    nextTrigger, 
-                    slashContext, 
-                    "beforeSlashHit"
-                );
-            }
-            // ถ้ามี Trigger รอ Resume
-            if(slashContext.waitingTrigger){
+            );
+            // askDodge จัดการ Flow ต่อผ่าน Callback แล้ว
+            if(dodgeStarted){
                 return true;
             }
-            return slashContext.resume();
+            // ไม่มี Dodge ให้ใช้
+            return true;
+        };
+        // กำหนดวิธี Resume หลัง Trigger
+        slashContext.resume = () => {
+            if(slashContext.canceled){
+                game.log(slashContext.target.name + " ป้องกันการโจมตี");
+                return true;
+            }
+            console.log("Slash DamageType =", slashContext.damageType);
+            // Damage เริ่มต้น
+            let damageAmount = 1;
+            // ผลของสุรา
+            if(player.isDrunk()){
+                damageAmount++;
+                player.setDrunk(false);
+                game.log(player.name + " ได้รับผลของสุรา ความเสียหาย +1");
+            }
+            // สร้าง Damage และบันทึกการ์ดต้นทาง
+            const damage = new Damage(
+                player, 
+                slashContext.target, 
+                damageAmount, 
+                slashContext.damageType
+            );
+            damage.card = sourceCard;
+            damage.ignoreArmor = slashContext.ignoreArmor;
+            // ส่ง Damage เข้าระบบ
+            game.damage(damage);
+            console.log(player.isDrunk());
+            return true;
         };
         // ส่ง Event ก่อน Dodge
         game.eventManager.emit("beforeDodge", dodgeContext);
