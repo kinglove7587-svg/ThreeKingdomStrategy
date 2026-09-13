@@ -36,6 +36,22 @@ class AxeOfInsanity extends TriggerSkill{
             if(resolution){
                 resolution.wait();
             }
+            // อ่าน HP ของ Target หลัง Damage เพื่อเลือกผลของ Axe Of Insanity
+            const targetHp = damage.target.hp;
+            // อ่าน HP ปัจจุบันของพานเฟิง
+            const playerHp = player.hp;
+            // ตรวจสอบเงื่อนไข HP ของ Axe Of Insanity
+            if(targetHp < playerHp){
+                console.log(
+                    "Axe Of Insanity Branch: Target HP < Pan Feng HP", targetHp, 
+                    "<", playerHp
+                );
+            }else{
+                console.log(
+                    "Axe Of Insanity Branch: Target HP >= Pan Feng HP", targetHp, 
+                    ">=", playerHp
+                );
+            }
             console.log(
                 "Axe Of Insanity ตรวจ afterDamage:", 
                 damage.source?.name, "→", 
