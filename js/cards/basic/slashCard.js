@@ -194,6 +194,9 @@ class SlashCard extends BasicCard{
         slashContext.resume = () => {
             if(slashContext.canceled){
                 game.log(slashContext.target.name + " ป้องกันการโจมตี");
+                if(sourceCard.physicalCard && !sourceCard.physicalCard.treacheryClaimed){
+                    game.discardPile.addCard(sourceCard.physicalCard);
+                }
                 return true;
             }
             console.log("Slash DamageType =", slashContext.damageType);
@@ -220,6 +223,9 @@ class SlashCard extends BasicCard{
             damage.ignoreArmor = slashContext.ignoreArmor;
             // ส่ง Damage เข้าระบบ
             game.damage(damage);
+            if(sourceCard.physicalCard && !sourceCard.physicalCard.treacheryClaimed){
+                game.discardPile.addCard(sourceCard.physicalCard);
+            }
             console.log(player.isDrunk());
             return true;
         };
