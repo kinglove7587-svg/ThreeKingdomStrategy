@@ -213,6 +213,10 @@ class SlashCard extends BasicCard{
                 slashContext.damageType
             );
             damage.card = sourceCard;
+            // ส่งการ์ดจริงเข้า Damage
+            if(sourceCard.physicalCard){
+                damage.physicalCard = sourceCard.physicalCard;
+            }
             damage.ignoreArmor = slashContext.ignoreArmor;
             // ส่ง Damage เข้าระบบ
             game.damage(damage);
