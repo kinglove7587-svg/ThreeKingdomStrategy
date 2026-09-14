@@ -85,6 +85,7 @@ class Luoshen extends ActiveSkill{
             }
             // นำ Judge Card เข้า Hand
             player.hand.addCard(receivedCard);
+            game.ui.render();
             // เก็บ Card ที่ได้รับไว้สำหรับ Final Summary Log
             this.receivedCards.push(receivedCard);
             game.log(
