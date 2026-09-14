@@ -22,7 +22,11 @@ class StealCard extends TrickCard{
         ){
             return false;
         }
-        // ใช้ Effective Distance เพื่อรวมผลของ Mount
+        // ตรวจสอบว่าผู้เล่นได้รับสิทธิ์ยกเว้นระยะจาก Skill หรือไม่
+        if(player.game.canIgnoreEffectDistance(player, this)){
+            return true;
+        }
+        // หากไม่มีสิทธิ์ยกเว้นระยะ ให้ตรวจระยะตามกติกาเดิม
         return player.game.getEffectDistance(player, target) <= 1;
     }
     // ประมวลผลการใช้การ์ดฉกฉวย (Steal)
