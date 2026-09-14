@@ -8,6 +8,10 @@ class RationsDepletedCard extends DelayedTrickCard{
         if(player === target){
             return false;
         }
+        // ตรวจสอบว่าผู้เล่นได้รับสิทธิ์ยกเว้นระยะจาก Skill หรือไม่
+        if(player.game.canIgnoreEffectDistance(player, this)){
+            return true;
+        }
         // ใช้ Effective Distance เพื่อรวมผลของ Mount
         return player.game.getEffectDistance(player, target) <= 1;
     }
