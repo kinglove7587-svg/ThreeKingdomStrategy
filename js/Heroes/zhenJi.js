@@ -12,13 +12,13 @@ class ZhenJi extends Player{
             "Empress Dowager (จักรพรรดินี)\n" +
             "คุณสามารถใช้หรือเล่นการ์ดสีดำ ♠️ ♣️ เป็น [หลบ]\n\n" +
 
-            "Goddess Of Luo River (เทพธิดาแห่งแม่น้ำหลัว)\n" +
+            "Luoshen (เทพธิดาแห่งแม่น้ำหลัว)\n" +
             "ใน Preparation Phase คุณสามารถเข้าสู่ Judge Phase ได้ " +
             "หากการ์ด Judge เป็นสีดำ คุณจะได้รับการ์ดใบนั้น " +
             "และสามารถทำขั้นตอนนี้ซ้ำได้ตราบใดที่การ์ด Judge ของคุณเป็นสีดำ";
 
         this.addSkill(new EmpressDowager());
-        //this.addSkill(new GoddessOfLuoRiver());
+        //this.addSkill(new Luoshen());
     }
     getPortrait(){
         return "assets/cards/heroes/ZhenJi.png";
