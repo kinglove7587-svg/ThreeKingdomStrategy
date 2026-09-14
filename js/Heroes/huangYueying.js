@@ -15,7 +15,7 @@ class HuangYueying extends Player{
             "Wizardry (เวทมนตร์กลศาสตร์)\n" +
             "การ์ดกลอุบายของคุณไม่จำกัดระยะ";
 
-        //this.addSkill(new Cultivation());
+        this.addSkill(new Cultivation());
         //this.addSkill(new Wizardry());
     }
     getPortrait(){
