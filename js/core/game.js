@@ -139,6 +139,13 @@ class Game {
             player.hand.addCard(card); // คืนการ์ดกลับเข้ามือ
             return false;
         }
+        // แจ้ง PassiveSkill ของผู้เล่นหลังใช้การ์ดสำเร็จ
+        for(const skill of player.getPassiveSkills()){
+            // ให้แต่ละ PassiveSkill ตรวจสอบว่าการ์ดใบนี้ทำให้ Skill ทำงานหรือไม่
+            if(typeof skill.onCardUsed === "function"){
+                skill.onCardUsed(player, card, this);
+            }
+        }
         // 
         if(card.shouldDiscard() && !card.treacheryClaimed){
             this.discardPile.addCard(card);
