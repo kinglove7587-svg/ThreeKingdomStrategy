@@ -1673,7 +1673,7 @@ class Game {
         }
 
         if(
-            !hasPendingAction && 
+            !this.pendingAction && 
             !damage?.deferActionFinalize && 
             damage?.source === this.getCurrentPlayer() &&
             damage.source.controller instanceof HumanController && 
