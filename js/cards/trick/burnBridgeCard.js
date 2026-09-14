@@ -22,6 +22,11 @@ class BurnBridgeCard extends TrickCard{
         ){
             return false;
         }
+        // ตรวจสอบว่าผู้เล่นได้รับสิทธิ์ยกเว้นระยะจาก Skill หรือไม่
+        if(player.game.canIgnoreEffectDistance(player, this)){
+            return true;
+        }
+        // หากไม่มีสิทธิ์ยกเว้นระยะ ให้ตรวจระยะตามกติกาเดิม
         return player.game.getEffectDistance(player, target) <= 1;
     }
     // ประมวลผลการใช้งานการ์ดถอนสะพาน (BurnBridgeCard)
