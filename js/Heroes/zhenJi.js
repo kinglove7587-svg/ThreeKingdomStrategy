@@ -17,7 +17,7 @@ class ZhenJi extends Player{
             "หากการ์ด Judge เป็นสีดำ คุณจะได้รับการ์ดใบนั้น " +
             "และสามารถทำขั้นตอนนี้ซ้ำได้ตราบใดที่การ์ด Judge ของคุณเป็นสีดำ";
 
-        //this.addSkill(new EmpressDowager());
+        this.addSkill(new EmpressDowager());
         //this.addSkill(new GoddessOfLuoRiver());
     }
     getPortrait(){
