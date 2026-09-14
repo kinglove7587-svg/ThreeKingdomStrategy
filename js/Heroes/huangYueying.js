@@ -16,7 +16,7 @@ class HuangYueying extends Player{
             "การ์ดกลอุบายของคุณไม่จำกัดระยะ";
 
         this.addSkill(new Cultivation());
-        //this.addSkill(new Wizardry());
+        this.addSkill(new Wizardry());
     }
     getPortrait(){
         return "assets/cards/heroes/HuangYueying.png";

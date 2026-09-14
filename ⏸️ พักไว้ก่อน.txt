@@ -47,6 +47,7 @@ FireAttackCard (พลิงผลาญ): 2 ใบ
 อย่างละ1ใบ
 ม้า อย่างละ2ใ
 ①
+บัก ยืมดาบ กองเถื่อน ธนูพันดอก
 game.players.find(p => p.name === "เล่าปี่").hand.addCard(
     new DodgeCard("♥️", 1)
 );
@@ -55,6 +56,5 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
     new SilverLionHelmetCard("♠️", 1)
 );
 game.ui.render();
-ca030e761662703b9c036a23b6da960601ead8ea ปิด braveheart dodge
-48431d6dcfed338263a2ee10363bfa374d8b6e35 EmpressDowager ปิด
 b0088ac39253bf747c72b4d5a01a8018f26c8559 เปิด HuangYueying
+f9dbc2767b1809001063327852c7955799c118d6 เปิด Wizardry
