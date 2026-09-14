@@ -910,6 +910,10 @@ class HumanController extends Controller{
         }
         // หากไม่ต้องเลือกอะไรเพิ่ม ให้รันเมธอด use() ของ สกิล ทันที
         const success = skill.use(this.player, this.game);
+        // ถ้า Skill ถูก Pause ด้วย Judge ให้รอ Resume ก่อน Finalize Action
+        if(this.game.pendingJudge){
+            return;
+        }
         // ส่งผลลัพธ์การทำงานหลังผู้เล่นทำ Action
         this.game.afterHumanAction(success);
     }
