@@ -13,7 +13,7 @@ const game = new Game([
         controller: HumanController//AIController
     },
     {
-        hero: GuoJia, 
+        hero: ZhenJi, 
         controller: HumanController//AIController
     },
     {
@@ -29,4 +29,4 @@ game.debug = new DebugTools(game);
 game.start();
 // CaoCao LuBu GuanYu XiahouDun SimaYi LiuBei ZhangFei SunQuan HuaTuo GanNing LuMeng DiaoChan
 // ZhangLiao ZhugeLiang HuangGai HuaXiong XuZhu ZhaoYun* ZhouYu GongsunZan GuoJia MaChao 
-// DaQiao PanFeng
+// DaQiao PanFeng ZhenJi

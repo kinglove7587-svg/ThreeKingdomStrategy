@@ -56,4 +56,4 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
 );
 game.ui.render();
 7eb60a857af5dd16b41cea1ae615b096f76feb98 ปิด braveheart slash
-afbec17c6e96e680b299747a94b5880b0223ac68 ปิด braveheart dodge
+ca030e761662703b9c036a23b6da960601ead8ea ปิด braveheart dodge
