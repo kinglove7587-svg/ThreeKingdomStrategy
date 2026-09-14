@@ -19,7 +19,7 @@ class ZhenJi extends Player{
             "และการ์ดในมือของคุณต้องไม่เกิน 6 ใบ";
 
         this.addSkill(new EmpressDowager());
-        //this.addSkill(new Luoshen());
+        this.addSkill(new Luoshen());
     }
     getPortrait(){
         return "assets/cards/heroes/ZhenJi.png";
