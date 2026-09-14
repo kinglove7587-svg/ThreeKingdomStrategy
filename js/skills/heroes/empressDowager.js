@@ -44,7 +44,6 @@ class EmpressDowager extends TriggerSkill{
                             text: "ใช้", 
                             onClick: () => {
                                 player.game.hideModal();
-                                player.game.log(player.name + " ใช้ Empress Dowager");
 
                                 const currentBlackCards = 
                                     player.hand.cards.filter(
