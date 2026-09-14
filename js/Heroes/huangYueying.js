@@ -17,6 +17,8 @@ class HuangYueying extends Player{
 
         this.addSkill(new Cultivation());
         this.addSkill(new Wizardry());
+
+        this.hand.addCard(new BarbarianCard("♠️", 1));
     }
     getPortrait(){
         return "assets/cards/heroes/HuangYueying.png";
