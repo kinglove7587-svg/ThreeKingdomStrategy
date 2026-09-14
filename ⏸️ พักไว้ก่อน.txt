@@ -56,4 +56,4 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
 );
 game.ui.render();
 ca030e761662703b9c036a23b6da960601ead8ea ปิด braveheart dodge
-384ab970f672751fc863a56430a3968edd73ce2a EmpressDowager
+48431d6dcfed338263a2ee10363bfa374d8b6e35 EmpressDowager ปิด
