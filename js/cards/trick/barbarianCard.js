@@ -20,6 +20,13 @@ class BarbarianCard extends TrickCard{
                 targetIndex++;
             }
             if(targetIndex >= targets.length){
+                if(
+                    !game.triggerResolutionQueue.isWaiting() && 
+                    !game.pendingAction && 
+                    game.actionLocked
+                ){
+                    game.afterHumanAction(true);
+                }
                 return true;
             }
             const target = targets[targetIndex];

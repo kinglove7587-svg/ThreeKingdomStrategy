@@ -47,6 +47,7 @@ FireAttackCard (พลิงผลาญ): 2 ใบ
 อย่างละ1ใบ
 ม้า อย่างละ2ใ
 ①
+Finalize Action
 บัก ยืมดาบ กองเถื่อน ธนูพันดอก
 game.players.find(p => p.name === "เล่าปี่").hand.addCard(
     new DodgeCard("♥️", 1)
