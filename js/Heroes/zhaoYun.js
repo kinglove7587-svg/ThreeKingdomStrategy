@@ -10,7 +10,8 @@ class ZhaoYun extends Player{
 
         this.abilityDescription = 
             "Braveheart (ห้าวหาญ)\n" +
-            "คุณสามารถใช้หรือเล่น โจมตี เป็น หลบ หรือ หลบ เป็น โจมตี";
+            "คุณสามารถใช้หรือเล่น โจมตี เป็น หลบ " + 
+            "และ ในกรณีที่คุณไม่มีหลบ สามารถใช้ โจมตี แทน หลบ ได้";
 
         this.addSkill(new BraveheartSlash());
         this.addSkill(new BraveheartDodge());
