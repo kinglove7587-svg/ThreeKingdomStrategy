@@ -282,6 +282,19 @@ class Game {
         );
         return finalDistance;
     }
+    // ตรวจสอบว่าผู้เล่นได้รับสิทธิ์ยกเว้นระยะจาก PassiveSkill หรือไม่
+    canIgnoreEffectDistance(player, card){
+
+        for(const skill of player.getPassiveSkills()){
+            if(typeof skill.canIgnoreEffectDistance !== "function"){
+                continue;
+            }
+            if(skill.canIgnoreEffectDistance(player, card, this)){
+                return true;
+            }
+        }
+        return false;
+    }
 
     startTurn(){ // เริ่ม ตา
         // ถ้าเกมจบแล้ว ห้ามเริ่มเทิร์น
