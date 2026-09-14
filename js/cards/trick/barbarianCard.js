@@ -38,6 +38,10 @@ class BarbarianCard extends TrickCard{
             if(game.triggerResolutionQueue.isWaiting()){
                 return true;
             }
+            // ถ้า Damage Flow Resume Action ให้แล้ว ห้าม Resume ซ้ำ
+            if(!game.pendingAction){
+                return true;
+            }
             return game.resumeAction();
         };
         return resolveTarget();

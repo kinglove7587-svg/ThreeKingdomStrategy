@@ -57,4 +57,4 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
 );
 game.ui.render();
 b0088ac39253bf747c72b4d5a01a8018f26c8559 เปิด HuangYueying
-f9dbc2767b1809001063327852c7955799c118d6 เปิด Wizardry
+7d0ffa782d2e2d725c91bb9552301291267ab17e ปิด Wizardry
