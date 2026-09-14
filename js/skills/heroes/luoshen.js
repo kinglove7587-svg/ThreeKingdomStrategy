@@ -117,6 +117,14 @@ class Luoshen extends ActiveSkill{
             message += " : " + cardName;
         }
         game.log(message);
+        // Finalize Human Action หลัง Luoshen จบจริง
+        if(
+            player.controller.isHuman() && 
+            !game.pendingJudge && 
+            game.actionLocked
+        ){
+            game.afterHumanAction(true);
+        }
     }
     getDescription(){
         return (
