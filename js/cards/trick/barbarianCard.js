@@ -20,6 +20,9 @@ class BarbarianCard extends TrickCard{
                 targetIndex++;
             }
             if(targetIndex >= targets.length){
+                if(player.controller instanceof HumanController){
+                    game.afterHumanAction(true);
+                }
                 return true;
             }
             const target = targets[targetIndex];
