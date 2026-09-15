@@ -16,7 +16,7 @@ class LuXun extends Player{
             "เมื่อคุณเสียการ์ดใบสุดท้ายจากมือ คุณสามารถจั่วการ์ด 1 ใบ";
 
         this.addSkill(new Modesty());
-        //this.addSkill(new SecondWind());
+        this.addSkill(new SecondWind());
     }
     getPortrait(){
         return "assets/cards/heroes/LuXun.png";

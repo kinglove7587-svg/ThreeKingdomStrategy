@@ -57,6 +57,5 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
     new SilverLionHelmetCard("♠️", 1)
 );
 game.ui.render();
-ef8278e08803a412f01b7e483f124877c5b01b72 ธนูพันดอก
-4d2beb3f32764e9aec3ecfc0f57081b601bcf4eb ปิด HuangYueying
 ec32e8e0f6761c6904fff9cac165cca6d2fe36d7 เปิด Modesty
+1e720bb6293045e32134c1c905916ec3fe692c1e เปิด SecondWind
