@@ -131,6 +131,11 @@ class HumanController extends Controller{
             this.selectedCardIndex = -1;
             return;
         }
+        // ถ้ามี Modal กำลังรอการตัดสินใจ ให้รอ Modal จบก่อน Finalize
+        if(this.game.pendingModal){
+            this.selectedCardIndex = -1;
+            return;
+        }
         // รอ Trigger ที่ต่อจากการ์ดให้จบก่อน
         if(
             this.inputState === "waitingTriggerChoice" || 
