@@ -25,6 +25,7 @@ class RainingArrowsCard extends TrickCard{
                         if(
                             game.actionLocked && 
                             !game.pendingAction && 
+                            !game.pendingModal && 
                             !game.triggerResolutionQueue.isWaiting()
                         ){
                             game.afterHumanAction(true);
