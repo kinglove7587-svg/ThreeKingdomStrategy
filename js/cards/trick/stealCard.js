@@ -12,6 +12,10 @@ class StealCard extends TrickCard{
         if(player === target){
             return false;
         }
+        // Modesty ทำให้ลกซุนไม่สามารถตกเป็นเป้าหมายของฉกฉวย
+        if(target instanceof LuXun){
+            return false;
+        }
         // ต้องมีไพ่บนมืออย่างน้อย 1 ใบ หรือสวมใส่อาวุธอยู่ ถึงจะเล็งเป้าได้
         if(
             target.hand.cards.length === 0 && 
