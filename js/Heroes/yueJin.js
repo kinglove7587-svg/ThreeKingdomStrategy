@@ -14,7 +14,7 @@ class YueJin extends Player{
             "เพื่อให้คุณเลือกทิ้งการ์ดอุปกรณ์ 1 ใบ " +
             "มิฉะนั้น คุณสร้างความเสียหาย 1 หน่วยแก่ตัวละครนั้น";
 
-        //this.addSkill(new Dauntless());
+        this.addSkill(new Dauntless());
     }
     getPortrait(){
         return "assets/cards/heroes/YueJin.png";
