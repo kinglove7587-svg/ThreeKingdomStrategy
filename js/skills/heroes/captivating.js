@@ -11,7 +11,15 @@ class Captivating extends ActiveSkill{
     }
     // ห้ามเลือกตัวเองเป็น Target
     canTarget(player, target){
-        return player !== target;
+        // ห้ามเลือกตัวเอง
+        if(player === target){
+            return false;
+        }
+        // Modesty ทำให้ลกซุนไม่สามารถตกเป็นเป้าหมายของ Captivating
+        if(target instanceof LuXun){
+            return false
+        }
+        return true;
     }
     // ต้องเลือก Target ก่อน
     needsTarget(player, game){
