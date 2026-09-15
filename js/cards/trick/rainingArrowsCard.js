@@ -69,20 +69,23 @@ class RainingArrowsCard extends TrickCard{
                 // ถ้าไม่ใช้/ไม่สามารถใช้ Dodge ให้รับ Damage
                 const damage = new Damage(player, target, 1);
                 damage.card = this;
+                // เก็บ PendingAction ที่สร้างขึ้นสำหรับ Damage ครั้งนี้
+                let pauseAction = null;
                 // กรณีไม่มี Dodge Modal ต้องพัก Action ไว้ก่อน Damage
                 if(!waitingForDodge){
                     game.pauseAction(
                         resolveTarget, 
                         false
                     );
+                    // จำ PendingAction ตัวที่เพิ่งสร้างไว้
+                    pauseAction = game.pendingAction;
                 }
                 game.damage(damage);
-                // ถ้ามี Trigger รออยู่ ให้หยุดไว้ก่อน
-                if(game.triggerResolutionQueue.isWaiting()){
-                    return;
-                }
-                // ถ้าไม่มี Trigger ให้ดำเนินเป้าหมายถัดไปต่อ
-                if(!waitingForDodge){
+                // ถ้า Damage / Trigger ยังไม่ได้ Resume Action เดิม
+                if(
+                    !waitingForDodge && 
+                    game.pendingAction === pauseAction
+                ){
                     return game.resumeAction();
                 }
             };
