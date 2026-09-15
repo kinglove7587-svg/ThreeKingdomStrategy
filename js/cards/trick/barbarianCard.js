@@ -20,10 +20,18 @@ class BarbarianCard extends TrickCard{
                 targetIndex++;
             }
             if(targetIndex >= targets.length){
-                // บันทึกว่า Barbarian ต้อง Finalize Action หลัง PassiveSkill ทำงานเสร็จ
-                this.deferHumanActionFinalize = (
-                    player.controller instanceof HumanController
-                );
+                // รอให้ Call Stack ของ Card และ PassiveSkill ปัจจุบันทำงานเสร็จก่อน Finalize
+                if(player.controller instanceof HumanController){
+                    setTimeout(() => {
+                        if(
+                            game.actionLocked && 
+                            !game.pendingAction && 
+                            !game.triggerResolutionQueue.isWaiting()
+                        ){
+                            game.afterHumanAction(true);
+                        }
+                    }, 0);
+                }
                 return true;
             }
             const target = targets[targetIndex];

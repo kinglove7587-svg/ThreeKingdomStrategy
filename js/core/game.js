@@ -146,11 +146,6 @@ class Game {
                 skill.onCardUsed(player, card, this);
             }
         }
-        // ตรวจว่า Card ต้อง Finalize Action หลัง PassiveSkill ทำงานเสร็จหรือไม่
-        if(card.deferActionFinalize){
-            card.deferActionFinalize = false;
-            this.afterHumanAction(true);
-        }
         // 
         if(card.shouldDiscard() && !card.treacheryClaimed){
             this.discardPile.addCard(card);
