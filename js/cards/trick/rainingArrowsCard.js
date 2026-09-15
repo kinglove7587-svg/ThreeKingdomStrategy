@@ -21,7 +21,15 @@ class RainingArrowsCard extends TrickCard{
             }
             if(targetIndex >= targets.length){
                 if(player.controller instanceof HumanController){
-                    game.afterHumanAction(true);
+                    setTimeout(() => {
+                        if(
+                            game.actionLocked && 
+                            !game.pendingAction && 
+                            !game.triggerResolutionQueue.isWaiting()
+                        ){
+                            game.afterHumanAction(true);
+                        }
+                    }, 0);
                 }
                 return true;
             }
