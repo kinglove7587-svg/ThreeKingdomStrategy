@@ -5,11 +5,11 @@ const game = new Game([
         controller: HumanController//AIController//
     },
     {
-        hero: PanFeng, 
+        hero: LuXun, 
         controller: HumanController//AIController//
     },
     {
-        hero: DaQiao, 
+        hero: PanFeng, 
         controller: HumanController//AIController
     },
     {
@@ -29,4 +29,4 @@ game.debug = new DebugTools(game);
 game.start();
 // CaoCao LuBu GuanYu XiahouDun SimaYi LiuBei ZhangFei SunQuan HuaTuo GanNing LuMeng DiaoChan
 // ZhangLiao ZhugeLiang HuangGai HuaXiong XuZhu ZhaoYun* ZhouYu GongsunZan GuoJia MaChao 
-// DaQiao PanFeng ZhenJi HuangYueying
+// DaQiao PanFeng ZhenJi HuangYueying LuXun
