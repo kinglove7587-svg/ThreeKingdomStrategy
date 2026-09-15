@@ -384,6 +384,42 @@ class UIManager{
                         this.hideCardTooltip();
                     };
                 }
+                // Dauntless Equipment Selection
+                if(
+                    controller.inputState === "waitingDauntlessEquipment" && 
+                    controller.selectedTarget === player
+                ){
+                    if(armorElement && player.armor){
+                        armorElement.classList.add("dauntless-equipment-selectable");
+                        armorElement.onclick = (event) => {
+                            event.stopPropagation();
+                            controller.selectDauntlessEquipment(
+                                player.armor, 
+                                "armor"
+                            );
+                        };
+                    }
+                    if(weaponElement && player.weapon){
+                        weaponElement.classList.add("dauntless-equipment-selectable");
+                        weaponElement.onclick = (event) => {
+                            event.stopPropagation();
+                            controller.selectDauntlessEquipment(
+                                player.weapon, 
+                                "weapon"
+                            );
+                        };
+                    }
+                    if(mountElement && player.mount){
+                        mountElement.classList.add("dauntless-equipment-selectable");
+                        mountElement.onclick = (event) => {
+                            event.stopPropagation();
+                            controller.selectDauntlessEquipment(
+                                player.mount, 
+                                "mount"
+                            );
+                        };
+                    }
+                }
                 // ผูก Card Tooltip ให้ Status ที่เป็น Card
                 const statusElement = div.querySelectorAll(".status-card");
                 statusElement.forEach((statusElement) => {
@@ -572,6 +608,10 @@ class UIManager{
             ){
                 return;
             }
+        }
+        // ระหว่าง Dauntless Equipment Selection ไม่แสดงการ์ดในมือปกติ
+        if(player.controller.inputState === "waitingDauntlessEquipment"){
+            return;
         }
         // ระหว่างรอเลือกเป้าหมายของ Active Skill ไม่ต้องแสดงไพ่ในมือ
         if(
