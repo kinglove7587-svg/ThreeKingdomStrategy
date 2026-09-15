@@ -28,6 +28,10 @@ class Dauntless extends ActiveSkill{
     needsTarget(player, game){
         return true;
     }
+    // Dauntless ต้องเลือก Basic Card 1 ใบ
+    needsCardSelection(player, game){
+        return true;
+    }
     // เลือก Basic Card ได้เท่านั้น
     canSelectSkillCard(player, card, name){
         return card instanceof BasicCard;
