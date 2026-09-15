@@ -15,7 +15,7 @@ class LuXun extends Player{
             "Second Wind (ลมหายใจเฮือกที่สอง)\n" +
             "เมื่อคุณเสียการ์ดใบสุดท้ายจากมือ คุณสามารถจั่วการ์ด 1 ใบ";
 
-        //this.addSkill(new Modesty());
+        this.addSkill(new Modesty());
         //this.addSkill(new SecondWind());
     }
     getPortrait(){
