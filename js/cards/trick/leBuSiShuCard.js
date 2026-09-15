@@ -10,6 +10,10 @@ class LeBuSiShuCard extends DelayedTrickCard{
         if (player === target){
             return false;
         }
+        // Modesty ทำให้ลกซุนไม่สามารถตกเป็นเป้าหมายของสุราลืมกลับ
+        if(target instanceof LuXun){
+            return false;
+        }
         // คืนค่า true เมื่อเป้าหมายเป็นผู้เล่นคนอื่น
         return true;
     }
