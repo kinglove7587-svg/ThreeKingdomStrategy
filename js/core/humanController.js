@@ -9,6 +9,8 @@ class HumanController extends Controller{
         this.selectedSkill = null; // บันทึกออบเจกต์ Skill ที่ผู้เล่นเลือกใช้งาน
         this.selectedSkillCardIndex = -1; // บันทึกตำแหน่ง Index ของการ์ดที่ผู้เล่นเลือกเพื่อมอบผ่านสกิล
         this.selectedSkillCardIndices = [];
+        // เก็บ Equipment ที่ Dauntless กำลังเลือกอยู่
+        this.selectedDauntlessEquipment = null;
         // Lust State
         this.lustContext = null;
         //Steal (ฉกฉวย) State
@@ -151,7 +153,8 @@ class HumanController extends Controller{
             this.inputState === "waitingStealCard" || 
             this.inputState === "waitingBurnSource" || 
             this.inputState === "waitingBurnCard" || 
-            this.inputState === "waitingSelection"
+            this.inputState === "waitingSelection" || 
+            this.inputState === "waitingDauntlessEquipment"
         ){
             return;
         }
@@ -980,6 +983,10 @@ class HumanController extends Controller{
         // ถ้าสกิลไม่ต้องการเลือกการ์ดต่อ ให้รันสกิลทันที
         this.inputState = "idle";
         const success = skill.use(this.player, this.game);
+        // ถ้า Dauntless เปลี่ยนเข้าสู่ขั้นเลือก Equipment ให้หยุดรอ UI ต่อ
+        if(this.inputState === "waitingDauntlessEquipment"){
+            return;
+        }
         if(this.game.pendingModal){
             return;
         }
