@@ -18,8 +18,9 @@ class LuXun extends Player{
         this.addSkill(new Modesty());
         this.addSkill(new SecondWind());
         
-        this.equipWeapon(new SkyPiercingHalberdCard("♣️", 7));
-        this.equipArmor(new EightTrigramsArmor("♣️", 7));
+        //this.equipWeapon(new SkyPiercingHalberdCard("♣️", 7));
+        //this.equipArmor(new SilverLionHelmetCard("♣️", 7));
+        //this.equipMount(new ShadowrunnerCard("♣️", 7));
     }
     getPortrait(){
         return "assets/cards/heroes/LuXun.png";
