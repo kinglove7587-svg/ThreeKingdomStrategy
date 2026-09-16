@@ -328,6 +328,8 @@ class HumanController extends Controller{
             equipmentType = "mount";
         }
         if(!currentEquipment || !equipmentType){
+            this.selectedDauntlessEquipment = null;
+            this.game.ui.render();
             return false;
         }
 
