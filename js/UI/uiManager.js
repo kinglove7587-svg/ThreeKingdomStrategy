@@ -3812,7 +3812,8 @@ class UIManager{
     // แสดง UI สำหรับเลือกอุปกรณ์ของ Dauntless
     renderDauntlessEquipmentSelection(){
 
-        const controller = this.game.getCurrentPlayer().controller;
+        const player = this.game.getCurrentPlayer();
+        const controller = player.controller;
         if(controller.inputState !== "waitingDauntlessEquipment"){
             return;
         }
@@ -3822,49 +3823,96 @@ class UIManager{
             return;
         }
 
-        const container = document.createElement("div");
-        container.className = "dauntless-equipment-selection";
+        const equipment = [
+            {
+                source: "weapon", 
+                card: target.weapon
+            }, 
+            {
+                source: "armor", 
+                card: target.armor
+            }, 
+            {
+                source: "mount", 
+                card: target.mount
+            }
+        ];
+        for(const item of equipment){
+            if(!item.card){
+                continue;
+            }
 
-        const title = document.createElement("div");
-        title.textContent = "เลือก Equipment ของ " + target.name;
-        container.appendChild(title);
+            const card = item.card;
+            const button = document.createElement("button");
+            button.classList.add("hand-card");
+            if(controller.selectedDauntlessEquipment === card){
+                button.classList.add("selected-card");
+            }
+            
+            button.onmouseenter = (event) => {
+                this.tooltipHoverCard = card;
+                this.tooltipMouseX = event.clientX;
+                this.tooltipMouseY = event.clientY;
+                if(this.tooltipShiftDown){
+                    this.showCardTooltip(
+                        card, 
+                        event.clientX, 
+                        event.clientY
+                    );
+                }
+            };
+            button.onmousemove = (event) => {
+                this.tooltipMouseX = event.clientX;
+                this.tooltipMouseY = event.clientY;
+                if(this.tooltipShiftDown){
+                    this.showCardTooltip(
+                        card, 
+                        event.clientX, 
+                        event.clientY
+                    );
+                }
+            };
+            button.onmouseleave = () => {
+                this.tooltipHoverCard = null;
+                this.hideCardTooltip();
+            };
 
-        const equipmentList = document.createElement("div");
-        equipmentList.className = "dauntless-equipment-selection-list";
-        if(target.weapon){
-            const weaponButton = document.createElement("button");
-            weaponButton.textContent = "อาวุธ : " + target.weapon.name;
-            weaponButton.onclick = () => {
+            const suitClass = 
+                (card.suit === "♥️" || card.suit === "♦️") 
+                    ? "suit-red" : "suit-black";
+            
+            button.innerHTML = 
+                "<div class=\"hand-card-header\">" + 
+                    "<span class=\"hand-card-suit " + suitClass + "\">" + card.suit + 
+                    "</span>" + 
+                    "<span class=\"hand-card-number\">" + card.number + 
+                    "</span>" + 
+                "</div>" + 
+                "<div class=\"hand-card-name\" data-card-name>" + card.name + 
+                "</div>" + 
+                "<div class=\"hand-card-type\">" + card.type + 
+                "</div>";
+
+            const nameElement = button.querySelector("[data-card-name]");
+            if(nameElement){
+                let fontSize = 17;
+                nameElement.style.fontSize = fontSize + "px";
+                while(
+                    nameElement.scrollHeight > nameElement.clientHeight && 
+                    fontSize > 12
+                ){
+                    fontSize -= 1;
+                    nameElement.style.fontSize = fontSize + "px";
+                }
+            }
+
+            button.onclick = () => {
                 controller.selectDauntlessEquipment(
-                    target.weapon, 
-                    "weapon"
+                    card, 
+                    item.source
                 );
             };
-            equipmentList.appendChild(weaponButton);
+            this.handArea.appendChild(button);
         }
-        if(target.armor){
-            const armorButton = document.createElement("button");
-            armorButton.textContent = "เกราะ : " + target.armor.name;
-            armorButton.onclick = () => {
-                controller.selectDauntlessEquipment(
-                    target.armor, 
-                    "armor"
-                );
-            };
-            equipmentList.appendChild(armorButton);
-        }
-        if(target.mount){
-            const mountButton = document.createElement("button");
-            mountButton.textContent = "ม้า : " + target.mount.name;
-            mountButton.onclick = () => {
-                controller.selectDauntlessEquipment(
-                    target.mount, 
-                    "mount"
-                );
-            };
-            equipmentList.appendChild(mountButton);
-        }
-        container.appendChild(equipmentList);
-        this.controlArea.appendChild(container);
     }
 }
