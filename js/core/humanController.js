@@ -300,6 +300,66 @@ class HumanController extends Controller{
         }
         this.game.ui.render();
     }
+    // ยืนยันการเลือกอุปกรณ์ของ Dauntless และทำการทิ้งอุปกรณ์ที่เลือกออกจากเป้าหมาย
+    confirmDauntlessEquipment(){
+
+        if(this.inputState !== "waitingDauntlessEquipment"){
+            return false;
+        }
+
+        const target = this.selectedTarget;
+        const equipment = this.selectedDauntlessEquipment;
+        if(!target || !equipment){
+            return false;
+        }
+
+        let currentEquipment = null;
+        let equipmentType = null;
+        if(target.weapon === equipment){
+            currentEquipment = target.weapon;
+            equipmentType = "weapon";
+        }
+        if(target.armor === equipment){
+            currentEquipment = target.armor;
+            equipmentType = "armor";
+        }
+        if(target.mount === equipment){
+            currentEquipment = target.mount;
+            equipmentType = "mount";
+        }
+        if(!currentEquipment || !equipmentType){
+            return false;
+        }
+
+        let discardedEquipment = null;
+        if(equipmentType === "weapon"){
+            discardedEquipment = target.unequipWeapon();
+        }
+        if(equipmentType === "armor"){
+            discardedEquipment = target.unequipArmor();
+        }
+        if(equipmentType === "mount"){
+            discardedEquipment = target.unequipMount();
+        }
+        if(!discardedEquipment){
+            return false;
+        }
+        this.game.discardPile.addCard(discardedEquipment);
+        this.game.log(
+            this.player.name + " ใช้ Dauntless ทำให้ " + 
+            target.name + " ทิ้ง " + 
+            discardedEquipment.name
+        );
+
+        this.selectedDauntlessEquipment = null;
+        this.selectedTarget = null;
+        this.selectedSkill = null;
+        this.selectedSkillCardIndex = -1;
+        this.selectedSkillCardIndices = [];
+        this.inputState = "idle";
+        this.game.afterHumanAction(true);
+        return true;
+    }
     // เริ่มต้นสถานะการเปิดดูการ์ดบนมือของผู้เล่นเป้าหมาย
     startViewingHand(target){
         // กำหนดเป้าหมายที่ต้องการเปิดดูการ์ดในมือ
