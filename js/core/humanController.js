@@ -1170,6 +1170,9 @@ class HumanController extends Controller{
         }
         // เมื่อเลือกครบตามจำนวนแล้ว ให้สั่งเรียกใช้งาน สกิล
         const success = skill.use(this.player, this.game);
+        if(this.inputState === "waitingDauntlessEquipment"){
+            return;
+        }
         if(this.game.pendingModal){
             this.selectedSkill = null;
             this.selectedSkillCardIndex = -1;
