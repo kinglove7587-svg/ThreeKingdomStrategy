@@ -3914,5 +3914,13 @@ class UIManager{
             };
             this.handArea.appendChild(button);
         }
+
+        const confirmButton = document.createElement("button");
+        confirmButton.textContent = "ยืนยัน";
+        confirmButton.disabled = !controller.selectedDauntlessEquipment;
+        confirmButton.onclick = () => {
+            controller.confirmDauntlessEquipment();
+        };
+        this.controlArea.appendChild(confirmButton);
     }
 }
