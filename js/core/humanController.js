@@ -265,6 +265,41 @@ class HumanController extends Controller{
         // คืนค่าออบเจกต์ผู้เล่นเป้าหมาย
         return this.selectedTarget;
     }
+    // บันทึกอุปกรณ์ที่ Dauntless กำลังเลือกอยู่ (อาวุธ/เกราะ/ม้า) ลงใน Controller
+    selectDauntlessEquipment(equipment, type){
+
+        if(this.inputState !== "waitingDauntlessEquipment"){
+            return;
+        }
+
+        const target = this.selectedTarget;
+        if(!target){
+            return;
+        }
+
+        let currentEquipment = null;
+        if(type === "weapon"){
+            currentEquipment = target.weapon;
+        }
+        if(type === "armor"){
+            currentEquipment = target.armor;
+        }
+        if(type === "mount"){
+            currentEquipment = target.mount;
+        }
+        if(!currentEquipment){
+            return;
+        }
+        if(currentEquipment !== equipment){
+            return;
+        }
+        if(this.selectedDauntlessEquipment === equipment){
+            this.selectedDauntlessEquipment = null;
+        }else{
+            this.selectedDauntlessEquipment = equipment;
+        }
+        this.game.ui.render();
+    }
     // เริ่มต้นสถานะการเปิดดูการ์ดบนมือของผู้เล่นเป้าหมาย
     startViewingHand(target){
         // กำหนดเป้าหมายที่ต้องการเปิดดูการ์ดในมือ
