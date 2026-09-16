@@ -1,7 +1,7 @@
 class LadyGan extends Player{
 
-    constructor(gamae, controllerClass){
-        super("กำฮูหยิน", gamae, controllerClass);
+    constructor(game, controllerClass){
+        super("กำฮูหยิน", game, controllerClass);
 
         this.maxHp = 3;
         this.hp = 3;
