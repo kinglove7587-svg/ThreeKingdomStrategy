@@ -44,7 +44,8 @@ class DebugTools {
             { hero: ZhenJi, name: "เจิ้นจี"}, 
             { hero: HuangYueying, name: "อุยซี"}, 
             { hero: LuXun, name: "ลกซุน"}, 
-            { hero: YueJin, name: "งักจิ้น"}
+            { hero: YueJin, name: "งักจิ้น"}, 
+            { hero: LadyGan, name: "กำฮูหยิน"}
 
         ];
         // สร้าง Select ให้ Player ทั้ง 5 คน

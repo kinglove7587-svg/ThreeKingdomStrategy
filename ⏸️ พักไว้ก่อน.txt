@@ -59,4 +59,4 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
 game.ui.render();
 ec32e8e0f6761c6904fff9cac165cca6d2fe36d7 เปิด Modesty
 1e720bb6293045e32134c1c905916ec3fe692c1e เปิด SecondWind
-1bb32530ce53b89e07a4a979b8ef684ac55766b9 เปิด Dauntless
+05bbbbe7bf85a8207bdd15691131118246358b17 ปิด Dauntless
