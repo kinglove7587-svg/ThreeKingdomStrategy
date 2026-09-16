@@ -3922,5 +3922,12 @@ class UIManager{
             controller.confirmDauntlessEquipment();
         };
         this.controlArea.appendChild(confirmButton);
+
+        const statusText = document.createElement("div");
+        statusText.textContent = 
+            controller.selectedDauntlessEquipment 
+                ? "เลือกทิ้ง: " + controller.selectedDauntlessEquipment.name 
+                : "เลือกอุปกรณ์ 1 ใบเพื่อทิ้ง";
+        this.controlArea.appendChild(statusText);
     }
 }
