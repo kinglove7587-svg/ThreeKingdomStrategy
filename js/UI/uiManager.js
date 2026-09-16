@@ -80,6 +80,7 @@ class UIManager{
         this.renderCardSelectionStatus();
         this.renderTargetSelectionStatus();
         this.renderAdditionalTargetSelection();
+        this.renderDauntlessEquipmentSelection();
     }
     // วาดการ์ดแสดงตัวละครฝั่งเราและฝั่งศัตรู
     renderPlayers(){
@@ -3807,5 +3808,63 @@ class UIManager{
                 card.suit + " " + 
                 card.number;
         }
+    }
+    // แสดง UI สำหรับเลือกอุปกรณ์ของ Dauntless
+    renderDauntlessEquipmentSelection(){
+
+        const controller = this.game.getCurrentPlayer().controller;
+        if(controller.inputState !== "waitingDauntlessEquipment"){
+            return;
+        }
+
+        const target = controller.getSelectedTarget();
+        if(!target){
+            return;
+        }
+
+        const container = document.createElement("div");
+        container.className = "dauntless-equipment-selection";
+
+        const title = document.createElement("div");
+        title.textContent = "เลือก Equipment ของ " + target.name;
+        container.appendChild(title);
+
+        const equipmentList = document.createElement("div");
+        equipmentList.className = "dauntless-equipment-selection-list";
+        if(target.weapon){
+            const weaponButton = document.createElement("button");
+            weaponButton.textContent = "อาวุธ : " + target.weapon.name;
+            weaponButton.onclick = () => {
+                controller.selectDauntlessEquipment(
+                    target.weapon, 
+                    "weapon"
+                );
+            };
+            equipmentList.appendChild(weaponButton);
+        }
+        if(target.armor){
+            const armorButton = document.createElement("button");
+            armorButton.textContent = "เกราะ : " + target.armor.name;
+            armorButton.onclick = () => {
+                controller.selectDauntlessEquipment(
+                    target.armor, 
+                    "armor"
+                );
+            };
+            equipmentList.appendChild(armorButton);
+        }
+        if(target.mount){
+            const mountButton = document.createElement("button");
+            mountButton.textContent = "ม้า : " + target.mount.name;
+            mountButton.onclick = () => {
+                controller.selectDauntlessEquipment(
+                    target.mount, 
+                    "mount"
+                );
+            };
+            equipmentList.appendChild(mountButton);
+        }
+        container.appendChild(equipmentList);
+        this.controlArea.appendChild(container);
     }
 }
