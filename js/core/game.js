@@ -442,6 +442,9 @@ class Game {
         this.ui.addLog("Play Phase");
         // ส่ง Event "onPlayPhase" ผ่าน eventManager ไปยังผู้เล่นเป้าหมาย เพื่อเปิดใช้งานสกิลช่วง Play Phase
         this.eventManager.emitToPlayer("onPlayPhase", player);
+        for(const skill of player.skills){
+            skill.onPlayPhase(player, this);
+        }
         // ใช้ Active Skill
         //
         if(!player.controller.isHuman()){
