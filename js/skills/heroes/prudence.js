@@ -80,6 +80,7 @@ class Prudence extends TriggerSkill{
                 target !== player && 
                 target.isAlive()
         );
+        // หากไม่มี Target ที่สามารถเลือกได้
         if(targets.length === 0){
             game.log(
                 player.name + " ไม่สามารถใช้ Prudence ได้ เนื่องจากไม่มีตัวละครอื่นที่สามารถเลือกได้"
@@ -91,49 +92,81 @@ class Prudence extends TriggerSkill{
             return;
         }
 
+        const content = 
+            game.ui.createTargetSelectionContent(
+                targets, 
+                (selectedPlayer) => {
+                    if(selectedPlayer){
+                        game.log(
+                            player.name + " เลือก Target ของ Prudence: " + 
+                            selectedPlayer.name
+                        );
+                    }else{
+                        game.log(
+                            player.name + " ยกเลิกการเลือก Target ของ Prudence"
+                        );
+                    }
+                }, 
+                {
+                    filter: target => 
+                        target !== player && 
+                        target.isAlive()
+                }
+            );
         game.showModal({
             owner: player, 
             title: "Prudence (สุขุมรอบคอบ)", 
             message: "เลือกตัวละครอื่น 1 คน", 
-            buttons: targets.map(target => ({
-                text: target.name, 
-                onClick: () => {
-                    const currentTargets = game.players.filter(
-                        currentTarget => 
-                            currentTarget !== player && 
-                            currentTarget.isAlive()
-                    );
-                    if(!currentTargets.includes(target)){
-                        game.log("เป้าหมายของ Prudence ไม่สามารถเลือกได้แล้ว");
-                        game.hideModal();
-                        this.showTargetSelection(
-                            player, 
-                            resolution
+            content: content, 
+            buttons: [
+                {
+                    text: "ยืนยัน", 
+                    role: "confirm", 
+                    onClick: () => {
+                        const selectedTarget = content.getSelectedPlayer();
+                        if(!selectedTarget){
+                            game.log("Prudence: กรุณาเลือกตัวละครก่อนยืนยัน");
+                            return;
+                        }
+                        // Validate Target ซ้ำก่อนทำ Effect จริง
+                        const currentTargets = game.players.filter(
+                            target => 
+                                target !== player && 
+                                target.isAlive()
                         );
-                        return;
-                    }
+                        // Target เดิมใช้ไม่ได้แล้ว
+                        if(!currentTargets.includes(selectedTarget)){
+                            game.log("เป้าหมายของ Prudence ไม่สามารถเลือกได้แล้ว");
+                            game.hideModal();
+                            this.showTargetSelection(
+                                player, 
+                                resolution
+                            );
+                            return;
+                        }
 
-                    const handBefore = target.hand.cards.length;
-                    const drawCount = target.hand.cards.length === 0 
-                        ? 2 : 1;
-                    for(let i = 0; i < drawCount; i++){
-                        target.drawCard(game.deck);
-                    }
+                        const handBefore = selectedTarget.hand.cards.length;
+                        const drawCount = selectedTarget.hand.cards.length === 0 
+                            ? 2 : 1;
+                        for(let i = 0; i < drawCount; i++){
+                            selectedTarget.drawCard(game.deck);
+                        }
 
-                    const actualDrawCount = 
-                        target.hand.cards.length - handBefore;
-                    game.log(
-                        player.name + " ใช้ Prudence ให้ " + 
-                        target.name + " จั่วการ์ด " + 
-                        actualDrawCount + " ใบ"
-                    );
-                    game.hideModal();
-                    if(resolution){
-                        resolution.resume();
+                        const actualDrawCount = 
+                            selectedTarget.hand.cards.length - handBefore;
+                        game.log(
+                            player.name + " ใช้ Prudence ให้ " + 
+                            selectedTarget.name + " จั่วการ์ด " + 
+                            actualDrawCount + " ใบ"
+                        );
+                        game.hideModal();
+                        if(resolution){
+                            resolution.resume();
+                        }
+                        game.ui.render();
                     }
-                    game.ui.render();
                 }
-            }))
+            ]
         });
     }
 }
