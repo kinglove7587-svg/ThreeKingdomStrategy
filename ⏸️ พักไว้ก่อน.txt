@@ -60,5 +60,5 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
     new SilverLionHelmetCard("♠️", 1)
 );
 game.ui.render();
-98cc69185c1f1f25d3226eb9410402ecec2a9ed6 ปิด DivineWisdom
 fb98bb91b44cc0086d802a500804b7e61b0fd18c ปิด Prudence
+f164847990221bb4b962afd7260a4082e3d2ab85 เปิด Betrothment

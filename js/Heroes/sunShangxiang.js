@@ -17,7 +17,7 @@ class SunShangxiang extends Player{
             "Daredevil (แผนสลัดอาวุธ)\n" +
             "เมื่อคุณสูญเสียการ์ดอุปกรณ์ 1 ใบ คุณสามารถจั่วการ์ด 2 ใบ";
 
-        //this.addSkill(new Betrothment());
+        this.addSkill(new Betrothment());
         //this.addSkill(new Daredevil());
     }
     getPortrait(){
