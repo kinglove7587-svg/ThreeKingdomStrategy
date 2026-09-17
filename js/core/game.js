@@ -1488,7 +1488,7 @@ class Game {
                 "recoverHp"
             );
         }
-        return null;
+        return this.resumeAction();
     }
     // ดำเนิน beforeDodge Trigger ต่อหลัง Trigger Resume
     resumeBeforeDodgeResolution(dodgeContext){
@@ -1625,7 +1625,7 @@ class Game {
         }
         // recoverHp Queue หมดแล้ว
         if(eventName === "recoverHp"){
-            return true;
+            return this.resumeAction();
         }
         return this.resumeAction();
     }
