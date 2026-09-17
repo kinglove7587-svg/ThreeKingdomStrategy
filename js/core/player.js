@@ -64,14 +64,42 @@ class Player{
     }
 
     recoverHp(amount = 1){ // จำนวน HP ที่ต้องการฟื้นฟู
+
+        const previousHp = this.hp;
         this.hp += amount; // บวกค่า HP ปัจจุบันเพิ่มขึ้นตามจำนวน amount
 
         if(this.hp > this.maxHp){ // HP ปัจจุบันสูงเกิน HP สูงสุด ?
             this.hp = this.maxHp; // ถ้าเกิน ให้ดึงกลับมาเท่ากับค่า maxHp
         }
-
-        this.game.log(this.name + " ฟื้น HP " + amount); // แสดง ว่าผู้เล่นคนนี้ฟื้น HP เท่าไหร่
+        const recoveredAmount = this.hp - previousHp;
+        this.game.log(this.name + " ฟื้น HP " + recoveredAmount); // แสดง ว่าผู้เล่นคนนี้ฟื้น HP เท่าไหร่
         this.showStatus(); // แสดง HP ล่าสุด
+
+        if(recoveredAmount > 0){
+
+            const context = {
+                player: this, 
+                amount: recoveredAmount
+            };
+
+            const trigger = this.game.processRecoverHpTrigger(context);
+            if(trigger){
+                this.game.runTriggerResolution(
+                    trigger, 
+                    context, 
+                    "recoverHp"
+                );
+                if(
+                    this.game.triggerResolutionQueue.isWaiting() && 
+                    !this.game.pendingAction && 
+                    this.game.actionLocked && 
+                    this.game.getCurrentPlayer().controller instanceof HumanController
+                ){
+                    this.game.pauseAction(() => true);
+                }
+            }
+        }
+        return recoveredAmount;
     }
     // เช็กว่าผู้เล่นคนนี้สามารถใช้การ์ด "โจมตี" ในเทิร์นนี้ได้หรือไม่ (ถ้ายังไม่เคยใช้จะคืนค่า true)
     canUseSlash(){
