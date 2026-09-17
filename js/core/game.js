@@ -1452,6 +1452,44 @@ class Game {
         }
         return queue.next();
     }
+    // ประมวลผล Trigger สำหรับ Event recoverHp
+    processRecoverHpTrigger(context){
+
+        if(!context){
+            return null;
+        }
+
+        const queue = this.triggerResolutionQueue;
+        if(queue.current || queue.isWaiting()){
+            return queue.current;
+        }
+
+        queue.queue = [];
+        queue.current = null;
+        queue.addEventListeners(
+            this.players, 
+            "recoverHp"
+        );
+        return queue.next();
+    }
+    // สานต่อ Trigger Resolution สำหรับ Event recoverHp
+    resumeRecoverHpResolution(context){
+
+        if(!context){
+            return null;
+        }
+
+        const queue = this.triggerResolutionQueue;
+        const nextTrigger = queue.resume();
+        if(nextTrigger){
+            return this.runTriggerResolution(
+                nextTrigger, 
+                context, 
+                "recoverHp"
+            );
+        }
+        return null;
+    }
     // ดำเนิน beforeDodge Trigger ต่อหลัง Trigger Resume
     resumeBeforeDodgeResolution(dodgeContext){
 
@@ -1537,6 +1575,10 @@ class Game {
                 if(eventName === "beforeDodge"){
                     return this.resumeBeforeDodgeResolution(damage);
                 }
+                // สานต่อ Trigger Resolution สำหรับ recoverHp
+                if(eventName === "recoverHp"){
+                    return this.resumeRecoverHpResolution(damage);
+                }
                 // beforeDamage ต้องกลับไปทำ Damage ต่อ
                 if(eventName === "beforeDamage"){
                     return this.resumeBeforeDamageResolution(damage);
@@ -1580,6 +1622,10 @@ class Game {
         // beforeDamage Queue หมดแล้ว ให้ Damage เดินต่อ
         if(eventName === "beforeDamage"){
             return damage.resume();
+        }
+        // recoverHp Queue หมดแล้ว
+        if(eventName === "recoverHp"){
+            return true;
         }
         return this.resumeAction();
     }

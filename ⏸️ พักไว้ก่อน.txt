@@ -57,6 +57,5 @@ game.players.find(p => p.name === "เล่าปี่").equipArmor(
     new SilverLionHelmetCard("♠️", 1)
 );
 game.ui.render();
-1e720bb6293045e32134c1c905916ec3fe692c1e เปิด SecondWind
 05bbbbe7bf85a8207bdd15691131118246358b17 ปิด Dauntless
-bbb76abfd3e6c2f988beebc19016ad274f43ea2f เปิด DivineWisdom
+98cc69185c1f1f25d3226eb9410402ecec2a9ed6 ปิด DivineWisdom
