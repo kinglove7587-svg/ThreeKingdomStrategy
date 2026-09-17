@@ -1,11 +1,11 @@
 // Instance ของเกม โดยกำหนดข้อมูลฮีโร่ ชื่อผู้เล่น และชนิด Controller ของแต่ละคน
 const game = new Game([
     {
-        hero: LadyGan, 
+        hero: SunShangxiang, 
         controller: HumanController//AIController//
     },
     {
-        hero: HuangYueying, 
+        hero: LadyGan, 
         controller: HumanController//AIController//
     },
     {
@@ -29,4 +29,4 @@ game.debug = new DebugTools(game);
 game.start();
 // CaoCao LuBu GuanYu XiahouDun SimaYi LiuBei ZhangFei SunQuan HuaTuo GanNing LuMeng DiaoChan
 // ZhangLiao ZhugeLiang HuangGai HuaXiong XuZhu ZhaoYun* ZhouYu GongsunZan GuoJia MaChao 
-// DaQiao PanFeng ZhenJi HuangYueying LuXun YueJin LadyGan
+// DaQiao PanFeng ZhenJi HuangYueying LuXun YueJin LadyGan SunShangxiang
