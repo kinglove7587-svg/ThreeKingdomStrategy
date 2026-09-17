@@ -4,7 +4,7 @@ class LadyGan extends Player{
         super("กำฮูหยิน", game, controllerClass);
 
         this.maxHp = 3;
-        this.hp = 2;
+        this.hp = 3;
         this.faction = "Shu";
         this.gender = "female";
 
