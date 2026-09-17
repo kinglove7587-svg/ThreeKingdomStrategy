@@ -4,7 +4,7 @@ class LadyGan extends Player{
         super("กำฮูหยิน", game, controllerClass);
 
         this.maxHp = 3;
-        this.hp = 3;
+        this.hp = 2;
         this.faction = "Shu";
         this.gender = "female";
 
@@ -18,7 +18,7 @@ class LadyGan extends Player{
             "ให้เขาจั่วการ์ด 1 ใบ หรือจั่ว 2 ใบ หากในขณะนั้นตัวละครนั้นไม่มีการ์ดในมือ";
 
         this.addSkill(new DivineWisdom());
-        //this.addSkill(new Prudence());
+        this.addSkill(new Prudence());
     }
     getPortrait(){
         return "assets/cards/heroes/LadyGan.png";
