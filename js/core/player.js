@@ -197,6 +197,12 @@ class Player{
         weapon.onUnequip(this);
         // ล้างช่องอาวุธ
         this.weapon = null;
+        // บันทึกว่า Weapon ถูกถอดออกจาก Equipment Zone
+        this.game.recordEquipmentLoss(
+            this, 
+            weapon, 
+            "weapon"
+        );
         // คืนค่าอาวุธเดิมออกไป เพื่อนำไปจัดการต่อ (เช่น ย้ายลงกองทิ้ง)
         return weapon;
     }
@@ -244,6 +250,12 @@ class Player{
         this.mount = null;
         mount.onUnequip(this);
         this.mount = null;
+        // บันทึกว่า Mount ถูกถอดออกจาก Equipment Zone
+        this.game.recordEquipmentLoss(
+            this, 
+            mount, 
+            "mount"
+        );
         return mount;
     }
     // คืนค่าผลของ Mount เมื่อผู้เล่นนี้เป็น "ผู้โจมตี"
@@ -275,6 +287,12 @@ class Player{
         }
         // ล้างช่องเกราะให้เป็น null
         this.armor = null;
+        // บันทึกว่า Armor ถูกถอดออกจาก Equipment Zone
+        this.game.recordEquipmentLoss(
+            this, 
+            armor, 
+            "armor"
+        );
         // คืนค่าเกราะเดิมออกไป เพื่อนำไปจัดการต่อ (เช่น ย้ายลงกองทิ้ง)
         return armor;
     }
