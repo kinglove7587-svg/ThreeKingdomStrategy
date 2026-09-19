@@ -1726,7 +1726,7 @@ class Game {
         }
         // equipmentLost Queue หมดแล้ว
         if(eventName === "equipmentLost"){
-            return true;
+            return this.resumeEquipmentLostResolution(damage);
         }
         // recoverHp Queue หมดแล้ว
         if(eventName === "recoverHp"){
