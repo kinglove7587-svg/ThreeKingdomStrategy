@@ -1268,7 +1268,7 @@ class Game {
             if(this.pendingEquipmentLosses.length > 0){
                 return this.processEquipmentLostTrigger();
             }
-            return true;
+            return this.afterHumanAction(true);
         }
 
         return this.runTriggerResolution(
