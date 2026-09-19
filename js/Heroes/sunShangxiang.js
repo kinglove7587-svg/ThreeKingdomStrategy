@@ -18,7 +18,7 @@ class SunShangxiang extends Player{
             "เมื่อคุณสูญเสียการ์ดอุปกรณ์ 1 ใบ คุณสามารถจั่วการ์ด 2 ใบ";
 
         this.addSkill(new Betrothment());
-        //this.addSkill(new Daredevil());
+        this.addSkill(new Daredevil());
     }
     getPortrait(){
         return "assets/cards/heroes/SunShangxiang.png";
