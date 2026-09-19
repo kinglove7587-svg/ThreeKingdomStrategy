@@ -1726,7 +1726,11 @@ class Game {
         }
         // equipmentLost Queue หมดแล้ว
         if(eventName === "equipmentLost"){
-            return this.resumeEquipmentLostResolution(damage);
+            this.pendingEquipmentLosses.shift();
+            if(this.pendingEquipmentLosses.length > 0){
+                return this.processEquipmentLostTrigger();
+            }
+            return this.afterHumanAction(true);
         }
         // recoverHp Queue หมดแล้ว
         if(eventName === "recoverHp"){
