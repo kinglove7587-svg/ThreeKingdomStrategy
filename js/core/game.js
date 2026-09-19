@@ -39,6 +39,8 @@ class Game {
         this.pendingJudge = null;
         this.pendingAction = null;
         this.pendingDrawPhase = null;
+        // เก็บรายการ Equipment ที่สูญเสียระหว่าง Action/Trigger
+        this.pendingEquipmentLosses = [];
         this.isGameOver = false;
     }
     // รองรับ onComplete / onCancel สำหรับ Generic Modal
@@ -735,6 +737,10 @@ class Game {
         ){
             return false;
         }
+        // ต้องจัดการ Equipment Loss ก่อน Finalize Action
+        if(this.pendingEquipmentLosses.length > 0){
+            return this.processEquipmentLostTrigger();
+        }
         // Action จบแล้ว ปลดล็อก End Turn
         this.finishAction();
         // ถ้าเกมจบแล้ว ให้หยุดการทำงานทันที
@@ -1212,6 +1218,90 @@ class Game {
     finishAction(){
         this.actionLocked = false;
     }
+    // บันทึกการสูญเสีย Equipment เพื่อรอประมวลผลหลัง Action ปัจจุบัน
+    recordEquipmentLoss(player, equipment, source){
+
+        if(!player || !equipment || !source){
+            return false;
+        }
+        if(
+            source !== "weapon" && 
+            source !== "armor" && 
+            source !== "mount"
+        ){
+            return false;
+        }
+        this.pendingEquipmentLosses.push({
+            player: player, 
+            equipment: equipment, 
+            source: source
+        });
+        return true;
+    }
+    // เริ่มประมวลผล Equipment Loss ทีละรายการ
+    processEquipmentLostTrigger(){
+
+        if(this.pendingEquipmentLosses.length === 0){
+            return false;
+        }
+        // ถ้า Trigger เดิมกำลังทำงานอยู่ ให้รอจน Queue เดิมจบก่อน
+        if(
+            this.triggerResolutionQueue.current || 
+            this.triggerResolutionQueue.isWaiting()
+        ){
+            return false;
+        }
+
+        const context = this.pendingEquipmentLosses[0];
+        const queue = this.triggerResolutionQueue;
+        queue.queue = [];
+        queue.current = null;
+        queue.addEventListeners(
+            this.players, 
+            "equipmentLost"
+        );
+
+        const trigger = queue.next();
+        // ไม่มี Skill ที่ฟัง Equipment Loss
+        if(!trigger){
+            this.pendingEquipmentLosses.shift();
+            if(this.pendingEquipmentLosses.length > 0){
+                return this.processEquipmentLostTrigger();
+            }
+            return true;
+        }
+
+        return this.runTriggerResolution(
+            trigger, 
+            context, 
+            "equipmentLost"
+        );
+    }
+    // Resume Equipment Loss Trigger หลังผู้เล่นตอบสนอง
+    resumeEquipmentLostResolution(context){
+
+        if(!context){
+            return null;
+        }
+
+        const queue = this.triggerResolutionQueue;
+        const nextTrigger = queue.resume();
+        if(nextTrigger){
+            return this.runTriggerResolution(
+                nextTrigger, 
+                context, 
+                "equipmentLost"
+            );
+        }
+        // Equipment Loss รายการปัจจุบันจบแล้ว
+        this.pendingEquipmentLosses.shift();
+        // ยังมี Equipment ที่สูญเสียรออยู่
+        if(this.pendingEquipmentLosses.length > 0){
+            return this.processEquipmentLostTrigger();
+        }
+        // Equipment Loss ทั้งหมดจบแล้ว
+        return this.afterHumanAction(true);
+    }
     // หยุด Judge ชั่วคราวเพื่อรอการตัดสินใจจาก Modal
     pauseJudge(data){
 
@@ -1586,6 +1676,10 @@ class Game {
                 if(eventName === "recoverHp"){
                     return this.resumeRecoverHpResolution(damage);
                 }
+                // สานต่อ Equipment Loss Trigger
+                if(eventName === "equipmentLost"){
+                    return this.resumeEquipmentLostResolution(damage);
+                }
                 // beforeDamage ต้องกลับไปทำ Damage ต่อ
                 if(eventName === "beforeDamage"){
                     return this.resumeBeforeDamageResolution(damage);
@@ -1629,6 +1723,10 @@ class Game {
         // beforeDamage Queue หมดแล้ว ให้ Damage เดินต่อ
         if(eventName === "beforeDamage"){
             return damage.resume();
+        }
+        // equipmentLost Queue หมดแล้ว
+        if(eventName === "equipmentLost"){
+            return true;
         }
         // recoverHp Queue หมดแล้ว
         if(eventName === "recoverHp"){
